@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+/*设置默认字体*/
+body,
+button,
+input,
+select,
+textarea {
+    font: 14px/1.5 Microsoft Yahei, tahoma, Srial, helvetica, sans-serif;text-rendering: optimizeLegibility;text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+body{ background-color: #fff }
+h1,h2,h3,h4,h5,h6{ font-weight: normal; }
+button:focus,input:focus,textarea:focus,select:focus{outline:none;}
+/*清除斜体*/
+em,i,var{font-style: normal;}
+/*清除列表元素*/
+ul,li,ol{list-style: none;}
+/*重置超链接元素*/
+a{
+	color: #333;
+	text-decoration:none;
+	outline: 0;
+	box-sizing: border-box;
+	transition: all .2s;
+}
+/******************************************项目专用**********************************************/
+.text-main-color {
+    color: #ea601f;
+}
+img,.wx_image {
+    max-width: 100%;
+}
+/*微信去除border专用*/
+button::after{ border: none; }
+
