@@ -2,7 +2,7 @@
     <div>
         <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称"/>
         <div>
-            <circleProgress type="circle" :percentage="0"/>
+            <circleProgress :max="5" :progress="2"/>
         </div>
     </div>
 </template>

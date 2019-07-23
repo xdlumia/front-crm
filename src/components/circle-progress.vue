@@ -1,7 +1,17 @@
+<!-- /**
+ * @author 王晓冬
+ * @description 公共圆形进度条
+ * @param {Number} max 阶段数量
+ * @param {Number} progress 当前阶段
+ * @param {string} width 进度条的宽高
+ * @param {string} color 进度条的颜色
+
+    <circleProgress :max="5" :progress="2" width="50px"/>
+ */ -->
 <template>
   <div class="circle-progress" :style="{width:width,height:width}">
     <div class="progress-load" :style="{'clip-path': currProgress,'background-color':color}">212</div>
-    <div class="circle-progress-text">{{progress}}/{{maxNum}}</div>
+    <div class="circle-progress-text">{{progress}}/{{max}}</div>
   </div>
 </template>
 <script>
@@ -9,7 +19,7 @@ export default {
 	name: 'ElProgress',
 	props: {
 		// 阶段最大值
-		maxNum: {
+		max: {
 			default: 4,
 			type: Number
 		},
@@ -28,7 +38,7 @@ export default {
 	},
 	computed: {
 		currProgress () {
-			let r = (this.progress / this.maxNum) * 100 * 4
+			let r = (this.progress / this.max) * 100 * 4
 			let k1 = 'polygon(50% 50%,50% 0%,'
 			let k2 = k1 + '100% 0%,'
 			let k3 = k2 + '100% 100%,'
