@@ -25,6 +25,8 @@ import iButton from './components/basic/iview/button'
 // import iBadge from './components/basic/iview/badge'
 import iActionSheet from './components/basic/iview/action-sheet'
 import iInput from './components/basic/iview/input'
+import iSteps from './components/basic/iview/steps'
+import iStep from './components/basic/iview/step'
 
 // uni UI component
 import uniIcon from './components/basic/uni/uni-icon/uni-icon'
@@ -65,6 +67,8 @@ Vue.component('iButton', iButton)
 // Vue.component('iBadge', iBadge)
 Vue.component('iActionSheet', iActionSheet)
 Vue.component('iInput', iInput)
+Vue.component('iSteps', iSteps)
+Vue.component('iStep', iStep)
 
 // uni UI component
 Vue.component('uniIcon', uniIcon)
@@ -100,6 +104,16 @@ App.mpType = 'app'
 Vue.prototype.$store = store
 Vue.use(Vuex)
 Vue.use(globalConfig)
+
+Vue.mixin({
+	methods: {
+		callPhone (phone) {
+			phone && uni.makePhoneCall({
+				phoneNumber: phone
+			})
+		}
+	}
+})
 
 const app = new Vue({
 	store,
