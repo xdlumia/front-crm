@@ -1,23 +1,27 @@
 <template>
     <div>
-        首页
+        <NavBar title="首页" />
     </div>
 </template>
 
 <script>
 
 export default {
-    components: {
-    },
-    data () {
-        return {
-        }
-    },
-    onLoad (option) {
-    },
-    methods: {
-    },
-    created () {}
+	components: {
+	},
+	data () {
+		return {
+
+		}
+	},
+	onLoad (option) {
+	},
+	methods: {
+
+	},
+	onReady () {
+		console.log(this.$store.state)
+	}
 }
 </script>
 

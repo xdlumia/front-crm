@@ -37,7 +37,8 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "客户管理系统",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle":"custom"
 	},
     "tabBar": {
         "color": "#636468",

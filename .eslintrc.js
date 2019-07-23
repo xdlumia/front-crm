@@ -15,9 +15,8 @@ module.exports = {
     plugins: ['vue'],
     rules: {
         'generator-star-spacing': 'off',
-        'no-trailing-spaces': 2,
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'no-console': ['error', { allow: ['warn', 'error'] }],
+        'no-console': ['warn', { allow: ['warn', 'error'] }],
         "no-undef": 0,
         'indent': ['error', 'tab'],
         'no-tabs': 'off'
