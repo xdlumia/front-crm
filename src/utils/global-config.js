@@ -1,6 +1,7 @@
 import api from './api'
 import local from './localStorage'
 import router from './router'
+import utils from './utils'
 import {
     $toast,
     $message
@@ -13,5 +14,6 @@ export default {
         vm.prototype.$routing = router
         vm.prototype.$toast = $toast
         vm.prototype.$message = $message
+        vm.prototype.$utils = utils
     }
 }

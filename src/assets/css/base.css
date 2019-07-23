@@ -738,23 +738,23 @@ h2.title {
 
 /* 边框   */
 .bt {
-    border-top: 1px solid #dcdfe6;
+    border-top: 1px solid #f2f2f2;
 }
 
 .bb {
-    border-bottom: 1px solid #dcdfe6;
+    border-bottom: 1px solid #f2f2f2;
 }
 
 .bl {
-    border-left: 1px solid #dcdfe6;
+    border-left: 1px solid #f2f2f2;
 }
 
 .br {
-    border-right: 1px solid #dcdfe6;
+    border-right: 1px solid #f2f2f2;
 }
 
 .ba {
-    border: 1px solid #dcdfe6;
+    border: 1px solid #f2f2f2;
 }
 
 .bn {

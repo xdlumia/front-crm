@@ -2,7 +2,7 @@
 <div class=" i-col" :class="[
         span ? 'i-col-span-' + span : '',
         offset ? 'i-col-offset-' + offset : '',
-        'i-class'
+        iClass
          ]">
     <slot></slot>
 </div>
