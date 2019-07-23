@@ -1,6 +1,9 @@
 <template>
     <div>
-        <NavBar title="机会" :isSearch="true" placeholder="请输入销售机会客户名称"/>
+        <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称"/>
+        <div>
+            <circleProgress type="circle" :percentage="0"/>
+        </div>
     </div>
 </template>
 
