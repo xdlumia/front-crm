@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import JIM from '@/utils/im'
+// import JIM from '@/utils/im'
 import { mapState } from 'vuex'
 export default {
 	props: {
@@ -64,15 +64,15 @@ export default {
 				encryptedData: data.encryptedData,
 				userInfo: data.userInfo
 			})
-			// 登录成功后 初始化 即时通讯im
-			JIM.init().then(_ => {
-				JIM.register({
-					id: res.openid,
-					password: res.openid,
-					nickName: res.nickName,
-					avatar: res.avatarUrl
-				})
-			})
+			// // 登录成功后 初始化 即时通讯im
+			// JIM.init().then(_ => {
+			// 	JIM.register({
+			// 		id: res.openid,
+			// 		password: res.openid,
+			// 		nickName: res.nickName,
+			// 		avatar: res.avatarUrl
+			// 	})
+			// })
 
 			// 重新登录则清除出价审核
 			this.$local.remove('isCheckBid')

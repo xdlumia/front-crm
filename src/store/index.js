@@ -9,7 +9,9 @@ let state = {
 	currentSystemTarget: 'c',
 
 	/* 当前系统信息 */
-	systemInfo: {}
+	systemInfo: {},
+	/* 用户信息 */
+	userInfo: {}
 
 }
 
@@ -20,6 +22,10 @@ let mutations = {
 	// 设置系统信息
 	setSystemInfo (state, data) {
 		state.systemInfo = data
+	},
+
+	setUserInfo (state, data) {
+		state.userInfo = data
 	}
 }
 

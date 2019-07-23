@@ -36,3 +36,8 @@ img,.wx_image {
 /*微信去除border专用*/
 button::after{ border: none; }
 
+.navigator-hover{
+    opacity: 1;
+    background: transparent;
+}
+
