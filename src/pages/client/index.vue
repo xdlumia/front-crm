@@ -7,17 +7,17 @@
 <script>
 
 export default {
-    components: {
-    },
-    data () {
-        return {
-        }
-    },
-    onLoad (option) {
-    },
-    methods: {
-    },
-    created () {}
+	components: {
+	},
+	data () {
+		return {
+		}
+	},
+	onLoad (option) {
+	},
+	methods: {
+	},
+	created () {}
 }
 </script>
 
