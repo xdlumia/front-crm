@@ -14,9 +14,9 @@
 			}
 		},
 		{
-			"path": "pages/index/map",
+			"path": "pages/index/affiliated",
 			"style": {
-				"navigationBarTitleText": "位置"
+				"navigationBarTitleText": "关联业务"
 			}
 		},
 		{

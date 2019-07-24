@@ -61,10 +61,11 @@
             <i-cell title="参与人"></i-cell>
         </i-cell-group>
         <div class="d-bg-schedule"></div>
-        <i-cell title="关联业务"  is-link></i-cell>
-        <a>
-            <i-button type="primary">Primary</i-button>
+        <a url='/pages/index/affiliated'>
+            <i-cell title="关联业务"  is-link></i-cell>
         </a>
+        <i-button type="primary">确 定</i-button>
+
     </div>
 </template>
 
