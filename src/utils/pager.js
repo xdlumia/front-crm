@@ -48,13 +48,13 @@ export default {
 		}
 	},
 	mounted () {
-		if (!this.newroot().query.search && this.pager.querySearchKey) {
-			this.query[this.pager.querySearchKey] = ''
-			this.$store.state.searchTextMap[this.pager.searchMapKey] = ''
-		}
-		if (this.pager.init) {
-			this.$startPullDownRefresh()
-		}
+		// if (!this.newroot().query.search && this.pager.querySearchKey) {
+		// 	this.query[this.pager.querySearchKey] = ''
+		// 	this.$store.state.searchTextMap[this.pager.searchMapKey] = ''
+		// }
+		// if (this.pager.init) {
+		// 	this.$startPullDownRefresh()
+		// }
 	},
 	// 下拉刷新
 	async onPullDownRefresh () {
