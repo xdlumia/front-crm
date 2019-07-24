@@ -18,6 +18,8 @@ import iIcon from './components/basic/iview/icon'
 import iSpin from './components/basic/iview/spin'
 import iRow from './components/basic/iview/row'
 import iCol from './components/basic/iview/col'
+import iCellGroup from './components/basic/iview/cell-group'
+import iCell from './components/basic/iview/cell'
 import iAvatar from './components/basic/iview/avatar'
 import iMessage from './components/basic/iview/message'
 import iToast from './components/basic/iview/toast'
@@ -60,6 +62,8 @@ Vue.component('iIcon', iIcon)
 Vue.component('iSpin', iSpin)
 Vue.component('iRow', iRow)
 Vue.component('iCol', iCol)
+Vue.component('iCellGroup', iCellGroup)
+Vue.component('iCell', iCell)
 Vue.component('iAvatar', iAvatar)
 Vue.component('iMessage', iMessage)
 Vue.component('iToast', iToast)

@@ -83,7 +83,8 @@
     align-items: center;
     line-height: 1.4;
     font-size: 14px;
-    overflow: hidden
+    overflow: hidden;
+    border-bottom: 1px solid #f2f2f2;
   }
 
   .i-cell::after {
@@ -97,7 +98,7 @@
     transform-origin: 0 0;
     pointer-events: none;
     box-sizing: border-box;
-    border: 0 solid #e9eaec;
+    border: 1px solid #e9eaec;
     border-bottom-width: 1px;
     left: 15px;
     right: 0

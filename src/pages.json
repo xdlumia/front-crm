@@ -32,6 +32,12 @@
 			}
 		},
 		{
+			"path": "pages/user/user-info",
+			"style": {
+				"navigationBarTitleText": "我的个人信息"
+			}
+		},
+		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登陆"

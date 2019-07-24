@@ -140,7 +140,6 @@ export default {
 
 .nav-title{
     padding: 0 202rpx;
-    padding: 0 150rpx;
     box-sizing: border-box;
 }
 

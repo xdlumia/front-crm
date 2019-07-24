@@ -1,5 +1,5 @@
 <template>
-<div class="i-class i-avatar i-avatar-circle" :class="[{'i-avatar-image': src}, 'i-avatar-' + size]">
+<div class="i-avatar i-avatar-circle" :class="[{'i-avatar-image': src}, 'i-avatar-' + size, iClass]">
     <img :src="src" v-if="src !== ''" class="image"/>
     <div class="i-avatar-string" v-else>
         <slot></slot>
@@ -10,6 +10,10 @@
 <script>
 export default {
     props: {
+        iClass: {
+            type: String,
+            default: ''
+        },
         // circle || square
         shape: {
             type: String,
