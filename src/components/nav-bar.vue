@@ -113,6 +113,7 @@ export default {
     border-radius: 100px;
     position: relative;
     box-sizing: border-box;
+    z-index: 1;
 
     &:after{
         content: '';

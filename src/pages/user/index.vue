@@ -53,8 +53,8 @@
         </div>
 
         <i-cell-group>
-            <i-cell title="帮助中心" is-link></i-cell>
-            <i-cell title="意见反馈" is-link></i-cell>
+            <i-cell title="帮助中心" is-link url='/pages/user/help'></i-cell>
+            <i-cell title="意见反馈" is-link url='/pages/user/feedback'></i-cell>
             <i-cell title="在线咨询" is-link></i-cell>
             <i-cell title="推荐给好友" is-link></i-cell>
             <i-cell title="客服电话" value='1810474315'></i-cell>

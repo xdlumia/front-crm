@@ -60,10 +60,26 @@
       computed: {},
       methods: {
           navigateTo () {
+              const url  = this.url;
+              const type = typeof this.isLink;
 
+              // this.triggerEvent('click', {});
+
+              if (!this.isLink || !url || url === 'true' || url === 'false') return;
+
+              if (type !== 'boolean' && type !== 'string') {
+                  warn('isLink 属性值必须是一个字符串或布尔值', this.data.isLink);
+                  return;
+              }
+
+              if (['navigateTo', 'redirectTo', 'switchTab', 'reLaunch'].indexOf(this.linkType) === -1) {
+                  warn('linkType 属性可选值为 navigateTo，redirectTo，switchTab，reLaunch', this.linkType);
+                  return;
+              }
+              uni[this.linkType].call(uni, {url});
           },
           handleTap () {
-              if (!this.data.onlyTapFooter) {
+              if (!this.onlyTapFooter) {
                   this.navigateTo()
               }
           },

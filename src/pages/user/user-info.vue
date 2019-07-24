@@ -11,7 +11,7 @@
         </div>
 
         <div class="login-btn">
-            <i-button type="primary" size="default" i-class="f16">退出登录</i-button>
+            <i-button type="primary" size="default" i-class="f16" @click='loginOut'>退出登录</i-button>
         </div>
     </div>
 </template>
@@ -27,14 +27,10 @@ export default {
 
 		}
 	},
-	onLoad (option) {
-
-	},
 	methods: {
-
-	},
-	created () {
-
+		loginOut () {
+			this.$routing.redirectTo('/pages/login/index')
+		}
 	}
 }
 </script>

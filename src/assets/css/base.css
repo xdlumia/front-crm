@@ -1077,3 +1077,6 @@ h2.title {
     align-items: center;
     justify-content: center
 }
+.d-flex-wrap{
+    flex-flow: wrap;
+}
