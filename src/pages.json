@@ -25,22 +25,12 @@
 				"navigationBarTitleText": "客户"
 			}
 		},
-		 /** 销售机会——BEGIN */
 		{
 			"path": "pages/chance/index",
 			"style": {
-				"navigationBarTitleText": "机会",
-				"enablePullDownRefresh":true
+				"navigationBarTitleText": "机会"
 			}
 		},
-		{
-			"path": "pages/chance/detail/index",
-			"style": {
-				"navigationBarTitleText": "销售机会详情",
-				"disableScroll": true
-			}
-		},
-		/** 销售机会——END*/
 		{
 			"path": "pages/application/index",
 			"style": {
@@ -101,7 +91,7 @@
     "tabBar": {
         "color": "#636468",
         "selectedColor": "#0079fe",
-        "borderStyle": "white",
+        "borderStyle": "black",
         "backgroundColor": "#fff",
         "list": [
 			{

@@ -58,6 +58,7 @@ export default {
 	},
 	// 下拉刷新
 	async onPullDownRefresh () {
+		console.log(11)
 		this.query.page = 1
 		this._getList()
 		this.$stopPullDownRefresh()

@@ -1,12 +1,12 @@
 /* 阿里字体图标库 */
 @font-face {
   font-family: 'iconfont';  /* project id 1304395 */
-  src: url('//at.alicdn.com/t/font_1304395_tiqqcus2yr.eot');
-  src: url('//at.alicdn.com/t/font_1304395_tiqqcus2yr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1304395_tiqqcus2yr.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1304395_tiqqcus2yr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1304395_tiqqcus2yr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1304395_tiqqcus2yr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1304395_ea7rokk4cvf.eot');
+  src: url('//at.alicdn.com/t/font_1304395_ea7rokk4cvf.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1304395_ea7rokk4cvf.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1304395_ea7rokk4cvf.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1304395_ea7rokk4cvf.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1304395_ea7rokk4cvf.svg#iconfont') format('svg');
 }
   
   .iconfont {
@@ -17,6 +17,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
   
+  .iconmingpian2:before{
+    content: "\e644"
+  }
+
   .iconkaihu:before{
     content: "\e6c6"
   }

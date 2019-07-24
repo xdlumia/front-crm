@@ -1,5 +1,5 @@
 <template>
-<div class="i-class i-icon " :style="{fontSize: size + 'px', color}" :class="'i-icon-' + type"></div>
+<div class=" i-icon " :style="{fontSize: size + 'px', color}" :class="['i-icon-' + type, iClass]"></div>
 </template>
 
 <script>
@@ -7,6 +7,10 @@ export default {
     name: 'icon',
     components: {},
     props: {
+        iClass: {
+            type: String,
+            default: ''
+        },
         type: {
             type: String,
             default: ''

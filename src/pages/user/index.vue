@@ -56,9 +56,32 @@
             <i-cell title="帮助中心" is-link url='/pages/user/help'></i-cell>
             <i-cell title="意见反馈" is-link url='/pages/user/feedback'></i-cell>
             <i-cell title="在线咨询" is-link></i-cell>
-            <i-cell title="推荐给好友" is-link></i-cell>
-            <i-cell title="客服电话" value='1810474315'></i-cell>
+            <i-cell title="推荐给好友" is-link @click='openPop'></i-cell>
+            <i-cell title="客服电话" value='1810474315' @click="callPhone('181811111111')"></i-cell>
         </i-cell-group>
+
+        <uni-popup ref="popup" type='bottom' custom>
+            <div class="d-bg-white">
+                <div class="d-center pt10 pb10">
+                    <div class="d-cell ac">
+                        <button open-type="share">
+                            <div class='pop-icon d-center'>
+                                <uni-icon type='weixin' size='26' color='#fff' />
+                            </div>
+                            <div class='f12 mt5' style='color: #07BD13'>微信</div>
+                        </button>
+                    </div>
+                    <a class="d-cell ac">
+                        <div class='pop-icon d-center' style='background:#3399ff'>
+                            <div class='iconfont iconmingpian2 d-text-white f24' ></div>
+                        </div>
+                        <div class="f12 mt5" style='color:#3399ff'>名片海报</div>
+                    </a>
+                </div>
+                <div class='bt pt5 pb5 f16 d-text-black ac' @click='$refs.popup.close()'>取消</div>
+            </div>
+        </uni-popup>
+
     </div>
 </template>
 
@@ -77,9 +100,14 @@ export default {
 
 	},
 	methods: {
-
+		openPop () {
+			this.$refs.popup.open()
+		}
 	},
 	created () {
+
+	},
+	onShareAppMessage () {
 
 	}
 }
@@ -116,6 +144,14 @@ export default {
             width: 22px;
             height: 22px;
         }
+    }
+
+    .pop-icon{
+        width: 45px;
+        height: 45px;
+        background: #07BD13;
+        margin: 0 auto;
+        border-radius: 100px;
     }
 
 </style>
