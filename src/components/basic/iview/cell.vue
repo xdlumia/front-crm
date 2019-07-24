@@ -63,7 +63,7 @@
               const url  = this.url;
               const type = typeof this.isLink;
 
-              // this.triggerEvent('click', {});
+              this.$emit('click', {});
 
               if (!this.isLink || !url || url === 'true' || url === 'false') return;
 

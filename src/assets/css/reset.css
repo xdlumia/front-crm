@@ -33,9 +33,20 @@ a{
 img,.wx_image {
     max-width: 100%;
 }
+button {
+    outline: 0;
+    background-color: transparent;
+}
+button::-moz-focus-inner {
+    border-color: transparent !important;
+}
 /*微信去除border专用*/
 button::after{ border: none; }
-
+.button-hover{
+    opacity: 1;
+    color: transparent;
+    background: transparent;
+}
 .navigator-hover{
     opacity: 1;
     background: transparent;
