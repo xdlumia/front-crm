@@ -7,7 +7,7 @@
 			api="bizSystemService.getUserAuth"
 			:params="queryForm"
 			v-slot="{row}">
-				<div class="chance-item uni-flex uni-row">
+				<div @click="openDetail(row)" class="chance-item uni-flex uni-row">
 					<div class="flex-item item-progress">
 						<circleProgress width="45px" :max="5" :progress="2" />
 					</div>
@@ -44,11 +44,6 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
-		/** 获取客户列表 */
-		async getList () {
-			return this.$api.bizSystemService.getUserAuth()
-		},
-
 		// // 滚动到顶部刷新
 		// scrolltoupper (e) {
 		// 	console.log(e)

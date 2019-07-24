@@ -48,6 +48,7 @@ import uniFab from './components/basic/uni/uni-fab/uni-fab'
 import authButton from './components/auth-button'
 import NavBar from './components/nav-bar'
 import circleProgress from './components/circle-progress'
+import scrollList from './components/scroll-list'
 // 自定义头部
 
 Vue.config.productionTip = false
@@ -92,6 +93,7 @@ Vue.component('uniFab', uniFab)
 Vue.component('authButton', authButton)
 Vue.component('NavBar', NavBar)
 Vue.component('circleProgress', circleProgress)
+Vue.component('scrollList', scrollList)
 /** 全局注册UI组件 - END */
 
 // 获取系统信息
