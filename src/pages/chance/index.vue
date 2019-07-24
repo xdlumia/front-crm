@@ -27,13 +27,13 @@
 </template>
 
 <script>
-import scrollList from './components/scroll-list'
+// import scrollList from './components/scroll-list'
 // import mPager from '@/components/m-pager-tip' // 页面加载提示组件
 import Pager from '@/utils/pager.js' // 翻页组件
 export default {
 	mixins: [Pager],
 	components: {
-		scrollList
+		// scrollList
 		// mPager
 	},
 	data () {
