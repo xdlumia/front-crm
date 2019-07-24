@@ -22,7 +22,6 @@
 				</div>
 			</div>
 		</scroll-list>
-			<!-- <mPager :list="list" :pager="pager" /> -->
     </div>
 </template>
 

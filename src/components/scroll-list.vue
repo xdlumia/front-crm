@@ -9,7 +9,7 @@
  */ -->
 <template>
   <div class="down-search-section-list" :style="{height:height}">
-    <div v-for="(item,index) of list" :key="index">
+    <div v-for="(item,index) of 5" :key="index">
       <slot v-bind:row="item"></slot>
     </div>
     <div class="no-data-msg" v-if="pager.isLoaded&&!list.length">暂无数据</div>
@@ -65,32 +65,6 @@ export default {
 	methods: {
 		// 初始化接口数据
 		_getList (params) {
-			// this.list = [
-			// 	{ name: 1 },
-			// 	{ name: 2 },
-			// 	{ name: 3 },
-			// 	{ name: 1 },
-			// 	{ name: 2 },
-			// 	{ name: 3 },
-			// 	{ name: 1 },
-			// 	{ name: 2 },
-			// 	{ name: 3 },
-			// 	{ name: 1 },
-			// 	{ name: 2 },
-			// 	{ name: 3 },
-			// 	{ name: 1 },
-			// 	{ name: 2 },
-			// 	{ name: 3 },
-			// 	{ name: 1 },
-			// 	{ name: 2 },
-			// 	{ name: 3 },
-			// 	{ name: 1 },
-			// 	{ name: 2 },
-			// 	{ name: 3 },
-			// 	{ name: 1 },
-			// 	{ name: 2 },
-			// 	{ name: 3 }
-			// ]
 			this.$api[this.server][this.url](params).then(res => {
 				if (this.pager.loading) return
 				try {
@@ -139,7 +113,7 @@ export default {
 		}
 	},
 	onReady () {
-		this._getList(this.params)
+		// this._getList(this.params)
 	}
 }
 </script>

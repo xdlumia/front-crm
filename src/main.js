@@ -30,6 +30,8 @@ import iInput from './components/basic/iview/input'
 import iSteps from './components/basic/iview/steps'
 import iStep from './components/basic/iview/step'
 import iLoadMore from './components/basic/iview/load-more'
+// import iTab from './components/basic/iview/tab'
+// import iTabs from './components/basic/iview/tabs'
 
 // uni UI component
 import uniIcon from './components/basic/uni/uni-icon/uni-icon'
@@ -38,7 +40,10 @@ import uniPopup from './components/basic/uni/uni-popup/uni-popup'
 import uniSwipeAction from './components/basic/uni/uni-swipe-action/uni-swipe-action'
 import uniParse from './components/basic/uni/uParse/src/wxParse.vue'
 import uniFab from './components/basic/uni/uni-fab/uni-fab'
+import uniTabs from './components/basic/uni/uni-tabs/tabs'
+// import uniTabPane from './components/basic/uni/uni-tabs/tabPane'
 import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
+
 // 自定义
 // 基础组件
 // import mPanel from './components/m-panel'
@@ -76,6 +81,8 @@ Vue.component('iInput', iInput)
 Vue.component('iSteps', iSteps)
 Vue.component('iStep', iStep)
 Vue.component('iLoadMore', iLoadMore)
+// Vue.component('iTab', iTab)
+// Vue.component('iTabs', iTabs)
 
 // uni UI component
 Vue.component('uniIcon', uniIcon)
@@ -85,6 +92,8 @@ Vue.component('uniSwipeAction', uniSwipeAction)
 Vue.component('uniParse', uniParse)
 Vue.component('uniFab', uniFab)
 Vue.component('uniCalendar', uniCalendar)
+Vue.component('uniTabs', uniTabs)
+// Vue.component('uniTabPane', uniTabPane)
 
 // 自定义
 // 基础组建
