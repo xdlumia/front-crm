@@ -29,7 +29,8 @@
 		{
 			"path": "pages/chance/index",
 			"style": {
-				"navigationBarTitleText": "机会"
+				"navigationBarTitleText": "机会",
+				"enablePullDownRefresh":true
 			}
 		},
 		{
