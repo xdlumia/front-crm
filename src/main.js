@@ -29,6 +29,7 @@ import iActionSheet from './components/basic/iview/action-sheet'
 import iInput from './components/basic/iview/input'
 import iSteps from './components/basic/iview/steps'
 import iStep from './components/basic/iview/step'
+import iLoadMore from './components/basic/iview/load-more'
 
 // uni UI component
 import uniIcon from './components/basic/uni/uni-icon/uni-icon'
@@ -74,6 +75,7 @@ Vue.component('iActionSheet', iActionSheet)
 Vue.component('iInput', iInput)
 Vue.component('iSteps', iSteps)
 Vue.component('iStep', iStep)
+Vue.component('iLoadMore', iLoadMore)
 
 // uni UI component
 Vue.component('uniIcon', uniIcon)
