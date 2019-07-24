@@ -35,7 +35,7 @@ import uniPopup from './components/basic/uni/uni-popup/uni-popup'
 import uniSwipeAction from './components/basic/uni/uni-swipe-action/uni-swipe-action'
 import uniParse from './components/basic/uni/uParse/src/wxParse.vue'
 import uniFab from './components/basic/uni/uni-fab/uni-fab'
-
+import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
 // 自定义
 // 基础组件
 // import mPanel from './components/m-panel'
@@ -77,6 +77,7 @@ Vue.component('uniPopup', uniPopup)
 Vue.component('uniSwipeAction', uniSwipeAction)
 Vue.component('uniParse', uniParse)
 Vue.component('uniFab', uniFab)
+Vue.component('uniCalendar', uniCalendar)
 
 // 自定义
 // 基础组建
