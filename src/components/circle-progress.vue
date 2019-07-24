@@ -10,7 +10,7 @@
  */ -->
 <template>
   <div class="circle-progress" :style="{width:width,height:width}">
-    <div class="progress-load" :style="{'clip-path': currProgress,'background-color':color}">212</div>
+    <div class="progress-load" :style="{'clip-path': currProgress,'background-color':color}"></div>
     <div class="circle-progress-text">{{progress}}/{{max}}</div>
   </div>
 </template>

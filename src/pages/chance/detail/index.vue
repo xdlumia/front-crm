@@ -3,7 +3,7 @@
         <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称"/>
         <!-- 列表内容 -->
         <view style="height:calc(100vh - 100px)" >
-            <change-list :data="index" v-for="(item,index) of 25" @click="openDetail(item)" :key="index"></change-list>
+            <!-- <change-list :data="index" v-for="(item,index) of 25" @click="openDetail(item)" :key="index"></change-list> -->
 			<!-- <mPager :list="list" :pager="pager" /> -->
         </view>
     </div>
