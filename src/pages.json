@@ -13,12 +13,22 @@
 				"navigationBarTitleText": "客户"
 			}
 		},
+		 /** 销售机会——BEGIN */
 		{
 			"path": "pages/chance/index",
 			"style": {
-				"navigationBarTitleText": "机会"
+				"navigationBarTitleText": "机会",
+				"enablePullDownRefresh":true
 			}
 		},
+		{
+			"path": "pages/chance/detail/index",
+			"style": {
+				"navigationBarTitleText": "销售机会详情",
+				"disableScroll": true
+			}
+		},
+		/** 销售机会——END*/
 		{
 			"path": "pages/application/index",
 			"style": {
@@ -29,6 +39,24 @@
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/user/user-info",
+			"style": {
+				"navigationBarTitleText": "我的个人信息"
+			}
+		},
+		{
+			"path": "pages/user/help",
+			"style": {
+				"navigationBarTitleText": "帮助中心"
+			}
+		},
+		{
+			"path": "pages/user/feedback",
+			"style": {
+				"navigationBarTitleText": "意见反馈"
 			}
 		},
 		{

@@ -60,10 +60,26 @@
       computed: {},
       methods: {
           navigateTo () {
+              const url  = this.url;
+              const type = typeof this.isLink;
 
+              // this.triggerEvent('click', {});
+
+              if (!this.isLink || !url || url === 'true' || url === 'false') return;
+
+              if (type !== 'boolean' && type !== 'string') {
+                  warn('isLink 属性值必须是一个字符串或布尔值', this.data.isLink);
+                  return;
+              }
+
+              if (['navigateTo', 'redirectTo', 'switchTab', 'reLaunch'].indexOf(this.linkType) === -1) {
+                  warn('linkType 属性可选值为 navigateTo，redirectTo，switchTab，reLaunch', this.linkType);
+                  return;
+              }
+              uni[this.linkType].call(uni, {url});
           },
           handleTap () {
-              if (!this.data.onlyTapFooter) {
+              if (!this.onlyTapFooter) {
                   this.navigateTo()
               }
           },
@@ -83,7 +99,8 @@
     align-items: center;
     line-height: 1.4;
     font-size: 14px;
-    overflow: hidden
+    overflow: hidden;
+    border-bottom: 1px solid #f2f2f2;
   }
 
   .i-cell::after {
@@ -97,7 +114,7 @@
     transform-origin: 0 0;
     pointer-events: none;
     box-sizing: border-box;
-    border: 0 solid #e9eaec;
+    border: 1px solid #e9eaec;
     border-bottom-width: 1px;
     left: 15px;
     right: 0

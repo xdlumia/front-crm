@@ -113,6 +113,7 @@ export default {
     border-radius: 100px;
     position: relative;
     box-sizing: border-box;
+    z-index: 1;
 
     &:after{
         content: '';
@@ -140,7 +141,6 @@ export default {
 
 .nav-title{
     padding: 0 202rpx;
-    padding: 0 150rpx;
     box-sizing: border-box;
 }
 

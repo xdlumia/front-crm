@@ -7,7 +7,8 @@ Vue.use(Vuex)
 let state = {
 	/** 当前系统端类型，b或者c */
 	currentSystemTarget: 'c',
-
+	/** 搜索内容 */
+	searchTextMap: {},
 	/* 当前系统信息 */
 	systemInfo: {},
 	/* 用户信息 */

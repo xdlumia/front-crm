@@ -18,6 +18,8 @@ import iIcon from './components/basic/iview/icon'
 import iSpin from './components/basic/iview/spin'
 import iRow from './components/basic/iview/row'
 import iCol from './components/basic/iview/col'
+import iCellGroup from './components/basic/iview/cell-group'
+import iCell from './components/basic/iview/cell'
 import iAvatar from './components/basic/iview/avatar'
 import iMessage from './components/basic/iview/message'
 import iToast from './components/basic/iview/toast'
@@ -46,6 +48,7 @@ import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
 import authButton from './components/auth-button'
 import NavBar from './components/nav-bar'
 import circleProgress from './components/circle-progress'
+import scrollList from './components/scroll-list'
 // 自定义头部
 
 Vue.config.productionTip = false
@@ -60,6 +63,8 @@ Vue.component('iIcon', iIcon)
 Vue.component('iSpin', iSpin)
 Vue.component('iRow', iRow)
 Vue.component('iCol', iCol)
+Vue.component('iCellGroup', iCellGroup)
+Vue.component('iCell', iCell)
 Vue.component('iAvatar', iAvatar)
 Vue.component('iMessage', iMessage)
 Vue.component('iToast', iToast)
@@ -89,6 +94,7 @@ Vue.component('uniCalendar', uniCalendar)
 Vue.component('authButton', authButton)
 Vue.component('NavBar', NavBar)
 Vue.component('circleProgress', circleProgress)
+Vue.component('scrollList', scrollList)
 /** 全局注册UI组件 - END */
 
 // 获取系统信息

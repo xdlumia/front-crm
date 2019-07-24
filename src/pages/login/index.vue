@@ -46,8 +46,8 @@ export default {
 <style scoped lang="scss">
     .logo-img{
         width: 150px;
-        height: 150px;
-        margin: 70px auto 100px ;
+        height: 146px;
+        margin: 88px auto 100px ;
     }
 
     .plr40{
