@@ -1,5 +1,5 @@
 // local 为开发人员本地 dev 为开发环境 build 为测试环境  product 为生产环境
-const model = 'product' 
+const model = 'dev' 
 
 var api = ''
 var ossUrl = ''
