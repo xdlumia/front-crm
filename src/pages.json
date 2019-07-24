@@ -8,6 +8,18 @@
 			}
 		},
 		{
+			"path": "pages/index/scheduleAdd",
+			"style": {
+				"navigationBarTitleText": "新建日程"
+			}
+		},
+		{
+			"path": "pages/index/affiliated",
+			"style": {
+				"navigationBarTitleText": "关联业务"
+			}
+		},
+		{
 			"path": "pages/client/index",
 			"style": {
 				"navigationBarTitleText": "客户"
