@@ -107,8 +107,8 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		width: 80upx;
-		height: 80upx;
+		width: 65upx;
+		height: 65upx;
 		flex-shrink: 0;
 		border-radius: 50%;
 		transition: all .2s;
@@ -124,11 +124,11 @@
 	}
 
 	.uni-calender__body-date-week .uni-calender__date.uni-calender__is-day {
-		color: #fd2e32
+		color: #457FF5
 	}
 
 	.uni-calender__body-date-week .uni-calender__date.uni-calender__is-day .uni-calender__lunar {
-		color: #fd2e32
+		color: #457FF5
 	}
 
 	.uni-calender__body-date-week .uni-calender__date.uni-calender__date-current {
@@ -137,7 +137,7 @@
 	}
 
 	.uni-calender__body-date-week .uni-calender__date.uni-calender__date-current .uni-calender__circle-box {
-		background: #fd2e32
+		background: #457FF5
 	}
 
 	.uni-calender__body-date-week .uni-calender__date.uni-calender__date-current .uni-calender__lunar {
@@ -146,12 +146,11 @@
 
 	.uni-calender__body-date-week .uni-calender__date .uni-calender__data-circle {
 		position: absolute;
-		top: 10upx;
-		right: 10upx;
+		bottom: 6upx;
 		width: 10rpx;
 		height: 10rpx;
 		border-radius: 50%;
-		background: #ff5a5f;
+		background: #457FF5;
 		z-index: 2
 	}
 </style>

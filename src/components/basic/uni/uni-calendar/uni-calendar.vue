@@ -3,17 +3,18 @@
 		<view class="uni-calendar__box">
 			<view class="uni-calendar__wrapper">
 				<view class="uni-calenda__content">
-					<view class="uni-calendar__panel">
-						<view class="uni-calendar__date-befor" @tap="dataBefor('0', 'month')">
+					<view class="uni-calendar__panel" style="justify-content:space-between">
+						<!-- <view class="uni-calendar__date-befor" @tap="dataBefor('0', 'month')">
 							<text class="iconfont icon-jiantou" />
-						</view>
-						<view class="uni-calendar__panel-box">
+						</view> -->
+						<view class="uni-calendar__panel-box" style="float:left;color:#333">
 							<view>{{ canlender.year }}年</view>
 							<view>{{ canlender.month }}月</view>
 						</view>
-						<view class="uni-calendar__date-after uni-calendar__rollback" @tap="dataBefor('1', 'month')">
+						<!-- <text class="iconfont icon-jiantou " style="float:left;color:#333;transform:rotate(90deg)"/> -->
+						<!-- <view class="uni-calendar__date-after uni-calendar__rollback" @tap="dataBefor('1', 'month')">
 							<text class="iconfont icon-jiantou " />
-						</view>
+						</view> -->
 						<view class="uni-calendar__backtoday" @tap="backtoday">回到今天</view>
 					</view>
 					<view v-if="lunar" class="uni-calendar__day-detail">
@@ -740,7 +741,7 @@
 		width: 100%;
 		text-align: center;
 		line-height: 80rpx;
-		color: #333;
+		color: #CCC;
 		font-weight: 700
 	}
 
