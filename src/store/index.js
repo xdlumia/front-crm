@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import storage from '@/utils/localStorage'
 
 Vue.use(Vuex)
 
@@ -7,13 +8,14 @@ Vue.use(Vuex)
 let state = {
 	/** 当前系统端类型，b或者c */
 	currentSystemTarget: 'c',
-	/** 搜索内容 */
+	/* 阿里云oss ticket */
+	oss: storage.fetch('ossPublic') || {},
+	/* 搜索内容 */
 	searchTextMap: {},
 	/* 当前系统信息 */
 	systemInfo: {},
 	/* 用户信息 */
 	userInfo: {}
-
 }
 
 let mutations = {
@@ -30,9 +32,22 @@ let mutations = {
 	}
 }
 
+let actions = {
+	async checkOssTicket ({ commit, state }, component) {
+		if (state.oss.expiration && state.oss.expiration > +new Date()) return
+		let { code, data } = await component.$api.seeExternService.getPublicOssTicket()
+		if (+code === 200) {
+			storage.save('ossPublic', data)
+			commit('setOssTicket', data)
+		} else {
+			return Promise.reject(new Error('OSSTicket获取失败'))
+		}
+	}
+}
 const store = new Vuex.Store({
 	state,
 	mutations,
+	actions,
 	strict: true
 })
 
