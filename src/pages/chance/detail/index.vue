@@ -2,7 +2,7 @@
     <div>
         <NavBar title="机会销售详情"/>
         <!-- 列表内容 -->
-        <div class="pl10 pr10 pt10" style="background-color:#f9f9f9">
+        <div class="pl10 pr10 pt10" style="background-color:#f9f9f9; height:100vh">
 			<!-- 顶部信息 -->
 			<div class="chance-datail-title f13">
 				<div class="uni-flex uni-row">
@@ -17,37 +17,20 @@
 				<div>销售金额(元): {{detailInfo.name}}</div>
 			</div>
 
-			<uniTabs
-				:TabList="['跟进记录','详细信息','相关信息']"
-				:currentTab="currentTab"
-				@tabs="tabsChange"
-			>
-			</uniTabs>
-			<!-- <scroll-view id="tab-bar" class="scroll-h" :scroll-x="true" :show-scrollbar="false">
-
-				<view v-for="(tab,index) in ['跟进记录','详细信息','相关信息']" :key="tab" class="uni-tab-item" :data-current="index" @click="ontabtap">
-					<text class="uni-tab-item-title" :class="currentTab==index ? 'uni-tab-item-title-active' : ''">{{tab}}</text>
+			<scroll-view id="tab-bar" class="scroll-h" :scroll-x="true" :show-scrollbar="false">
+				<view v-for="(tab,index) in tabBars" :key="tab.id" class="uni-tab-item" :id="tab.id" :data-current="index" @click="ontabtap(index)">
+					<text class="uni-tab-item-title" :class="currIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
 				</view>
-			</scroll-view> -->
-			<swiper :current="currentTab" class="swiper-box" style="flex: 1;" :duration="300" @change="ontabchange">
-				<swiper-item class="swiper-item" v-for="(tab,index1) in 5" :key="index1">
-					<scroll-view class="scroll-v list" scroll-y @scrolltolower="loadMore(index1)">
-						<!-- #ifdef APP-PLUS-NVUE -->
-						<refresh class="refresh" @refresh="onrefresh(index1)" @pullingdown="onpullingdown" :display="tab.refreshing ? 'show' : 'hide'">
-							<div class="refresh-view">
-								<image class="refresh-icon" :src="refreshIcon" :style="{width: (tab.refreshing || pulling) ? 0: '32px'}" :class="{'refresh-icon-active': tab.refreshFlag}"></image>
-								<image class="loading-icon" :src="loadingIcon" v-if="tab.refreshing"></image>
-								<text class="loading-text">{{tab.refreshText}}</text>
-							</div>
-						</refresh>
-						<!-- #endif -->
-						<view v-for="(newsitem,index2) in tab.data" :key="newsitem.id">
-							<media-item :options="newsitem" @close="close(index1,index2)" @click="goDetail(newsitem)"></media-item>
-						</view>
-						<view class="loading-more">
-							<text class="loading-more-text">{{tab.loadingText}}</text>
-						</view>
-					</scroll-view>
+			</scroll-view>
+			<swiper :current="currIndex" class="swiper-box" style="flex: 1;" :duration="300" @change="ontabchange">
+				<swiper-item>
+					1
+				</swiper-item>
+				<swiper-item>
+					2
+				</swiper-item>
+				<swiper-item>
+					3
 				</swiper-item>
 			</swiper>
 		</div>
@@ -56,6 +39,7 @@
 
 <script>
 export default {
+
 	components: {
 		// mPager
 	},
@@ -64,16 +48,30 @@ export default {
 			detailInfo: {
 				name: '客户名称'
 			},
-			tabs: [],
-			currentTab: ''
+			tabBars: [{
+				name: '跟进记录',
+				id: 'guanzhu'
+			}, {
+				name: '详细信息',
+				id: 'tuijian'
+			}, {
+				name: '详细信息',
+				id: 'tuijian'
+			}],
+			currIndex: 0
 		}
 	},
 	onLoad (option) {
 	},
 	methods: {
-		/** 获取客户列表 */
-		async getList () {
-			return this.$api.bizSystemService.getUserAuth()
+		ontabtap (e) {
+			console.log(e)
+			// let index = e.target.dataset.current || e.currentTarget.dataset.current
+			this.currIndex = e
+		},
+		ontabchange (e) {
+			let index = e.target.current || e.detail.current
+			this.currIndex = index
 		},
 
 		// // 滚动到顶部刷新
@@ -96,7 +94,9 @@ export default {
 
 <style scoped lang="scss">
 .chance-datail-title{
+	background-color:#fff;
 	color:#666;
 	.datail-handle{ min-width: 60px}
 }
+.uni-tab-item-title-active{color:red}
 </style>
