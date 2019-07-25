@@ -22,7 +22,8 @@
 		{
 			"path": "pages/client/index",
 			"style": {
-				"navigationBarTitleText": "客户"
+				"navigationBarTitleText": "客户",
+				"enablePullDownRefresh": true
 			}
 		},
 		/** 销售机会——BEGIN */
@@ -135,6 +136,13 @@
 			"path":"pages/application/enterprise-management/organization/invite-other",
 			"style":{
 				"navigationBarTitleText":"邀请成员加入"
+			}
+		},
+		{
+			"path":"pages/highseas/index",
+			"style":{
+				"navigationBarTitleText":"公海池",
+				"enablePullDownRefresh":true
 			}
 		}
 	],

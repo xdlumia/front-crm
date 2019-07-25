@@ -1,5 +1,5 @@
 import {
-    $message
+	$message
 } from '@/utils/message'
 import local from '@/utils/localStorage'
 import sha512 from 'js-sha512'
@@ -16,47 +16,48 @@ Api = new Flyio()
 // #endif
 
 Api.interceptors.request.use((config, promise) => {
-    config.headers['token'] = local.getItem('token') || ''
-    config.headers['finger'] = local.getItem('finger') || ''
-    config.headers['uid'] = uuid()
-    config.headers['verifycode'] = sha512(
-        config.headers['__'] + config.headers['token'] + config.headers['finger']
-    )
+	config.headers['token'] = local.getItem('token') || ''
+	config.headers['finger'] = local.getItem('finger') || ''
+	config.headers['uid'] = uuid()
+	config.headers['verifycode'] = sha512(
+		config.headers['__'] + config.headers['token'] + config.headers['finger']
+	)
 
-    return config
+	return config
 })
 
 Api.interceptors.response.use(
-    (response, promise) => {
-        if (+response.data.code === 402) {
-            local.remove('finger')
-            local.remove('token')
-            local.remove('userInfo')
-            if(global.g.redirectUrl) {        
-                uni.redirectTo({
-                    url: global.g.redirectUrl
-                })
-            }
-            return promise.resolve(
-                Object.assign({
-                        data: []
-                    },
-                    response.data
-                )
-            )
-        }
-        return promise.resolve(response.data)
-    },
-    (err, promise) => {
-        if (err) {
-            $message({
-                content: err.message,
-                type: 'error'
-            })
-            return promise.reject(err.response)
-        }
-        return promise.resolve()
-    }
+	(response, promise) => {
+		if (+response.data.code === 402) {
+			local.remove('finger')
+			local.remove('token')
+			local.remove('userInfo')
+			if (global.g.redirectUrl) {
+				console.warn('未登录')
+				// uni.redirectTo({
+				// 	url: global.g.redirectUrl
+				// })
+			}
+			return promise.resolve(
+				Object.assign({
+					data: []
+				},
+				response.data
+				)
+			)
+		}
+		return promise.resolve(response.data)
+	},
+	(err, promise) => {
+		if (err) {
+			$message({
+				content: err.message,
+				type: 'error'
+			})
+			return promise.reject(err.response)
+		}
+		return promise.resolve()
+	}
 )
 
 export default Api

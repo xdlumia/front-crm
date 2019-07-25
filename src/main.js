@@ -7,6 +7,7 @@ import store from './store'
 // 其他资源
 import '@/static/IPconfig'
 import globalConfig from '@/utils/global-config.js'
+import local from '@/utils/localStorage'
 import '@/assets/css/app.css'
 
 /** 全局注册UI组件 - BEGIN */
@@ -41,6 +42,8 @@ import uniSwipeAction from './components/basic/uni/uni-swipe-action/uni-swipe-ac
 import uniParse from './components/basic/uni/uParse/src/wxParse.vue'
 import uniFab from './components/basic/uni/uni-fab/uni-fab'
 import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
+import uniTag from './components/basic/uni/uni-tag/uni-tag'
+
 // import tabPane from './components/basic/uni/uni-tabs/tabPane'
 // import tabs from './components/basic/uni/uni-tabs/tabs'
 // 自定义
@@ -91,6 +94,8 @@ Vue.component('uniSwipeAction', uniSwipeAction)
 Vue.component('uniParse', uniParse)
 Vue.component('uniFab', uniFab)
 Vue.component('uniCalendar', uniCalendar)
+Vue.component('uniTag', uniTag)
+
 // Vue.component('tabPane', tabPane)
 // Vue.component('tabs', tabs)
 // 自定义
@@ -123,6 +128,11 @@ Vue.use(Vuex)
 Vue.use(globalConfig)
 
 Vue.mixin({
+	computed: {
+		navH () {
+			return local.fetch('navH') + 'rpx'
+		}
+	},
 	methods: {
 		callPhone (phone) {
 			phone && uni.makePhoneCall({

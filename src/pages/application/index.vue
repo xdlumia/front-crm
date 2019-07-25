@@ -11,10 +11,10 @@
                     <i class="iconfont iconqian" style="color: #4889F4;"></i>
                     <span>销售机会</span>
                 </div>
-                <div class="flexalone flexcenter flexconm d-text-black">
+                <a url='/pages/highseas/index' class="flexalone flexcenter flexconm d-text-black">
                     <i class="iconfont f20 icongengduo1" style="color: #00CA8D;"></i>
                     <span>客户公海池</span>
-                </div>
+                </a>
             </div>
             <div class="mt20" style="height: 10px;background: #F9F9F9;"></div>
             <div class="d-flex flexconm" style="height: 190px;">

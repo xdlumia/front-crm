@@ -130,16 +130,24 @@ export default {
 
 <style scoped lang="scss">
 .down-search-section-list {
-  position: relative;
-  &::before {
-    content: "松手刷新";
-    position: absolute;
-    top: -36px;
-    width: 100%;
-    left: 0;
-    color: #9e9e9e;
-    font-size: 12px;
+	position: relative;
+	&::before {
+		content: "松手刷新";
+		position: absolute;
+		top: -36px;
+		width: 100%;
+		left: 0;
+		color: #9e9e9e;
+		font-size: 12px;
+		text-align: center;
+	}
+}
+
+/* 无数据提示样式 */
+.no-data-msg {
     text-align: center;
-  }
+    padding: 36px 0 0;
+    color: #ccc;
+    font-size: 14px;
 }
 </style>

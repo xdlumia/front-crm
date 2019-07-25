@@ -990,6 +990,10 @@ h2.title {
     color: #666;
 }
 
+.d-text-cgray {
+    color: #ccc;
+}
+
 .d-text-qgray {
     color: #999;
 }
@@ -1078,5 +1082,5 @@ h2.title {
     justify-content: center
 }
 .d-flex-wrap{
-    flex-flow: wrap;
+    flex-wrap: wrap;
 }

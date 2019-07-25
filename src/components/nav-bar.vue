@@ -68,8 +68,10 @@ export default {
 		} else {
 			titleBarHeight = 96
 		}
+
 		this.titleBarHeight = titleBarHeight
 		this.statusHeight = systemInfo.statusBarHeight * 2
+		this.$local.save('navH', +this.titleBarHeight + +this.statusHeight)
 	},
 	computed: {
 		isBack () {
