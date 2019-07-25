@@ -78,6 +78,7 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
+
 		jumpEnterpriseManage () {
 			uni.navigateTo({
 				url: 'enterprise-management/index'
