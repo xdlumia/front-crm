@@ -255,7 +255,7 @@ function fn1 (e) {
 export default {
 	data () {
 		return {
-			echarts,
+			// echarts,
 			current: 1,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
