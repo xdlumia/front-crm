@@ -5,8 +5,10 @@
  */ -->
 <template>
   <div class="panel-section" :style="{'margin-top':top+'px'}">
-    <div class="panel-section-title">
-      <h3 v-if="title">{{title}}</h3>
+    <div class="panel-section-title" :style="{'background-color':bg}">
+      <h3 v-if="title" :style="{'border-left-color':color}">{{title}}
+          <i-icon v-if="add" @click="addClick" class="fr" type="add" size="24" color="#466bef" />
+      </h3>
     </div>
     <div class="panel-content" :class="{'panel-border-none':!border}">
       <slot></slot>
@@ -25,30 +27,46 @@ export default {
 		},
 		top: {
 			default: 0
+		},
+		bg: {
+			type: String,
+			default: '#fff'
+		},
+		color: {
+			type: String,
+			default: '#409eff'
+		},
+		add: {
+			default: false,
+			type: Boolean
 		}
 	},
 	data () {
 		return {}
 	},
 	created () {},
-	methods: {}
+	methods: {
+		addClick () {
+			this.$emit('add')
+		}
+	}
 }
 </script>
 
 <style lang="scss" scoped>
 .panel-section {
+    border-top: 1px solid #e4e4e4;
   .panel-section-title {
     line-height: 40px;
     height: 40px;
-    background-color:#f8f9fc;
     padding:10px 0;
+    padding-right: 10px;
     box-sizing: border-box;
     h3 {
       height: 20px;
       line-height: 20px;
       margin-left:10px;
       padding-left:5px;
-      background-color: #f8f9fc;
       font-size: 14px;
       color: #333;
       border-left: 3px solid #409eff;
@@ -57,7 +75,6 @@ export default {
   .panel-content {
     box-sizing: border-box;
     background: #fff;
-    border-bottom: 1px solid #e4e4e4;
     border-top: 1px solid #e4e4e4;
     .detail-panel-item:last-child {
       border-bottom: none;
