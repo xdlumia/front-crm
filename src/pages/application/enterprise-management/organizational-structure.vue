@@ -1,20 +1,18 @@
 <template>
 	<view>
-		<NavBar title="企业管理" />
-		<view class="company-font m10" style="color: #0074D9;">{{companyName}}</view>
+		<NavBar title="组织架构" />
+		<view class="m10" style="color: #0074D9;">{{companyName}}</view>
 		<view class="uni-list">
 			<radio-group @change="radioChange">
 				<label class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in depts" :key="item.id">
-					<view>
+					<view style="width:15%">
 						<radio :value="item.id" :checked="index === current" />
 					</view>
-					<view class="this-font pr15">{{item.deptName}}</view>
+					<view class="fl" style="width:85%">{{item.deptName}}</view>
 				</label>
 			</radio-group>
 		</view>
-		<view style="position: fixed;bottom: 0;width: 100%;text-align: center;">
-			<button class="this-font" style="background-color: #0074D9;width: 100%;" type="primary">确定</button>
-		</view>
+		<i-button style="position: fixed;bottom: 0;" class="wfull" type="primary">确定</i-button>
 	</view>
 </template>
 
@@ -58,33 +56,10 @@ export default {
 				}
 			}
 		}
-		// 点击最后一级时触发该事件
-		/* treeItemClick(item) {
-				let {
-					id,
-					name,
-					parentId
-				} = item;
-				uni.showModal({
-					content: `点击了${parentId.length+1}级菜单, ${name}, id为${id}, 父id为${parentId.toString()}`
-				})
-				console.log(item)
-			} */
 	}
 }
 </script>
 
 <style>
-	.this-font{
-		font-family: '微软雅黑';
-		font-weight: 400;
-		font-style: normal;
-		font-size: 16px;
-	}
-	.company-font{
-		font-family: '微软雅黑';
-		font-weight: 400;
-		font-style: normal;
-		font-size: 13px;
-	}
+
 </style>

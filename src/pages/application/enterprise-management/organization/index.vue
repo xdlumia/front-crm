@@ -1,35 +1,38 @@
 <template>
     <view>
-        <NavBar title="企业管理" />
+        <NavBar title="组织架构" />
         <view class="uni-flex uni-column">
-            <view class="flex-item flex-item-V bb mt10 mb20">
-                <span class="this-font p10" style="color: #5081F5;">{{companyName}}</span>
+            <view class="flex-item flex-item-V mt10 mb10">
+                <span class="p10" style="color: #5081F5;">{{companyName}}</span>
             </view>
-            <view class="flex-item flex-item-V uni-flex uni-column" v-for="(item) in depts" :key="item.id">
-                <view class="flex-item flex-item-V bb p5">
-                    <view class="fl this-font">{{item.name}}(</view>
-                    <view class="fl this-font">{{item.children}})</view>
-                    <view class="fr this-font">></view>
-                </view>
+            <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
+            <view class="flex-item flex-item-V uni-flex uni-column" >
+                <i-cell-group v-for="(item) in depts" :key="item.id">
+                    <i-cell is-link url='/pages/application/enterprise-management/organization/index'>{{item.name}}({{item.children}})</i-cell>
+                </i-cell-group>
             </view>
-            <view class="flex-item flex-item-V uni-flex uni-column" v-for="(item) in users" :key="item.id">
+            <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
+            <view class="flex-item flex-item-V uni-flex uni-column" v-for="(item) in users" :key="item.id" @click="editUser">
                 <view class="flex-item flex-item-V bb p10">
                     <view class="fl width20">
-                        <image class="ba" style="height: 51px;width: 51px;" src="../../../../../dist/dev/mp-weixin/static/img/my-default.png"></image>
+                        <image class="ba" style="height: 51px;width: 51px;" src="/static/img/my-default.png"></image>
                     </view>
-                    <view class="fl width20 pl10 this-font mt15">{{item.name}}</view>
-                    <button plain="true" class="fl ba width33 mt15" style="border-color: #0080FF;">{{item.tag}}</button>
+                    <view class="fl width20 pl10 mt15">{{item.name}}</view>
+                    <view class="fl ac ml10 pl5 pr5 mt15" style="color:#457FF5;border: 1px solid #457FF5;border-radius: 5px;">
+                        {{item.tag}}
+                    </view>
                 </view>
             </view>
-            <view class="flex-item flex-item-V bb mt10 p10" @tap="invite">
-                <icon class="fl" type="success">+</icon>
-                <view class="pl15 fl this-font">邀请同事加入</view>
+            <view class="flex-item flex-item-V bb mt10 p10 d-flex-lr" @tap="invite">
+               <i class="iconfont f28 iconxinjian fl " style="color: #4D7FF5;"></i>
+               <view class="pl5 fl">邀请同事加入</view>
             </view>
+            <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V bt" style="position: fixed;bottom: 20px;width: 100%;padding-top: 10px;">
                 <view class="uni-flex uni-row">
-                    <view class="flex-item bule-font width33" style="text-align: center;" @tap="addUser">添加员工</view>
-                    <view class="flex-item bule-font width33" style="text-align: center;" @tap="addDept">添加子部门</view>
-                    <view class="flex-item bule-font width33" style="text-align: center;" @tap="deptSet">部门设置</view>
+                    <a class="flex-item width33" style="text-align: center;color:#4D7FF5;" url="/pages/application/enterprise-management/team/editor/index?isEditor=0">添加员工</a>
+                    <a class="flex-item width33" style="text-align: center;color:#4D7FF5;" url="/pages/application/enterprise-management/organization/add-dept?isEditor=0&name=销售部">添加子部门</a>
+                    <a class="flex-item width33" style="text-align: center;color:#4D7FF5;" url="/pages/application/enterprise-management/organization/add-dept?isEditor=1&name=销售部">部门设置</a>
                 </view>
             </view>
         </view>
@@ -78,28 +81,16 @@ export default {
 		// }, 300)
 	},
 	methods: {
-		// 添加员工
-		addUser () {
-			uni.navigateTo({
-				url: '../team/editor/index?isEditor=0'
-			})
-		},
-		// 添加子部门
-		addDept () {
-			uni.navigateTo({
-				url: 'add-dept?isEditor=0&name=销售部'
-			})
-		},
-		// 部门设置(修改)
-		deptSet () {
-			uni.navigateTo({
-				url: 'add-dept?isEditor=1&name=销售部'
-			})
-		},
 		// 邀请成员加入
 		invite () {
 			uni.navigateTo({
 				url: 'invite-other'
+			})
+		},
+		// 编辑员工
+		editUser () {
+			uni.navigateTo({
+				url: '/pages/application/enterprise-management/team/editor/index'
 			})
 		}
 	}
