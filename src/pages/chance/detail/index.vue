@@ -37,34 +37,31 @@
       </scroll-view>
       <swiper
         :current="currIndex"
-        class="swiper-box"
-        style="flex: 1;"
+        style="flex: 1;height:calc(100vh - 300px)"
+		class="d-auto-y"
         :duration="300"
-        @change="ontabchange"
-      >
+        @change="ontabchange">
         <swiper-item>1</swiper-item>
         <swiper-item>
-			<mPanel title="基本信息">
-				<i-cell-group>
-					<i-cell title="只显示箭头"></i-cell>
-					<i-cell title="跳转到首页" is-link url="/pages/dashboard/index"></i-cell>
-					<i-cell title="只有 footer 点击有效"></i-cell>
-					<i-cell title="开关">
-						<switch slot="footer" checked />
-					</i-cell>
-				</i-cell-group>
-			</mPanel>
+			<!-- 详细信息 -->
+			<detailInfo></detailInfo>
 		</swiper-item>
-        <swiper-item>3</swiper-item>
+        <swiper-item>
+			<!-- 相关信息 -->
+			<correlationInfo></correlationInfo>
+		</swiper-item>
       </swiper>
     </div>
   </div>
 </template>
 
 <script>
+import detailInfo from './components/detail-info'
+import correlationInfo from './components/correlation-info'
 export default {
 	components: {
-		// mPager
+		detailInfo,
+		correlationInfo
 	},
 	data () {
 		return {
@@ -125,7 +122,7 @@ export default {
 }
 .uni-tab {
   border-top: 1px solid #efefef;
-  border-bottom:2px solid #efefef;
+  border-bottom:1px solid #efefef;
   .uni-tab-item {
     display: inline-block;
     line-height: 40px;

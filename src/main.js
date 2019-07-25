@@ -46,6 +46,7 @@ import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
 // 自定义
 // 基础组件
 import mPanel from './components/m-panel'
+import mList from './components/m-list'
 // import mUpload from './components/m-upload'
 // import mForm from './components/m-form'
 
@@ -96,6 +97,7 @@ Vue.component('uniCalendar', uniCalendar)
 // 自定义
 // 基础组建
 Vue.component('mPanel', mPanel)
+Vue.component('mList', mList)
 // Vue.component('mUpload', mUpload)
 // Vue.component('mForm', mForm)
 
