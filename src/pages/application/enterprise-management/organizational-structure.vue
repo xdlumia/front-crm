@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<NavBar title="企业管理" />
 		<view class="company-font m10" style="color: #0074D9;">{{companyName}}</view>
 		<view class="uni-list">
 			<radio-group @change="radioChange">

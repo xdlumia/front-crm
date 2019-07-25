@@ -1,5 +1,6 @@
 <template>
     <view>
+		<NavBar title="企业管理" />
         <view class="uni-padding-wrap uni-common-mt">
             <form @submit="formSubmit" @reset="formReset">
                 <view class="uni-form-item mt10 mb10 bb">

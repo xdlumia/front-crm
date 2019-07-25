@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<NavBar title="企业管理" />
 		<view class="uni-flex uni-column" v-for="(item,index) in roles" :key="item.id">
 			<view class="flex-item flex-item-V bb p10" :class="{'active':isActive==index}" @touchstart="changBlue(index)">
 				<view class="p5 name-font">{{item.name}}</view>

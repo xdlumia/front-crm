@@ -1,21 +1,24 @@
 |<template>
-	<view class="uni-flex uni-column">
-		<view class="flex-item flex-item-V mt15">
-			<view class="this-font fl pl15">通过微信邀请</view>
-			<view class="fr pr15">
-				<button plain="true" open-type="share" style="border-color: #FFFFFF;" class="this-font">></button>
+	<view>
+		<NavBar title="企业管理" />
+		<view class="uni-flex uni-column">
+			<view class="flex-item flex-item-V mt15">
+				<view class="this-font fl pl15">通过微信邀请</view>
+				<view class="fr pr15">
+					<button plain="true" open-type="share" style="border-color: #FFFFFF;" class="this-font">></button>
+				</view>
 			</view>
+			<view class="flex-item flex-item-V tip-font pl15 pr15 pb15 bb">发送链接给微信好友，微信群</view>
+			<view class="flex-item flex-item-V pl15 mt15">
+				<view class="fl width60">
+					<input class="ba" placeholder="链接" :value="link" />
+				</view>
+				<view class="fl width30 ml10">
+					<button type="primary" plain="true" class="ba" style="color:#0080FF ; border-color: #0080FF;" @tap="copyToClip">复制链接</button>
+				</view>
+			</view>
+			<view class="flex-item flex-item-V tip-font pl15 pr15 pb15">通过链接邀请，点击复制链接，发送给企业成员</view>
 		</view>
-		<view class="flex-item flex-item-V tip-font pl15 pr15 pb15 bb">发送链接给微信好友，微信群</view>
-		<view class="flex-item flex-item-V pl15 mt15">
-			<view class="fl width60">
-				<input class="ba" placeholder="链接" :value="link" />
-			</view>
-			<view class="fl width30 ml10">
-				<button type="primary" plain="true" class="ba" style="color:#0080FF ; border-color: #0080FF;" @tap="copyToClip">复制链接</button>
-			</view>
-		</view>
-		<view class="flex-item flex-item-V tip-font pl15 pr15 pb15">通过链接邀请，点击复制链接，发送给企业成员</view>
 	</view>
 </template>
 
