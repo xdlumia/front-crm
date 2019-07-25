@@ -3,17 +3,16 @@
         <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称"/>
         <!-- 列表内容 -->
 		<scroll-list
-		ref="scrollList"
 		height="calc(100vh - 100px)"
 		api="bizSystemService.getUserAuth"
 		:params="queryForm"
-		v-slot="{row}">
+		v-slot="{ row }">
 			<div @click="openDetail(row)" class="chance-item uni-flex uni-row">
 				<div class="flex-item item-progress">
-					<circleProgress width="45px" :max="5" :progress="row.name" />
+					<circleProgress width="45px" :max="5" :progress="2" />
 				</div>
 				<div class="flex-item item-info d-elip">
-					<h4 class="d-elip">{{row.name}}车公庄地铁 文华园小区朝南一局560万车公庄地铁 文华园小区朝南一局560万</h4>
+					<h4 class="d-elip">{{row}}车公庄地铁 文华园小区朝南一局560万车公庄地铁 文华园小区朝南一局560万</h4>
 					<p class="d-text-gray d-elip">华为技术有限公司</p>
 					<div>
 					<time class="d-text-gray f12 fl">2019-04-4</time>

@@ -9,7 +9,7 @@
  */ -->
 <template>
   <div class="down-search-section-list" :style="{height:height}">
-    <div v-for="(item,index) of 15" :key="index">
+    <div v-for="(item,index) of list" :key="index">
       <slot v-bind:row="item"></slot>
     </div>
     <div class="no-data-msg" v-if="pager.isLoaded&&!list.length">暂无数据</div>
@@ -40,7 +40,7 @@ export default {
 	},
 	data () {
 		return {
-			list: [],
+			list: [{ name: 1 }],
 			pager: {
 				init: true,
 				isScrollView: false, // scroll-view组件模式
