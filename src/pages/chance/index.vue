@@ -27,9 +27,9 @@
 <script>
 // import mPager from '@/components/m-pager-tip' // 页面加载提示组件
 // import Pager from '@/utils/pager.js' // 翻页组件
-// import scrollList from '@/utils/scroll-list.js' //
+import scrollList from '@/utils/scroll-list.js' //
 export default {
-	// mixins: [scrollList],
+	mixins: [scrollList],
 	components: {
 		// mPager
 	},
