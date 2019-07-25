@@ -88,8 +88,55 @@
 			"style": {
 				"navigationBarTitleText": "申请免费试用"
 			}
+		},
+		{
+			"path":"pages/application/enterprise-management/index",
+			"style":{
+				"navigationBarTitleText": "企业管理"
+			}
+		},
+		{
+			"path":"pages/application/enterprise-management/team/index",
+			"style":{
+				"navigationBarTitleText":"团队申请"
+			}
+		},
+		{
+			"path":"pages/application/enterprise-management/organization/index",
+			"style":{
+				"navigationBarTitleText":"组织架构"
+			}
+		},
+		{
+			"path":"pages/application/enterprise-management/team/editor/index",
+			"style":{
+				"navigationBarTitleText":"编辑员工"
+			}
+		},
+		{
+			"path":"pages/application/enterprise-management/roles",
+			"style":{
+				"navigationBarTitleText":"角色"
+			}
+		},
+		{
+			"path":"pages/application/enterprise-management/organizational-structure",
+			"style":{
+				"navigationBarTitleText":"组织"
+			}
+		},
+		{
+			"path":"pages/application/enterprise-management/organization/add-dept",
+			"style":{
+				"navigationBarTitleText":"添加部门"
+			}
+		},
+		{
+			"path":"pages/application/enterprise-management/organization/invite-other",
+			"style":{
+				"navigationBarTitleText":"邀请成员加入"
+			}
 		}
-
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
