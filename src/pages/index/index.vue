@@ -1,10 +1,23 @@
 <template>
     <div>
         <NavBar title="首页" />
-        <i-tabs v-model="current" @change="handleChange">
-            <i-tab key="tab1" title="今天"></i-tab>
-            <i-tab key="tab2" title="仪表盘"></i-tab>
-        </i-tabs>
+
+        <!-- <Tabs
+            :TabList="TabList"
+            :currentTab="current"
+            @tabs="tabsChange"
+        >
+            <TabPane>
+                <view>1</view>
+            </TabPane>
+            <TabPane>
+                <view>2</view>
+            </TabPane>
+            <TabPane>
+                <view>3</view>
+            </TabPane>
+        </Tabs> -->
+
         <div class="f16 d-text-black b ml10">今天</div>
         <!--显示本周-->
         <div v-if="timelong == 7">
@@ -70,11 +83,16 @@ export default {
 	},
 	data () {
 		return {
-			current: '',
+			current: 0,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
 			timelong: 7,
 			clickDay: '',
+			TabList: [
+				{ title: '商品介绍' },
+				{ title: '规格参数' },
+				{ title: '售后保障' }
+			],
 			selected: [{ date: '2019-07-24', info: '签到', data: { custom: '自定义信息', name: '自定义消息头' } }]
 		}
 	},
@@ -91,6 +109,10 @@ export default {
 	},
 	methods: {
 		confirm () {
+
+		},
+		// 选项卡切换
+		tabsChange () {
 
 		},
 		// 进来默认获取今天日期
