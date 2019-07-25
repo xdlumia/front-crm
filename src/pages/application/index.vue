@@ -54,10 +54,10 @@
                         </div>
                     </div>
                     <div class="flexalone flexcenter">
-                        <div style='width: 100px;' @tap="jumpEnterpriseManage">
+                        <a url='/pages/application/enterprise-management/index' style='width: 100px;'>
                             <i class="iconfont f20 iconduoren" style="color: #4D7FF5;"></i>
                             <span class="ml15">企业管理</span>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -79,11 +79,6 @@ export default {
 	},
 	methods: {
 
-		jumpEnterpriseManage () {
-			uni.navigateTo({
-				url: 'enterprise-management/index'
-			})
-		}
 	},
 	created () {}
 }

@@ -1,7 +1,11 @@
 <template>
 	<view>
 		<NavBar title="企业管理" />
-		<view class="uni-flex uni-column">
+		<i-cell-group>
+            <i-cell title="团队申请" is-link url='/pages/application/enterprise-management/team/index'></i-cell>
+            <i-cell title="组织架构" is-link url='/pages/application/enterprise-management/organization/index'></i-cell>
+        </i-cell-group>
+		<!-- <view class="uni-flex uni-column">
 			<view class="flex-item flex-item-V p10 ba" @tap="toTeam">
 				<view class="view-style" style="float: left;">团队申请</view>
 				<view class="view-style" style="float: right;">></view>
@@ -10,7 +14,7 @@
 				<view class="view-style" style="float: left;">组织架构</view>
 				<view class="view-style" style="float: right;">></view>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -28,16 +32,6 @@ export default {
 
 	},
 	methods: {
-		toTeam () {
-			uni.navigateTo({
-				url: 'team/index'
-			})
-		},
-		toOrganization () {
-			uni.navigateTo({
-				url: 'organization/index'
-			})
-		}
 	},
 	created () {
 
