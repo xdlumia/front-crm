@@ -179,7 +179,7 @@
                 <div class="wfull" style="height:200px;">
                    <view class="box1">
                         <!-- 引入的mpvue-echarts组件 -->
-                        <mpvue-echarts :echarts='echarts' canvasId="chat1" @onInit="fn1OnInit" ref='lineChart' class="ec-canvas"/>
+                        <!-- <mpvue-echarts :echarts='echarts' canvasId="chat1" @onInit="fn1OnInit" ref='lineChart' class="ec-canvas"/> -->
                     </view>
                 </div>
             </div>
@@ -212,7 +212,7 @@
 
 <script>
 import * as echarts from 'echarts'
-import mpvueEcharts from 'mpvue-echarts/src/echarts.vue'
+// import mpvueEcharts from 'mpvue-echarts/src/echarts.vue'
 function fn1 (e) {
 	let option = {
 		title: {
@@ -268,7 +268,7 @@ export default {
 		}
 	},
 	components: {
-		mpvueEcharts
+		// mpvueEcharts
 	},
 	computed: {
 		todayDate () {
