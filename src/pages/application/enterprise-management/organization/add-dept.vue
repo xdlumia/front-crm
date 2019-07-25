@@ -15,12 +15,14 @@
                 </view>
             </form>
         </view>
-        <view class="mt30 ba title-font" style="text-align: center;" v-if="isEditor == 1">
+        <!-- <view class="mt30 ba title-font" style="text-align: center;" v-if="isEditor == 1">
             删除部门
-        </view>
-        <view style="position: fixed;bottom: 0;width: 100%;padding-top: 10px;">
+        </view> -->
+        <i-button  v-if="isEditor == 1" class="mt30 ba title-font wfull" style="text-align: center;">删除部门</i-button>
+        <!-- <view style="position: fixed;bottom: 0;width: 100%;padding-top: 10px;">
             <button type="primary" class="title-font" style="background-color: #007AFF;">完成</button>
-        </view>
+        </view> -->
+        <i-button style="position: fixed;bottom: 0;" class="wfull" type="primary">完成</i-button>
     </view>
 </template>
 <script>

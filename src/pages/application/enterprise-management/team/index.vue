@@ -4,7 +4,7 @@
         <view class="uni-flex uni-column">
             <view class="flex-item flex-item-V bb uni-flex uni-row p15" v-for="(item) in teamDatas" :key="item.is">
                  <view class="flex-item width20 p10">
-                    <image class="ba" style="height: 51px;width: 51px;" src="../../../../../dist/dev/mp-weixin/static/img/my-default.png"></image>
+                    <image class="ba" style="height: 51px;width: 51px;" src="/static/img/my-default.png"></image>
                 </view>
                 <view class="flex-item width30">
                     <view class="name-font">{{item.name}}</view>
