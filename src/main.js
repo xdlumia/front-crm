@@ -53,6 +53,7 @@ import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
 import authButton from './components/auth-button'
 import NavBar from './components/nav-bar'
 import circleProgress from './components/circle-progress'
+import scrollList from './components/scroll-list'
 // 自定义头部
 
 Vue.config.productionTip = false
@@ -102,6 +103,8 @@ Vue.component('uniCalendar', uniCalendar)
 Vue.component('authButton', authButton)
 Vue.component('NavBar', NavBar)
 Vue.component('circleProgress', circleProgress)
+Vue.component('scrollList', scrollList)
+
 /** 全局注册UI组件 - END */
 
 // 获取系统信息
