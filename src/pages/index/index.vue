@@ -211,7 +211,7 @@
 </template>
 
 <script>
-import * as echarts from 'echarts'
+// import * as echarts from 'echarts'
 // import mpvueEcharts from 'mpvue-echarts/src/echarts.vue'
 function fn1 (e) {
 	let option = {
