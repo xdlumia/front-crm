@@ -1,5 +1,4 @@
 dist/
 package.json
 src/static/
-src/utils/
 src/components/basic/

@@ -118,12 +118,12 @@
             "port": 8080,
             "disableHostCheck": true,
             "proxy": {
-                "/apix": {
-                    "target": "http://testh5px.515md.com/apix/",
-                    "changeOrigin": true,
-                    "secure": false,
-                    "pathRewrite":{"^/apix":""}
-                }
+                // "/apix": {
+                //     "target": "http://testh5px.515md.com/apix/",
+                //     "changeOrigin": true,
+                //     "secure": false,
+                //     "pathRewrite":{"^/apix":""}
+                // }
             }
         } 
     }
