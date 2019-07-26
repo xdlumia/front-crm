@@ -1,12 +1,12 @@
 /* 阿里字体图标库 */
 @font-face {
   font-family: 'iconfont';  /* project id 1304395 */
-  src: url('//at.alicdn.com/t/font_1304395_sv1rg1mpkv.eot');
-  src: url('//at.alicdn.com/t/font_1304395_sv1rg1mpkv.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1304395_sv1rg1mpkv.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1304395_sv1rg1mpkv.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1304395_sv1rg1mpkv.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1304395_sv1rg1mpkv.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.eot');
+  src: url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.svg#iconfont') format('svg');
 }
   
   .iconfont {
@@ -128,8 +128,8 @@
     content: "\e61d";
   }
   
-  .iconyuandian:before {
-    content: "\e61e";
+  .iconcall:before {
+    content: "\e610";
   }
   
   

@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="hfull d-auto-y">
         <mPanel title="联系人" color="#7765cc" add>
             <div class="detail-list">
                 <div class="list-title">
                     <title>黄玉里</title> <span class="d-text-qgray">总精力</span>
-                    <span class="fr iconfont icondadianhua f18"></span>
+                    <span class="fr iconfont iconcall f18 d-text-gray" ></span>
                 </div>
                 <p class="f12 d-elip d-text-qgray">华为技术有限公司</p>
             </div>
@@ -33,9 +33,13 @@
             </div>
         </mPanel>
         <mPanel top="10" title="团队成员" color="#4889f4" add>
-            <m-list label="创建日期">{{detailInfo.aaa}}</m-list>
-            <m-list label="最后跟进">{{detailInfo.aaa}}</m-list>
-            <m-list label="最新修改">{{detailInfo.aaa}}</m-list>
+            <div class="detail-list d-flex-lr bb">
+                <image class="detail-list-img" data-name="徐丽丽" src="" alt=""></image>
+                <p>
+                    <b class="f16">徐丽丽</b>
+                    <span class="f12 d-text-qgray">负责人</span>
+                </p>
+            </div>
         </mPanel>
     </div>
 </template>
@@ -55,6 +59,12 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
+		// 图片如果加载失败显示名称
+		defaultImg (e) {
+			console.log(e)
+			e.setAttribute('data-name', '改变')
+			// let title = e.target.dataset.title
+		},
 		// // 滚动到顶部刷新
 		// scrolltoupper (e) {
 		// 	console.log(e)
@@ -86,6 +96,22 @@ export default {
 <style scoped lang="scss">
 .detail-list{
     padding:10px 15px 0;
+    .detail-list-img{
+        display: block;
+        width:44px;
+        height: 44px;
+        border-radius: 50%;
+        margin-right: 10px;
+        background-color:#eee;
+        overflow: hidden;
+        text-align: center;
+        line-height: 44px;
+        font-size:12px;
+        color:#999;
+        &:before{
+            content: attr(data-name)
+        }
+    }
     .list-title{
         title{ color:#333;font-size: 15px; border-right:1px solid #eee; padding-right:10px;}
         span{ font-size:13px; margin-left: 10px;}
