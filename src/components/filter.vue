@@ -1,5 +1,5 @@
 <template>
-    <div class='filter-box d-bg-white' :style="height ? 'top:' + height :'top:' + navH">
+    <div class='filter-box d-bg-white' :style="top ? 'top:' + top :'top:' + navH">
         <div class="d-flex filter-title pl15 pr15 f13 bb d-text-black">
             <div
                 v-for='(item, index) in filterData'
@@ -37,7 +37,7 @@
 export default {
 	name: 'filter',
 	props: {
-		height: {
+		top: {
 			type: String,
 			default: ''
 		},

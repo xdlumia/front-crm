@@ -8,7 +8,7 @@
                 </div>
             </div>
             <!-- <filter-diy @submit='submit' @clear='clear' /> -->
-            <Filter :filterData='filterData' @filterSubmit='submit' ref='filter' :height='"calc("+ navH +" + 49px)"'>
+            <Filter :filterData='filterData' @filterSubmit='submit' ref='filter' :top='"calc("+ navH +" + 49px)"'>
 
             </Filter>
         </div>
