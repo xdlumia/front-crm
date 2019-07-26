@@ -19,95 +19,42 @@
         <div>负责人: {{detailInfo.name}}</div>
         <div>销售金额(元): {{detailInfo.name}}</div>
       </div>
-
-      <scroll-view id="tab-bar" class="pl15 pr15 uni-tab" :scroll-x="true" :show-scrollbar="false">
-        <view
-          v-for="(tab,index) in tabBars"
-          :key="tab.id"
-          class="uni-tab-item"
-          :id="tab.id"
-          :data-current="index"
-          @click="ontabtap(index)"
-        >
-          <text
-            class="uni-tab-item-title"
-            :class="currIndex==index ? 'uni-tab-item-title-active' : ''"
-          >{{tab.name}}</text>
-        </view>
-      </scroll-view>
-      <swiper
-        :current="currIndex"
-        style="flex: 1;height:calc(100vh - 300px)"
-		class="d-auto-y"
-        :duration="300"
-        @change="ontabchange">
-        <swiper-item>1</swiper-item>
-        <swiper-item>
-			<!-- 详细信息 -->
-			<detailInfo></detailInfo>
-		</swiper-item>
-        <swiper-item>
-			<!-- 相关信息 -->
-			<correlationInfo></correlationInfo>
-		</swiper-item>
-      </swiper>
+      <!-- tabs切换组件 -->
+      <detail-swiper></detail-swiper>
+      <!-- 底部操作按钮 -->
+      <div class="footer-fixed-menu d-center d-bg-white">
+        <a class="d-cell al">
+          <uni-icon type="plus" size="16" color="#1890FF" />
+          <span class="ml5 f13 d-text-gray">添加跟进</span>
+        </a>
+        <a class="d-cell ar">
+          <i-icon type="setup" size="18" color="#1890FF" />
+          <span class="ml5 f13 d-text-gray">打电话</span>
+        </a>
+        <a class="d-cell ar">
+          <i-icon type="setup" size="18" color="#1890FF" />
+          <span class="ml5 f13 d-text-gray">更多</span>
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import detailInfo from './components/detail-info'
-import correlationInfo from './components/correlation-info'
+import detailSwiper from './components/detail-swiper'
 export default {
 	components: {
-		detailInfo,
-		correlationInfo
+		detailSwiper
 	},
 	data () {
 		return {
 			detailInfo: {
 				name: '客户名称'
-			},
-			tabBars: [
-				{
-					name: '跟进记录',
-					id: '1'
-				},
-				{
-					name: '详细信息',
-					id: '2'
-				},
-				{
-					name: '相关信息',
-					id: '3'
-				}
-			],
-			currIndex: 2
+			}
 		}
 	},
 	onLoad (option) {},
-	methods: {
-		ontabtap (index) {
-			this.currIndex = index
-		},
-		ontabchange (e) {
-			let index = e.target.current || e.detail.current
-			this.currIndex = index
-		},
-
-		// // 滚动到顶部刷新
-		// scrolltoupper (e) {
-		// 	console.log(e)
-		// },
-		// // 滚动到底部加载
-		// scrolltolower (e) {
-		// 	console.log(e)
-		// },
-		// 打开列表详情
-		openDetail ({ id }) {
-			this.$routing.navigateTo('/pages/customer/detail?id=' + id)
-		}
-	},
+	methods: {},
 	created () {}
 }
 </script>
@@ -122,18 +69,20 @@ export default {
 }
 .uni-tab {
   border-top: 1px solid #efefef;
-  border-bottom:1px solid #efefef;
+  border-bottom: 1px solid #efefef;
   .uni-tab-item {
     display: inline-block;
     line-height: 40px;
     height: 40px;
-	margin-right: 10px;
-	.uni-tab-item-title{
-		padding-bottom:6px;
-		box-sizing:border-box;
-		&.uni-tab-item-title-active{color: #409EFF; border-bottom:1px solid #409EFF}
-	}
+    margin-right: 10px;
+    .uni-tab-item-title {
+      padding-bottom: 6px;
+      box-sizing: border-box;
+      &.uni-tab-item-title-active {
+        color: #409eff;
+        border-bottom: 1px solid #409eff;
+      }
+    }
   }
 }
-
 </style>
