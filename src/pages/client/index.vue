@@ -19,6 +19,8 @@
 					<div class="d-flex client-tags">
 						<div class="iconfont iconqian f16 d-text-blue mr10"></div>
 						<div class="c-tag f12 mr10">普通客户</div>
+						<div class="c-tag f12 mr10">70分</div>
+						<div class="c-tag f12 mr10">2019-10-10</div>
 					</div>
 				</div>
 			</scroll-list>
