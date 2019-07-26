@@ -19,6 +19,12 @@
         <div>负责人: {{detailInfo.name}}</div>
         <div>销售金额(元): {{detailInfo.name}}</div>
       </div>
+      <!-- 当前阶段 -->
+      <i-steps
+        :current="current"
+        class="change-steps d-fixed wfull pt5 pb5"
+        :style="{top:`calc(${navH} + 39px)`}"
+      >
       <!-- tabs切换组件 -->
       <detail-swiper></detail-swiper>
       <!-- 底部操作按钮 -->
@@ -36,12 +42,17 @@
           <span class="ml5 f13 d-text-gray">更多</span>
         </a>
       </div>
+      <!-- 更多 action -->
+      <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" />
+
     </div>
   </div>
 </template>
 
 <script>
 import detailSwiper from './components/detail-swiper'
+let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程']
+let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
 	components: {
 		detailSwiper
@@ -50,11 +61,18 @@ export default {
 		return {
 			detailInfo: {
 				name: '客户名称'
-			}
+			},
+			moreShow: false,
+			phoneShow: false,
+			moreActions: moreActions
 		}
 	},
 	onLoad (option) {},
-	methods: {},
+	methods: {
+		handlerAction (item) {
+			this[item] = !this[item]
+		}
+	},
 	created () {}
 }
 </script>

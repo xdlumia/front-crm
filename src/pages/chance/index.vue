@@ -27,28 +27,30 @@
     <!-- 列表内容 -->
     <scroll-list
       class="d-absolute wfull"
-      :style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
+      style="top:203px"
       height="`calc(100vh - ${navH} - 39px - 65px)`"
       api="bizSystemService.getUserAuth"
       :params="queryForm"
       v-slot="{ row }"
     >
-      <a url="./detail/index" class="chance-item uni-flex uni-row">
-        <div class="flex-item item-progress">
-          <circleProgress width="45px" :max="5" :progress="2" />
-        </div>
-        <div class="flex-item item-info d-elip">
-          <h4 class="d-elip">{{row}}车公庄地铁 文华园小区朝南一局560万车公庄地铁 文华园小区朝南一局560万</h4>
-          <p class="d-text-gray d-elip">华为技术有限公司</p>
-          <div>
-            <time class="d-text-gray f12 fl">2019-04-4</time>
-            <span class="f14 fr">¥5,000,000.00</span>
+      <a url="./detail/index">
+        <div class="chance-item uni-flex uni-row">
+          <div class="flex-item item-progress">
+            <circleProgress width="45px" :max="5" :progress="2" />
+          </div>
+          <div class="flex-item item-info d-elip">
+            <h4 class="d-elip">{{row}}车公庄地铁 文华园小区朝南一局560万车公庄地铁 文华园小区朝南一局560万</h4>
+            <p class="d-text-gray d-elip">华为技术有限公司</p>
+            <div>
+              <time class="d-text-gray f12 fl">2019-04-4</time>
+              <span class="f14 fr">¥5,000,000.00</span>
+            </div>
           </div>
         </div>
       </a>
     </scroll-list>
     <!-- 客户 -->
-    <div class="footer-fixed-menu d-center d-bg-white">
+    <div class="footer-fixed-menu d-center d-bg-white bt">
       <a class="d-cell al">
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建机会</span>
