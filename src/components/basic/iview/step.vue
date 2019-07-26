@@ -1,9 +1,9 @@
 <template>
-    <div class="i-class i-step-item" :class="[stepClass, direction === 'vertical' ? 'i-step-vertical' : 'i-step-horizontal']"  :style="itemStyle">
+    <div @click="setpClick()" class="i-class i-step-item" :class="[stepClass, direction === 'vertical' ? 'i-step-vertical' : 'i-step-horizontal']"  :style="itemStyle">
         <div class="i-step-item-ico">
-            <div class="i-step-ico" v-if="stepNoIcon">{{index+1 }}</div>
+            <div class="i-step-ico" v-if="stepNoIcon"><slot name="step">{{index+1 }}</slot></div>
             <div class="i-step-ico" v-else>
-                <i-icon i-class="i-step-ico-in" :type="stepIcoClass"></i-icon>
+                <slot name="step"><i-icon i-class="i-step-ico-in" :type="stepIcoClass"></i-icon></slot>
             </div>
             <div class="i-step-line" v-if="index !== len - 1"></div>
         </div>
@@ -74,6 +74,9 @@ export default {
         }
     },
     methods: {
+        setpClick(){
+            this.$emit('step')
+        },
         updateDataChange(stepData){
             this.len = stepData.len
             this.index = stepData.index

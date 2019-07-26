@@ -6,11 +6,9 @@
 		</Filter>
 		<!-- 步骤 -->
 		<i-steps :current="current" class="change-steps d-fixed wfull pt5 pb5" :style="{top:`calc(${navH} + 39px)`}">
-			<i-step @click="click" content='填写资料' />
-			<i-step content='客服回电确认' />
-			<i-step content='小程序开通' />
-			<i-step content='登录/管理客户' />
-		</i-steps>
+			<i-step @step="setpHandle(item,index)" v-for="(item,index) of stepList" :key="index" :content="item.label">
+				<span slot="step">{{item.index}}</span>
+			</i-steps>
 		<!-- 统计 -->
 		<div class="chance-sts bt d-fixed wfull" :style="{top:`calc(${navH} + 39px + 65px)`}">
 			<li class="sts-item">1个商机</li>
@@ -53,7 +51,15 @@ export default {
 	},
 	data () {
 		return {
-			current: 0,
+			// 步骤列表
+			stepList: [
+				{ label: '全部销售机会', index: 'all' },
+				{ label: '验证机会', index: 1 },
+				{ label: '需求确定', index: 2 },
+				{ label: '方案报价', index: 3 },
+				{ label: '谈判审核', index: 4 }
+			],
+			current: 2,
 			queryForm: {
 				limit: 10,
 				page: 1
@@ -63,33 +69,10 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
-		click () {
-			console.log(1)
-		},
-		// // 滚动到顶部刷新
-		// scrolltoupper (e) {
-		// 	console.log(e)
-		// },
-		// // 滚动到底部加载
-		// scrolltolower (e) {
-		// 	console.log(e)
-		// },
-		// 打开列表详情
-		openDetail (index) {
-			this.$routing.navigateTo('./detail/index')
+		setpHandle (row, index) {
+			this.current = index
 		}
-
 	},
-	// // 监听用户下拉动作，一般用于下拉刷新
-	// onPullDownRefresh  () {
-	// 	this.$refs.list.reload()
-	// 	wx.vibrateShort()
-	// 	wx.stopPullDownRefresh()
-	// },
-	// // 页面上拉触底事件的处理函数
-	// onReachBottom () {
-	// 	this.$refs.list.getNextPage()
-	// },
 	created () {}
 }
 </script>
