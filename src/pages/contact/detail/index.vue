@@ -15,25 +15,9 @@
             <i-icon type="like" size="20" class="ml15" color="#1890FF" />
           </div>
         </div>
-        <div>客户名称: {{detailInfo.name}}</div>
-        <div>负责人: {{detailInfo.name}}</div>
-        <div>销售金额(元): {{detailInfo.name}}</div>
-      </div>
-      <!-- 当前阶段 -->
-      <div class="mt10 change-steps " style="background-color:#fff">
-        <i-steps
-          :current="current"
-          class="wfull">
-          <i-step
-            @step="setpHandle(item,index)"
-            v-for="(item,index) of stepList"
-            :key="index"
-            :content="item.label"
-          >
-            <span slot="step">{{item.index}}</span>
-          </i-step>
-        </i-steps>
-        <p class="f12 d-text-gray"> <i class="iconfont"></i> 点击商机阶段，商机阶段变更</p>
+        <div class="f13">负责人: {{detailInfo.name}}</div>
+        <div class="d-text-blue f12">地址责任地址责任地址责任</div>
+        <div class="f13">深圳市龙岗区坂田华为总部办公楼</div>
       </div>
       <!-- tabs切换组件 -->
       <detail-swiper style="margin-top:100px"></detail-swiper>

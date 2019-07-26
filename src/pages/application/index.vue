@@ -26,10 +26,12 @@
                         </div>
                     </div>
                     <div class="flexalone flexcenter">
-                        <div style='width: 100px;'>
-                            <i class="iconfont f20 iconlianxiren" style="color: #00CA8D;"></i>
-                            <span class="ml15">联系人</span>
-                        </div>
+                        <a url="/pages/contact/index">
+                            <div style='width: 100px;'>
+                                <i class="iconfont f20 iconlianxiren" style="color: #00CA8D;"></i>
+                                <span class="ml15">联系人</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="flexalone borbottom flexcenter">

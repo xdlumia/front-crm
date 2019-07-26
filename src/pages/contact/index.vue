@@ -1,48 +1,25 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称" />
+    <NavBar title="机会" :isSearch="true" placeholder="输入联系人姓名,手机号" />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData="filterData" @filterSubmit="submit" ref="filter" :top="navH"></Filter>
-    <!-- 步骤 -->
-    <i-steps
-      :current="current"
-      class="change-steps d-fixed wfull pt5 pb5"
-      :style="{top:`calc(${navH} + 39px)`}">
-      <i-step
-        @step="setpHandle(item,index)"
-        v-for="(item,index) of stepList"
-        :key="index"
-        :content="item.label"
-      >
-        <span slot="step">{{item.index}}</span>
-      </i-step>
-    </i-steps>
-    <!-- 统计 -->
-    <div class="chance-sts bt d-fixed wfull" :style="{top:`calc(${navH} + 39px + 65px)`}">
-      <li class="sts-item">1个商机</li>
-      <li class="sts-item">222元</li>
-      <li class="sts-item">赢率30%</li>
-    </div>
     <!-- 列表内容 -->
     <scroll-list
       class="d-absolute wfull"
-      :style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
-      height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
+      :style="{top:`calc(39px + ${navH})`}"
+      height="`calc(100vh - ${navH} - 39px)`"
       api="bizSystemService.getUserAuth"
       :params="queryForm"
       v-slot="{ row }">
-      <a url="./detail/index">
+      <a url="./detail/index" class="d-block">
         <div class="chance-item uni-flex uni-row">
-          <div class="flex-item item-progress">
-            <circleProgress width="45px" :max="5" :progress="2" />
+          <div class="wfull flex-item item-info d-elip">
+            <h4 class="d-elip">{{row}}王东亮</h4>
+            <p class="d-text-qgray d-elip f12 ">华为技术有限公司</p>
+            <time class="d-text-gray f12 fl">创建日期: 2019-04-4 17:23</time>
           </div>
-          <div class="flex-item item-info d-elip">
-            <h4 class="d-elip">{{row}}车公庄地铁 文华园小区朝南一局560万车公庄地铁 文华园小区朝南一局560万</h4>
-            <p class="d-text-gray d-elip">华为技术有限公司</p>
-            <div>
-              <time class="d-text-gray f12 fl">2019-04-4</time>
-              <span class="f14 fr">¥5,000,000.00</span>
-            </div>
+          <div class="flex-item item-progress">
+            <i class="iconfont f20 d-text-blue iconcall"></i>
           </div>
         </div>
       </a>
@@ -51,11 +28,11 @@
     <div class="footer-fixed-menu d-center d-bg-white bt">
       <a class="d-cell al">
         <uni-icon type="plus" size="16" color="#1890FF" />
-        <span class="ml5 f13 d-text-gray">新建机会</span>
+        <span class="ml5 f13 d-text-gray">新建联系人</span>
       </a>
       <a class="d-cell ar">
         <i-icon type="setup" size="18" color="#1890FF" />
-        <span class="ml5 f13 d-text-gray">管理机会</span>
+        <span class="ml5 f13 d-text-gray">管理联系人</span>
       </a>
     </div>
   </div>

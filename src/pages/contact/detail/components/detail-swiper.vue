@@ -1,6 +1,6 @@
 <template>
   <div>
-      <scroll-view style="background-color:#fff;" id="tab-bar" class="pl15 pr15 uni-tab mb10" :scroll-x="true" :show-scrollbar="false">
+      <scroll-view id="tab-bar" class="pl15 pr15 uni-tab" :scroll-x="true" :show-scrollbar="false">
         <view
           v-for="(tab,index) in tabBars"
           :key="tab.id"
