@@ -37,7 +37,7 @@
                 </div>
 			</scroll-list>
 
-			<div class="client-menu d-center d-bg-white">
+			<div class="footer-fixed-menu d-center d-bg-white">
 				<a class="d-cell al">
 					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
 				</a>
@@ -126,15 +126,6 @@ export default {
 	.highseas-tags{
 		align-items: center;
 	}
-
-	.client-menu{
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		padding: 10px 15px;
-		box-sizing: border-box;
-    }
 
     .page-search-box{
         height: 29px;

@@ -138,7 +138,7 @@ Vue.mixin({
 	methods: {
 		callPhone (phone) {
 			phone && uni.makePhoneCall({
-				phoneNumber: phone
+				phoneNumber: phone.toString()
 			})
 		}
 	}

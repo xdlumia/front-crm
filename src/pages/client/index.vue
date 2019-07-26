@@ -5,13 +5,14 @@
 			<filter-diy @submit='submit' @clear='clear' />
 		</Filter>
 		<div class='client-list-view d-relative'>
+
 			<scroll-list
 				:height="'calc(100vh - ' + navH +' - 40px)'"
 				api="bizSystemService.getUserAuth"
 				:params="queryForm"
 				v-slot="{ row }"
 			>
-				<div class="client-item pb5 pt5 pl15 pr15 d-bg-white">
+				<a url='/pages/client/detail?id' class="client-item pb5 pt5 pl15 pr15 d-bg-white">
 					<div class="d-flex f14 mb5">
 						<div class="d-text-black d-cell d-elip">华盛顿有限成功华盛顿有限成功华盛顿有限成功华盛顿有限成功华盛顿有限成功华盛顿有限成功</div>
 						<div class='d-text-cgray'>多次成交</div>
@@ -22,14 +23,14 @@
 						<div class="c-tag f12 mr10">70分</div>
 						<div class="c-tag f12 mr10">2019-10-10</div>
 					</div>
-				</div>
+				</a>
 			</scroll-list>
 
-			<div class="client-menu d-center d-bg-white">
+			<div class="footer-fixed-menu d-center d-bg-white">
 				<a class="d-cell al">
 					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
 				</a>
-				<a class="d-cell ac">
+				<a url='/pages/highseas/index' class="d-cell ac">
 					<span class="iconfont iconrenzheng f16"></span><span class="ml5 f13  d-text-gray">到公海池</span>
 				</a>
 				<a class="d-cell ar">
@@ -125,15 +126,6 @@ export default {
 		line-height: 20px;
 		text-align: center;
 		border-radius: 100px;
-	}
-
-	.client-menu{
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		padding: 10px 15px;
-		box-sizing: border-box;
 	}
 
 </style>

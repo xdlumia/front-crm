@@ -26,6 +26,12 @@
 				"enablePullDownRefresh": true
 			}
 		},
+		{
+			"path":"pages/client/detail",
+			"style":{
+				"navigationBarTitleText":"客户详情"
+			}
+		},
 		/** 销售机会——BEGIN */
 		{
 			"path": "pages/chance/index",
