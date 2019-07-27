@@ -36,7 +36,9 @@
         <p class="f12 d-text-gray"> <i class="iconfont"></i> 点击商机阶段，商机阶段变更</p>
       </div>
       <!-- tabs切换组件 -->
-      <detail-swiper style="margin-top:100px"></detail-swiper>
+      <detail-swiper style="margin-top:100px" :tabBars='tabBars'>
+            <swiper-item slot='swiper'>1</swiper-item>
+      </detail-swiper>
       <!-- 底部操作按钮 -->
       <div class="footer-fixed-menu d-center d-bg-white">
         <a class="d-cell al">
@@ -61,14 +63,34 @@
 
 <script>
 import detailSwiper from './components/detail-swiper'
+
 let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
+
 export default {
 	components: {
 		detailSwiper
 	},
 	data () {
 		return {
+			tabBars: [
+				{
+					name: '跟进记录',
+					id: '1'
+				},
+				{
+					name: '详细信息',
+					id: '2'
+				},
+				{
+					name: '相关信息',
+					id: '3'
+				},
+				{
+					name: '相关信息',
+					id: '3'
+				}
+			],
 			// 步骤列表
 			stepList: [
 				{ label: '验证机会', index: 1 },
@@ -111,24 +133,6 @@ export default {
   color: #666;
   .datail-handle {
     min-width: 60px;
-  }
-}
-.uni-tab {
-  border-top: 1px solid #efefef;
-  border-bottom: 1px solid #efefef;
-  .uni-tab-item {
-    display: inline-block;
-    line-height: 40px;
-    height: 40px;
-    margin-right: 10px;
-    .uni-tab-item-title {
-      padding-bottom: 6px;
-      box-sizing: border-box;
-      &.uni-tab-item-title-active {
-        color: #409eff;
-        border-bottom: 1px solid #409eff;
-      }
-    }
   }
 }
 </style>

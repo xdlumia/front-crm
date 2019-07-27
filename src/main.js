@@ -31,6 +31,9 @@ import iInput from './components/basic/iview/input'
 import iSteps from './components/basic/iview/steps'
 import iStep from './components/basic/iview/step'
 import iLoadMore from './components/basic/iview/load-more'
+import iSwipeout from './components/basic/iview/swipeout'
+import iSwitch from './components/basic/iview/switch'
+
 // import iTab from './components/basic/iview/tab'
 // import iTabs from './components/basic/iview/tabs'
 
@@ -84,6 +87,8 @@ Vue.component('iInput', iInput)
 Vue.component('iSteps', iSteps)
 Vue.component('iStep', iStep)
 Vue.component('iLoadMore', iLoadMore)
+Vue.component('iSwipeout', iSwipeout)
+Vue.component('iSwitch', iSwitch)
 // Vue.component('iTab', iTab)
 // Vue.component('iTabs', iTabs)
 

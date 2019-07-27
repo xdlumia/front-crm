@@ -73,9 +73,6 @@ export default {
         border-top: 1px solid #f2f2f2;
         border-bottom: 1px solid #f2f2f2;
         height: 51px;
-        // .form-row-item{
-        //     height: 100%;
-        // }
         .form-row-label{
             width: 110px;
             text-indent: 15px;
