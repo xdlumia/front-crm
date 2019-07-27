@@ -77,6 +77,12 @@
 			}
 		},
 		{
+			"path": "pages/transaction/index",
+			"style": {
+				"navigationBarTitleText": "成交记录"
+			}
+		},
+		{
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "我的"
