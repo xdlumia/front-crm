@@ -85,7 +85,7 @@ export default {
 			var that = this
 			that.init(data)
 		},
-		init: function (array, callback) {
+		init: function (array=[], callback) {
 			var that = this
 			if (array.length && array.length <= 0) {
 				return false
@@ -99,10 +99,8 @@ export default {
 			that.buildTextData(that, array)
 		},
 		wxaSortPickerItemTap: function (child, type) {
-			console.log(child, 'child')
 			if (this.isRadio) {
 				this.isCheckedData.value == child.value ? this.isCheckedData = {} : this.isCheckedData = child
-				console.log(this.isCheckedData, 'this.isCheckedData')
 				if (type != 'dad') {
 					this.$emit('clickData', this.isCheckedData)
 				}
