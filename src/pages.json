@@ -20,6 +20,12 @@
 			}
 		},
 		{
+			"path": "pages/index/colleagueChoose",
+			"style": {
+				"navigationBarTitleText": "选择同事"
+			}
+		},
+		{
 			"path": "pages/client/index",
 			"style": {
 				"navigationBarTitleText": "客户",

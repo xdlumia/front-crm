@@ -1,3 +1,7 @@
+<!-- /**
+ * @author 徐贺
+ * @param label 关联业务
+ */ -->
 <template>
     <div>
         <NavBar title="关联业务" />
