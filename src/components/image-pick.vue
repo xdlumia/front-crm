@@ -9,7 +9,7 @@
         </div>
         <div class="upload-box d-center" @click="chooseImage" v-if='maxLen > imgs.length'>
             <div>
-                <i-icon size="24" type='add' color='#bdbdbd' />
+                <i-icon size="28" type='add' color='#999' />
                 <div class='wfull ac f12 d-text-gray'>{{placeholder}}</div>
             </div>
         </div>
@@ -21,7 +21,7 @@ export default {
 	props: {
 		placeholder: {
 			type: String,
-			default: '图片'
+			default: ''
 		},
 		maxLen: {
 			type: Number,
@@ -137,9 +137,9 @@ export default {
 
 .upload-box{
     @extend .upload-img;
-    border-radius: 3px;
+    // border-radius: 3px;
     border: 1px dashed #d9d9d9;
-    background: #fafafa;
+    // background: #fafafa;
     box-sizing: border-box;
     &.upload-box:nth-of-type(4n){
         margin-right: 0;

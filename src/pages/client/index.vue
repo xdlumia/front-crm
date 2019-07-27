@@ -27,7 +27,7 @@
 			</scroll-list>
 
 			<div class="footer-fixed-menu d-center d-bg-white">
-				<a class="d-cell al">
+				<a url='/pages/client/add-client' class="d-cell al">
 					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
 				</a>
 				<a url='/pages/highseas/index' class="d-cell ac">

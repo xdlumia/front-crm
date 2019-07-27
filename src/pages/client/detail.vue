@@ -8,7 +8,7 @@
                 <div class="flex-item d-elip wfull f16 d-text-black">华为技术有限公司</div>
                 <div class="flex-item datail-handle">
                     <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
-                    <i-icon type="like_fill" size="20" class="ml15" color="#1890FF" />
+                    <i-icon type="like_fill" size="20" class="ml15" color="#ff5533" />
                 </div>
             </div>
 
@@ -28,12 +28,12 @@
             </div>
         </div>
 
-        <div class="d-fec">
-
+        <div class="">
+            <detailSwiper />
         </div>
 
         <div class="footer-fixed-menu d-center d-bg-white">
-            <a url='/pages/client/' class="d-cell al">
+            <a url='/pages/client/addup' class="d-cell al">
                 <uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">添加跟进</span>
             </a>
             <div class="d-cell ac" @click="handlerAction('phoneShow')">
@@ -43,8 +43,9 @@
                 <i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">更多</span>
             </div>
         </div>
+
         <!-- 更多 action -->
-        <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" />
+        <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" @click="handleMore" />
 
         <!-- 电话 action -->
         <i-actionSheet :visible="phoneShow" :actions="phoneActions" show-cancel @cancel="handlerAction('phoneShow')" @click='handlePhone' />
@@ -52,9 +53,14 @@
 </template>
 
 <script>
+import detailSwiper from './components/detail-swiper'
+
 let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
+	components: {
+		detailSwiper
+	},
 	data () {
 		return {
 			moreShow: false,
@@ -94,7 +100,20 @@ export default {
 
 		handlePhone ({ target: { index } }) {
 			this.callPhone(this.phoneActions[index].phone)
+		},
+
+		handleMore ({ target: { index } }) {
+			let fnType = {
+				5: () => {
+					// 更多日程
+					this.$routing.navigateTo('/pages/index/scheduleAdd')
+				}
+			}
+			fnType[index]()
 		}
+	},
+	onUnload () {
+		this.moreShow && (this.moreShow = false)
 	}
 }
 </script>

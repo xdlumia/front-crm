@@ -38,6 +38,18 @@
 				"navigationBarTitleText":"客户详情"
 			}
 		},
+		{
+			"path":"pages/client/add-client",
+			"style":{
+				"navigationBarTitleText":"新建客户"
+			}
+		},
+		{
+			"path":"pages/client/addup",
+			"style":{
+				"navigationBarTitleText":"添加跟进"
+			}
+		},
 		/** 销售机会——BEGIN */
 		{
 			"path": "pages/chance/index",
