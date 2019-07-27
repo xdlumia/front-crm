@@ -19,12 +19,12 @@
             <div class="mt20" style="height: 10px;background: #F9F9F9;"></div>
             <div class="d-flex flexconm" style="height: 190px;">
                 <div class="flexalone borbottom flexcenter">
-                    <div class="flexalone flexcenter">
+                    <a url='/pages/transaction/index' class="flexalone flexcenter">
                         <div style='width: 100px;'>
                             <i class="iconfont f20 iconjiaoyijilu" style="color: #81A4F8;"></i>
                             <span class="ml15">成交记录</span>
                         </div>
-                    </div>
+                    </a>
                     <div class="flexalone flexcenter">
                         <a url="/pages/contact/index">
                             <div style='width: 100px;'>
