@@ -20,6 +20,12 @@
 			}
 		},
 		{
+			"path": "pages/index/colleagueChoose",
+			"style": {
+				"navigationBarTitleText": "选择同事"
+			}
+		},
+		{
 			"path": "pages/client/index",
 			"style": {
 				"navigationBarTitleText": "客户",
@@ -80,6 +86,12 @@
 			"path": "pages/application/index",
 			"style": {
 				"navigationBarTitleText": "应用"
+			}
+		},
+		{
+			"path": "pages/transaction/index",
+			"style": {
+				"navigationBarTitleText": "成交记录"
 			}
 		},
 		{

@@ -69,7 +69,9 @@
             <div class="h40 d-flex-level mt10" style="background:#F9F9F9;">
                 <div class="d-flex ml15" style="height: 26px;align-items: center;">
                     <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar>
-                    <span class="d-text-qgray f13 ml5">小家伙</span>
+                    <a url="/pages/index/colleagueChoose">
+                        <span class="d-text-qgray f13 ml5">小家伙</span>
+                    </a>
                     <uni-icon type="arrowdown" class="pl5 d-text-qgray" size="16"/>
                 </div>
                 <div class="mr15" style="height:26px;line-height:26px">
@@ -177,7 +179,7 @@
                     <span class="b ml10">销售漏斗</span><span class="f12 b">( 商机金额 )</span>
                 </div>
                 <div class="wfull" style="height:200px;">
-                   <view class="box1">
+                   <view class="echartsBox">
                         <!-- 引入的mpvue-echarts组件 -->
                         <!-- <mpvue-echarts :echarts='echarts' canvasId="chat1" @onInit="fn1OnInit" ref='lineChart' class="ec-canvas"/> -->
                     </view>
@@ -329,23 +331,23 @@ export default {
 .d-hui{color: #999;}
 .h200{height: 200px;}
 .iconbox{height: 30px;width: 108px;box-sizing: border-box;}
-.content {
-        text-align: center;
-        height: 400upx;
-    }
+// .content {
+//         text-align: center;
+//         height: 400upx;
+//     }
 
-    .logo {
-        height: 200upx;
-        width: 200upx;
-        margin-top: 200upx;
-    }
+    // .logo {
+    //     height: 200upx;
+    //     width: 200upx;
+    //     margin-top: 200upx;
+    // }
 
-    .title {
-        font-size: 36upx;
-        color: #8f8f94;
-    }
+    // .title {
+    //     font-size: 36upx;
+    //     color: #8f8f94;
+    // }
 
-    .box1 {
+    .echartsBox {
         width: 100%;
         height: 100%;
     }

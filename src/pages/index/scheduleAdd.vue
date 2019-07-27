@@ -1,3 +1,7 @@
+<!-- /**
+ * @author 徐贺
+ * @param label 新建日程
+ */ -->
 <template>
     <div>
         <NavBar title="新建日程" />
