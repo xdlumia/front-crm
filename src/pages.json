@@ -75,6 +75,13 @@
 		/** 销售机会——END*/
 		/** 联系人——BEGIN */
 		{
+			"path": "pages/common/more-list",
+			"style": {
+				"navigationBarTitleText": "更多条目",
+				"enablePullDownRefresh":true
+			}
+		},
+		{
 			"path": "pages/contact/index",
 			"style": {
 				"navigationBarTitleText": "联系人",
