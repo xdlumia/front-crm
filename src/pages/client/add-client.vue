@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="form-row d-center">
+            <div class="form-row isarrow d-center">
                 <div class="f13 d-text-black form-row-item form-row-label">
                     <span class='d-text-red'>*</span>所属部门
                 </div>
@@ -39,10 +39,13 @@
                 <div class="d-cell mr10 form-row-item">
                     <input type="text" disabled class='f12 d-text-gray' placeholder="请填写详细地址">
                 </div>
+                <div @click="chooseMap" class="ml15 ac hfull pl15 d-center" style="border-left: 1px solid #F2F2F2;">
+                    <i-icon type="coordinates" size="22" color="#999" />
+                </div>
             </div>
 
             <picker :value="levelTypeIndex" :range="levelData" @change='change($event, "levelTypeIndex")'>
-                <div class="form-row d-center">
+                <div class="form-row isarrow d-center">
                     <div class="f13 d-text-black form-row-item form-row-label">
                         客户级别
                     </div>
@@ -52,7 +55,7 @@
                 </div>
             </picker>
             <picker :value="levelTypeIndex" :range="levelData" @change='change($event, "levelTypeIndex")'>
-                <div class="form-row d-center">
+                <div class="form-row isarrow d-center">
                     <div class="f13 d-text-black form-row-item form-row-label">
                         行业
                     </div>
@@ -62,7 +65,7 @@
                 </div>
             </picker>
             <picker :value="levelTypeIndex" :range="levelData" @change='change($event, "levelTypeIndex")'>
-                <div class="form-row d-center">
+                <div class="form-row isarrow d-center">
                     <div class="f13 d-text-black form-row-item form-row-label">
                         来源
                     </div>
@@ -72,7 +75,7 @@
                 </div>
             </picker>
             <picker :value="levelTypeIndex" :range="levelData" @change='change($event, "levelTypeIndex")'>
-                <div class="form-row d-center">
+                <div class="form-row isarrow d-center">
                     <div class="f13 d-text-black form-row-item form-row-label">
                         标签
                     </div>
@@ -146,6 +149,14 @@ export default {
         border-top: 1px solid #f2f2f2;
         border-bottom: 1px solid #f2f2f2;
         height: 51px;
+        padding-right: 15px;
+        .form-row-label{
+            width: 110px;
+            text-indent: 15px;
+        }
+    }
+
+    .isarrow{
         position: relative;
         &:after{
             content: " ";
@@ -159,10 +170,6 @@ export default {
             border-color: #dddee1;
             border-style: solid;
             transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0)
-        }
-        .form-row-label{
-            width: 110px;
-            text-indent: 15px;
         }
     }
 

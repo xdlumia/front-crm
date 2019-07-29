@@ -51,7 +51,6 @@ export default {
 	onLoad (option) {},
 	methods: {
 		handleChange ({ index }) {
-			console.log(index)
 			this.currIndex = index
 		}
 	},
