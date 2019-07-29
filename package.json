@@ -33,6 +33,7 @@
     "@dcloudio/uni-mp-toutiao": "latest",
     "@dcloudio/uni-mp-weixin": "latest",
     "ali-oss": "^6.1.1",
+    "async-validator": "^1.11.3",
     "flyio": "^0.6.14",
     "js-sha512": "^0.8.0",
     "regenerator-runtime": "^0.12.1",
