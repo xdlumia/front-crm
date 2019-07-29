@@ -33,9 +33,9 @@
 			}
 		},
 		{
-			"path": "pages/client/tags",
+			"path": "pages/client/manage/index",
 			"style": {
-				"navigationBarTitleText": "标签"
+				"navigationBarTitleText": "管理信息设置"
 			}
 		},
 		{
@@ -103,6 +103,12 @@
 			"style": {
 				"navigationBarTitleText": "更多条目",
 				"enablePullDownRefresh":true
+			}
+		},
+		{
+			"path": "pages/common/score-manage",
+			"style": {
+				"navigationBarTitleText": "评分管理"
 			}
 		},
 		{

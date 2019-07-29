@@ -33,7 +33,7 @@
 				<a url='/pages/highseas/index' class="d-cell ac">
 					<span class="iconfont iconrenzheng f16"></span><span class="ml5 f13  d-text-gray">到公海池</span>
 				</a>
-				<a url='./tags' class="d-cell ar">
+				<a url='./manage/index' class="d-cell ar">
 					<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理</span>
 				</a>
 			</div>
