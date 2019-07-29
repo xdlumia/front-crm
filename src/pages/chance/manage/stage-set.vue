@@ -18,7 +18,7 @@
                             <span><i-icon type="enter" size="20" color="#999" /></span>
                         </i-col>
                         <i-col span="8" i-class="col-class">
-                        <span class="pl5 f13">{{row.title || ' '}}</span>
+                        <span class="pl5 f13">{{row.title}}</span>
                         </i-col>
                         <i-col span="4" class="ar">
                             <i class="uni-icon uni-icon-bars f16"></i>
@@ -39,11 +39,12 @@
             <i-cell v-for="(item,index) of resultList" :key="index">
                 <i-row>
                     <i-col span="8">
-                        <p class="ac">{{item.value || ' '}}</p>
+                        <span style="color:#fff">0</span>
+                        <span class="ac">{{item.value}}</span>
                     </i-col>
 
                     <i-col span="16" i-class="col-class">
-                       <span class="pl5 f13">{{item.title || ' '}}</span>
+                        <span class="pl5 f13">{{item.title}}</span>
                     </i-col>
 
                 </i-row>
