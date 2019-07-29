@@ -33,7 +33,7 @@
         </div>
 
         <div class="footer-fixed-menu d-center d-bg-white">
-            <a url='/pages/client/addup' class="d-cell al">
+            <a url='/pages/client/add-follow' class="d-cell al">
                 <i-icon type='addressbook_fill' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">添加跟进</span>
             </a>
             <div class="d-cell ac d-center" @click="handlerAction('phoneShow')">

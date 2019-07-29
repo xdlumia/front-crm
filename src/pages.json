@@ -45,13 +45,19 @@
 			}
 		},
 		{
+            "path":"pages/client/attr-detail",
+            "style":{
+                "navigationBarTitleText":"业务属性详情"
+            }
+        },
+		{
 			"path":"pages/client/add-client",
 			"style":{
 				"navigationBarTitleText":"新建客户"
 			}
 		},
 		{
-			"path":"pages/client/addup",
+			"path":"pages/client/add-follow",
 			"style":{
 				"navigationBarTitleText":"添加跟进"
 			}
