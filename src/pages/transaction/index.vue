@@ -57,7 +57,7 @@
 				<a url='/pages/transaction/transaction-add' class="d-cell al">
 					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建成交</span>
 				</a>
-				<a class="d-cell ar">
+				<a url='/pages/transaction/transaction-manage' class="d-cell ar">
 					<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理成交记录</span>
 				</a>
 			</div>

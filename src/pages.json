@@ -156,6 +156,30 @@
 			}
 		},
 		{
+			"path": "pages/transaction/transaction-manage",
+			"style": {
+				"navigationBarTitleText": "管理成交记录"
+			}
+		},
+		{
+			"path": "pages/common/information-set",
+			"style": {
+				"navigationBarTitleText": "信息设置"
+			}
+		},
+		{
+			"path": "pages/common/info-set",
+			"style": {
+				"navigationBarTitleText": "标签设置"
+			}
+		},
+		{
+			"path": "pages/common/edit-info",
+			"style": {
+				"navigationBarTitleText": "管理标签设置"
+			}
+		},
+		{
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "我的"
