@@ -7,7 +7,7 @@
             <div class="uni-flex uni-row pt10 mb5">
                 <div class="flex-item d-elip wfull f16 d-text-black">华为技术有限公司</div>
                 <div class="flex-item datail-handle">
-                    <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
+                    <a url='./add-client' class='d-inline'><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
                     <i-icon type="like_fill" size="20" class="ml15" color="#ff5533" />
                 </div>
             </div>
@@ -34,13 +34,13 @@
 
         <div class="footer-fixed-menu d-center d-bg-white">
             <a url='/pages/client/addup' class="d-cell al">
-                <uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">添加跟进</span>
+                <i-icon type='addressbook_fill' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">添加跟进</span>
             </a>
-            <div class="d-cell ac" @click="handlerAction('phoneShow')">
-                <span class="iconfont iconrenzheng f16"></span><span class="ml5 f13  d-text-gray">打电话</span>
+            <div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
+                <span class="iconfont iconcall f18" style='color: #696969'></span><span class="ml5 f13  d-text-gray">打电话</span>
             </div>
             <div class="d-cell ar" @click="handlerAction('moreShow')">
-                <i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">更多</span>
+                <i-icon type='more' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">更多</span>
             </div>
         </div>
 
@@ -104,6 +104,18 @@ export default {
 
 		handleMore ({ target: { index } }) {
 			let fnType = {
+				1: () => {
+					// 复制
+					this.$routing.navigateTo('./add-client')
+				},
+				3: () => {
+					this.$routing.navigateTo('/pages/index/colleagueChoose')
+				},
+				4: () => {
+					this.$utils.showModal().then(() => {
+						console.log('111')
+					})
+				},
 				5: () => {
 					// 更多日程
 					this.$routing.navigateTo('/pages/index/scheduleAdd')
@@ -130,4 +142,5 @@ export default {
             min-width: 60px;
         }
     }
+
 </style>

@@ -151,6 +151,17 @@ Vue.mixin({
 			phone && uni.makePhoneCall({
 				phoneNumber: phone.toString()
 			})
+		},
+		chooseMap () {
+			uni.chooseLocation({
+				success: function (res) {
+					console.log(res)
+					// console.log('位置名称：' + res.name)
+					// console.log('详细地址：' + res.address)
+					// console.log('纬度：' + res.latitude)
+					// console.log('经度：' + res.longitude)
+				}
+			})
 		}
 	}
 })

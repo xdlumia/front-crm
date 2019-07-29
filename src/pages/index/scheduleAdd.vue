@@ -97,45 +97,14 @@ export default {
 		}
 	},
 	computed: {
-		startDate () {
-			return this.getDate('start')
-		},
-		endDate () {
-			return this.getDate('end')
-		}
 	},
 	created () {
 	},
 	onLoad (option) {
 	},
 	methods: {
-		fChooseMap () {
-			uni.chooseLocation({
-				success: function (res) {
-					// console.log('位置名称：' + res.name)
-					// console.log('详细地址：' + res.address)
-					// console.log('纬度：' + res.latitude)
-					// console.log('经度：' + res.longitude)
-				}
-			})
-		},
 		bindDateChange () {
 
-		},
-		getDate (type) {
-			const date = new Date()
-			let year = date.getFullYear()
-			let month = date.getMonth() + 1
-			let day = date.getDate()
-
-			if (type === 'start') {
-				year = year - 60
-			} else if (type === 'end') {
-				year = year + 2
-			}
-			month = month > 9 ? month : '0' + month
-			day = day > 9 ? day : '0' + day
-			return `${year}-${month}-${day}`
 		}
 	},
 
