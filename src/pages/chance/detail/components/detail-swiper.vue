@@ -2,13 +2,13 @@
   <div>
       <i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
         <i-tab index="0">
-            <notesInfo />
+            <notesInfo height="200px"/>
         </i-tab>
         <i-tab index="1">
-            <detailInfo />
+            <detailInfo height="300px"/>
         </i-tab>
         <i-tab index="2">
-            <correlationInfo />
+            <correlationInfo height="200px"/>
         </i-tab>
     </i-tabs>
   </div>

@@ -1,12 +1,12 @@
 <template>
-    <div class="hfull d-auto-y">
+    <div class="hfull d-auto-y" :style="{height:height}">
         <mPanel title="联系人" color="#7765cc" url="/pages/contact/index">
             <div class="detail-list">
                 <div class="list-title">
                     <title>黄玉里</title> <span class="d-text-qgray">总精力</span>
                     <span class="fr iconfont iconcall f18 d-text-gray" ></span>
                 </div>
-                <a url="/pages/client/detail" class="d-block f12 d-elip d-text-qgray">华为技术有限公司</a>
+                <p class="f12 d-elip d-text-qgray">华为技术有限公司</p>
             </div>
         </mPanel>
 		<mPanel top="10" title="成交记录" color="#3cc695" url="/pages/transaction/index">
@@ -46,6 +46,7 @@
 
 <script>
 export default {
+	props: ['height'],
 	components: {
 		// mPager
 	},
@@ -59,12 +60,6 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
-		// 图片如果加载失败显示名称
-		defaultImg (e) {
-			console.log(e)
-			e.setAttribute('data-name', '改变')
-			// let title = e.target.dataset.title
-		},
 		// // 滚动到顶部刷新
 		// scrolltoupper (e) {
 		// 	console.log(e)

@@ -1,5 +1,5 @@
 <template>
-    <div class="hfull d-auto-y">
+    <div class="hfull d-auto-y" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc">
             <m-list label="机会名称">{{detailInfo.aaa}}</m-list>
             <m-list label="所属部门">{{detailInfo.aaa}}</m-list>
@@ -23,6 +23,7 @@
 
 <script>
 export default {
+	props: ['height'],
 	components: {
 		// mPager
 	},
