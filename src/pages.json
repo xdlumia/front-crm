@@ -33,7 +33,7 @@
 			}
 		},
 		{
-			"path": "pages/client/manage/index",
+			"path": "pages/client/tags",
 			"style": {
 				"navigationBarTitleText": "标签"
 			}
@@ -78,7 +78,7 @@
 			}
 		},
 		{
-			"path": "pages/chance/tags",
+			"path": "pages/chance/manage/index",
 			"style": {
 				"navigationBarTitleText": "管理机会",
 				"disableScroll": true
