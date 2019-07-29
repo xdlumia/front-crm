@@ -48,14 +48,14 @@
                 <view class="bb">
                     <view class="uni-form-item m10 pl5">
                         <view class="fl width30">备注</view>
-                        <input row="6" class="fl width70" name="note" placeholder="备注" />
+                        <textarea class="fl" name="note" placeholder="备注" ></textarea>
                     </view>
                 </view>
                 <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view>
-                <view class="d-absolute wfull" style="bottom:0">
-                    <i-button class="fl width50" v-if="isEditor == 1" type="warn">刪除</i-button>
-                    <i-button class="fl width50" v-if="isEditor == 1" type="primary">完成</i-button>
-                    <i-button v-if="isEditor == 0" type="primary">保存</i-button>
+                <view class="d-absolute wfull d-fixed" style="bottom:0">
+                    <i-button class="fl width50" v-if="isEditor == 0" type="warn">刪除</i-button>
+                    <i-button class="fl width50" v-if="isEditor == 0" type="primary">完成</i-button>
+                    <i-button v-if="isEditor == 1" type="primary">保存</i-button>
                 </view>
 
             </form>

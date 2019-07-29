@@ -8,7 +8,8 @@
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V uni-flex uni-column" >
                 <i-cell-group v-for="(item) in depts" :key="item.id">
-                    <i-cell is-link url='/pages/application/enterprise-management/organization/index'>{{item.name}}({{item.children}})</i-cell>
+                    <i-cell v-if="item.children != null && item.children.length > 0" is-link @click="toNextHierarchy(item.children)" >{{item.name}}({{item.childrenSize}})</i-cell>
+                    <i-cell v-else>{{item.name}}({{item.childrenSize}})</i-cell>
                 </i-cell-group>
             </view>
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
@@ -28,7 +29,7 @@
                <view class="pl5 fl">邀请同事加入</view>
             </view>
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
-            <view class="flex-item flex-item-V bt" style="position: fixed;bottom: 20px;width: 100%;padding-top: 10px;">
+            <view class="flex-item flex-item-V bt h30" style="position: fixed;bottom: 0;width: 100%;padding-top: 10px;background-color: rgba(255,255,255,1)">
                 <view class="uni-flex uni-row">
                     <a class="flex-item width33" style="text-align: center;color:#4D7FF5;" url="/pages/application/enterprise-management/team/editor/index?isEditor=0">添加员工</a>
                     <a class="flex-item width33" style="text-align: center;color:#4D7FF5;" url="/pages/application/enterprise-management/organization/add-dept?isEditor=0&name=销售部">添加子部门</a>
@@ -38,7 +39,6 @@
         </view>
     </view>
 </template>
-
 <script>
 export default {
 	components: {
@@ -51,12 +51,47 @@ export default {
 				{
 					id: 0,
 					name: '销售部',
-					children: 3
-				},
-				{
-					id: 1,
-					name: '市场部',
-					children: 2
+					childrenSize: 2,
+					children: [
+						{
+							id: 1,
+							name: '销售1部',
+							childrenSize: 2,
+							children: [
+								{
+									id: 3,
+									name: '销售1店',
+									childrenSize: 1,
+									children: [
+										{
+											id: 4,
+											name: '销售员1',
+											childrenSize: 0,
+											children: [
+
+											]
+										}
+									]
+								},
+								{
+									id: 4,
+									name: '销售2店',
+									childrenSize: 2,
+									children: [
+
+									]
+								}
+							]
+						},
+						{
+							id: 2,
+							name: '销售2部',
+							childrenSize: 2,
+							children: [
+
+							]
+						}
+					]
 				}
 			],
 			users: [
@@ -65,22 +100,33 @@ export default {
 					pic: 'xxx',
 					tag: '管理员',
 					name: '李志'
-				},
-				{
-					id: 1,
-					pic: 'xxx',
-					tag: '主管理员',
-					name: '李志'
 				}
-			]
+			],
+			hierarchy: 0
 		}
 	},
-	onLoad () {
-		// setTimeout(()=>{
-		// 	this.list = testList;
-		// }, 300)
+	onLoad (option) {
+		if (option.hierarchy) {
+			this.hierarchy = option.hierarchy
+		}
+		if (option.children) {
+			this.depts = JSON.parse(option.children)
+		}
 	},
 	methods: {
+		// 为避免微信小程序只能进入5级层级的问题，通过控制this.hierarchy的值，使在点击返回按钮时页面直接返回到公司层级所在的页面
+		toNextHierarchy (children) {
+			if (parseInt(this.hierarchy) > 0) {
+				uni.redirectTo({
+					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + this.hierarchy + '&children=' + JSON.stringify(children)
+				})
+			} else {
+				let param = parseInt(this.hierarchy) + 1
+				uni.navigateTo({
+					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + param + '&children=' + JSON.stringify(children)
+				})
+			}
+		},
 		// 邀请成员加入
 		invite () {
 			uni.navigateTo({
@@ -98,19 +144,6 @@ export default {
 </script>
 
 <style>
-    .this-font{
-        font-family: '微软雅黑';
-        font-weight: 400;
-        font-style: normal;
-        font-size: 13px;
-    }
-    .bule-font{
-        font-family: '微软雅黑';
-        font-weight: 400;
-        font-style: normal;
-        font-size: 13px;
-        color: #0074D9;
-    }
     .width20{
         width: 20%;
     }

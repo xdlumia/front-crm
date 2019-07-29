@@ -1,19 +1,19 @@
 <template>
     <view>
-        <NavBar title="企业管理" />
+        <NavBar title="团队申请" />
         <view class="uni-flex uni-column">
             <view class="flex-item flex-item-V bb uni-flex uni-row p15" v-for="(item) in teamDatas" :key="item.is">
                  <view class="flex-item width20 p10">
                     <image class="ba" style="height: 51px;width: 51px;" src="/static/img/my-default.png"></image>
                 </view>
-                <view class="flex-item width30">
-                    <view class="name-font">{{item.name}}</view>
-                    <view class="tip-font">来源</view>
+                <view class="flex-item width32">
+                    <view class="f16">{{item.name}}</view>
+                    <view class="d-text-qgray">来源</view>
                     <view>由<span style="color:#5081F5;">{{item.inviter}}</span>邀请加入</view>
-                    <view class="tip-font">申请理由</view>
+                    <view class="d-text-qgray">申请理由</view>
                     <view>{{item.applyReason}}</view>
                 </view>
-                <view class="flex-item width50" style="margin: 40px 0;">
+                <view class="flex-item width48" style="margin: 40px 0;">
                     <button type="primary"
                     size="8px" plain="true"
                     style="float: left;margin-left: 4px;color: #4889F4;border-color: #4889F4;"
@@ -77,21 +77,10 @@ export default {
     .width20{
         width: 20%;
     }
-    .width30{
-        width: 30%;
+    .width32{
+        width: 32%;
     }
-    .width50{
-        width: 50%;
-    }
-    .name-font{
-        font-family: 'PingFangSC-Regular', 'PingFang SC';
-        font-weight: 400;
-        font-style: normal;
-        font-size: 16px;
-        text-align: left;
-    }
-    .tip-font{
-        font-size: 10px;
-        color: #999999;
+    .width48{
+        width: 48%;
     }
 </style>

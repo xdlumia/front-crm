@@ -23,9 +23,7 @@
 export default {
 	data () {
 		return {
-			isActive: 0,
-			current: '管理员',
-			position: 'left',
+			current: 0,
 			roles: [
 				{
 					id: 0,
@@ -49,11 +47,6 @@ export default {
 		}
 	},
 	methods: {
-		handleFruitChange ({ detail = {} }) {
-			this.setData({
-				current: detail.value
-			})
-		},
 		radioChange: function (evt) {
 			for (let i = 0; i < this.roles.length; i++) {
 				if (this.roles[i].id === evt.target.id) {
@@ -67,18 +60,4 @@ export default {
 </script>
 
 <style>
-	.name-font{
-		font-family: 'PingFangSC-Regular', 'PingFang SC';
-		font-weight: 400;
-		font-style: normal;
-		font-size: 16px;
-		text-align: left;
-	}
-	.tip-font{
-		font-size: 14px;
-		color: #999999;
-	}
-	.active{
-		background-color: #0080FF;
-	}
 </style>
