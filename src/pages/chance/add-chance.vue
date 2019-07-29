@@ -1,8 +1,8 @@
-<!-- 名片新建/编辑 -->
-<!-- tianjiaojiao -->
+<!-- 添加机会 -->
+<!-- wangxiaodong -->
 <template>
-<div class="d-bg-white" style="heigth:100vh">
-    <NavBar title="新建机会"/>
+<div class="d-bg-white">
+    <NavBar title="新建销售机会"/>
     <div>
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.userName" label="机会名称" placeholder="请填写销售机会名称" required />
@@ -109,10 +109,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-</style><style lang="scss">
 page {
-  background-color: #f2f2f2;
+  background-color: #fff;
   padding-bottom: 140upx;
 }
 </style>

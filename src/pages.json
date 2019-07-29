@@ -61,8 +61,7 @@
 		{
 			"path": "pages/chance/add-chance",
 			"style": {
-				"navigationBarTitleText": "新建机会",
-				"enablePullDownRefresh":true
+				"navigationBarTitleText": "新建销售机会"
 			}
 		},
 		{
