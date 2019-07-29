@@ -1,40 +1,21 @@
 <template>
-  <div>
-      <scroll-view style="background-color:#fff;" id="tab-bar" class="detail-tab" :scroll-x="true" :show-scrollbar="false">
-          <div class="pl15 pr15 detail-tab-box">
-              <div
-                v-for="(tab,index) in tabBars"
-                :key="tab.id"
-                class="detail-tab-item d-relative d-text-black"
-                :id="tab.id"
-                :data-current="index"
-                @click="ontabtap(index)"
-                >
-                    <text
-                        class="detail-tab-item-title"
-                        :class="currIndex==index ? 'detail-tab-item-title-active' : ''"
-                    >{{tab.name}}</text>
-                </div>
-          </div>
+    <div>
+        <i-tabs :current="current" :tabList='tabBars' @change="handleChange">
 
-      </scroll-view>
-      <swiper
-        :current="currIndex"
-        style="flex: 1;height:calc(100vh - 300px)"
-        class="d-auto-y"
-        :duration="300"
-        @change="ontabchange">
-        <swiper-item>1</swiper-item>
-        <swiper-item>
-            <!-- 详细信息 -->
-            <detailInfo></detailInfo>
-        </swiper-item>
-        <swiper-item>
-            <!-- 相关信息 -->
-            <correlationInfo></correlationInfo>
-        </swiper-item>
-      </swiper>
-  </div>
+            <i-tab index="0">
+                <div style='height:calc(100vh - 300px)'>
+                    1
+                </div>
+            </i-tab>
+            <i-tab index="1">
+                <detailInfo></detailInfo>
+            </i-tab>
+            <i-tab index="2">
+                <correlationInfo></correlationInfo>
+            </i-tab>
+
+        </i-tabs>
+    </div>
 </template>
 
 <script>
@@ -47,18 +28,16 @@ export default {
 	},
 	data () {
 		return {
+			current: 0,
 			tabBars: [
 				{
-					name: '跟进记录',
-					id: '1'
+					title: '跟进记录'
 				},
 				{
-					name: '详细信息',
-					id: '2'
+					title: '详细信息'
 				},
 				{
-					name: '相关信息',
-					id: '3'
+					title: '相关信息'
 				}
 			],
 			currIndex: 0
@@ -66,12 +45,8 @@ export default {
 	},
 	onLoad (option) {},
 	methods: {
-		ontabtap (index) {
-			this.currIndex = index
-		},
-		ontabchange (e) {
-			let index = e.target.current || e.detail.current
-			this.currIndex = index
+		handleChange ({ index }) {
+			this.current = index
 		}
 	},
 	created () {}

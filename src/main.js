@@ -33,6 +33,8 @@ import iStep from './components/basic/iview/step'
 import iLoadMore from './components/basic/iview/load-more'
 import iSwipeout from './components/basic/iview/swipeout'
 import iSwitch from './components/basic/iview/switch'
+import iTabs from './components/basic/iview/tabs'
+import iTab from './components/basic/iview/tab'
 
 // import iTab from './components/basic/iview/tab'
 // import iTabs from './components/basic/iview/tabs'
@@ -89,8 +91,8 @@ Vue.component('iStep', iStep)
 Vue.component('iLoadMore', iLoadMore)
 Vue.component('iSwipeout', iSwipeout)
 Vue.component('iSwitch', iSwitch)
-// Vue.component('iTab', iTab)
-// Vue.component('iTabs', iTabs)
+Vue.component('iTab', iTab)
+Vue.component('iTabs', iTabs)
 
 // uni UI component
 Vue.component('uniIcon', uniIcon)
