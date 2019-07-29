@@ -11,7 +11,7 @@
         <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
             <div class="ml15 w100">位置</div>
             <i-input v-model="value1" placeholder="点击输入" class='wfull'/>
-                <div @click="fChooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
+                <div @click="chooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
                     <i-icon type="coordinates" size="22" color="#999" />
                 </div>
         </div>
@@ -97,16 +97,6 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
-		fChooseMap () {
-			uni.chooseLocation({
-				success: function (res) {
-					// console.log('位置名称：' + res.name)
-					// console.log('详细地址：' + res.address)
-					// console.log('纬度：' + res.latitude)
-					// console.log('经度：' + res.longitude)
-				}
-			})
-		},
 		bindDateChange () {
 
 		},

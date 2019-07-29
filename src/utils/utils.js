@@ -75,5 +75,19 @@ export default {
 
 	hideLoading () {
 		uni.hideLoading()
+	},
+
+	showModal (content) {
+		return new Promise((resolve, reject) => {
+			uni.showModal({
+				title: '提示',
+				content: content || '确定要删除选择的记录？'
+			}).then(([err, res]) => {
+				if (err || !res.confirm) {
+					reject(new Error(err))
+				}
+				resolve()
+			})
+		})
 	}
 }

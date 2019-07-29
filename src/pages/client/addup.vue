@@ -4,7 +4,7 @@
         <div class="mt10 d-bg-white">
 
             <picker :value="upTypeIndex" :range="upData" @change='change($event, "upTypeIndex")'>
-                <div class="form-row d-center">
+                <div class="form-row isarrow d-center">
                         <div class="f13 d-text-black form-row-item form-row-label">
                             跟进类型
                         </div>
@@ -14,7 +14,7 @@
                 </div>
             </picker>
 
-            <div class="form-row d-center">
+            <div class="form-row isarrow d-center">
                 <div class="f13 d-text-black form-row-item form-row-label">
                     联系人
                 </div>
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="form-row d-center">
+            <div class="form-row isarrow d-center">
                 <div class="f13 d-text-black form-row-item form-row-label">
                     销售机会
                 </div>
@@ -40,10 +40,11 @@
                     <div class="d-cell mr10 form-row-item">
                         <input type="text" disabled class='f12 d-text-gray' :placeholder="timeData || '请选择'">
                     </div>
+                    <div> <i class="iconfont f16 iconshouye_chengjiaoshujurili" style="color: #5a5a5a;"></i></div>
                 </div>
             </picker>
             <picker :value="levelTypeIndex" :range="levelData" @change='change($event, "levelTypeIndex")'>
-                <div class="form-row d-center">
+                <div class="form-row isarrow d-center">
                     <div class="f13 d-text-black form-row-item form-row-label">
                         意向程度
                     </div>
@@ -100,6 +101,14 @@ export default {
         border-top: 1px solid #f2f2f2;
         border-bottom: 1px solid #f2f2f2;
         height: 51px;
+        padding-right: 15px;
+        .form-row-label{
+            width: 110px;
+            text-indent: 15px;
+        }
+    }
+
+    .isarrow{
         position: relative;
         &:after{
             content: " ";
@@ -113,10 +122,6 @@ export default {
             border-color: #dddee1;
             border-style: solid;
             transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0)
-        }
-        .form-row-label{
-            width: 110px;
-            text-indent: 15px;
         }
     }
 
