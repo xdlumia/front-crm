@@ -34,7 +34,7 @@
             </Filter>
         </div>
 
-		<div class='highseas-list-view d-relative'>
+		<a url='/pages/transaction/detail' class='highseas-list-view d-relative'>
 			<scroll-list
 				:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
 				api="bizSystemService.getUserAuth"
@@ -54,14 +54,14 @@
 			</scroll-list>
 
 			<div class="footer-fixed-menu d-center d-bg-white">
-				<a class="d-cell al">
+				<a url='/pages/transaction/transaction-add' class="d-cell al">
 					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建成交</span>
 				</a>
 				<a class="d-cell ar">
 					<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理成交记录</span>
 				</a>
 			</div>
-		</div>
+		</a>
     </div>
 </template>
 

@@ -101,6 +101,18 @@
 			}
 		},
 		{
+			"path": "pages/transaction/detail",
+			"style": {
+				"navigationBarTitleText": "成交详情"
+			}
+		},
+		{
+			"path": "pages/transaction/transaction-add",
+			"style": {
+				"navigationBarTitleText": "新建成交记录"
+			}
+		},
+		{
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "我的"
