@@ -96,6 +96,12 @@
 				"navigationBarTitleText":"添加跟进"
 			}
 		},
+		{
+			"path":"pages/chance/manage/stage-set",
+			"style":{
+				"navigationBarTitleText":"编辑销售阶段"
+			}
+		},
 		/** 销售机会——END*/
 		/** 联系人——BEGIN */
 		{
