@@ -11,18 +11,18 @@
       api="bizSystemService.getUserAuth"
       :params="queryForm"
       v-slot="{ row }">
-      <a url="./detail/index" class="d-block">
-        <div class="chance-item uni-flex uni-row">
-          <div class="wfull flex-item item-info d-elip">
+      <div class="chance-item uni-flex uni-row">
+        <div class="wfull flex-item item-info d-elip">
+          <a url="./detail/index">
             <h4 class="d-elip">{{row}}王东亮</h4>
             <p class="d-text-qgray d-elip f12 ">华为技术有限公司</p>
             <time class="d-text-gray f12 fl">创建日期: 2019-04-4 17:23</time>
-          </div>
-          <div class="flex-item item-progress">
-            <i class="iconfont f20 d-text-blue iconcall"></i>
-          </div>
+          </a>
         </div>
-      </a>
+        <div class="flex-item item-progress">
+          <i class="iconfont f20 d-text-blue iconcall"></i>
+        </div>
+      </div>
     </scroll-list>
     <!-- 客户 -->
     <div class="footer-fixed-menu d-center d-bg-white bt">

@@ -41,7 +41,7 @@
       </detail-swiper>
       <!-- 底部操作按钮 -->
       <div class="footer-fixed-menu d-center d-bg-white">
-        <a class="d-cell al">
+        <a class="d-cell al" url='/pages/chance/add-chance'>
           <uni-icon type="plus" size="16" color="#1890FF" />
           <span class="ml5 f13 d-text-gray">添加跟进</span>
         </a>

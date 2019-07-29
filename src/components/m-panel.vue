@@ -7,7 +7,9 @@
   <div class="panel-section" :style="{'margin-top':top+'px'}">
     <div class="panel-section-title" :style="{'background-color':bg}">
       <h3 v-if="title" :style="{'border-left-color':color}">{{title}}
-          <i-icon v-if="add" @click="addClick" class="fr" type="add" size="24" color="#466bef" />
+        <a  v-if="url" :url="url">
+          <i-icon @click="addClick" class="fr" type="add" size="24" color="#466bef" />
+        </a>
       </h3>
     </div>
     <div class="panel-content" :class="{'panel-border-none':!border}">
@@ -36,9 +38,8 @@ export default {
 			type: String,
 			default: '#409eff'
 		},
-		add: {
-			default: false,
-			type: Boolean
+		url: {
+			type: String
 		}
 	},
 	data () {

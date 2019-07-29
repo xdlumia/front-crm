@@ -59,6 +59,13 @@
 			}
 		},
 		{
+			"path": "pages/chance/add-chance",
+			"style": {
+				"navigationBarTitleText": "新建机会",
+				"enablePullDownRefresh":true
+			}
+		},
+		{
 			"path": "pages/chance/detail/index",
 			"style": {
 				"navigationBarTitleText": "销售机会详情",
