@@ -6,7 +6,7 @@
                     <title>黄玉里</title> <span class="d-text-qgray">总精力</span>
                     <span class="fr iconfont iconcall f18 d-text-gray" ></span>
                 </div>
-                <p class="f12 d-elip d-text-qgray">华为技术有限公司</p>
+                <a url="/pages/client/detail" class="d-block f12 d-elip d-text-qgray">华为技术有限公司</a>
             </div>
         </mPanel>
 		<mPanel top="10" title="成交记录" color="#3cc695" url="/pages/transaction/index">
