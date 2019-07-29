@@ -5,20 +5,19 @@
  * @param label-width lable 宽度 默认100
  * @param disabled 是否禁用选择器
  * @param value v-model
- * @param props {value: 值, lable:显示的名称}
  * @param required 是否必填
- * <m-input <i-select
+ * <m-input <picker
              v-model="form.phone"
-				:props="{label:'name',value:'id'}"
 				label="所属部门"
 				placeholder="请选择所属部门"
-				required
-				:options="upData">
-			</i-select>
+				required>
+			</picker-date>
  */ -->
 <template>
     <picker :disabled="disabled" mode="date" :value="currValue" @change="bindDateChange">
-		<i-input isSelect disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" required />
+		<i-input disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" required>
+			<i-icon type="time" size="16" color="#999" />
+		</i-input>
 	</picker>
 </template>
 

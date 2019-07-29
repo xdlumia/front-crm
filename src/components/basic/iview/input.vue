@@ -29,7 +29,7 @@
                 <span v-if="required" class="d-text-red">*</span>
                 <label class="d-elip d-text-black f13">{{label}}</label>
             </div>
-            <div class="d-cell">
+            <div class="d-cell d-relative">
                 <input
                     :type="type"
                     :disabled="disabled"
@@ -37,12 +37,12 @@
                     :value="value"
                     :placeholder="placeholder"
                     :maxlength="maxlength"
-					:class="{'input-icon':isSelect}"
                     class=" i-input-input uni-lh50 uni-h50 wfull f13"
                     @input="handleInputChange"
                     @focus="handleInputFocus"
                     @blur="handleInputBlur"
                 />
+				<div class="input-icon"><slot></slot></div>
             </div>
         </div>
     </div>
@@ -119,23 +119,15 @@ export default {
 .detail-panel-item {
 	position: relative;
     font-size: 12px;
-  padding:10px 15px;
-  border-bottom: 1px solid #f2f2f2;
+    padding:10px 15px;
+    border-bottom: 1px solid #f2f2f2;
 }
 .input-icon{
-	position: relative;
-	&:after{
-            content: " ";
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            position: absolute;
-            top: 50%;
-            right: 0px;
-            border-width: 2px 2px 0 0;
-            border-color: #dddee1;
-            border-style: solid;
-            transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0)
-        }
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	right: 0px;
+	transform: translateY(-50%);
+	color:#999
 }
 </style>
