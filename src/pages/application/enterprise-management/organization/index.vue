@@ -8,7 +8,7 @@
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V uni-flex uni-column" >
                 <i-cell-group v-for="(item) in depts" :key="item.id">
-                    <i-cell v-if="item.children != null && item.children.length > 0" is-link @click="toNextHierarchy(item.children)" >{{item.name}}({{item.childrenSize}})</i-cell>
+                    <i-cell v-if="item.children != null && item.children.length > 0" is-link @click="toNextHierarchy(item.name,item.children)" >{{item.name}}({{item.childrenSize}})</i-cell>
                     <i-cell v-else>{{item.name}}({{item.childrenSize}})</i-cell>
                 </i-cell-group>
             </view>
@@ -31,9 +31,24 @@
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V bt h30" style="position: fixed;bottom: 0;width: 100%;padding-top: 10px;background-color: rgba(255,255,255,1)">
                 <view class="uni-flex uni-row">
-                    <a class="flex-item width33" style="text-align: center;color:#4D7FF5;" url="/pages/application/enterprise-management/team/editor/index?isEditor=0">添加员工</a>
-                    <a class="flex-item width33" style="text-align: center;color:#4D7FF5;" url="/pages/application/enterprise-management/organization/add-dept?isEditor=0&name=销售部">添加子部门</a>
-                    <a class="flex-item width33" style="text-align: center;color:#4D7FF5;" url="/pages/application/enterprise-management/organization/add-dept?isEditor=1&name=销售部">部门设置</a>
+                    <a
+                        :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
+                        style="text-align: center;color:#4D7FF5;"
+                        url="/pages/application/enterprise-management/team/editor/index?isEditor=0">
+                        添加员工
+                    </a>
+                    <a
+                        :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
+                        style="text-align: center;color:#4D7FF5;"
+                        url="/pages/application/enterprise-management/organization/add-dept?isEditor=0&name=销售部">
+                        添加子部门
+                    </a>
+                    <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
+                        v-if="hierarchy != 0"
+                        style="text-align: center;color:#4D7FF5;"
+                        url="/pages/application/enterprise-management/organization/add-dept?isEditor=1&name=销售部">
+                        部门设置
+                    </a>
                 </view>
             </view>
         </view>
@@ -112,18 +127,23 @@ export default {
 		if (option.children) {
 			this.depts = JSON.parse(option.children)
 		}
+		// 动态修改追加部门名称
+		if (option.companyName && option.name) {
+			console.log(this.depts)
+			this.companyName = option.companyName + '>' + option.name
+		}
 	},
 	methods: {
 		// 为避免微信小程序只能进入5级层级的问题，通过控制this.hierarchy的值，使在点击返回按钮时页面直接返回到公司层级所在的页面
-		toNextHierarchy (children) {
+		toNextHierarchy (name, children) {
 			if (parseInt(this.hierarchy) > 0) {
 				uni.redirectTo({
-					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + this.hierarchy + '&children=' + JSON.stringify(children)
+					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + this.hierarchy + '&children=' + JSON.stringify(children) + '&companyName=' + this.companyName + '&name=' + name
 				})
 			} else {
 				let param = parseInt(this.hierarchy) + 1
 				uni.navigateTo({
-					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + param + '&children=' + JSON.stringify(children)
+					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + param + '&children=' + JSON.stringify(children) + '&companyName=' + this.companyName + '&name=' + name
 				})
 			}
 		},
@@ -136,7 +156,7 @@ export default {
 		// 编辑员工
 		editUser () {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/team/editor/index'
+				url: '/pages/application/enterprise-management/team/editor/index?isEditor=1'
 			})
 		}
 	}
@@ -149,5 +169,8 @@ export default {
     }
     .width33{
         width: 33%;
+    }
+    .width50{
+        width: 50%;
     }
 </style>
