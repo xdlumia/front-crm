@@ -41,21 +41,22 @@
       </detail-swiper>
       <!-- 底部操作按钮 -->
       <div class="footer-fixed-menu d-center d-bg-white">
-        <a class="d-cell al" url='/pages/chance/add-chance'>
+        <a class="d-cell al" url='/pages/chance/add-follow'>
           <uni-icon type="plus" size="16" color="#1890FF" />
           <span class="ml5 f13 d-text-gray">添加跟进</span>
         </a>
-        <a class="d-cell ar">
-          <i-icon type="setup" size="18" color="#1890FF" />
-          <span class="ml5 f13 d-text-gray">打电话</span>
-        </a>
-        <a class="d-cell ar">
-          <i-icon type="setup" size="18" color="#1890FF" />
-          <span class="ml5 f13 d-text-gray">更多</span>
-        </a>
+        <div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
+            <span class="iconfont iconcall f18" style='color: #696969'></span><span class="ml5 f13  d-text-gray">打电话</span>
+        </div>
+        <div class="d-cell ar" @click="handlerAction('moreShow')">
+            <i-icon type='more' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">更多</span>
+        </div>
       </div>
-      <!-- 更多 action -->
-      <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" />
+       <!-- 更多 action -->
+        <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" @click="handleMore" />
+
+        <!-- 电话 action -->
+        <i-actionSheet :visible="phoneShow" :actions="phoneActions" show-cancel @cancel="handlerAction('phoneShow')" @click='handlePhone' />
 
     </div>
   </div>
@@ -64,7 +65,7 @@
 <script>
 import detailSwiper from './components/detail-swiper'
 
-let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程']
+let moreActionsTitle = ['更多操作', '复制', '转移给他人', '删除', '日程']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 
 export default {
@@ -104,7 +105,16 @@ export default {
 			},
 			moreShow: false,
 			phoneShow: false,
-			moreActions: moreActions
+			moreActions: moreActions,
+			phoneActions: [
+				{
+					name: '联系人电话'
+				},
+				{
+					name: '赵利春 18910453728',
+					phone: 18910453728
+				}
+			]
 		}
 	},
 	onLoad (option) {},

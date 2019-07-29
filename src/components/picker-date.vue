@@ -16,7 +16,7 @@
 <template>
     <picker :disabled="disabled" mode="date" :value="currValue" @change="bindDateChange">
 		<i-input disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" required>
-			<i-icon type="time" size="16" color="#999" />
+			<i class="iconfont f16 iconshouye_chengjiaoshujurili" style="color: #5a5a5a;"></i>
 		</i-input>
 	</picker>
 </template>

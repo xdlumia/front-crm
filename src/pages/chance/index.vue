@@ -53,7 +53,7 @@
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建机会</span>
       </a>
-      <a class="d-cell ar">
+      <a class="d-cell ar" url='./manage/index'>
         <i-icon type="setup" size="18" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">管理机会</span>
       </a>

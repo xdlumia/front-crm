@@ -33,7 +33,7 @@
 			}
 		},
 		{
-			"path": "pages/client/tags",
+			"path": "pages/client/manage/index",
 			"style": {
 				"navigationBarTitleText": "标签"
 			}
@@ -75,6 +75,19 @@
 			"style": {
 				"navigationBarTitleText": "销售机会详情",
 				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/chance/tags",
+			"style": {
+				"navigationBarTitleText": "管理机会",
+				"disableScroll": true
+			}
+		},
+		{
+			"path":"pages/chance/add-follow",
+			"style":{
+				"navigationBarTitleText":"添加跟进"
 			}
 		},
 		/** 销售机会——END*/
