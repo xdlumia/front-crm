@@ -30,18 +30,18 @@
                         <div class="mr15">
                             <uni-tag text="领取" type='primary' inverted size='small'></uni-tag>
                         </div>
-                        <div class="mr10">
+                        <a url='/pages/index/colleagueChoose' class="mr10">
                             <uni-tag text="分配" type='primary' inverted size='small'></uni-tag>
-                        </div>
+                        </a>
                     </div>
                 </div>
 			</scroll-list>
 
 			<div class="footer-fixed-menu d-center d-bg-white">
-				<a class="d-cell al">
+				<a url='./add-client' class="d-cell al">
 					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
 				</a>
-				<a class="d-cell ar">
+				<a url='./setting' class="d-cell ar">
 					<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理</span>
 				</a>
 			</div>

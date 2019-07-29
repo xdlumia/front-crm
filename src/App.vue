@@ -39,4 +39,21 @@ export default {
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
+
+.isarrow{
+    position: relative;
+    &:after{
+        content: " ";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        border-width: 2px 2px 0 0;
+        border-color: #dddee1;
+        border-style: solid;
+        transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0)
+    }
+}
 </style>

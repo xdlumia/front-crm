@@ -258,7 +258,7 @@ export default {
 	data () {
 		return {
 			// echarts,
-			current: 1,
+			current: 0,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
 			timelong: 7,
