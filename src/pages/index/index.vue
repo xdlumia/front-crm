@@ -9,6 +9,7 @@
         <!-- 今天 -->
         <div v-if='current == 0'>
             <!--显示本周-->
+
             <div v-if="timelong == 7">
                 <div class="d-text-black ml15 mt10">{{todayDate}}
                     <uni-icon type="arrowdown" class="pl5" size="18" @click='timelong = 30'/>
@@ -258,7 +259,7 @@ export default {
 	data () {
 		return {
 			// echarts,
-			current: 0,
+			current: 1,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
 			timelong: 7,

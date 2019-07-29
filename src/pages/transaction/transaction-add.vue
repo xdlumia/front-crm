@@ -12,7 +12,7 @@
                 required
                 :options="upData">
             </i-select>
-            <i-input v-model="form.phone" label="客户名称" placeholder="请输入"/>
+            <i-input v-model="form.phone" disabled label="客户名称" placeholder="请输入"/>
             <i-select
                 v-model="form.phone"
                 :props="{label:'name',value:'id'}"
@@ -42,23 +42,11 @@
                 required
                 :options="upData">
             </i-select>
-            <i-input v-model="form.userPosition" label="销售金额" placeholder="请填写销售金额" required />
-            <i-select
-                v-model="form.phone"
-                :props="{label:'name',value:'id'}"
-                label="销售阶段"
-                placeholder="请选择销售阶段"
-                required
-                :options="upData">
-            </i-select>
-            <picker-date v-model="form.personalProfile" label="预计成交日期" placeholder="请选择日期">
+            <picker-date v-model="form.personalProfile" label="签约日期" placeholder="请选择日期" :required='false'>
             </picker-date>
-            <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="行业" :options="upData"/>
-            <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="来源" :options="upData"/>
-            <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="标签" :options="upData"/>
-            <i-input v-model="form.personalProfile" label="个人简介" placeholder="备注" type="textarea" />
         </m-form>
         <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
+		<i-button type="primary">保 存</i-button>
     </div>
 </div>
 </template>

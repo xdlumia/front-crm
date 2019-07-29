@@ -7,7 +7,7 @@
                     <block v-for="(child,inde) in item.textArray" :key="inde">
                             <view class="wxaSortPickerItem" :data-text="child.name" :data-value="child.value"  @click="wxaSortPickerItemTap(child,'child')">
                                 <uni-icon v-if='isRadio' type='checkbox-filled' :color="child.value == isCheckedData.value ? '#1890FF' : '#999'" size='26' />
-                                <uni-icon v-else type='checkbox-filled' :color="haveChecked" size='26' />
+                                <uni-icon v-else type='checkbox-filled' color="'#999'" size='26' />
                                 <span class="ml5">{{child.name}}</span>
                             </view>
                     </block>
@@ -55,15 +55,15 @@ export default {
 	},
 	computed: {
 		haveChecked () {
+			let valueArr = []
 			this.isAllData.forEach((item) => {
-				if (item.value == this.child.value) {
-					// console.log('1890FF')
-					return '#1890FF'
-				} else {
-					// console.log('999')
-					return '#999'
-				}
+				valueArr.push(item.value)
 			})
+			if(valueArr.includes(this.child.value)){
+				return '#1890FF'
+			}else{
+				return '#999'
+			}
 		}
 	},
 	mounted () {
@@ -99,29 +99,31 @@ export default {
 			that.buildTextData(that, array)
 		},
 		wxaSortPickerItemTap: function (child, type) {
+			this.child = child
 			if (this.isRadio) {
 				this.isCheckedData.value == child.value ? this.isCheckedData = {} : this.isCheckedData = child
 				if (type != 'dad') {
 					this.$emit('clickData', this.isCheckedData)
 				}
 			} else {
-				// console.log('231')
 				// let isAllData = [...this.isAllData]
-				// if(isAllData.length){
-				// 	for(let i=0;i<isAllData.length;i++){
-				// 		if(isAllData[i].value && (isAllData[i].value == child.value)){
-				// 			console.log('没有')
-				// 			isAllData.splice(i,1)
-				// 		}else{
-				// 			console.log('有')
-				// 			isAllData.push(child)
-				// 		}
+				// let valueArr = []
+				// isAllData.map((item)=>{
+				// 	valueArr.push(item.value)
+				// })
+				
+				// if(valueArr.length){
+				// 	if(valueArr.includes(child.value)){
+				// 		this.isAllData.splice(child.value.indexOf(valueArr),1)
+				// 		valueArr.splice(child.value.indexOf(valueArr),1)
+				// 	}else{
+				// 		this.isAllData.push(child)
+				// 		valueArr.push(child.value)
 				// 	}
 				// }else{
-				// 	isAllData.push(child)
+				// 	this.isAllData.push(child)
+				// 	valueArr.push(child.value)
 				// }
-				// this.isAllData = [...isAllData]
-				// isAllData = []
 				// console.log(this.isAllData)
 				// this.$emit('clickData', this.isAllData)
 			}
