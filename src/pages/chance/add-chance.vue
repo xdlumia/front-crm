@@ -40,7 +40,7 @@ export default {
 				// 邮箱
 				email: '',
 				// 手机号
-				phone: '2',
+				phone: '1',
 				// 姓名
 				userName: '',
 				// 个人简介
@@ -94,7 +94,6 @@ export default {
 		change ({ mp: { detail } }, filed) {
 			let index = detail.value
 			this[filed] = index
-			console.log(detail)
 		}
 	},
 	created () {},

@@ -1,15 +1,24 @@
 <!-- /**
  * @author 王晓冬
- * @param label 标题
- * @param label-width lable 宽度 默认80
- * @param disabled 是否禁用输入框
  * @param value v-model
- * @example 如下例子，在visible为true的时候，内容将会从 #tab-bar 显示区域底部弹出
- * <m-input label="姓名" disabled="true" v-model="contractInfo.name"></m-input>
+ * @param label 选择器标题
+ * @param label-width lable 宽度 默认100
+ * @param disabled 是否禁用选择器
+ * @param value v-model
+ * @param props {value: 值, lable:显示的名称}
+ * @param required 是否必填
+ * <m-input <i-select
+             v-model="form.phone"
+				:props="{label:'name',value:'id'}"
+				label="所属部门"
+				placeholder="请选择所属部门"
+				required
+				:options="upData">
+			</i-select>
  */ -->
 <template>
-    <picker :value="valueIndex" :range="range" @change='change($event, "upTypeIndex")'>
-		<i-input v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" required />
+    <picker :disabled="disabled" :value="valueIndex" :range="range" @change='change($event, "upTypeIndex")'>
+		<i-input isSelect disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" required />
 	</picker>
 </template>
 
@@ -21,6 +30,7 @@ export default {
 			required: true,
 			type:Array,
 		},
+		disabled:Boolean,
 		label: {
 			type: String,
 			default:'默认label'
@@ -66,7 +76,7 @@ export default {
 					let currData = this.options[index] || {}
 					this.valueName = currData[label] || ''
 				}
-				return index
+				return index ===-1? 0 : index
 			},
 			set(val) {
 			}
@@ -94,18 +104,19 @@ export default {
 </script>
 
 <style lang="scss">
-.detail-panel-item{
-    padding:0 15px;
-    height: 50px;
-    line-height: 50px;
-    border-bottom:1px solid #e4e4e4;
-    display: flex;
-    font-size:14px;
-    label{color:#a0a0a0;}
-    .detail-panel-content{height: 50px;
-      color:#333;
-      line-height: 50px;
-      width: 100%;
-    }
+.input-icon{
+	&:after{
+            content: " ";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            border-width: 2px 2px 0 0;
+            border-color: #dddee1;
+            border-style: solid;
+            transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0)
+        }
 }
 </style>

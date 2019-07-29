@@ -35,7 +35,8 @@
                     :value="value"
                     :placeholder="placeholder"
                     :maxlength="maxlength"
-                    class="i-input-input uni-lh50 uni-h50 wfull f13"
+					:class="{'input-icon':isSelect}"
+                    class=" i-input-input uni-lh50 uni-h50 wfull f13"
                     @input="handleInputChange"
                     @focus="handleInputFocus"
                     @blur="handleInputBlur"
@@ -86,7 +87,8 @@ export default {
 		autofocus: {
 			type: Boolean,
 			default: false
-		}
+		},
+		isSelect:Boolean
 	},
 	methods: {
 		handleInputChange (event) {
@@ -113,8 +115,25 @@ export default {
 
 <style lang="scss" scoped>
 .detail-panel-item {
+	position: relative;
     font-size: 12px;
   padding:10px 15px;
   border-bottom: 1px solid #f2f2f2;
+}
+.input-icon{
+	position: relative;
+	&:after{
+            content: " ";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            position: absolute;
+            top: 50%;
+            right: 0px;
+            border-width: 2px 2px 0 0;
+            border-color: #dddee1;
+            border-style: solid;
+            transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0)
+        }
 }
 </style>
