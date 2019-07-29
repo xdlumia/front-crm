@@ -30,7 +30,7 @@
                     <span class='d-text-red'>*</span>开始
                 </div>
                 <div class="d-cell mr10 form-row-item">
-                    <input type="text" class='f12 d-text-gray' placeholder="">
+                    <input type="text" class='f12 d-text-gray' placeholder="请选择">
                 </div>
             </div>
         </picker>
@@ -41,18 +41,18 @@
                     <span class='d-text-red'>*</span>结束
                 </div>
                 <div class="d-cell mr10 form-row-item">
-                    <input type="text" class='f12 d-text-gray' placeholder="">
+                    <input type="text" class='f12 d-text-gray' placeholder="请选择">
                 </div>
             </div>
         </picker>
 
-        <picker mode="date" :value="timeIndex" @change='bindDateChange($event, "upTypeIndex")'>
+        <picker :range="tixData" :value="tixIndex" @change='tixChange($event, "tixIndex")'>
             <div class="form-row d-center">
                 <div class="f13 d-text-black form-row-item form-row-label">
                     <span class='d-text-red'>*</span>提醒
                 </div>
                 <div class="d-cell mr10 form-row-item">
-                    <input type="text" class='f12 d-text-gray' placeholder="">
+                    <input type="text" class='f12 d-text-gray' :placeholder="tixData[tixIndex] || '请选择'">
                 </div>
             </div>
         </picker>
@@ -62,7 +62,7 @@
                 <span class='d-text-red'>*</span>参与人
             </div>
             <div class="d-cell mr10 form-row-item">
-                <input type="text" disabled class='f12 d-text-gray' placeholder="">
+                <input type="text" disabled class='f12 d-text-gray' placeholder="请选择">
             </div>
         </div>
 
@@ -74,7 +74,7 @@
                     <span class='d-text-red'>*</span>关联业务
                 </div>
                 <div class="d-cell mr10 form-row-item">
-                    <input type="text" disabled class='f12 d-text-gray' placeholder="">
+                    <input type="text" disabled class='f12 d-text-gray' placeholder="请选择">
                 </div>
             </div>
         </a>
@@ -93,7 +93,9 @@ export default {
 			value1: '',
 			date: '',
 			array: ['中国', '美国', '巴西', '日本'],
-			timeIndex: []
+			timeIndex: '',
+			tixIndex: '',
+			tixData: ['提前十分钟', '提前30分钟', '提前一小时', '提前三小时']
 		}
 	},
 	computed: {
@@ -105,6 +107,10 @@ export default {
 	methods: {
 		bindDateChange () {
 
+		},
+		tixChange ({ mp: { detail } }, filed) {
+			let index = detail.value
+			this[filed] = index
 		}
 	},
 
