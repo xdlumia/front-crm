@@ -33,9 +33,9 @@
 			}
 		},
 		{
-			"path": "pages/client/tags",
+			"path": "pages/client/manage/index",
 			"style": {
-				"navigationBarTitleText": "标签"
+				"navigationBarTitleText": "管理信息设置"
 			}
 		},
 		{
@@ -45,13 +45,19 @@
 			}
 		},
 		{
+            "path":"pages/client/attr-detail",
+            "style":{
+                "navigationBarTitleText":"业务属性详情"
+            }
+        },
+		{
 			"path":"pages/client/add-client",
 			"style":{
 				"navigationBarTitleText":"新建客户"
 			}
 		},
 		{
-			"path":"pages/client/addup",
+			"path":"pages/client/add-follow",
 			"style":{
 				"navigationBarTitleText":"添加跟进"
 			}
@@ -103,6 +109,12 @@
 			"style": {
 				"navigationBarTitleText": "更多条目",
 				"enablePullDownRefresh":true
+			}
+		},
+		{
+			"path": "pages/common/score-manage",
+			"style": {
+				"navigationBarTitleText": "评分管理"
 			}
 		},
 		{

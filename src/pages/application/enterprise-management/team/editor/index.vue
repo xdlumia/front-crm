@@ -1,7 +1,7 @@
 <template>
     <view>
-		<NavBar v-if="isEditor == 1" title="添加员工" />
-        <NavBar v-if="isEditor == 0" title="编辑员工" />
+		<NavBar v-if="isEditor == 1" title="编辑员工" />
+        <NavBar v-if="isEditor == 0" title="添加员工" />
         <view class="uni-common-mt wfull">
             <form @submit="formSubmit" @reset="formReset">
                 <view class="bb">

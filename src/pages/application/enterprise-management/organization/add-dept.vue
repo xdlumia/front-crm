@@ -1,6 +1,7 @@
 <template>
     <view>
-		<NavBar title="企业管理" />
+		<NavBar v-if="isEditor == 1" title="部门设置" />
+		<NavBar v-else title="添加子部门" />
         <view class="uni-padding-wrap uni-common-mt">
             <form @submit="formSubmit" @reset="formReset">
                 <view class="uni-form-item mt10 mb10 bb">
@@ -15,13 +16,7 @@
                 </view>
             </form>
         </view>
-        <!-- <view class="mt30 ba title-font" style="text-align: center;" v-if="isEditor == 1">
-            删除部门
-        </view> -->
         <i-button  v-if="isEditor == 1" class="mt30 ba title-font wfull" style="text-align: center;">删除部门</i-button>
-        <!-- <view style="position: fixed;bottom: 0;width: 100%;padding-top: 10px;">
-            <button type="primary" class="title-font" style="background-color: #007AFF;">完成</button>
-        </view> -->
         <i-button style="position: fixed;bottom: 0;" class="wfull" type="primary">完成</i-button>
     </view>
 </template>

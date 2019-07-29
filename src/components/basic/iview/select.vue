@@ -18,7 +18,7 @@
  */ -->
 <template>
     <picker :disabled="disabled" :value="valueIndex" :range="range" @change='change($event, "upTypeIndex")'>
-		<i-input disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" required>
+		<i-input disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" :required='required'>
 			<i-icon type="enter" size="16" color="#999" />
 		</i-input>
 	</picker>
@@ -40,7 +40,10 @@ export default {
 		labelWidth: {
 			default: '100'
 		},
-		required:Boolean,
+		required:{
+			type: Boolean,
+			default: false
+		},
 		placeholder:{
 			type:String,
 			default:'请选择'

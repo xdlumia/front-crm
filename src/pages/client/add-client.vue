@@ -1,5 +1,5 @@
 <template>
-    <div class='addup-page'>
+    <div class='add-follow-page'>
         <NavBar title='新建客户信息' />
         <div class="d-bg-white">
 
@@ -141,7 +141,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .addup-page{
+    .add-follow-page{
         background: #f2f2f2;
         height: 100vh;
         padding-bottom: 75px;
