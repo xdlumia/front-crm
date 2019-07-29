@@ -81,6 +81,13 @@
 		/** 销售机会——END*/
 		/** 联系人——BEGIN */
 		{
+			"path": "pages/common/more-list",
+			"style": {
+				"navigationBarTitleText": "更多条目",
+				"enablePullDownRefresh":true
+			}
+		},
+		{
 			"path": "pages/contact/index",
 			"style": {
 				"navigationBarTitleText": "联系人",
@@ -104,6 +111,18 @@
 			"path": "pages/transaction/index",
 			"style": {
 				"navigationBarTitleText": "成交记录"
+			}
+		},
+		{
+			"path": "pages/transaction/detail",
+			"style": {
+				"navigationBarTitleText": "成交详情"
+			}
+		},
+		{
+			"path": "pages/transaction/transaction-add",
+			"style": {
+				"navigationBarTitleText": "新建成交记录"
 			}
 		},
 		{

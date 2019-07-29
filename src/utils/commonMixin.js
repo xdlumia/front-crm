@@ -1,3 +1,4 @@
+import filters from './filters'
 
 /** 调用子组件生命周期 */
 function CallChildrenHook (name) {
@@ -9,6 +10,7 @@ function CallChildrenHook (name) {
 }
 
 export default {
+	filters: filters,
 	onShow: CallChildrenHook('onShow'),
 	onLoad: CallChildrenHook('onLoad'),
 	onHide: CallChildrenHook('onHide'),

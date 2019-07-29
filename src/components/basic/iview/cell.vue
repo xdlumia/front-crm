@@ -138,7 +138,7 @@
 
   .i-cell-text {
     line-height: 24px;
-    font-size: 14px
+    font-size: 13px
   }
 
   .i-cell-desc {

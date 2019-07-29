@@ -56,6 +56,7 @@ import uniTag from './components/basic/uni/uni-tag/uni-tag'
 // 基础组件
 import mPanel from './components/m-panel'
 import mList from './components/m-list'
+import pickerDate from './components/picker-date'
 // import mUpload from './components/m-upload'
 // import mForm from './components/m-form'
 
@@ -113,6 +114,7 @@ Vue.component('uniTag', uniTag)
 // 基础组建
 Vue.component('mPanel', mPanel)
 Vue.component('mList', mList)
+Vue.component('pickerDate', pickerDate)
 // Vue.component('mUpload', mUpload)
 // Vue.component('mForm', mForm)
 

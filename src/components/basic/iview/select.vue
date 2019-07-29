@@ -18,7 +18,9 @@
  */ -->
 <template>
     <picker :disabled="disabled" :value="valueIndex" :range="range" @change='change($event, "upTypeIndex")'>
-		<i-input isSelect disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" required />
+		<i-input disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" required>
+			<i-icon type="enter" size="16" color="#999" />
+		</i-input>
 	</picker>
 </template>
 
