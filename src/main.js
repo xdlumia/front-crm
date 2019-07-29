@@ -28,6 +28,7 @@ import iButton from './components/basic/iview/button'
 // import iBadge from './components/basic/iview/badge'
 import iActionSheet from './components/basic/iview/action-sheet'
 import iInput from './components/basic/iview/input'
+import iSelect from './components/basic/iview/select'
 import iSteps from './components/basic/iview/steps'
 import iStep from './components/basic/iview/step'
 import iLoadMore from './components/basic/iview/load-more'
@@ -61,6 +62,7 @@ import authButton from './components/auth-button'
 import NavBar from './components/nav-bar'
 import circleProgress from './components/circle-progress'
 import scrollList from './components/scroll-list'
+import mForm from './components/m-form'
 // 自定义头部
 
 Vue.config.productionTip = false
@@ -84,6 +86,7 @@ Vue.component('iButton', iButton)
 // Vue.component('iBadge', iBadge)
 Vue.component('iActionSheet', iActionSheet)
 Vue.component('iInput', iInput)
+Vue.component('iSelect', iSelect)
 Vue.component('iSteps', iSteps)
 Vue.component('iStep', iStep)
 Vue.component('iLoadMore', iLoadMore)
@@ -116,6 +119,7 @@ Vue.component('authButton', authButton)
 Vue.component('NavBar', NavBar)
 Vue.component('circleProgress', circleProgress)
 Vue.component('scrollList', scrollList)
+Vue.component('mForm', mForm)
 
 /** 全局注册UI组件 - END */
 

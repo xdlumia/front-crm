@@ -84,8 +84,7 @@
 		{
 			"path": "pages/contact/detail/index",
 			"style": {
-				"navigationBarTitleText": "联系人详情",
-				"disableScroll": true
+				"navigationBarTitleText": "联系人详情"
 			}
 		},
 		/** 联系人——END*/
