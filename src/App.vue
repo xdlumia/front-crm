@@ -13,7 +13,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 /* uni.css - 通用组件、模板样式库，可以当作一套ui库应用 */
 @import './assets/css/uni.css';
 * {
@@ -28,8 +28,10 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 10px 15px;
     box-sizing: border-box;
+    .d-cell{
+        padding: 10px 15px;
+    }
 }
 .twowrap{
     display: -webkit-box;

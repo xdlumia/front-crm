@@ -11,7 +11,9 @@
             <div>
                 <textarea
                     :disabled="disabled"
+					:rows="3"
                     :focus="autofocus"
+					style="min-height:55px; height:auto"
                     :value="value"
                     :placeholder="placeholder"
                     :maxlength="maxlength"
@@ -69,7 +71,7 @@ export default {
 		},
 		maxlength: {
 			type: Number,
-			default: 500
+			default: 300
 		},
 		// 是否必填
 		required: {
