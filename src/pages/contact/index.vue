@@ -26,7 +26,7 @@
     </scroll-list>
     <!-- 客户 -->
     <div class="footer-fixed-menu d-center d-bg-white bt">
-      <a class="d-cell al">
+      <a class="d-cell al" url='/pages/contact/add-contact'>
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建联系人</span>
       </a>

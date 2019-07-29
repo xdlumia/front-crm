@@ -92,6 +92,12 @@
 				"navigationBarTitleText": "联系人",
 				"enablePullDownRefresh":true
 			}
+		},{
+			"path": "pages/contact/add-contact",
+			"style": {
+				"navigationBarTitleText": "新建联系人",
+				"enablePullDownRefresh":true
+			}
 		},
 		{
 			"path": "pages/contact/detail/index",

@@ -3,9 +3,14 @@
 <template>
 <div class="d-bg-white">
     <NavBar title="新建销售机会"/>
-    <div>
+    <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.userName" label="机会名称" placeholder="请填写销售机会名称" required />
+            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
+            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
+            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
+            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
+            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
             <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
             <i-select
                 v-model="form.phone"
@@ -32,6 +37,12 @@
             <i-input v-model="form.personalProfile" label="个人简介" placeholder="备注" type="textarea" />
         </m-form>
         <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
+    </scroll-view>
+	<!-- 保存 -->
+    <div class="footer-fixed-menu d-center bt">
+      <div class="d-cell ac d-bg-blue">
+        <span class="ml5 f15 d-text-white">保存</span>
+      </div>
     </div>
 </div>
 </template>
