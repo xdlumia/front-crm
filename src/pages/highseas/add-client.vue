@@ -14,18 +14,6 @@
                 </div>
             </picker>
 
-            <div class="form-row d-center">
-                <div class="f13 d-text-black form-row-item form-row-label">
-                    <span class='d-text-red'>*</span>手机号
-                </div>
-                <div class="d-cell mr10 form-row-item">
-                    <input type="number" class='f12 d-text-gray' placeholder="请选择">
-                </div>
-                <div>
-                    <div class="check-repeat">查重</div>
-                </div>
-            </div>
-
             <div class="form-row isarrow d-center">
                 <div class="f13 d-text-black form-row-item form-row-label">
                     <span class='d-text-red'>*</span>所属部门
@@ -94,17 +82,6 @@
             <textarea rows="5" class="f12 d-text-gray" style='width: auto; height:60px' placeholder="点击填写"></textarea>
         </div>
 
-        <div class="d-center pl15 pr15 mt5">
-            <div class='d-cell'>
-                <i-icon size="18" color="#999" type='prompt_fill' />
-                <span class=" ml10 f12 d-text-black">提交之后同时新建联系人</span>
-            </div>
-            <i-switch :value="switch1" @change='handleChange' slot="footer">
-                <i-icon type="right" slot="open"></i-icon>
-                <i-icon type="close" slot="close"></i-icon>
-            </i-switch>
-        </div>
-
         <div class='d-center d-text-black mt10'>
             <i-icon type='add' size="20" color='#333' /> <span class='ml15'>添加更多条目</span>
         </div>
@@ -156,6 +133,23 @@ export default {
         .form-row-label{
             width: 110px;
             text-indent: 15px;
+        }
+    }
+
+    .isarrow{
+        position: relative;
+        &:after{
+            content: " ";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            border-width: 2px 2px 0 0;
+            border-color: #dddee1;
+            border-style: solid;
+            transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0)
         }
     }
 

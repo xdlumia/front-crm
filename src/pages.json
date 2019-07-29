@@ -33,6 +33,12 @@
 			}
 		},
 		{
+			"path": "pages/client/tags",
+			"style": {
+				"navigationBarTitleText": "标签"
+			}
+		},
+		{
 			"path":"pages/client/detail",
 			"style":{
 				"navigationBarTitleText":"客户详情"
@@ -195,6 +201,24 @@
 			"style":{
 				"navigationBarTitleText":"公海池",
 				"enablePullDownRefresh":true
+			}
+		},
+		{
+			"path":"pages/highseas/add-client",
+			"style":{
+				"navigationBarTitleText":"新建客户"
+			}
+		},
+		{
+			"path":"pages/highseas/setting",
+			"style":{
+				"navigationBarTitleText":"管理公海池"
+			}
+		},
+		{
+			"path":"pages/highseas/add-highseas",
+			"style":{
+				"navigationBarTitleText":"新建公海池"
 			}
 		}
 	],
