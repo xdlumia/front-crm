@@ -11,7 +11,7 @@
             style="color:#333"
           >车公庄地铁 文华园小区朝南一局560万车公庄地铁 文华园小区朝南一局560万</div>
           <div class="flex-item datail-handle">
-            <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
+            <a class="d-inline" url="/pages/chance/add-chance"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
             <i-icon type="like" size="20" class="ml15" color="#1890FF" />
           </div>
         </div>

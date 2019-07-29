@@ -2,7 +2,9 @@
   <div class="chance-bg">
     <NavBar title="机会" :isSearch="true" placeholder="输入联系人姓名,手机号" />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
-    <Filter :filterData="filterData" @filterSubmit="submit" ref="filter" :top="navH"></Filter>
+    <Filter :filterData='filterData' @filterSubmit='submit' ref='filter'>
+			<filter-diy @submit='submit' @clear='clear' />
+		</Filter>
     <!-- 列表内容 -->
     <scroll-list
       class="d-absolute wfull"
@@ -41,13 +43,38 @@
 <script>
 
 import Filter from '@/components/filter'
+import FilterDiy from './filter-diy'
 export default {
 	mixins: [],
 	components: {
-		Filter
+		Filter,
+		FilterDiy
 	},
 	data () {
 		return {
+			filterData: [
+				{
+					prop: 'a',
+					current: { id: 0, name: '我参与的' },
+					list: [
+						{ id: 0, name: '我负责的' },
+						{ id: 1, name: '我参与的' },
+						{ id: 1, name: '全部' },
+						{ id: 1, name: '7天未跟进' },
+						{ id: 1, name: '最近浏览' },
+						{ id: 1, name: '我下属的' }
+					]
+				},
+				{
+					prop: 'b',
+					current: { id: 0, name: '最新跟进日期' },
+					list: [
+						{ id: 0, name: '最新跟进日期' },
+						{ id: 1, name: '最新创建日期' },
+						{ id: 1, name: '最新修改日期' }
+					]
+				}
+			],
 			// 步骤列表
 			stepList: [
 				{ label: '全部销售机会', index: 'all' },
