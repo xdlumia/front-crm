@@ -176,8 +176,8 @@
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
                 <div class="h50" style="line-height: 50px;">
-                    <i class="iconfont f18 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
-                    <span class="b ml10">销售漏斗</span><span class="f12 b">( 商机金额 )</span>
+                    <i class="iconfont f24 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
+                    <span class="b ml5">销售漏斗</span><span class="f12 b">( 商机金额 )</span>
                 </div>
                 <div class="wfull" style="height:200px;">
                    <view class="echartsBox">
@@ -189,7 +189,7 @@
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
                 <div class="h50" style="line-height: 50px;">
-                    <i class="iconfont f18 iconpaihangbang ml10" style="color: #FECC00;"></i>
+                    <i class="iconfont f20 iconpaihangbang ml10" style="color: #FECC00;"></i>
                     <span class="b">排行榜</span><span class="f12 b">( 全公司 )</span>
                 </div>
                 <div>
@@ -301,7 +301,7 @@ export default {
 			var currenDay = indexDate.getDay()
 			var dates = []
 			for (var i = 0; i < 7; i++) {
-				dates.push((new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 7) % 7)).toLocaleDateString().replace(/[年月]/g, '-').replace(/[日上下午]/g, '')).split('/').pop())
+				dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 7) % 7)).getDate())
 			}
 			this.allTime = [...dates]
 		},

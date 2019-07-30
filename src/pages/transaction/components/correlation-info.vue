@@ -1,10 +1,9 @@
 <template>
     <div class="d-auto-y" style="height:calc( 100vh - 350px )">
-        <mPanel title="联系人" color="#7765cc" add url="/pages/contact/index">
+        <mPanel title="联系人" color="#7765cc" add>
             <div class="detail-list">
                 <div class="list-title">
-                    <title>黄玉里</title> <span class="d-text-qgray">总精力</span>
-                    <span class="fr iconfont iconcall f18 d-text-gray" ></span>
+                    <title>黄玉里</title> <span class="d-text-qgray">总经理</span>
                 </div>
                 <p class="f12 d-elip d-text-qgray">华为技术有限公司</p>
             </div>
@@ -25,7 +24,7 @@
                 <p class="f12 d-elip d-text-blue" style="background-colr:#efefef"><i-icon type="coordinates" size="18" color="#4788F4" />我是尝尝的遗传地址</p>
             </div>
         </mPanel>
-        <mPanel top="10" title="附件" color="#4889f4" add>
+        <mPanel top="10" title="附件" color="#4889f4" add url="/pages/transaction/index">
             <div class="detail-list">
                 <p class="f13 d-elip mt5 d-text-gray iconfont icon-adjunct"> 我是附件名称</p>
                 <p class="f13 d-elip mt5 d-text-gray iconfont icon-adjunct"> 我是附件名称</p>

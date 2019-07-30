@@ -5,7 +5,7 @@
             <div class="search-input d-center d-cell pl10">
                 <!-- <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5"><input placeholder="搜成交记录名称" /></span> -->
                 <i-icon style='position: absolute;left: 3px;top: 0px;' type="search" size="20" color='#c5c5c5' />
-                <input style="padding-left: 15px;height: 29px;" placeholder="搜成交记录名称" />
+                <input v-model="searchValue" style="padding-left: 15px;height: 29px;" placeholder="搜成交记录名称" />
             </div>
         </div>
         <div class="search-jl">
@@ -18,6 +18,7 @@
                 <uni-icon @click="deleteSearchList(index)" class="ml5 fr" type='closeempty' color="#999" size='20'/>
             </div>
         </div>
+        <button @click="subSearchList">搜索</button>
     </div>
 </template>
 <script>
@@ -26,13 +27,16 @@ export default {
 	},
 	data () {
 		return {
+			searchValue: '',
+			searchList: []
 		}
 	},
 	onReady () {
 	},
 	methods: {
 		deleteSearchList (index) {
-
+			// this.$local.save('navH', +this.titleBarHeight + +this.statusHeight)
+			// local.fetch('navH') + 'rpx'
 		}
 	}
 }
