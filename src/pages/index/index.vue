@@ -39,7 +39,7 @@
             </div>
 
             <!--日程列表-->
-            <div v-if="clickDay == 31" style="border: 1px solid #e4e4e4;border-left: none;border-right: none;">
+            <a url="/pages/index/scheduleAdd" v-if="clickDay == 31" style="border: 1px solid #e4e4e4;border-left: none;border-right: none;">
                 <div class="p10 wfull">
                     <div class="wfull d-flex">
                         <div class="d-flex cirle-blue" style="margin-top: 7px;">
@@ -53,7 +53,7 @@
                         10:00 - 11:00
                     </div>
                 </div>
-            </div>
+            </a>
 
             <!--新建日程-->
             <div class="d-flex mt10" style="justify-content: center;">
