@@ -1,12 +1,12 @@
 /* 阿里字体图标库 */
 @font-face {
   font-family: 'iconfont';  /* project id 1304395 */
-  src: url('//at.alicdn.com/t/font_1304395_e8rc1khugbv.eot');
-  src: url('//at.alicdn.com/t/font_1304395_e8rc1khugbv.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1304395_e8rc1khugbv.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1304395_e8rc1khugbv.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1304395_e8rc1khugbv.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1304395_e8rc1khugbv.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.eot');
+  src: url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.svg#iconfont') format('svg');
 }
   
   .iconfont {
@@ -155,5 +155,12 @@
   .iconkehugenjin:before {
     content: "\e656";
   }
+  .iconleijixunhuan:before {
+    content: "\e636";
+  }
+  .iconfanhui1:before {
+    content: "\e625";
+  }
   
+
   
