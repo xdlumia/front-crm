@@ -105,11 +105,11 @@
             </i-switch>
         </div>
 
-        <div class='d-center d-text-black mt10'>
+        <a url='/pages/common/more-list' class='d-center d-text-black mt10'>
             <i-icon type='add' size="20" color='#333' /> <span class='ml15'>添加更多条目</span>
-        </div>
+        </a>
 
-        <div class="pl15 pr15 sub-btn">
+        <div class="footer-fixed-menu">
             <i-button type="primary" i-class="f16">保存</i-button>
         </div>
 

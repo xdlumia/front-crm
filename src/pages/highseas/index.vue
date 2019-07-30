@@ -1,6 +1,10 @@
 <template>
     <div class="highseas-page">
-        <NavBar title='华北公海池' />
+        <NavBar >
+			<a url='./choose-highseas' class='d-center f16'>
+				华北公海池<i-icon type="unfold" size='18' color='#000' />
+			</a>
+		</NavBar>
         <div>
             <div class="page-search-box d-flex" :style="'top: '+ navH">
                 <div class="search-input d-center d-cell pl10">

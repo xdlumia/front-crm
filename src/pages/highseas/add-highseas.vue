@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <div class="pl15 pr15 sub-btn">
+            <div class="footer-fixed-menu">
                 <i-button type="primary" i-class="f16">完成</i-button>
             </div>
         </div>

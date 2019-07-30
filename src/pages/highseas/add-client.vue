@@ -86,7 +86,7 @@
             <i-icon type='add' size="20" color='#333' /> <span class='ml15'>添加更多条目</span>
         </div>
 
-        <div class="pl15 pr15 sub-btn">
+        <div class="footer-fixed-menu">
             <i-button type="primary" i-class="f16">保存</i-button>
         </div>
 

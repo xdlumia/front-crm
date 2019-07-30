@@ -25,25 +25,25 @@
         <div class="attention-box pl20 pr20">
             <div class="f14 d-text-black">我的关注</div>
             <div class="d-center attention-item-box ac pl10 pr10 pb10">
-                <a class="f12 d-text-qgray">
+                <a url='/pages/contact/index' class="f12 d-text-qgray">
                     <div class="icon-box">
                         <i-icon type="like_fill" color="#ff5533" size="26" />
                     </div>
                     <div>联系人</div>
                 </a>
-                <a class="f12 d-text-qgray">
+                <a url='/pages/client/index' open-type='switchTab' class="f12 d-text-qgray">
                      <div class="icon-box">
                         <span class="iconfont iconkehuziliao f16" style='color:#00b17b'></span>
                     </div>
                     <div>客户</div>
                 </a>
-                <a class="f12 d-text-qgray">
+                <a url='/pages/transaction/index' class="f12 d-text-qgray">
                      <div class="icon-box">
                         <span class="iconfont iconshouye_chengjiaoshujurili f20" style='color:#4889f4'></span>
                     </div>
                     <div>成交记录</div>
                 </a>
-                <a class="f12 d-text-qgray">
+                <a url='/pages/chance/index' open-type='switchTab' class="f12 d-text-qgray">
                      <div class="icon-box">
                         <span class="iconfont iconqian f20" style='color:#4e89f4'></span>
                     </div>

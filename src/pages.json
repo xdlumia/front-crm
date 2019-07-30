@@ -49,6 +49,12 @@
             "style":{
                 "navigationBarTitleText":"业务属性详情"
             }
+		},
+		{
+            "path":"pages/client/add-attr-info",
+            "style":{
+                "navigationBarTitleText":"添加业务属性"
+            }
         },
 		{
 			"path":"pages/client/add-client",
@@ -295,6 +301,12 @@
 			}
 		},
 		{
+			"path":"pages/highseas/setting-detail",
+			"style":{
+				"navigationBarTitleText":"管理公海池"
+			}
+		},
+		{
 			"path":"pages/highseas/add-highseas",
 			"style":{
 				"navigationBarTitleText":"新建公海池"
@@ -304,6 +316,12 @@
 			"path":"pages/highseas/return-client",
 			"style":{
 				"navigationBarTitleText":"公海池选择"
+			}
+		},
+		{
+			"path":"pages/highseas/choose-highseas",
+			"style":{
+				"navigationBarTitleText":"选择客户公海池"
 			}
 		}
 	],

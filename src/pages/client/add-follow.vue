@@ -61,7 +61,7 @@
             <imagePick />
         </div>
 
-        <div class="pl15 pr15 sub-btn">
+        <div class="footer-fixed-menu">
             <i-button type="primary" i-class="f16">保存</i-button>
         </div>
 

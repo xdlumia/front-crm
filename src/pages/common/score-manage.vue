@@ -24,7 +24,7 @@
 			<div class="btn-score f12" @click="addParentField">添加更多字段</div>
 		</div>
 
-		<div class="pl15 pr15 sub-btn">
+		<div class="footer-fixed-menu">
             <i-button type="primary" i-class="f16">保存</i-button>
         </div>
 
@@ -66,14 +66,14 @@ export default {
 .score-manage-page{
 	height: 100vh;
 	background: #f2f2f2;
-	padding-bottom: 80px;
+	padding-bottom: 75px;
 	box-sizing: border-box;
 }
 
 .score-rule{
 	height: 46px;
-
 }
+
 .btn-score{
 	padding: 0 20px;
 	height: 27px;
@@ -85,10 +85,4 @@ export default {
 	background: #fff;
 }
 
-.sub-btn{
-	position: fixed;
-	left: 0;
-    right: 0;
-	bottom: 26px;
-}
 </style>
