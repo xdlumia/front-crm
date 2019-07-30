@@ -33,16 +33,17 @@
             :options="tixData">
         </i-select>
 
-        <i-select
-            v-model="tixIndex"
-            disabled
-            :props="{label:'name',value:'id'}"
-            label="参与人"
-            placeholder="请选择"
-            required
-            :options="tixData">
-        </i-select>
-
+        <a url="/pages/index/colleagueChoose">
+            <i-select
+                v-model="tixIndex"
+                disabled
+                :props="{label:'name',value:'id'}"
+                label="参与人"
+                placeholder="请选择"
+                required
+                :options="tixData">
+            </i-select>
+        </a>
         <div class="d-bg-schedule"></div>
         <a url='/pages/index/affiliated'>
             <i-select
@@ -55,7 +56,6 @@
                 :options="tixData">
             </i-select>
         </a>
-        <div class="d-bg-schedule"></div>
         <div class="footer-fixed-menu">
             <i-button type="primary" i-class="f16">确 定</i-button>
         </div>
