@@ -4,7 +4,7 @@
             <input class="search-input f13 d-text-black pl10 d-cell" placeholder="请填写跟进内容，快速跟进" type="text">
             <div class='f13 d-text-blue ml15'>快速跟进</div>
         </div>
-        <scroll-view scroll-y :style="'height:calc(100vh - 49px - 217px - 50px - ' + navH + ')'">
+        <scroll-view scroll-y :style="{height: height}">
             <div class="d-bg-white" >
                 <div class="note-time-title pt15 pb15 f12 d-text-qgray">
                     2019-05-25
@@ -48,7 +48,12 @@
 
 <script>
 export default {
-
+	props: {
+		height: {
+			type: String,
+			default: ''
+		}
+	}
 }
 </script>
 
