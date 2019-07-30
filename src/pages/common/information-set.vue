@@ -20,22 +20,20 @@
                 <uni-icon type='arrowright' size='18' color='#696969' />
             </div>
             <div class="hfull d-flex mationInfo-middle">
-                <picker class="flexcenter" @change="bindPickerChange" :value="msgIndex" :range="msgArr">
-                <view class="class='formType flexcenter'">
-                    <view class="flexcenter wfull hfull">
-                            <view class="uni-list-cell-left d-text-black ml10">
-                                    表单类型
-                            </view>
-                            <view class="uni-list-cell-db flexcenter ml10">
-
-                                        <view class="uni-input f12"  style="color: #999;">
-                                            {{msgArr[msgIndex] || '请选择'}}
-                                            <uni-icon type='arrowright' size='16' color='#696969' />
-                                        </view>
-
-                            </view>
+                <picker mode='multiSelector' class="flexcenter" @change="bindPickerChange" :value="msgIndex" :range="msgArr">
+                    <view class="class='formType flexcenter'">
+                        <view class="flexcenter wfull hfull">
+                                <view class="uni-list-cell-left d-text-black ml10">
+                                        表单类型
+                                </view>
+                                <view class="uni-list-cell-db flexcenter">
+                                    <view class="uni-input f12"  style="color: #999;min-width:58px">
+                                        <!-- {{msgIndex|| '请选择'}} -->
+                                        <uni-icon type='arrowright' size='16' color='#696969' />
+                                    </view>
+                                </view>
+                        </view>
                     </view>
-                </view>
                 </picker>
             </div>
 
@@ -65,10 +63,10 @@ export default {
 	data () {
 		return {
 			statusTypes: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
-			msgArr: ['文字', '数字', '日期', '标签'],
+			msgArr: [['文字', '数字', '日期', '标签'], ['成交记录']],
 			status: '',
 			userName: '',
-			msgIndex: 0,
+			msgIndex: [],
 			listArr: [{ name: '', meg: [] }]
 		}
 	},
@@ -82,6 +80,7 @@ export default {
 
 		},
 		bindPickerChange (e) {
+			console.log(e)
 			this.msgIndex = e.target.value
 		},
 		moreAdd () {
