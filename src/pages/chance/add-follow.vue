@@ -25,7 +25,6 @@
     </scroll-view>
 	<!-- 保存 -->
     <div class="footer-fixed-menu">
-      <!-- <div class="d-cell ac d-bg-blue f15 d-text-white">保存</div> -->
       <i-button type="primary" i-class="f16">保存</i-button>
     </div>
 </div>
