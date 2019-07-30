@@ -7,79 +7,58 @@
         <NavBar title="新建日程" />
 
         <div class="d-bg-schedule"></div>
-			<i-input label="日程主题" v-model="value1" class='wfull'/>
+            <i-input v-model="value1" label="日程主题" placeholder="请输入" required />
         <div class="d-bg-schedule"></div>
 
         <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
             <i-input label="位置" v-model="value1" placeholder="点击输入" class='wfull'/>
-            <div @click="fChooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
+            <div @click="chooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
                 <i-icon type="coordinates" size="22" color="#999" />
             </div>
         </div>
         <div class="d-bg-schedule"></div>
 
-        <!-- <picker class="f12 d-flex" mode="date" style="border-bottom:1px solid #ececec;height:50px;align-items:center;" :value="value1">
-            <view class="picker ml15">
-                开始时间 {{value1}}
-            </view>
-        </picker> -->
+        <picker-date v-model="timeIndex" label="开始" placeholder="请选择" required>
+        </picker-date>
 
-        <picker mode="date" :value="timeIndex" @change='bindDateChange($event, "upTypeIndex")'>
-            <div class="form-row d-center">
-                <div class="f13 d-text-black form-row-item form-row-label">
-                    <span class='d-text-red'>*</span>开始
-                </div>
-                <div class="d-cell mr10 form-row-item">
-                    <input type="text" class='f12 d-text-gray' placeholder="请选择">
-                </div>
-            </div>
-        </picker>
+        <picker-date v-model="timeIndex" label="结束" placeholder="请选择" required>
+        </picker-date>
 
-        <picker mode="date" :value="timeIndex" @change='bindDateChange($event, "upTypeIndex")'>
-            <div class="form-row d-center">
-                <div class="f13 d-text-black form-row-item form-row-label">
-                    <span class='d-text-red'>*</span>结束
-                </div>
-                <div class="d-cell mr10 form-row-item">
-                    <input type="text" class='f12 d-text-gray' placeholder="请选择">
-                </div>
-            </div>
-        </picker>
+        <i-select
+            v-model="tixIndex"
+            :props="{label:'name',value:'id'}"
+            label="提醒"
+            placeholder="请选择"
+            required
+            :options="tixData">
+        </i-select>
 
-        <picker :range="tixData" :value="tixIndex" @change='tixChange($event, "tixIndex")'>
-            <div class="form-row d-center">
-                <div class="f13 d-text-black form-row-item form-row-label">
-                    <span class='d-text-red'>*</span>提醒
-                </div>
-                <div class="d-cell mr10 form-row-item">
-                    <input type="text" class='f12 d-text-gray' :placeholder="tixData[tixIndex] || '请选择'">
-                </div>
-            </div>
-        </picker>
-
-        <div class="form-row d-center">
-            <div class="f13 d-text-black form-row-item form-row-label">
-                <span class='d-text-red'>*</span>参与人
-            </div>
-            <div class="d-cell mr10 form-row-item">
-                <input type="text" disabled class='f12 d-text-gray' placeholder="请选择">
-            </div>
-        </div>
-
-        <div class="d-bg-schedule"></div>
-
-        <a url='/pages/index/affiliated'>
-            <div class="form-row d-center">
-                <div class="f13 d-text-black form-row-item form-row-label">
-                    <span class='d-text-red'>*</span>关联业务
-                </div>
-                <div class="d-cell mr10 form-row-item">
-                    <input type="text" disabled class='f12 d-text-gray' placeholder="请选择">
-                </div>
-            </div>
+        <a url="/pages/index/colleagueChoose">
+            <i-select
+                v-model="tixIndex"
+                disabled
+                :props="{label:'name',value:'id'}"
+                label="参与人"
+                placeholder="请选择"
+                required
+                :options="tixData">
+            </i-select>
         </a>
-
-        <i-button type="primary">确 定</i-button>
+        <div class="d-bg-schedule"></div>
+        <a url='/pages/index/affiliated'>
+            <i-select
+                v-model="tixIndex"
+                disabled
+                :props="{label:'name',value:'id'}"
+                label="关联业务"
+                placeholder="请选择"
+                required
+                :options="tixData">
+            </i-select>
+        </a>
+        <div class="footer-fixed-menu">
+            <i-button type="primary" i-class="f16">确 定</i-button>
+        </div>
 
     </div>
 </template>
@@ -95,7 +74,7 @@ export default {
 			array: ['中国', '美国', '巴西', '日本'],
 			timeIndex: '',
 			tixIndex: '',
-			tixData: ['提前十分钟', '提前30分钟', '提前一小时', '提前三小时']
+			tixData: [{ name: '提前十分钟', id: '1' }, { name: '提前30分钟', id: '2' }, { name: '提前一小时', id: '3' }, { name: '提前三小时', id: '4' }]
 		}
 	},
 	computed: {

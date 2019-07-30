@@ -1,22 +1,16 @@
 <template>
-    <div class="hfull d-auto-y">
+    <div class="d-auto-y" style="height:calc( 100vh - 350px )">
         <mPanel title="基本信息" bg="#f8f9fc">
-            <m-list label="机会名称">{{detailInfo.aaa}}</m-list>
-            <m-list label="所属部门">{{detailInfo.aaa}}</m-list>
-            <m-list label="客户名称">{{detailInfo.aaa}}</m-list>
-            <m-list label="负责人">{{detailInfo.aaa}}</m-list>
-            <m-list label="销售金额（元）">{{detailInfo.aaa}}</m-list>
-            <m-list label="销售阶段">{{detailInfo.aaa}}</m-list>
-            <m-list label="赢率">{{detailInfo.aaa}}</m-list>
-            <m-list label="预计成交日期">{{detailInfo.aaa}}</m-list>
-            <m-list label="行业">{{detailInfo.aaa}}</m-list>
-            <m-list label="来源">{{detailInfo.aaa}}</m-list>
-            <m-list label="备注">{{detailInfo.aaa}}</m-list>
+            <m-list label="主题">{{detailInfo.aaa}}</m-list>
+            <m-list label="客户">{{detailInfo.aaa}}</m-list>
+            <m-list label="总金额（元）">{{detailInfo.aaa}}</m-list>
+            <m-list label="成交状态">{{detailInfo.aaa}}</m-list>
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc">
+			<m-list label="负责人">{{detailInfo.aaa}}</m-list>
             <m-list label="创建日期">{{detailInfo.aaa}}</m-list>
-            <m-list label="最后跟进">{{detailInfo.aaa}}</m-list>
-            <m-list label="最新修改">{{detailInfo.aaa}}</m-list>
+            <m-list label="创建人">{{detailInfo.aaa}}</m-list>
+            <m-list label="最后修改日">{{detailInfo.aaa}}</m-list>
         </mPanel>
     </div>
 </template>

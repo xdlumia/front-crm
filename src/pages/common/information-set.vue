@@ -16,26 +16,24 @@
 
             <div class="hfull flexcenter mationInfo-top">
                 <uni-icon @click="deleteMoreList(index)" class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20'/>
-                <input v-model="userName" placeholder="属性名称" class="ml5"/>
+                <input maxlength="6" v-model="userName" placeholder="属性名称" class="ml5"/>
                 <uni-icon type='arrowright' size='18' color='#696969' />
             </div>
             <div class="hfull d-flex mationInfo-middle">
-                <picker class="flexcenter" @change="bindPickerChange" :value="msgIndex" :range="msgArr">
-                <view class="class='formType flexcenter'">
-                    <view class="flexcenter wfull hfull">
-                            <view class="uni-list-cell-left d-text-black ml10">
-                                    表单类型
-                            </view>
-                            <view class="uni-list-cell-db flexcenter ml10">
-
-                                        <view class="uni-input f12"  style="color: #999;">
-                                            {{msgArr[msgIndex] || '请选择'}}
-                                            <uni-icon type='arrowright' size='16' color='#696969' />
-                                        </view>
-
-                            </view>
+                <picker mode='multiSelector' class="flexcenter" @change="bindPickerChange" @columnchange='bindColumnChange' :value="msgIndex" :range="msgArr">
+                    <view class="class='formType flexcenter'">
+                        <view class="flexcenter wfull hfull">
+                                <view class="uni-list-cell-left d-text-black ml10">
+                                        表单类型
+                                </view>
+                                <view class="uni-list-cell-db flexcenter">
+                                    <view class="uni-input f12"  style="color: #999;min-width:58px">
+                                        {{msgArr[0][msgIndex[0]]|| '请选择'}}
+                                        <uni-icon type='arrowright' size='16' color='#696969' />
+                                    </view>
+                                </view>
+                        </view>
                     </view>
-                </view>
                 </picker>
             </div>
 
@@ -55,7 +53,9 @@
 
     </scroll-view>
     <!-- 客户 -->
-    <i-button @click="handleClick" type="primary">保 存</i-button>
+   <div class="footer-fixed-menu">
+        <i-button type="primary" i-class="f16">保 存</i-button>
+    </div>
 </div>
 </template>
 <script>
@@ -65,10 +65,10 @@ export default {
 	data () {
 		return {
 			statusTypes: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
-			msgArr: ['文字', '数字', '日期', '标签'],
+			msgArr: [['文字', '数字', '日期', '标签']],
 			status: '',
 			userName: '',
-			msgIndex: 0,
+			msgIndex: [],
 			listArr: [{ name: '', meg: [] }]
 		}
 	},
@@ -82,7 +82,19 @@ export default {
 
 		},
 		bindPickerChange (e) {
+			// console.log(e)
 			this.msgIndex = e.target.value
+		},
+		bindColumnChange (e) {
+			// console.log(e)
+			if (e.detail.value === 3) {
+				this.msgArr.push(['成交记录'])
+				this.msgIndex = [3, 0]
+			} else {
+				this.msgArr.splice(1, 1)
+				this.msgIndex = [0]
+			}
+			// console.log(this.msgArr)
 		},
 		moreAdd () {
 			this.listArr.push({ name: '', meg: [] })

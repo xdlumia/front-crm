@@ -13,7 +13,7 @@
    </div>
    <div style="height: 10px;background: #f2f2f2;"></div>
 
-     <div class="moreinfo" style="justify-content: space-between;">
+  <div class="moreinfo" style="justify-content: space-between;">
        <div>
          <div class="hfull flexcenter fl">
         <uni-icon @click="deleteMoreList(index)" class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20'/>
@@ -21,17 +21,31 @@
       <div class="d-text-black ml5 fl">已成交</div>
        </div>
     <div class="fr mr15">
-      <div class="ac d-text-blue m5 subButton fr">
-        <span class="f13">确定</span>
+      <div class="ac d-text-blue m5 fr">
+        <uni-icon type='bars' size='18' color='#999' />
       </div>
     </div>
   </div>
 
-     <div class="moreinfo d-flex" v-for="(item,index) in infoList" :key='index'>
+  <div class="moreinfo" style="justify-content: space-between;">
+       <div>
+         <div class="hfull flexcenter fl">
+        <uni-icon @click="deleteMoreList(index)" class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20'/>
+      </div>
+      <div class="d-text-black ml5 fl">未成交</div>
+       </div>
+    <div class="fr mr15">
+      <div class="ac d-text-blue m5 fr">
+        <uni-icon type='bars' size='18' color='#999' />
+      </div>
+    </div>
+  </div>
+
+  <div class="moreinfo d-flex" v-for="(item,index) in infoList" :key='index'>
     <div class="hfull flexcenter">
       <uni-icon @click="deleteMoreList(index)" class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20'/>
     </div>
-    <input v-model="userName" placeholder="输入选项名称" class="ml5" style="flex: 1;"/>
+    <input maxlength="6" v-model="userName" placeholder="输入选项名称" class="ml5" style="flex: 1;"/>
     <div style="calc(100vw - 310px)" class="hfull flexcenter mr15">
       <div class="ac d-text-blue m5 subButton">
         <span class="f13">确定</span>
@@ -44,6 +58,9 @@
       <uni-icon type='plus-filled' size='18' color='#4889F4' />
       <span class="d-text-black ml10">添加标签选项</span>
     </div>
+  </div>
+  <div class="footer-fixed-menu">
+      <i-button type="primary" i-class="f16">保 存</i-button>
   </div>
 </div>
 </template>

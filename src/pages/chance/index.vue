@@ -80,12 +80,12 @@ export default {
 					prop: 'a',
 					current: { id: 0, name: '我参与的' },
 					list: [
+						{ id: 0, name: '全部' },
 						{ id: 0, name: '我负责的' },
-						{ id: 1, name: '我参与的' },
-						{ id: 1, name: '全部' },
-						{ id: 1, name: '7天未跟进' },
-						{ id: 1, name: '最近浏览' },
-						{ id: 1, name: '我下属的' }
+						{ id: 1, name: '我下属的' },
+						{ id: 2, name: '我关注的' },
+						{ id: 3, name: '7天未跟进' },
+						{ id: 4, name: '最近浏览' }
 					]
 				},
 				{
@@ -93,8 +93,9 @@ export default {
 					current: { id: 0, name: '最新跟进日期' },
 					list: [
 						{ id: 0, name: '最新跟进日期' },
-						{ id: 1, name: '最新创建日期' },
-						{ id: 1, name: '最新修改日期' }
+						{ id: 1, name: '阶段更新日期' },
+						{ id: 1, name: '销售金额(从高到底)' },
+						{ id: 1, name: '盈率(从高到底)' }
 					]
 				}
 			],
@@ -153,6 +154,7 @@ export default {
     padding-right: 5px;
     margin-right: 5px;
     border-right: 1px solid #999;
+    &::last-child{border:none}
   }
 }
 .chance-item {

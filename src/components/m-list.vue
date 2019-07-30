@@ -9,8 +9,8 @@
  */ -->
 <template>
     <li class="detail-panel-item">
-        <label class="d-elip" v-if="labelWidth" :style="{width:labelWidth+'px'}">{{label}}</label>
-        <p class="detail-panel-content d-elip"><slot>{{content}}</slot></p>
+        <label class="d-elip f13" v-if="labelWidth" :style="{width:labelWidth+'px'}">{{label}}</label>
+        <p class="detail-panel-content d-elip f13"><slot>{{content}}</slot></p>
     </li>
 </template>
 

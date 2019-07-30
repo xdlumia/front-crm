@@ -7,11 +7,6 @@
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.userName" label="机会名称" placeholder="请填写销售机会名称" required />
             <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
-            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
-            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
-            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
-            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
-            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="number" />
             <i-select
                 v-model="form.phone"
                 :props="{label:'name',value:'id'}"
@@ -34,7 +29,7 @@
             <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="行业" :options="upData"/>
             <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="来源" :options="upData"/>
             <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="标签" :options="upData"/>
-            <i-input v-model="form.personalProfile" label="个人简介" placeholder="备注" type="textarea" />
+            <i-input v-model="form.personalProfile" label="备注" placeholder="点击填写" type="textarea" />
         </m-form>
         <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>

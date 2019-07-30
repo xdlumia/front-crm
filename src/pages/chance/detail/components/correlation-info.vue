@@ -1,10 +1,17 @@
+<!--
+/**
+* @author 王晓冬
+* @name 相关信息
+* @date 2019年7月299日
+**/
+-->
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
-        <mPanel title="联系人" color="#7765cc" url="/pages/contact/index">
+        <mPanel title="联系人" color="#7765cc" url="/pages/contact/index?select=1">
             <div class="detail-list">
                 <div class="list-title">
                     <title>黄玉里</title> <span class="d-text-qgray">总精力</span>
-                    <span class="fr iconfont iconcall f18 d-text-gray" ></span>
+                    <span @click="callPhone(18210256005)" class="fr iconfont iconcall f18 d-text-gray" ></span>
                 </div>
                 <p class="f12 d-elip d-text-qgray">华为技术有限公司</p>
             </div>
@@ -27,12 +34,12 @@
         </mPanel>
         <mPanel top="10" title="附件" color="#4889f4" url @add="handle">
             <div class="detail-list">
-                <p class="f13 d-elip mt5 d-text-gray iconfont icon-adjunct"> 我是附件名称</p>
-                <p class="f13 d-elip mt5 d-text-gray iconfont icon-adjunct"> 我是附件名称</p>
-                <p class="f13 d-elip mt5 d-text-gray iconfont icon-adjunct"> 我是附件名称</p>
+                <p class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> 我是附件名称</p>
+                <p class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> 我是附件名称</p>
+                <p class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> 我是附件名称</p>
             </div>
         </mPanel>
-        <mPanel top="10" title="团队成员" color="#4889f4" url="/pages/index/scheduleAdd">
+        <mPanel top="10" title="团队成员" color="#4889f4" url="/pages/index/colleagueChoose">
             <div class="detail-list d-flex-lr bb">
                 <image class="detail-list-img" data-name="徐丽丽" src="" alt=""></image>
                 <p>
