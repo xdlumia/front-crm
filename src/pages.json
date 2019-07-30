@@ -204,6 +204,12 @@
 			}
 		},
 		{
+			"path":"pages/application/enterprise-management/team/info",
+			"style":{
+				"navigationBarTitleText":"详细信息"
+			}
+		},
+		{
 			"path":"pages/application/enterprise-management/organization/index",
 			"style":{
 				"navigationBarTitleText":"组织架构"
