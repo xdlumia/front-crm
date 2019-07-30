@@ -119,7 +119,7 @@
                         <div class="whalf">
                             <div class="d-flex iconbox">
                                 <div class="borright flexcenter d-flex" style="width: 50px;">
-                                    <i class="iconfont f24 iconqian lh30 d-gray"></i>
+                                    <i class="iconfont f24 iconshangji lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
                                     <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
@@ -132,7 +132,7 @@
                         <div class="whalf">
                             <div class="d-flex iconbox">
                                 <div class="borright flexcenter d-flex" style="width: 50px;">
-                                    <i class="iconfont f24 iconguanlian lh30 d-gray"></i>
+                                    <i class="iconfont f24 iconzhuzhuangtu lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
                                     <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
@@ -147,7 +147,7 @@
                         <div class="whalf">
                             <div class="d-flex iconbox">
                                 <div class="borright flexcenter d-flex" style="width: 50px;">
-                                    <i class="iconfont f24 icontianjiajihua lh30 d-gray"></i>
+                                    <i class="iconfont f24 iconkehugenjin lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
                                     <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
@@ -160,7 +160,7 @@
                         <div class="whalf">
                             <div class="d-flex iconbox">
                                 <div class="borright flexcenter d-flex" style="width: 50px;">
-                                    <i class="iconfont f24 iconjiaoyijilu lh30 d-gray"></i>
+                                    <i class="iconfont f24 iconjilu lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
                                     <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
@@ -176,7 +176,7 @@
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
                 <div class="h50" style="line-height: 50px;">
-                    <i class="iconfont f16 iconshaixuan ml15" style="color: #E55FD4;"></i>
+                    <i class="iconfont f18 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
                     <span class="b ml10">销售漏斗</span><span class="f12 b">( 商机金额 )</span>
                 </div>
                 <div class="wfull" style="height:200px;">
@@ -189,8 +189,8 @@
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
                 <div class="h50" style="line-height: 50px;">
-                    <i class="iconfont f16 iconshouye ml15" style="color: #FECC00;"></i>
-                    <span class="b ml10">排行榜</span><span class="f12 b">( 全公司 )</span>
+                    <i class="iconfont f18 iconpaihangbang ml10" style="color: #FECC00;"></i>
+                    <span class="b">排行榜</span><span class="f12 b">( 全公司 )</span>
                 </div>
                 <div>
                     <div class="d-flex">
