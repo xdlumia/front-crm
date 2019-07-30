@@ -30,9 +30,9 @@
                 <div class="f13 d-text-black form-row-item form-row-label">
                     <span class='d-text-red'>*</span>所属部门
                 </div>
-                <div class="d-cell mr10 form-row-item">
+                <a url='/pages/application/enterprise-management/organizational-structure' class="d-cell mr10 form-row-item">
                     <input type="text" disabled class='f12 d-text-gray' placeholder="请选择">
-                </div>
+                </a>
             </div>
 
             <div class="form-row d-center">

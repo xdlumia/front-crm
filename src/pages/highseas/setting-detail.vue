@@ -1,42 +1,130 @@
 <template>
     <div class='setting-page'>
         <NavBar title='公海池设置' />
+        <scroll-view scroll-y :style="'height:calc(100vh - '+ navH +' - 46px)'">
+            <m-form ref="mform" class="uni-pb100">
+                <div class='d-bg-white'>
+                    <mPanel top="10" title="基本信息" color="#4889f4">
+                        <i-input label="公海名称" placeholder="北海一区公海" disabled required />
 
-        <m-form ref="mform" class="uni-pb100">
-            <div class='d-bg-white'>
-                <mPanel top="10" title="基本信息" color="#4889f4">
-                    <i-input label="公海名称" placeholder="请填写销售机会名称" disabled required>
-                        <div class="isarrow"></div>
-                    </i-input>
+                        <a url='/pages/application/enterprise-management/organizational-structure'>
+                            <i-input label="管理员" placeholder="添加管理员" disabled required>
+                                <div class="isarrow"></div>
+                            </i-input>
+                        </a>
 
-                    <a url='/pages/application/enterprise-management/organizational-structure'>
-                        <i-input label="管理员" placeholder="添加管理员" disabled required>
-                            <div class="isarrow"></div>
-                        </i-input>
-                    </a>
-
-                    <a url='/pages/application/enterprise-management/organizational-structure'>
-                        <i-input label="公海成员" placeholder="添加成员部门" disabled required>
-                            <div class="isarrow"></div>
-                        </i-input>
-                    </a>
-                    <div class='pl15 p15'>
-                        <div class='uni-h50 uni-lh50'>
-                            <label class='d-text-red'>*</label>
-                            <label class='d-elip d-text-black'>公海类型</label>
+                        <a url='/pages/application/enterprise-management/organizational-structure'>
+                            <i-input label="公海成员" placeholder="添加成员部门" disabled required>
+                                <div class="isarrow"></div>
+                            </i-input>
+                        </a>
+                        <div class='pl15 p15'>
+                            <div class='uni-h50 uni-lh50'>
+                                <label class='d-text-red'>*</label>
+                                <label class='d-elip d-text-black'>公海类型</label>
+                            </div>
+                            <div class='pl15'>
+                                <div class="bb d-center pb15 pt15">
+                                    <span class='radio-box d-inline active'></span><div class='ml15 d-cell f13'>成员可见可领取，管理员可分配</div>
+                                </div>
+                                <div class="d-center pt15">
+                                    <span class='radio-box d-inline'></span><div class='ml15 d-cell f13'>成员不可见，管理员可分配</div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
+                    </mPanel>
+                </div>
 
+                <div class="d-bg-white mt10">
+                    <mPanel top="10" title="规则设置" color="#4889f4">
+                        <div class='bb pl15 pr15 pt10 pb10'>
+                            <div class='uni-h50 uni-lh50'>
+                                <label class='d-elip d-text-black  f13'>查看客户数量限制</label>
+                            </div>
+                            <div class='pl15 pr15'>
+                                <div class="d-center pb15 pt15">
+                                    <span class='radio-box d-inline active'></span><div class='ml15 d-cell f13'>无限制</div>
+                                </div>
+                                <div class='d-center'>
+                                    <span class='radio-box d-inline active'></span>
+                                    <input type="number" class="input-box ml15 mr10 ac">
+                                    <div class="d-cell">
+                                        个
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </mPanel>
 
-            </div>
+                        <div class='d-center bb  pl15 pr15 pt10 pb10'>
+                            <div class='uni-h50 uni-lh50'>
+                                <label class='d-elip d-text-black  f13'>领取客户上限</label>
+                            </div>
+                            <div class='pl15 pr15 d-cell'>
+                                <div class='d-center'>
+                                    <input type="number" class="input-box ml15 mr10 ac" style='width: 100px;'>
+                                    <div class="d-cell">
+                                        人
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-        </m-form>
+                        <div class='d-center pl15 pr15 bb pt10 pb10'>
+                            <div class='uni-h50 uni-lh50'>
+                                <label class='d-elip d-text-black f13'>连续领取规则</label>
+                            </div>
+                            <div class='pl15 pr15 d-cell'>
+                                <div class='d-center'>
+                                    <input type="number" class="input-box ml15 mr10 ac" style='width: 100px;'>
+                                    <div class="d-cell">
+                                        天
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='pl15 pr15 pt10 pb10 d-center'>
+                            <div class='uni-h50 uni-lh50 d-cell'>
+                                <label class='d-elip d-text-black f13'>客户自动回收</label>
+                            </div>
+                            <div>
+                                <i-switch slot="footer" :value='switch1' @change='handleChange'>
+                                    <view slot="open">开</view>
+                                    <view slot="close">关</view>
+                                </i-switch>
+                            </div>
+                        </div>
+
+                        <div class='pl15' v-show='switch1'>
+                            <div class='pl15 pr15 pb10'>
+                                <div class='d-center'>
+                                    <span class='radio-box d-inline active'></span>
+                                    <input type="number" class="input-box ml15 mr10 ac">
+                                    <div class="d-cell">
+                                        天 未跟进，则回收
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='pl15 pr15 pb10'>
+
+                                <div class='d-center'>
+                                    <span class='radio-box d-inline active'></span>
+                                    <input type="number" class="input-box ml15 mr10 ac">
+                                    <div class="d-cell">
+                                        天 未成交，则回收
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </mPanel>
+                </div>
+
+            </m-form>
+        </scroll-view>
 
         <div class="footer-fixed-menu">
-            <uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">保存</span>
+            <i-button type="primary" i-class="f16">保存</i-button>
         </div>
     </div>
 </template>
@@ -44,11 +132,13 @@
 export default {
 	data () {
 		return {
-
+			switch1: false
 		}
 	},
 	methods: {
-
+		handleChange (val) {
+			this.switch1 = !this.switch1
+		}
 	}
 }
 </script>
@@ -58,4 +148,35 @@ export default {
       height: 100vh;
       background: #f6f6f6;
   }
+
+  .radio-box{
+    width: 15px;
+    height: 15px;
+    border-radius: 100px;
+    border: 1px solid #d9d9d9;
+    position: relative;
+    &.active{
+        border-color: #1890ff;
+        &::before{
+            content: '';
+            width: 11px;
+            height: 11px;
+            background: #1890ff;
+            border-radius: 100px;
+            position: absolute;
+            left: 2px;
+            top: 2px;
+        }
+    }
+}
+
+.input-box{
+    height: 33px;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    padding:0 5px;
+    color: #c0c0c0;
+    width: 44px;
+}
+
 </style>
