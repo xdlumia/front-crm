@@ -2,25 +2,27 @@
   <div class="chance-bg">
     <NavBar title="机会销售详情" />
     <!-- 列表内容 -->
-    <div class="pt10" style="height:100vh">
+    <div style="height:100vh">
       <!-- 顶部信息 -->
-      <div class="chance-datail-title pl15 pr15 f13">
+      <div class="chance-datail-title pt10 pb10 pl15 pr15 f13">
         <div class="uni-flex uni-row">
           <div
             class="flex-item d-elip wfull f16"
             style="color:#333"
           >车公庄地铁 文华园小区朝南一局560万车公庄地铁 文华园小区朝南一局560万</div>
           <div class="flex-item datail-handle">
-            <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
+            <a class="d-inline" url="/pages/chance/add-chance"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
             <i-icon type="like" size="20" class="ml15" color="#1890FF" />
           </div>
         </div>
-        <div>客户名称: {{detailInfo.name}}</div>
-        <div>负责人: {{detailInfo.name}}</div>
-        <div>销售金额(元): {{detailInfo.name}}</div>
+        <div class="f12">客户名称: <a url="/pages/client/detail" class="d-elip d-text-blue" style="display:inline">华为技术有限公司</a></div>
+        <div class="f12">负责人: {{detailInfo.name}}</div>
+        <div class="f12">销售金额(元): {{detailInfo.name}}
+          <span class="fr">预计成交日期<time class="d-inline d-text-blue f12">2019-09-03</time></span>
+        </div>
       </div>
       <!-- 当前阶段 -->
-      <div class="mt10 change-steps " style="background-color:#fff">
+      <div class="mt10 mb10 change-steps " style="background-color:#fff">
         <i-steps
           :current="current"
           class="wfull">
@@ -33,11 +35,11 @@
             <span slot="step">{{item.index}}</span>
           </i-step>
         </i-steps>
-        <p class="f12 d-text-gray"> <i class="iconfont"></i> 点击商机阶段，商机阶段变更</p>
+        <p class="f12 d-text-gray"> <i class="uni-icon uni-icon-info-filled f12 mr5"></i> 点击商机阶段，商机阶段变更</p>
       </div>
       <!-- tabs切换组件 -->
-      <detail-swiper style="margin-top:100px" :tabBars='tabBars'>
-            <swiper-item slot='swiper'>1</swiper-item>
+      <detail-swiper :tabBars='tabBars'>
+            <swiper-item slot='swiper'></swiper-item>
       </detail-swiper>
       <!-- 底部操作按钮 -->
       <div class="footer-fixed-menu d-center d-bg-white">
@@ -124,6 +126,32 @@ export default {
 		},
 		handlerAction (item) {
 			this[item] = !this[item]
+		},
+		handlePhone ({ target: { index } }) {
+			this.callPhone(this.phoneActions[index].phone)
+		},
+
+		handleMore ({ target: { index } }) {
+			if (index === 0) return
+			let fnType = {
+				1: () => {
+					// 复制
+					this.$routing.navigateTo('/pages/chance/add-chance')
+				},
+				2: () => {
+					this.$routing.navigateTo('/pages/index/colleagueChoose')
+				},
+				3: () => {
+					this.$utils.showModal().then(() => {
+						console.log('111')
+					}).catch(() => {})
+				},
+				4: () => {
+					// 更多日程
+					this.$routing.navigateTo('/pages/index/scheduleAdd')
+				}
+			}
+			fnType[index]()
 		}
 	},
 	created () {}

@@ -15,11 +15,14 @@
             <div class='d-text-gray f13 mb5'>
                 总金额： <span class='d-text-blue'>778,997</span>
             </div>
-            <div class="d-center d-text-gray mb5">
-                <div class="d-cell f13">状态：
-                    <span class='d-text-blue'>已成交</span>
-                    <uni-icon type='arrowright' size='20' color='#696969' />
-                </div>
+            <div class="d-text-gray mb5 transaction">
+				<i-select
+					v-model="value"
+					:props="{label:'name',value:'id'}"
+					label="状态"
+					placeholder="请选择"
+					:options="upData">
+				</i-select>
             </div>
             <div class='d-text-gray f13 mb5'>
                 客户名称： <span>北京奥运会有限责任公司</span>
@@ -71,6 +74,8 @@ export default {
 				}
 			],
 			detailInfo: {},
+			value: '1',
+			upData: [{ name: '已成交', id: '1' }, { name: '未成交', id: '2' }],
 			tabBars: [
 				{
 					name: '跟进记录',
@@ -138,4 +143,8 @@ export default {
         }
     }
 
+</style>
+<style>
+.transaction .detail-panel-item{border-bottom: none;width: 120px;padding: 0px !important;}
+.transaction .uni-lh50{width: 50px !important;}
 </style>

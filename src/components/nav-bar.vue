@@ -26,6 +26,7 @@
                 <div class='nav-title f16 d-text-black wfull'>
                     <div class="ac d-elip b f16" v-if="!isSearch">
                         {{title}}
+                        <slot />
                     </div>
 
                     <div class="search-box ac" v-else>

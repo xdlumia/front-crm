@@ -46,7 +46,9 @@
             </picker-date>
         </m-form>
         <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
-		<i-button type="primary">保 存</i-button>
+		<div class="footer-fixed-menu">
+            <i-button type="primary" i-class="f16">保 存</i-button>
+        </div>
     </div>
 </div>
 </template>

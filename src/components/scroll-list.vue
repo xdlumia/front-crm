@@ -4,13 +4,14 @@
  * @param {boolean} isSearch 是否显示搜索框
  * @param {string} placeholder 搜索框文案 默认为 搜索
  * @param {string} title 标题
+ * @param  select 判断当前是否是选择
 
     <NavBar title="首页"  />
  */ -->
 <template>
   <div class="down-search-section-list" :style="{height:height}">
     <div v-for="(item,index) of 6" :key="index">
-      <slot v-bind:row="item"></slot>
+      <slot v-bind:row="item"  v-bind:index="index"  v-bind:select="select"></slot>
     </div>
     <div class="no-data-msg" v-if="pager.isLoaded&&!list.length">暂无数据</div>
     <i-load-more
@@ -25,6 +26,9 @@
 export default {
 	components: {},
 	props: {
+		select: {
+			default: 0
+		},
 		// 请求接口
 		api: {
 			required: true

@@ -30,9 +30,9 @@
                 <div class="f13 d-text-black form-row-item form-row-label">
                     <span class='d-text-red'>*</span>所属部门
                 </div>
-                <div class="d-cell mr10 form-row-item">
+                <a url='/pages/application/enterprise-management/organizational-structure' class="d-cell mr10 form-row-item">
                     <input type="text" disabled class='f12 d-text-gray' placeholder="请选择">
-                </div>
+                </a>
             </div>
 
             <div class="form-row d-center">
@@ -105,11 +105,11 @@
             </i-switch>
         </div>
 
-        <div class='d-center d-text-black mt10'>
+        <a url='/pages/common/more-list' class='d-center d-text-black mt10'>
             <i-icon type='add' size="20" color='#333' /> <span class='ml15'>添加更多条目</span>
-        </div>
+        </a>
 
-        <div class="pl15 pr15 sub-btn">
+        <div class="footer-fixed-menu">
             <i-button type="primary" i-class="f16">保存</i-button>
         </div>
 

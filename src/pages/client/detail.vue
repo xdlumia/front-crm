@@ -55,7 +55,7 @@
 <script>
 import detailSwiper from './components/detail-swiper'
 
-let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程']
+let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程', '领取', '分配']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
 	components: {
@@ -107,6 +107,9 @@ export default {
 				1: () => {
 					// 复制
 					this.$routing.navigateTo('./add-client')
+				},
+				2: () => {
+					this.$routing.navigateTo('/pages/highseas/return-client')
 				},
 				3: () => {
 					this.$routing.navigateTo('/pages/index/colleagueChoose')

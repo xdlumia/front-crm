@@ -7,8 +7,11 @@
   <div class="panel-section" :style="{'margin-top':top+'px'}">
     <div class="panel-section-title" :style="{'background-color':bg}">
       <h3 v-if="title" :style="{'border-left-color':color}">{{title}}
-        <a  v-if="url" :url="url">
-          <i-icon @click="addClick" class="fr" type="add" size="24" color="#466bef" />
+        <a v-if="url" :url="url" class="fr">
+          <slot name="add"><i-icon class="fr" type="add" size="24" color="#466bef" /></slot>
+        </a>
+        <a v-else class="fr">
+          <slot name="add"></slot>
         </a>
       </h3>
     </div>
@@ -47,9 +50,6 @@ export default {
 	},
 	created () {},
 	methods: {
-		addClick () {
-			this.$emit('add')
-		}
 	}
 }
 </script>

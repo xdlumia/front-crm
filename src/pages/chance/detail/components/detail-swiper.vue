@@ -1,34 +1,31 @@
 <template>
-    <div>
-        <i-tabs :current="current" :tabList='tabBars' @change="handleChange">
-
-            <i-tab index="0">
-                <div style='height:calc(100vh - 300px)'>
-                    1
-                </div>
-            </i-tab>
-            <i-tab index="1">
-                <detailInfo></detailInfo>
-            </i-tab>
-            <i-tab index="2">
-                <correlationInfo></correlationInfo>
-            </i-tab>
-
-        </i-tabs>
-    </div>
+  <div>
+      <i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
+        <i-tab index="0">
+            <notesInfo height="calc(100vh - 380px)"/>
+        </i-tab>
+        <i-tab index="1">
+            <detailInfo height="calc(100vh - 380px)"/>
+        </i-tab>
+        <i-tab index="2">
+            <correlationInfo height="calc(100vh - 380px)"/>
+        </i-tab>
+    </i-tabs>
+  </div>
 </template>
 
 <script>
 import detailInfo from './detail-info'
+import notesInfo from '@/pages/client/components/notes-info'
 import correlationInfo from './correlation-info'
 export default {
 	components: {
 		detailInfo,
+		notesInfo,
 		correlationInfo
 	},
 	data () {
 		return {
-			current: 0,
 			tabBars: [
 				{
 					title: '跟进记录'
@@ -46,7 +43,7 @@ export default {
 	onLoad (option) {},
 	methods: {
 		handleChange ({ index }) {
-			this.current = index
+			this.currIndex = index
 		}
 	},
 	created () {}
@@ -58,7 +55,10 @@ export default {
     height: 39px;
     border-top: 1px solid #efefef;
     border-bottom:1px solid #efefef;
-
+    .detail-tab-box{
+        display: flex;
+        justify-content: space-between;
+    }
     .detail-tab-item {
         display: inline-block;
         line-height: 40px;

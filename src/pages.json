@@ -33,9 +33,9 @@
 			}
 		},
 		{
-			"path": "pages/client/tags",
+			"path": "pages/client/manage/index",
 			"style": {
-				"navigationBarTitleText": "标签"
+				"navigationBarTitleText": "管理信息设置"
 			}
 		},
 		{
@@ -48,6 +48,12 @@
             "path":"pages/client/attr-detail",
             "style":{
                 "navigationBarTitleText":"业务属性详情"
+            }
+		},
+		{
+            "path":"pages/client/add-attr-info",
+            "style":{
+                "navigationBarTitleText":"添加业务属性"
             }
         },
 		{
@@ -96,6 +102,12 @@
 				"navigationBarTitleText":"添加跟进"
 			}
 		},
+		{
+			"path":"pages/chance/manage/stage-set",
+			"style":{
+				"navigationBarTitleText":"编辑销售阶段"
+			}
+		},
 		/** 销售机会——END*/
 		/** 联系人——BEGIN */
 		{
@@ -103,6 +115,12 @@
 			"style": {
 				"navigationBarTitleText": "更多条目",
 				"enablePullDownRefresh":true
+			}
+		},
+		{
+			"path": "pages/common/score-manage",
+			"style": {
+				"navigationBarTitleText": "评分管理"
 			}
 		},
 		{
@@ -121,7 +139,20 @@
 		{
 			"path": "pages/contact/detail/index",
 			"style": {
-				"navigationBarTitleText": "联系人详情"
+				"navigationBarTitleText": "联系人详情",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/contact/manage/index",
+			"style": {
+				"navigationBarTitleText": "管理联系人"
+			}
+		},
+		{
+			"path":"pages/contact/add-follow",
+			"style":{
+				"navigationBarTitleText":"添加跟进"
 			}
 		},
 		/** 联系人——END*/
@@ -147,6 +178,36 @@
 			"path": "pages/transaction/transaction-add",
 			"style": {
 				"navigationBarTitleText": "新建成交记录"
+			}
+		},
+		{
+			"path": "pages/transaction/transaction-manage",
+			"style": {
+				"navigationBarTitleText": "管理成交记录"
+			}
+		},
+		{
+			"path": "pages/common/information-set",
+			"style": {
+				"navigationBarTitleText": "信息设置"
+			}
+		},
+		{
+			"path": "pages/common/tags-set",
+			"style": {
+				"navigationBarTitleText": "标签设置"
+			}
+		},
+		{
+			"path": "pages/common/edit-tags",
+			"style": {
+				"navigationBarTitleText": "管理标签设置"
+			}
+		},
+		{
+			"path": "pages/common/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
 			}
 		},
 		{
@@ -265,9 +326,27 @@
 			}
 		},
 		{
+			"path":"pages/highseas/setting-detail",
+			"style":{
+				"navigationBarTitleText":"管理公海池"
+			}
+		},
+		{
 			"path":"pages/highseas/add-highseas",
 			"style":{
 				"navigationBarTitleText":"新建公海池"
+			}
+		},
+		{
+			"path":"pages/highseas/return-client",
+			"style":{
+				"navigationBarTitleText":"公海池选择"
+			}
+		},
+		{
+			"path":"pages/highseas/choose-highseas",
+			"style":{
+				"navigationBarTitleText":"选择客户公海池"
 			}
 		}
 	],

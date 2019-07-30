@@ -1,12 +1,12 @@
 /* 阿里字体图标库 */
 @font-face {
   font-family: 'iconfont';  /* project id 1304395 */
-  src: url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.eot');
-  src: url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1304395_20jqkdhz3cd.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.eot');
+  src: url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1304395_jz6wwre7x3m.svg#iconfont') format('svg');
 }
   
   .iconfont {
@@ -131,5 +131,42 @@
   .iconcall:before {
     content: "\e610";
   }
+
+  .iconzhuzhuangtu:before {
+    content: "\e6ce";
+  }
+
+  .iconjilu:before {
+    content: "\e624";
+  }
+
+  .iconpaihangbang:before {
+    content: "\e619";
+  }
+
+  .iconxiaoshouloudou:before {
+    content: "\e67e";
+  }
+
+  .iconshangji:before {
+    content: "\e810";
+  }
+
+  .iconkehugenjin:before {
+    content: "\e656";
+  }
+  .iconleijixunhuan:before {
+    content: "\e636";
+  }
+  .iconfanhui1:before {
+    content: "\e625";
+  }
+  .iconadjunct:before {
+    content: "\e671";
+  }
+
+
   
+  
+
   

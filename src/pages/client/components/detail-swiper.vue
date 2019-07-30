@@ -2,21 +2,20 @@
   <div>
       <i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
         <i-tab index="0">
-            <notesInfo />
+            <notesInfo :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="1">
-            <detailInfo />
+            <detailInfo :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="2">
-            <correlationInfo />
+            <correlationInfo :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
         </i-tab>
         <i-tab index='3'>
-            <attrInfo />
+            <attrInfo :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
         </i-tab>
     </i-tabs>
   </div>
 </template>
-
 <script>
 import detailInfo from './detail-info'
 import notesInfo from './notes-info'
