@@ -174,13 +174,13 @@
 			}
 		},
 		{
-			"path": "pages/common/info-set",
+			"path": "pages/common/tags-set",
 			"style": {
 				"navigationBarTitleText": "标签设置"
 			}
 		},
 		{
-			"path": "pages/common/edit-info",
+			"path": "pages/common/edit-tags",
 			"style": {
 				"navigationBarTitleText": "管理标签设置"
 			}
