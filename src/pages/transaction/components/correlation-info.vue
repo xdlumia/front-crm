@@ -1,6 +1,6 @@
 <template>
-    <div class="hfull d-auto-y">
-        <mPanel title="联系人" color="#7765cc" add>
+    <div class="d-auto-y" style="height:calc( 100vh - 350px )">
+        <mPanel title="联系人" color="#7765cc" add url="/pages/contact/index">
             <div class="detail-list">
                 <div class="list-title">
                     <title>黄玉里</title> <span class="d-text-qgray">总精力</span>
@@ -9,7 +9,7 @@
                 <p class="f12 d-elip d-text-qgray">华为技术有限公司</p>
             </div>
         </mPanel>
-		<mPanel top="10" title="成交记录" color="#3cc695" add>
+		<mPanel top="10" title="成交记录" color="#3cc695" add url="/pages/transaction/index">
             <div class="detail-list">
                 <p class="f12 d-elip d-text-gray">购买房源6603A/500W</p>
                 <p class="f12 d-elip d-text-gray">
@@ -18,7 +18,7 @@
                 </p>
             </div>
         </mPanel>
-        <mPanel top="10" title="日程" color="#4889f4" add>
+        <mPanel top="10" title="日程" color="#4889f4" add url="/pages/index/scheduleAdd">
             <div class="detail-list">
                 <p class="f13 d-elip d-text-gray">明天粉色扥发东风东</p>
                 <p class="f12 d-elip d-text-gray">2019/01/03 13:20 至2019/01/31 15:20</p>
@@ -32,7 +32,7 @@
                 <p class="f13 d-elip mt5 d-text-gray iconfont icon-adjunct"> 我是附件名称</p>
             </div>
         </mPanel>
-        <mPanel top="10" title="团队成员" color="#4889f4" add>
+        <mPanel top="10" title="团队成员" color="#4889f4" add url="/pages/index/colleagueChoose">
             <div class="detail-list d-flex-lr bb">
                 <image class="detail-list-img" data-name="徐丽丽" src="" alt=""></image>
                 <p>

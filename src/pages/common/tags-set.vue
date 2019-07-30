@@ -15,7 +15,7 @@
     <div class="hfull flexcenter">
       <uni-icon @click="deleteMoreList(index)" class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20'/>
     </div>
-    <input v-model="userName" placeholder="标签名称" class="ml5" style="flex: 1;"/>
+    <input maxlength="6" v-model="userName" placeholder="标签名称" class="ml5" style="flex: 1;"/>
     <div style="calc(100vw - 310px)" class="hfull flexcenter mr15">
       <div class="ac d-text-blue m5 subButton">
         <span class="f13">确定</span>
@@ -28,6 +28,9 @@
       <uni-icon type='plus-filled' size='18' color='#4889F4' />
       <span class="d-text-black ml10">添加客户属性</span>
     </div>
+  </div>
+  <div class="footer-fixed-menu">
+      <i-button type="primary" i-class="f16">保 存</i-button>
   </div>
 </div>
 </template>

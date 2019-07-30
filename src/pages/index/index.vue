@@ -22,7 +22,7 @@
                         <div class="ac mb5" style="font-weight: normal;color: #666;min-height: 32px;line-height: 32px;" :class="item == clickDay ? 'haveClick' : ''">
                             {{item}}
                         </div>
-                        <i style="height: 5px;" :class="item == 24 ? 'cirle-blue' : ''"></i>
+                        <i style="height: 5px;" :class="item == 31 ? 'cirle-blue' : ''"></i>
                     </div>
                 </div>
             </div>
@@ -33,13 +33,13 @@
             </div>
 
             <!--暂无日程-->
-            <div v-if="clickDay != 24" style="justify-content: center;align-items: center;flex-direction: column;" class="d-flex p10 mt15">
+            <div v-if="clickDay != 31" style="justify-content: center;align-items: center;flex-direction: column;" class="d-flex p10 mt15">
                 <img src="../../assets/img/schedule.png" style="width: 132px;height: 111px;"/>
                 <span class="d-text-qgray">今天还没有安排日程哦</span>
             </div>
 
             <!--日程列表-->
-            <div v-if="clickDay == 24" style="border: 1px solid #e4e4e4;border-left: none;border-right: none;">
+            <div v-if="clickDay == 31" style="border: 1px solid #e4e4e4;border-left: none;border-right: none;">
                 <div class="p10 wfull">
                     <div class="wfull d-flex">
                         <div class="d-flex cirle-blue" style="margin-top: 7px;">
@@ -259,7 +259,7 @@ export default {
 	data () {
 		return {
 			// echarts,
-			current: 1,
+			current: 0,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
 			timelong: 7,
