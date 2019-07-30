@@ -115,6 +115,7 @@ export default {
 		}
 	},
 	onLoad (option) {
+		console.log(option)
 	},
 	methods: {
 		setpHandle (row, index) {

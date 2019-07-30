@@ -49,7 +49,6 @@ import uniParse from './components/basic/uni/uParse/src/wxParse.vue'
 import uniFab from './components/basic/uni/uni-fab/uni-fab'
 import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
 import uniTag from './components/basic/uni/uni-tag/uni-tag'
-import dragSort from './components/basic/uni/drag-sort'
 // import tabPane from './components/basic/uni/uni-tabs/tabPane'
 // import tabs from './components/basic/uni/uni-tabs/tabs'
 // 自定义
@@ -57,6 +56,8 @@ import dragSort from './components/basic/uni/drag-sort'
 import mPanel from './components/m-panel'
 import mList from './components/m-list'
 import pickerDate from './components/picker-date'
+import mRadio from './components/m-radio'
+import mRadioGroup from './components/m-radio-group'
 // import mUpload from './components/m-upload'
 // import mForm from './components/m-form'
 
@@ -107,7 +108,6 @@ Vue.component('uniParse', uniParse)
 Vue.component('uniFab', uniFab)
 Vue.component('uniCalendar', uniCalendar)
 Vue.component('uniTag', uniTag)
-Vue.component('dragSort', dragSort)
 
 // Vue.component('tabPane', tabPane)
 // Vue.component('tabs', tabs)
@@ -116,6 +116,8 @@ Vue.component('dragSort', dragSort)
 Vue.component('mPanel', mPanel)
 Vue.component('mList', mList)
 Vue.component('pickerDate', pickerDate)
+Vue.component('mRadio', mRadio)
+Vue.component('mRadioGroup', mRadioGroup)
 // Vue.component('mUpload', mUpload)
 // Vue.component('mForm', mForm)
 

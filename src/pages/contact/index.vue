@@ -14,7 +14,7 @@
       :params="queryForm"
       :select="select"
       v-slot="{ row, index, select }">
-      <radio-group @change="radioChange">
+
         <div class="chance-item uni-flex uni-row">
           <div class="wfull flex-item item-info d-elip">
             <a url="./detail/index">
@@ -25,12 +25,11 @@
           </div>
           <div class="flex-item item-progress">
             <span v-if="select==1">
-              <radio value="item.id"  />
+                  <m-radio v-model="current" :label='1'>12</m-radio>
             </span>
             <i v-else @click="callPhone(18210286644)" class="iconfont f20 d-text-blue iconcall"></i>
           </div>
         </div>
-      </radio-group>
     </scroll-list>
     <!-- 客户 -->
     <div class="footer-fixed-menu d-center d-bg-white bt">
@@ -58,7 +57,7 @@ export default {
 	},
 	data () {
 		return {
-			select: 0,
+			select: 1,
 			filterData: [
 				{
 					prop: 'a',
