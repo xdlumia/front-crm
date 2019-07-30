@@ -20,18 +20,23 @@
                 <uni-icon type='arrowright' size='18' color='#696969' />
             </div>
             <div class="hfull d-flex mationInfo-middle">
-                <view class="uni-list class='formType flexcenter'">
-                    <view class="uni-list-cell">
-                            <view class="uni-list-cell-left d-text-black">
+                <picker class="flexcenter" @change="bindPickerChange" :value="msgIndex" :range="msgArr">
+                <view class="class='formType flexcenter'">
+                    <view class="flexcenter wfull hfull">
+                            <view class="uni-list-cell-left d-text-black ml10">
                                     表单类型
                             </view>
-                            <view class="uni-list-cell-db flexcenter">
-                                    <picker @change="bindPickerChange" :value="msgIndex" :range="msgArr">
-                                            <view class="uni-input f12"  style="color: #999;">{{msgArr[msgIndex] || '请选择'}}<uni-icon type='arrowright' size='16' color='#696969' /></view>
-                                    </picker>
+                            <view class="uni-list-cell-db flexcenter ml10">
+
+                                        <view class="uni-input f12"  style="color: #999;">
+                                            {{msgArr[msgIndex] || '请选择'}}
+                                            <uni-icon type='arrowright' size='16' color='#696969' />
+                                        </view>
+
                             </view>
                     </view>
-            </view>
+                </view>
+                </picker>
             </div>
 
             <div style="calc(100vw - 310px)" class="hfull flexcenter">
