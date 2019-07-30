@@ -1,15 +1,28 @@
+<!--
+/**
+* @author 王晓冬
+* @name 相关信息
+* @date 2019年7月299日
+**/
+-->
 <template>
-    <div class="hfull d-auto-y">
-        <mPanel title="联系人" color="#7765cc" src="">
-            <div class="detail-list">
-                <div class="list-title">
-                    <title>黄玉里</title> <span class="d-text-qgray">总精力</span>
-                    <span class="fr iconfont iconcall f18 d-text-gray" ></span>
+    <div class="hfull d-auto-y" :style="{height:height}">
+        <mPanel title="联系人" color="#7765cc" url="/pages/contact/index">
+            <div class="detail-list uni-flex uni-row pb10">
+                <div class="flex-item item-progress mr10">
+                    <circleProgress width="45px" :max="5" :progress="2" />
                 </div>
-                <p class="f12 d-elip d-text-qgray">华为技术有限公司</p>
+                <div class="flex-item d-elip">
+                    <div class="d-elip">购买房源6603A/500W</div>
+                    <div class="d-elip d-text-qgray f12">销售阶段2 /需求确定</div>
+                </div>
+                <div class="flex-item item-progress">
+                    <div class="d-elip f12">2019年06月04日</div>
+                    <div class="d-elip d-text-qgray f14">2,222.00 元</div>
+                </div>
             </div>
         </mPanel>
-		<mPanel top="10" title="成交记录" color="#3cc695" src="">
+		<mPanel top="10" title="成交记录" color="#3cc695" url="/pages/transaction/index">
             <div class="detail-list">
                 <p class="f12 d-elip d-text-gray">购买房源6603A/500W</p>
                 <p class="f12 d-elip d-text-gray">
@@ -18,21 +31,21 @@
                 </p>
             </div>
         </mPanel>
-        <mPanel top="10" title="日程" color="#4889f4" src="">
+        <mPanel top="10" title="日程" color="#4889f4" url="/pages/index/scheduleAdd">
             <div class="detail-list">
                 <p class="f13 d-elip d-text-gray">明天粉色扥发东风东</p>
                 <p class="f12 d-elip d-text-gray">2019/01/03 13:20 至2019/01/31 15:20</p>
                 <p class="f12 d-elip d-text-blue" style="background-colr:#efefef"><i-icon type="coordinates" size="18" color="#4788F4" />我是尝尝的遗传地址</p>
             </div>
         </mPanel>
-        <mPanel top="10" title="附件" color="#4889f4" src="">
+        <mPanel top="10" title="附件" color="#4889f4" url @add="handle">
             <div class="detail-list">
-                <p class="f13 d-elip mt5 d-text-gray iconfont icon-adjunct"> 我是附件名称</p>
-                <p class="f13 d-elip mt5 d-text-gray iconfont icon-adjunct"> 我是附件名称</p>
-                <p class="f13 d-elip mt5 d-text-gray iconfont icon-adjunct"> 我是附件名称</p>
+                <p class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> 我是附件名称</p>
+                <p class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> 我是附件名称</p>
+                <p class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> 我是附件名称</p>
             </div>
         </mPanel>
-        <mPanel top="10" title="团队成员" color="#4889f4" src="">
+        <mPanel top="10" title="团队成员" color="#4889f4" url="/pages/index/colleagueChoose">
             <div class="detail-list d-flex-lr bb">
                 <image class="detail-list-img" data-name="徐丽丽" src="" alt=""></image>
                 <p>
@@ -46,6 +59,7 @@
 
 <script>
 export default {
+	props: ['height'],
 	components: {
 		// mPager
 	},
@@ -59,12 +73,6 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
-		// 图片如果加载失败显示名称
-		defaultImg (e) {
-			console.log(e)
-			e.setAttribute('data-name', '改变')
-			// let title = e.target.dataset.title
-		},
 		// // 滚动到顶部刷新
 		// scrolltoupper (e) {
 		// 	console.log(e)
@@ -95,7 +103,7 @@ export default {
 
 <style scoped lang="scss">
 .detail-list{
-    padding:10px 15px 0;
+    padding:10px 15px;
     .detail-list-img{
         display: block;
         width:44px;

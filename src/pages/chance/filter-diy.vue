@@ -23,13 +23,13 @@
 <script>
 import FilterPlane from '@/components/filter-plane'
 let filterList = [];
-['客户级别', '客户性质', '跟进状态', '成交状态', '来源', '销售阶段'].forEach(item => {
+['销售阶段', '预计成交日期', '机会来源'].forEach(item => {
 	filterList.push({
 		title: item,
 		datalist: [
 			{
 				id: 1,
-				name: '非公海池客户'
+				name: '数据测试'
 			}
 		]
 	})

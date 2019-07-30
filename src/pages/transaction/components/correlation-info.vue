@@ -94,7 +94,7 @@ export default {
 
 <style scoped lang="scss">
 .detail-list{
-    padding:10px 15px 0;
+    padding:10px 15px;
     .detail-list-img{
         display: block;
         width:44px;

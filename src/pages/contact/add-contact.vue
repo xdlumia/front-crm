@@ -15,14 +15,13 @@
             <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="所属部门" :options="upData"/>
             <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="联系人角色" :options="upData"/>
             <i-input v-model="form.personalProfile" label="备注" placeholder="备注" type="textarea" />
+
         </m-form>
         <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
-    <!-- 保存 -->
-    <div class="footer-fixed-menu d-center bt">
-      <div class="d-cell ac d-bg-blue">
-        <span class="ml5 f15 d-text-white">保存</span>
-      </div>
+	<!-- 保存 -->
+    <div class="footer-fixed-menu">
+      <i-button type="primary" i-class="f16">保存</i-button>
     </div>
 </div>
 </template>

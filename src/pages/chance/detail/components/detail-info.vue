@@ -1,3 +1,8 @@
+<!--
+/**
+* @author 详细信息
+* @date 2019年7月299日
+-->
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc">

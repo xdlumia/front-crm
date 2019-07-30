@@ -1,43 +1,45 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会销售详情" />
+    <NavBar title="联系人详情" />
     <!-- 列表内容 -->
-    <div class="pt10" style="height:100vh">
+    <div style="height:100vh">
       <!-- 顶部信息 -->
-      <div class="chance-datail-title pl15 pr15 f13">
+      <div class="chance-datail-title d-bg-white pt10 pb10 pl15 pr15 f13 mb10">
         <div class="uni-flex uni-row">
           <div
             class="flex-item d-elip wfull f16"
-            style="color:#333"
-          >车公庄地铁 文华园小区朝南一局560万车公庄地铁 文华园小区朝南一局560万</div>
+            style="color:#333">王东亮</div>
           <div class="flex-item datail-handle">
-            <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
+            <a class="d-inline" url="/pages/contact/add-contact"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
             <i-icon type="like" size="20" class="ml15" color="#1890FF" />
           </div>
         </div>
-        <div class="f13">负责人: {{detailInfo.name}}</div>
-        <div class="d-text-blue f12">地址责任地址责任地址责任</div>
-        <div class="f13">深圳市龙岗区坂田华为总部办公楼</div>
+        <div class="f12">负责人: {{detailInfo.name}}</div>
+        <div class="f12"><a url="/pages/client/detail" class="d-elip d-text-blue" style="display:inline">华为技术有限公司</a></div>
+        <div class="f12">华为技术有限公司</div>
       </div>
       <!-- tabs切换组件 -->
-      <detail-swiper style="margin-top:100px"></detail-swiper>
+      <detail-swiper :tabBars='tabBars'>
+            <swiper-item slot='swiper'></swiper-item>
+      </detail-swiper>
       <!-- 底部操作按钮 -->
       <div class="footer-fixed-menu d-center d-bg-white">
-        <a class="d-cell al">
+        <a class="d-cell al" url='/pages/chance/add-follow'>
           <uni-icon type="plus" size="16" color="#1890FF" />
           <span class="ml5 f13 d-text-gray">添加跟进</span>
         </a>
-        <a class="d-cell ar">
-          <i-icon type="setup" size="18" color="#1890FF" />
-          <span class="ml5 f13 d-text-gray">打电话</span>
-        </a>
-        <a class="d-cell ar">
-          <i-icon type="setup" size="18" color="#1890FF" />
-          <span class="ml5 f13 d-text-gray">更多</span>
-        </a>
+        <div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
+            <span class="iconfont iconcall f18" style='color: #696969'></span><span class="ml5 f13  d-text-gray">打电话</span>
+        </div>
+        <div class="d-cell ar" @click="handlerAction('moreShow')">
+            <i-icon type='more' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">更多</span>
+        </div>
       </div>
-      <!-- 更多 action -->
-      <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" />
+       <!-- 更多 action -->
+        <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" @click="handleMore" />
+
+        <!-- 电话 action -->
+        <i-actionSheet :visible="phoneShow" :actions="phoneActions" show-cancel @cancel="handlerAction('phoneShow')" @click='handlePhone' />
 
     </div>
   </div>
@@ -45,14 +47,34 @@
 
 <script>
 import detailSwiper from './components/detail-swiper'
-let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程']
+
+let moreActionsTitle = ['更多操作', '复制', '转移给他人', '删除', '日程']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
+
 export default {
 	components: {
 		detailSwiper
 	},
 	data () {
 		return {
+			tabBars: [
+				{
+					name: '跟进记录',
+					id: '1'
+				},
+				{
+					name: '详细信息',
+					id: '2'
+				},
+				{
+					name: '相关信息',
+					id: '3'
+				},
+				{
+					name: '相关信息',
+					id: '3'
+				}
+			],
 			// 步骤列表
 			stepList: [
 				{ label: '验证机会', index: 1 },
@@ -66,7 +88,16 @@ export default {
 			},
 			moreShow: false,
 			phoneShow: false,
-			moreActions: moreActions
+			moreActions: moreActions,
+			phoneActions: [
+				{
+					name: '联系人电话'
+				},
+				{
+					name: '赵利春 18910453728',
+					phone: 18910453728
+				}
+			]
 		}
 	},
 	onLoad (option) {},
@@ -76,6 +107,32 @@ export default {
 		},
 		handlerAction (item) {
 			this[item] = !this[item]
+		},
+		handlePhone ({ target: { index } }) {
+			this.callPhone(this.phoneActions[index].phone)
+		},
+
+		handleMore ({ target: { index } }) {
+			if (index === 0) return
+			let fnType = {
+				1: () => {
+					// 复制
+					this.$routing.navigateTo('/pages/chance/add-chance')
+				},
+				2: () => {
+					this.$routing.navigateTo('/pages/index/colleagueChoose')
+				},
+				3: () => {
+					this.$utils.showModal().then(() => {
+						// console.log('111')
+					}).catch(() => {})
+				},
+				4: () => {
+					// 更多日程
+					this.$routing.navigateTo('/pages/index/scheduleAdd')
+				}
+			}
+			fnType[index]()
 		}
 	},
 	created () {}
@@ -95,24 +152,6 @@ export default {
   color: #666;
   .datail-handle {
     min-width: 60px;
-  }
-}
-.uni-tab {
-  border-top: 1px solid #efefef;
-  border-bottom: 1px solid #efefef;
-  .uni-tab-item {
-    display: inline-block;
-    line-height: 40px;
-    height: 40px;
-    margin-right: 10px;
-    .uni-tab-item-title {
-      padding-bottom: 6px;
-      box-sizing: border-box;
-      &.uni-tab-item-title-active {
-        color: #409eff;
-        border-bottom: 1px solid #409eff;
-      }
-    }
   }
 }
 </style>

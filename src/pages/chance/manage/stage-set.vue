@@ -6,10 +6,10 @@
                 <i-cell class="wfull" v-for="(item,index) of resultList" :key="index">
                     <i-row>
                         <i-col span="3">
-                            <i class="stage-index">{{index}}</i>
+                            <p><i class="stage-index">{{index}}</i></p>
                         </i-col>
                         <i-col span="3">
-                            <span><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
+                            <span @click="delResult(index)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
                         </i-col>
                         <i-col span="4">
                             <p @click="handlerAction()" class="f13">80%</p>
@@ -26,13 +26,12 @@
                     </i-row>
                 </i-cell>
             <!-- </dragSort> -->
-
-            <i-cell>
-                <div class="ac d-text-gray" @click="addStage()">
-                    <i class="uni-icon uni-icon-plus-filled f16 mr5" style="color:#4788f4"></i>添加销售阶段
-                </div>
-            </i-cell>
         </i-cell-group>
+        <i-cell>
+            <div class="ac d-text-gray" @click="addStage()">
+                <i class="uni-icon uni-icon-plus-filled f16 mr5" style="color:#4788f4"></i>添加销售阶段
+            </div>
+        </i-cell>
         <p class="f12 d-text-qgray pl15 mt10 mb10"><i class="uni-icon uni-icon-info-filled f12 mr5"></i>最多可添加5个销售阶段</p>
 
         <i-cell-group>
@@ -82,8 +81,16 @@ export default {
 	},
 	methods: {
 		addStage () {
+			if (this.resultList.length >= 5) {
+				uni.showToast({ title: '最大只能添加5条', icon: 'none' })
+				return
+			}
 			this.resultList.push({})
 			console.log('添加阶段')
+		},
+		delResult (index) {
+			console.log(index)
+			this.resultList.splice(index, 1)
 		},
 		// onDragSortChange (e) {
 		// 	console.log(e)
@@ -91,6 +98,10 @@ export default {
 		// 	// data 操作的数据
 		// },
 		handlerAction (item) {
+			this.moreShow = !this.moreShow
+		},
+		handleMore ({ target: { index } }) {
+			console.log(index)
 			this.moreShow = !this.moreShow
 		}
 	}
@@ -105,6 +116,7 @@ export default {
         color:#666;
         .stage-index{
             text-align: center;
+            display: inline-block;
             line-height: 20px;
             color:#fff;
             font-size:12px;
