@@ -36,7 +36,7 @@
                     :focus="autofocus"
                     :value="value"
                     :placeholder="placeholder"
-                    :maxlength="maxlength"
+                    :maxlength="maxlength == 300?32:maxlength"
                     class=" i-input-input uni-lh50 uni-h50 wfull f13"
                     @input="handleInputChange"
                     @focus="handleInputFocus"

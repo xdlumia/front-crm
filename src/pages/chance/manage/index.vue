@@ -1,7 +1,7 @@
 <template>
     <div class='tags-page'>
         <NavBar title='管理客户' />
-        <a class="tags-box p15 isarrow f13 d-text-black d-bg-white bt bb">机会信息管理</a>
+        <a url="./pages/common/info-set" class="tags-box p15 isarrow f13 d-text-black d-bg-white bt bb">机会信息管理</a>
         <div class="pl15 pr15 d-text-gray f13 pt10 pb10">可以设置商机有哪些基本信息</div>
 
         <a url="./stage-set" class="tags-box p15 isarrow f13 d-text-black d-bg-white bt bb">销售阶段设置</a>

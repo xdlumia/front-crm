@@ -1,6 +1,6 @@
 <template>
     <div class="d-relative">
-        <scroll-view scroll-y :style="'height:calc(100vh - 217px - 100px - ' + navH + ')'">
+        <scroll-view scroll-y :style="{height:height}">
             <a url='/pages/client/attr-detail' class="attr-item pl15 pr15 d-bg-white mb10 pt10 pb10">
                 <div class="f13 d-text-black b">CRM管理系统如何解决销售和管理上痛点</div>
                 <div class="d-text-qgray f13 twowrap">CRM管理系统如何解决销售和管理上痛点CRM管理系统如何解决销售和管理上痛点CRM管理系统如何解决销售和管理上痛点CRM管理系统如何解决销售和管理上痛点CRM管理系统如何解决销售和管理上痛点</div>
@@ -12,7 +12,6 @@
                     <span class="f14 d-text-gray">删除</span>
                 </div>
             </a>
-
         </scroll-view>
         <div class="pl15 pr15">
            <div class="add-attr-btn f14 d-text-black d-bg-white ac">+ 添加</div>
@@ -22,7 +21,12 @@
 
 <script>
 export default {
-
+	props: {
+		height: {
+			type: String,
+			default: ''
+		}
+	}
 }
 </script>
 
