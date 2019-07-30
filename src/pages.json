@@ -205,6 +205,12 @@
 			}
 		},
 		{
+			"path": "pages/common/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		},
+		{
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "我的"

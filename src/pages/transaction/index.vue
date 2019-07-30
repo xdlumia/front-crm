@@ -3,9 +3,11 @@
         <NavBar title='成交记录' />
         <div>
             <div class="page-search-box d-flex" :style="'top: '+ navH">
-                <div class="search-input d-center d-cell pl10">
-                    <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">搜成交记录名称</span>
-                </div>
+				<a url='/pages/common/search' class="wfull">
+					<div class="search-input d-center d-cell pl10">
+						<i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">搜成交记录名称</span>
+					</div>
+				</a>
             </div>
             <!-- <filter-diy @submit='submit' @clear='clear' /> -->
             <Filter :filterData='filterData' @filterSubmit='submit' ref='filter' :top='"calc("+ navH +" + 49px)"'>
