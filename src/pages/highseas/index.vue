@@ -20,7 +20,7 @@
 				:params="queryForm"
 				v-slot="{ row }"
 			>
-				<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
+				<a  url='/pages/client/detail' class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
                     <div class="d-cell">
                         <div class="f13 d-text-black">北京奥运会有限责任公司</div>
                         <div class="f12 d-text-qgray">退回时间：2019-06-03 15:33</div>
@@ -30,11 +30,11 @@
                         <div class="mr15">
                             <uni-tag text="领取" type='primary' inverted size='small'></uni-tag>
                         </div>
-                        <a url='/pages/index/colleagueChoose' class="mr10">
+                        <div @click.stop='$routing.navigateTo("/pages/index/colleagueChoose")' class="mr10">
                             <uni-tag text="分配" type='primary' inverted size='small'></uni-tag>
-                        </a>
+                        </div>
                     </div>
-                </div>
+                </a>
 			</scroll-list>
 
 			<div class="footer-fixed-menu d-center d-bg-white">
