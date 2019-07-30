@@ -2,8 +2,8 @@
     <div class='stage-page'>
         <NavBar title='编辑销售阶段' />
         <i-cell-group class="f13">
-            <dragSort  v-slot="{ row,index }" :list="resultList" :props="{label:'name'}" @change="onDragSortChange">
-                <i-cell class="wfull">
+            <!-- <dragSort  v-slot="{ row,index }" :list="resultList" @change="onDragSortChange"> -->
+                <i-cell class="wfull" v-for="(item,index) of resultList" :key="index">
                     <i-row>
                         <i-col span="3">
                             <i class="stage-index">{{index}}</i>
@@ -12,10 +12,10 @@
                             <span><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
                         </i-col>
                         <i-col span="4">
-                            <span class="f13">80% </span>
+                            <p @click="handlerAction()" class="f13">80%</p>
                         </i-col>
                         <i-col span="2">
-                            <span><i-icon type="enter" size="20" color="#999" /></span>
+                            <p @click="handlerAction()"><i-icon type="enter" size="20" color="#999" /></p>
                         </i-col>
                         <i-col span="8" i-class="col-class">
                         <span class="pl5 f13">{{row.title}}</span>
@@ -25,7 +25,7 @@
                         </i-col>
                     </i-row>
                 </i-cell>
-            </dragSort>
+            <!-- </dragSort> -->
 
             <i-cell>
                 <div class="ac d-text-gray" @click="addStage()">
@@ -57,13 +57,21 @@
         <div class="footer-fixed-menu">
             <i-button type="primary" i-class="f16">保存</i-button>
         </div>
+        <!-- 更多 action -->
+        <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" @click="handleMore" />
+
     </div>
 </template>
 
 <script>
+let moreActionsTitle = ['0', '50', '100', '80', '90']
+let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
+
 	data () {
 		return {
+			moreActions: moreActions,
+			moreShow: false,
 			upData: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			resultList: [
 				{ title: '赢单', value: '100%' },
@@ -74,12 +82,16 @@ export default {
 	},
 	methods: {
 		addStage () {
+			this.resultList.push({})
 			console.log('添加阶段')
 		},
-		onDragSortChange (e) {
-			console.log(e)
-			// frontData 插到谁后面
-			// data 操作的数据
+		// onDragSortChange (e) {
+		// 	console.log(e)
+		// 	// frontData 插到谁后面
+		// 	// data 操作的数据
+		// },
+		handlerAction (item) {
+			this.moreShow = !this.moreShow
 		}
 	}
 }
