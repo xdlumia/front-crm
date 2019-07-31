@@ -11,8 +11,8 @@
             <!--显示本周-->
 
             <div v-if="timelong == 7">
-                <div class="d-text-black ml15 mt10">{{todayDate}}
-                    <uni-icon type="arrowdown" class="pl5" size="18" @click='timelong = 30'/>
+                <div class="d-text-black ml15 mt10" @click='timelong = 30'>{{todayDate}}
+                    <uni-icon type="arrowdown" class="pl5" size="18"/>
                 </div>
                 <div class="d-flex mt15">
                     <div v-for="item in aweek" :key='item' style="flex:1;color:#CCCCCC" class="d-text-qgray ac b">{{item}}</div>
@@ -275,7 +275,7 @@ export default {
 	},
 	computed: {
 		todayDate () {
-			return (new Date().toLocaleDateString().split('/').join('-'))
+			return (new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate())
 		}
 	},
 	created () {
