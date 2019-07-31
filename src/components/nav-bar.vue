@@ -18,7 +18,7 @@
                     <navigator open-type='navigateBack' class="d-center tools-item">
                         <i-icon type="return" size="24" color='#000' />
                     </navigator>
-                    <navigator open-type='switchTab' class="d-center tools-item">
+                    <navigator url='/pages/index/index' open-type='switchTab' class="d-center tools-item">
                         <i-icon type="homepage" size="24" color='#000' />
                     </navigator>
                 </div>

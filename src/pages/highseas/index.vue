@@ -123,6 +123,7 @@ export default {
 	.highseas-list-view{
 		margin-top: 87px;
 		box-sizing: border-box;
+		padding-bottom: 110px;
 	}
 	.highseas-item{
 		border-bottom:1px solid #d7d7d7;
@@ -138,6 +139,7 @@ export default {
         position: fixed;
         right: 0;
         left: 0;
+		z-index: 10;
         .search-input{
             display: block;
             height: 100%;

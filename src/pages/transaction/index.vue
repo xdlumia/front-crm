@@ -36,34 +36,37 @@
             </Filter>
         </div>
 
-		<a url='/pages/transaction/detail' class='highseas-list-view d-relative'>
-			<scroll-list
-				:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
-				api="bizSystemService.getUserAuth"
-				:params="queryForm"
-				v-slot="{ row }"
-			>
-				<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
-                    <div class="d-cell">
-                        <div class="f13 d-text-black">房屋租赁</div>
-                        <div class="f12 d-text-qgray">客户：北京皇城责任有限公司</div>
-                        <div class="f12 d-text-qgray">成交金额：86582元</div>
-                    </div>
-                    <div class="d-center">
-                        <div class="f13 d-text-qgray">已成交</div>
-                    </div>
-                </div>
-			</scroll-list>
+		<div class='highseas-list-view'>
+				<scroll-list
+					:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
+					api="bizSystemService.getUserAuth"
+					:params="queryForm"
+					v-slot="{ row }"
+				>
 
-			<div class="footer-fixed-menu d-center d-bg-white">
-				<a url='/pages/transaction/transaction-add' class="d-cell al">
-					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建成交</span>
-				</a>
-				<a url='/pages/transaction/transaction-manage' class="d-cell ar">
-					<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理成交记录</span>
-				</a>
-			</div>
-		</a>
+						<a url='/pages/transaction/detail' class='d-relative'>
+							<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
+								<div class="d-cell">
+									<div class="f13 d-text-black">房屋租赁</div>
+									<div class="f12 d-text-qgray">客户：北京皇城责任有限公司</div>
+									<div class="f12 d-text-qgray">成交金额：86582元</div>
+								</div>
+								<div class="d-center">
+									<div class="f13 d-text-qgray">已成交</div>
+								</div>
+							</div>
+						</a>
+				</scroll-list>
+		</div>
+
+		<div class="footer-fixed-menu d-center d-bg-white">
+			<a url='/pages/transaction/transaction-add' class="d-cell al">
+				<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建成交</span>
+			</a>
+			<a url='/pages/transaction/transaction-manage' class="d-cell ar">
+				<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理成交记录</span>
+			</a>
+		</div>
     </div>
 </template>
 
@@ -191,6 +194,7 @@ export default {
 	.highseas-list-view{
 		margin-top: 87px;
 		box-sizing: border-box;
+		padding-bottom: 110px;
 	}
 	.highseas-item{
 		border-bottom:1px solid #d7d7d7;
@@ -206,6 +210,7 @@ export default {
         position: fixed;
         right: 0;
         left: 0;
+		z-index:10;
         .search-input{
             display: block;
             height: 100%;
