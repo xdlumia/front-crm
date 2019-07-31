@@ -64,6 +64,7 @@ import mRadioGroup from './components/m-radio-group'
 
 // 业务组件
 import authButton from './components/auth-button'
+import ecCanvas from './components/aaacanvas'
 import NavBar from './components/nav-bar'
 import circleProgress from './components/circle-progress'
 import scrollList from './components/scroll-list'
@@ -78,6 +79,7 @@ Vue.config.productionTip = false
 Vue.prototype.$store = store
 
 // iview UI
+Vue.component('ecCanvas', ecCanvas)
 Vue.component('iIcon', iIcon)
 Vue.component('iSpin', iSpin)
 Vue.component('iRow', iRow)
