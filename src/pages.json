@@ -118,6 +118,13 @@
 			}
 		},
 		{
+			"path": "pages/common/more-tags",
+			"style": {
+				"navigationBarTitleText": "添加更多标签",
+				"enablePullDownRefresh":true
+			}
+		},
+		{
 			"path": "pages/common/score-manage",
 			"style": {
 				"navigationBarTitleText": "评分管理"

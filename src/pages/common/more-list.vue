@@ -4,13 +4,11 @@
 <div class="d-bg-white">
     <NavBar title="添加更多条目"/>
 	<scroll-view style="height:calc(100vh - 115px)" scroll-y>
-		<radio-group class="uni-list" @change="onChange">
-			<i-cell-group>
-				<i-cell v-for="(item, index) in 30" :key="index" :title="`测试${index}`">
-					<radio slot="footer" value="32" :checked="item.checked" />
-				</i-cell>
-			</i-cell-group>
-		</radio-group>
+		<i-cell-group>
+			<i-cell v-for="(item, index) in 30" :key="index" :title="`测试${index}`">
+				<m-checkbox slot="footer" label="32" />
+			</i-cell>
+		</i-cell-group>
 	</scroll-view>
 	<!-- 客户 -->
     <div class="footer-fixed-menu d-center d-bg-white bt">

@@ -6,7 +6,11 @@
     <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.userName" label="姓名" placeholder="请填写" required />
-            <i-input v-model="form.phone" label="客户名称" placeholder="请填写" required type="number" />
+            <a url="/pages/client/index" openType="switchTab">
+				<i-input disabled v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required>
+					<i-icon type="enter" size="16" color="#999" />
+				</i-input>
+			</a>
             <i-input v-model="form.userPosition" label="职位" placeholder="请填写"/>
             <i-input v-model="form.userPosition" label="电话" placeholder="请填写"/>
             <i-input v-model="form.userPosition" label="手机" placeholder="请填写"/>

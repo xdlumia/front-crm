@@ -57,6 +57,7 @@ import mPanel from './components/m-panel'
 import mList from './components/m-list'
 import pickerDate from './components/picker-date'
 import mRadio from './components/m-radio'
+import mCheckbox from './components/m-checkbox'
 import mRadioGroup from './components/m-radio-group'
 // import mUpload from './components/m-upload'
 // import mForm from './components/m-form'
@@ -117,6 +118,7 @@ Vue.component('mPanel', mPanel)
 Vue.component('mList', mList)
 Vue.component('pickerDate', pickerDate)
 Vue.component('mRadio', mRadio)
+Vue.component('mCheckbox', mCheckbox)
 Vue.component('mRadioGroup', mRadioGroup)
 // Vue.component('mUpload', mUpload)
 // Vue.component('mForm', mForm)

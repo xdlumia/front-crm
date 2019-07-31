@@ -27,9 +27,9 @@
         <div v-else class="d-flex f13">
             <div v-if="labelWidth" :style="{width:labelWidth * 2 +'rpx'}" class="uni-h50 uni-lh50">
                 <span v-if="required" class="d-text-red">*</span>
-                <label class="d-elip d-text-black f13">{{label}}</label>
+                <slot name="label"><label class="d-elip d-text-black f13">{{label}}</label></slot>
             </div>
-            <div class="d-cell d-relative">
+            <div class="d-cell d-relative d-flex">
                 <input
                     :type="type"
                     :disabled="disabled"
@@ -37,7 +37,7 @@
                     :value="value"
                     :placeholder="placeholder"
                     :maxlength="maxlength == 300?32:maxlength"
-                    class=" i-input-input uni-lh50 uni-h50 wfull f13"
+                    class=" i-input-input uni-lh50 uni-h50 f13 wfull"
                     @input="handleInputChange"
                     @focus="handleInputFocus"
                     @blur="handleInputBlur"
@@ -124,10 +124,6 @@ export default {
 }
 .input-icon{
 	display: inline-block;
-	position: absolute;
-	top: 50%;
-	right: 0px;
-	transform: translateY(-50%);
-	color:#999
+	color:#999;
 }
 </style>

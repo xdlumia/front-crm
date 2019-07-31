@@ -1,6 +1,6 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会销售详情" />
+    <NavBar title="销售机会详情" />
     <!-- 列表内容 -->
     <div style="height:100vh">
       <!-- 顶部信息 -->
