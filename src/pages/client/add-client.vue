@@ -3,29 +3,21 @@
         <NavBar title='新建客户信息' />
         <div class="d-bg-white">
 
-            <picker :value="upTypeIndex" :range="upData" @change='change($event, "upTypeIndex")'>
-                <div class="form-row d-center">
-                    <div class="f13 d-text-black form-row-item form-row-label">
-                        <span class='d-text-red'>*</span>客户名称
-                    </div>
-                    <div class="d-cell mr10 form-row-item">
-                        <input type="text" class='f12 d-text-gray' placeholder="请填写客户名称">
-                    </div>
-                </div>
-            </picker>
+            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="text" />
 
-            <div class="form-row d-center">
-                <div class="f13 d-text-black form-row-item form-row-label">
-                    <span class='d-text-red'>*</span>手机号
-                </div>
-                <div class="d-cell mr10 form-row-item">
-                    <input type="number" class='f12 d-text-gray' placeholder="请选择">
-                </div>
-                <div>
-                    <div class="check-repeat">查重</div>
-                </div>
-            </div>
+            <i-input v-model="form.phone" label="手机号" placeholder="请填写" required type="number">
+                <div class="check-repeat">查重</div>
+            </i-input>
+            <i-select
+                v-model="form.phone"
+                :props="{label:'name',value:'id'}"
+                label="所属部门"
+                placeholder="请选择所属部门"
+                required
+                :options="upData">
+            </i-select>
 
+            <!--
             <div class="form-row isarrow d-center">
                 <div class="f13 d-text-black form-row-item form-row-label">
                     <span class='d-text-red'>*</span>所属部门
@@ -33,60 +25,57 @@
                 <a url='/pages/application/enterprise-management/organizational-structure' class="d-cell mr10 form-row-item">
                     <input type="text" disabled class='f12 d-text-gray' placeholder="请选择">
                 </a>
-            </div>
+            </div> -->
 
-            <div class="form-row d-center">
+            <i-input v-model="form.phone" label="详细地址" placeholder="请填写详细地址"  type="number">
+                <div @click="chooseMap" class="ml15 ac hfull pl15 d-center" style="border-left: 1px solid #F2F2F2;">
+                    <i-icon type="coordinates" size="22" color="#999" />
+                </div>
+            </i-input>
+
+            <!-- <div class="form-row d-center">
                 <div class="f13 d-text-black form-row-item form-row-label">
-                    详细地址
+
                 </div>
                 <div class="d-cell mr10 form-row-item">
                     <input type="text" disabled class='f12 d-text-gray' placeholder="请填写详细地址">
                 </div>
-                <div @click="chooseMap" class="ml15 ac hfull pl15 d-center" style="border-left: 1px solid #F2F2F2;">
-                    <i-icon type="coordinates" size="22" color="#999" />
-                </div>
-            </div>
 
-            <picker :value="levelTypeIndex" :range="levelData" @change='change($event, "levelTypeIndex")'>
-                <div class="form-row isarrow d-center">
-                    <div class="f13 d-text-black form-row-item form-row-label">
-                        客户级别
-                    </div>
-                    <div class="d-cell mr10 form-row-item">
-                        <input type="text" disabled class='f12 d-text-gray' :placeholder="levelData[levelTypeIndex] || '请选择'">
-                    </div>
-                </div>
-            </picker>
-            <picker :value="levelTypeIndex" :range="levelData" @change='change($event, "levelTypeIndex")'>
-                <div class="form-row isarrow d-center">
-                    <div class="f13 d-text-black form-row-item form-row-label">
-                        行业
-                    </div>
-                    <div class="d-cell mr10 form-row-item">
-                        <input type="text" disabled class='f12 d-text-gray' :placeholder="levelData[levelTypeIndex] || '请选择'">
-                    </div>
-                </div>
-            </picker>
-            <picker :value="levelTypeIndex" :range="levelData" @change='change($event, "levelTypeIndex")'>
-                <div class="form-row isarrow d-center">
-                    <div class="f13 d-text-black form-row-item form-row-label">
-                        来源
-                    </div>
-                    <div class="d-cell mr10 form-row-item">
-                        <input type="text" disabled class='f12 d-text-gray' :placeholder="levelData[levelTypeIndex] || '请选择'">
-                    </div>
-                </div>
-            </picker>
-            <picker :value="levelTypeIndex" :range="levelData" @change='change($event, "levelTypeIndex")'>
-                <div class="form-row isarrow d-center">
-                    <div class="f13 d-text-black form-row-item form-row-label">
-                        标签
-                    </div>
-                    <div class="d-cell mr10 form-row-item">
-                        <input type="text" disabled class='f12 d-text-gray' :placeholder="levelData[levelTypeIndex] || '请选择'">
-                    </div>
-                </div>
-            </picker>
+            </div> -->
+
+            <i-select
+                v-model="form.phone"
+                :props="{label:'name',value:'id'}"
+                label="客户级别"
+                placeholder="请选择客户级别"
+                @change='change($event, "levelTypeIndex")'
+                :options="levelData"
+            />
+
+            <i-select
+                v-model="form.phone"
+                :props="{label:'name',value:'id'}"
+                label="行业"
+                placeholder="请选择行业"
+                @change='change($event, "levelTypeIndex")'
+                :options="levelData"
+            />
+            <i-select
+                v-model="form.phone"
+                :props="{label:'name',value:'id'}"
+                label="来源"
+                placeholder="请选择来源"
+                @change='change($event, "levelTypeIndex")'
+                :options="levelData"
+            />
+            <i-select
+                v-model="form.phone"
+                :props="{label:'name',value:'id'}"
+                label="标签"
+                placeholder="请选择标签"
+                @change='change($event, "levelTypeIndex")'
+                :options="levelData"
+            />
         </div>
 
         <div class="pt10 pb10 pl15 pr15 d-bg-white">
