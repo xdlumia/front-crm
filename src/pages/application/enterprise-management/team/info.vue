@@ -35,11 +35,11 @@ export default {
 		return {
 			id: 0,
 			pic: '',
-			name: '呼呼呼',
-			phone: '18233279575',
-			inviter: '浏览量',
-			verifier: '快快快',
-			applyReason: '行行行'
+			name: '',
+			phone: '',
+			inviter: '',
+			verifier: '',
+			applyReason: ''
 		}
 	},
 	onLoad (option) {
