@@ -14,6 +14,10 @@
             <div class="d-text-black f13 pb15">添加图片[最多只能上传9张图片]</div>
             <imagePick />
         </div>
+
+        <div class='footer-fixed-menu'>
+            <i-button type="primary" i-class="f16">提交反馈</i-button>
+        </div>
     </div>
 </template>
 

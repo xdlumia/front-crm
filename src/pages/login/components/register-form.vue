@@ -52,7 +52,7 @@
         </div>
 
         <div class="phone-fixed d-text-white d-fixed d-center" @click="callPhone(servicePhone)">
-            <span class="iconfont icondadianhua f22"></span>
+            <span class="iconfont iconcall f22"></span>
         </div>
 
         <div class="login-btn">
@@ -89,6 +89,14 @@ export default {
 
     .login-btn {
         padding: 80px 40px 0
+    }
+
+    .phone-fixed{
+        width: 40px;
+        height: 40px;
+        border-radius: 100px;
+        background: #4889F4;
+        right: 30px;
     }
 
 </style>

@@ -51,12 +51,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .phone-fixed{
-        width: 40px;
-        height: 40px;
-        border-radius: 100px;
-        background: #4889F4;
-        right: 30px;
-    }
 
 </style>
