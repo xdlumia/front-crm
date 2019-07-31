@@ -183,6 +183,8 @@
                    <view class="echartsBox">
                         <!-- 引入的mpvue-echarts组件 -->
                         <!-- <mpvue-echarts :echarts='echarts' canvasId="chat1" @onInit="fn1OnInit" ref='lineChart' class="ec-canvas"/> -->
+                         <!-- <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" :ec="ec">
+                         </ec-canvas> -->
                     </view>
                 </div>
             </div>
@@ -216,49 +218,104 @@
 <script>
 // import * as echarts from 'echarts'
 // import mpvueEcharts from 'mpvue-echarts/src/echarts.vue'
-function fn1 (e) {
-	let option = {
-		title: {
-			left: 'left',
-			top: 'bottom'
-		},
-		tooltip: {
-			trigger: 'item',
-			formatter: '{a} <br/>{b} : {c}%'
-		},
-		calculable: true,
-		series: [
-			{
-				type: 'funnel',
-				width: '60%',
-				height: '80%',
-				left: '15%',
-				top: '5%',
-				data: [
-					{ value: 60, name: '访问' },
-					{ value: 30, name: '咨询' },
-					{ value: 10, name: '订单' },
-					{ value: 80, name: '点击' },
-					{ value: 100, name: '展现' }
-				]
-			}
-		]
-	}
-	let { width, height } = e
-	let canvas = this.$refs.lineChart.canvas
-	echarts.setCanvasCreator(() => canvas)
-	let lineChart = echarts.init(canvas, null, {
-		width: width,
-		height: height
-	})
-	canvas.setChart(lineChart)
-	lineChart.setOption(option)
-	this.$refs.lineChart.setChart(lineChart)
-};
+
+// import mpvueEcharts from '../../ec-canvas/ec-canvas'
+// import * as echarts from '@/components/ec-canvas/echarts';
+
+// function fn1 (e) {
+// 	let option = {
+// 		title: {
+// 			left: 'left',
+// 			top: 'bottom'
+// 		},
+// 		tooltip: {
+// 			trigger: 'item',
+// 			formatter: '{a} <br/>{b} : {c}%'
+// 		},
+// 		calculable: true,
+// 		series: [
+// 			{
+// 				type: 'funnel',
+// 				width: '60%',
+// 				height: '80%',
+// 				left: '15%',
+// 				top: '5%',
+// 				data: [
+// 					{ value: 60, name: '访问' },
+// 					{ value: 30, name: '咨询' },
+// 					{ value: 10, name: '订单' },
+// 					{ value: 80, name: '点击' },
+// 					{ value: 100, name: '展现' }
+// 				]
+// 			}
+// 		]
+// 	}
+// 	let { width, height } = e
+// 	let canvas = this.$refs.lineChart.canvas
+// 	echarts.setCanvasCreator(() => canvas)
+// 	let lineChart = echarts.init(canvas, null, {
+// 		width: width,
+// 		height: height
+// 	})
+// 	canvas.setChart(lineChart)
+// 	lineChart.setOption(option)
+// 	this.$refs.lineChart.setChart(lineChart)
+// };
+// const app = getApp();
+
+// var list = []
+// var list1 = []
+
+// function initChart (canvas, width, height) {
+// 	const chart = echarts.init(canvas, null, {
+// 		width: width,
+// 		height: height
+// 	})
+// 	canvas.setChart(chart)
+
+// 	var option = {
+// 		tooltip: {
+// 			trigger: 'axis'
+// 		},
+// 		legend: {
+// 			data: ['客户']
+// 		},
+// 		grid: {
+// 			left: '1%',
+// 			right: '30rpx',
+// 			bottom: '1%',
+// 			containLabel: true
+// 		},
+// 		xAxis: {
+// 			type: 'category',
+// 			boundaryGap: false,
+// 			data: list,
+// 			name: '月份',
+// 			nameGap: 2,
+// 			axisLabel: {
+// 				interval: 0
+// 			}
+// 		},
+// 		yAxis: {
+// 			type: 'value',
+// 			name: '数量'
+// 		},
+// 		series: [
+// 			{
+// 				name: '客户',
+// 				type: 'line',
+// 				stack: '总量',
+// 				data: list1
+// 			}
+// 		]
+// 	}
+
+// 	chart.setOption(option)
+// 	return chart
+// }
 export default {
 	data () {
 		return {
-			// echarts,
 			current: 0,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
@@ -266,8 +323,11 @@ export default {
 			clickDay: '',
 			TabList: [{ name: '今天' }, { name: '仪表盘' }],
 			selected: [{ date: '2019-07-24', info: '签到', data: { custom: '自定义信息', name: '自定义消息头' } }],
-			rankingList: [{ name: '王二小', num: 36098 }, { name: '王三小', num: 10025 }, { name: '王四小', num: 10020 }],
-			fn1OnInit: fn1
+			rankingList: [{ name: '王二小', num: 36098 }, { name: '王三小', num: 10025 }, { name: '王四小', num: 10020 }]
+			// fn1OnInit: fn1,
+			// ec:{
+			//     onInit: initChart
+			// }
 		}
 	},
 	components: {

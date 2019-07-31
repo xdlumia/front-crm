@@ -4,7 +4,10 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "首页",
+				"usingComponents": {
+					"ec-canvas": "/components/ec-canvas/ec-canvas"
+				}
 			}
 		},
 		{
@@ -368,7 +371,7 @@
         "color": "#636468",
         "selectedColor": "#0079fe",
         "borderStyle": "black",
-        "backgroundColor": "#fff",
+		"backgroundColor": "#fff",
         "list": [
 			{
 				"pagePath": "pages/index/index",
@@ -401,5 +404,5 @@
 				"text": "我的"
 			}
 		]
-    }
+	}
 }
