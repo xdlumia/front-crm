@@ -64,7 +64,7 @@ import mRadioGroup from './components/m-radio-group'
 
 // 业务组件
 import authButton from './components/auth-button'
-import ecCanvas from './components/aaacanvas'
+import ecCanvas from './components/ec-canvas'
 import NavBar from './components/nav-bar'
 import circleProgress from './components/circle-progress'
 import scrollList from './components/scroll-list'
