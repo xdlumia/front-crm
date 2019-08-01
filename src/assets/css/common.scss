@@ -1,0 +1,23 @@
+.detail-list{
+    padding:10px 15px 0;
+    .detail-list-img{
+        display: block;
+        width:44px;
+        height: 44px;
+        border-radius: 50%;
+        margin-right: 10px;
+        background-color:#eee;
+        overflow: hidden;
+        text-align: center;
+        line-height: 44px;
+        font-size:12px;
+        color:#999;
+        &:before{
+            content: attr(data-name)
+        }
+    }
+    .list-title{
+        title{ color:#333;font-size: 15px; border-right:1px solid #eee; padding-right:10px;}
+        span{ font-size:13px; margin-left: 10px;}
+    }
+ }
