@@ -3,13 +3,14 @@
         <div class="f13 d-text-qgray pt10 pb10">{{title}}</div>
         <div class="d-flex d-flex-wrap">
             <slot />
-            <div class="f-tag" @click='tagClick(item)' v-for='(item, index) in dataList' :key='index' :class="{active: id === item[valueKey]}">{{item.name}}</div>
+            <div class="f-tag" @click='tagClick(item)' v-for='(item, index) in dataList' :key='index' :class="{active: Object.keys(ids).includes(item[valueKey].toString())}">{{item.name}}</div>
         </div>
     </div>
 </template>
 <script>
 export default {
 	props: {
+		prop: String,
 		title: String,
 		current: [Number, String],
 		valueKey: {
@@ -25,23 +26,26 @@ export default {
 	},
 	data () {
 		return {
-			id: 0
+			ids: {}
 		}
 	},
 	watch: {
 		current (val) {
-			this.id = val
+			this.ids = val
 		}
 	},
 	methods: {
 		tagClick (item) {
-			if (this.id === item[this.valueKey]) {
-				this.id = null
-				this.$emit('click', {})
+			if (Object.keys(this.ids).includes(item[this.valueKey].toString())) {
+				delete this.ids[item[this.valueKey]]
 			} else {
-				this.id = item[this.valueKey]
-				this.$emit('click', item)
+				this.$set(this.ids, item[this.valueKey], item)
 			}
+			this.$forceUpdate()
+			this.$emit('click', {
+				prop: this.pros,
+				ids: Object.values(this.ids)
+			})
 		}
 	}
 }

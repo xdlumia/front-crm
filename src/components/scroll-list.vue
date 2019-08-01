@@ -74,12 +74,12 @@ export default {
 				try {
 					this.pager.loading = true
 					uni.showLoading('加载中')
-					if (this.params.page === 1) {
+					if (params.page === 1) {
 						this.list = []
 					}
 					let { data, pagers, curr } = res || []
 					data = data || []
-					if (this.params.page === 1) {
+					if (params.page === 1) {
 						this.list = data
 					} else {
 						this.list = [].concat(this.list, data)

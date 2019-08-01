@@ -101,7 +101,7 @@ export default {
 			if (this.filterSelect[this.filterProp].id === item.id) return
 			this.$set(this.filterSelect, this.filterProp, item)
 			this.filterShow = false
-			this.$emit('filterSubmit', item)
+			this.$emit('filterSubmit', { ...item, prop: this.filterProp })
 		}
 	}
 }
