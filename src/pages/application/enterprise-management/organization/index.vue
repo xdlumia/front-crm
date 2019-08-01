@@ -150,7 +150,7 @@ export default {
 		// 邀请成员加入
 		invite () {
 			uni.navigateTo({
-				url: 'invite-other'
+				url: '/pages/application/enterprise-management/organization/invite/index'
 			})
 		},
 		// 编辑员工
