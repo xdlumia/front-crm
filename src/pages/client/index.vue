@@ -10,18 +10,18 @@
 				:height="'calc(100vh - ' + navH +' - 40px)'"
 				api="seeCrmService.clientinfoPagelist"
 				:params="queryForm"
-				v-slot="{ row }"
+				@getList='getList'
 			>
-				<a url='/pages/client/detail?id' class="client-item pb5 pt5 pl15 pr15 d-bg-white">
+				<a v-for="item of list" :key="item.id" :url="'/pages/client/detail?id=' + item.id" class="client-item pb5 pt5 pl15 pr15 d-bg-white" >
 					<div class="d-flex f14 mb5">
-						<div class="d-text-black d-cell d-elip">华盛顿有限成功华盛顿有限成功华盛顿有限成功华盛顿有限成功华盛顿有限成功华盛顿有限成功</div>
-						<div class='d-text-cgray'>多次成交</div>
+						<div class="d-text-black d-cell d-elip">{{item.name}}</div>
+						<div class='d-text-cgray'>{{item.makeBargainCode}}</div>
 					</div>
 					<div class="d-flex client-tags">
 						<div class="iconfont iconqian f16 d-text-blue mr10"></div>
-						<div class="c-tag f12 mr10">普通客户</div>
-						<div class="c-tag f12 mr10">70分</div>
-						<div class="c-tag f12 mr10">2019-10-10</div>
+						<div class="c-tag f12 mr10">{{item.gradeCode}}</div>
+						<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
+						<div class="c-tag f12 mr10">{{item.finallyFollowTime|timeToStr('yyyy-mm-dd')}}</div>
 					</div>
 				</a>
 			</scroll-list>
@@ -82,8 +82,12 @@ export default {
 						}
 					]
 				}
-			]
+			],
+			list: []
 		}
+	},
+	filters: {
+
 	},
 	onReady () {
 		let selects = {}
@@ -93,6 +97,9 @@ export default {
 		this.filterSelect = selects
 	},
 	methods: {
+		getList (list) {
+			this.list = list
+		},
 		submit (item) {
 			this.$refs.filter.hide()
 		},

@@ -10,9 +10,7 @@
  */ -->
 <template>
   <div class="down-search-section-list" :style="{height:height}">
-    <div v-for="(item,index) of list" :key="index">
-      <slot v-bind:row="item"  v-bind:index="index"  v-bind:select="select"></slot>
-    </div>
+	<slot />
     <div class="no-data-msg" v-if="pager.isLoaded&&!list.length">暂无数据</div>
     <i-load-more
       :tip="(pager.noMore&&!pager.loading)?'没有更多了':'加载中'"
@@ -44,7 +42,8 @@ export default {
 	},
 	data () {
 		return {
-			list: [{ name: 1 }],
+			list: [],
+			queryParams: { page: 1, limit: 15 },
 			pager: {
 				init: true,
 				isScrollView: false, // scroll-view组件模式
@@ -68,7 +67,8 @@ export default {
 	created () {},
 	methods: {
 		// 初始化接口数据
-		_getList (params) {
+		_getList () {
+			let params = Object.assign({}, this.queryParams, this.params)
 			this.$api[this.server][this.url](params).then(res => {
 				if (this.pager.loading) return
 				try {
@@ -88,6 +88,7 @@ export default {
 					this.pager.loading = false
 					this.pager.isLoaded = true
 					this.$forceUpdate()
+					this.$emit('getList', this.list)
 				} catch (error) {
 					console.error(error)
 				}
@@ -101,13 +102,9 @@ export default {
 			this.params.page = page || 1
 			// api动态加载完 开始重新请求数据
 			this.$nextTick(() => {
-				this._getList(this.params)
+				this._getList()
 			})
 		},
-		// refreshList () {
-		// 	this.params.page = 1
-		// 	this._getList()
-		// },
 		getNextPage () {
 			if (this.pager.loading) return
 			if (!this.pager.noMore) {
@@ -127,7 +124,7 @@ export default {
 		this.getNextPage()
 	},
 	onReady () {
-		// this._getList(this.params)
+		this._getList()
 	}
 }
 </script>
