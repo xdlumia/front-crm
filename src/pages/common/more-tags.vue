@@ -51,14 +51,23 @@ export default {
 			statusTypes: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			status: '',
 			check: [1],
-			isEdit: true,
+			isEdit: false,
 			labelName: ''
 
 		}
 	},
 	onLoad (option) {
+		console.log('onLoad')
 	},
 	methods: {
+		// 获取标签列表
+		lableinfoList () {
+			this.$api.seeCrmService.lableinfoList()
+				.then(res => {
+
+				})
+		},
+		// 添加标签
 		moreAdd () {
 			this.isEdit = false
 			this.statusTypes.push({ name: '', id: 1 })
@@ -66,6 +75,7 @@ export default {
 		deleteMoreList (index) {
 			this.statusTypes.splice(index, 1)
 		},
+		// 当前光标数据显示清除按钮
 		focusChange (row, index) {
 			this.statusTypes.forEach(item => {
 				item.focus = false
@@ -73,13 +83,16 @@ export default {
 			row.focus = true
 			this.statusTypes.splice(index, 1, row)
 		},
+		// 清空当前行
 		clear (row, index) {
 			console.log(row)
 			row.name = ''
 			this.statusTypes.splice(index, 1, row)
 		}
 	},
-	created () {},
+	created () {
+		this.lableinfoList()
+	},
 	computed: {
 	}
 }
