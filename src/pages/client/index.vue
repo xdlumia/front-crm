@@ -11,6 +11,7 @@
 				api="seeCrmService.clientinfoPagelist"
 				:params="queryForm"
 				@getList='getList'
+				ref='list'
 			>
 				<a v-for="item of list" :key="item.id" :url="'/pages/client/detail?id=' + item.id" class="client-item pb5 pt5 pl15 pr15 d-bg-white" >
 					<div class="d-flex f14 mb5">
@@ -45,6 +46,22 @@
 <script>
 import Filter from '@/components/filter'
 import FilterDiy from './components/filter-diy'
+
+// 筛选数据
+let queryType = ['全部客户', '我负责的客户', '我下属负责的客户', '我参与的客户', '我关注的', '7天未跟进的客户', '我下属参与的'].map((item, index) => {
+	return {
+		name: item,
+		id: index
+	}
+})
+
+let sortType = ['最新跟进', '最新创建', '离我最近', '最高成交'].map((item, index) => {
+	return {
+		name: item,
+		id: index
+	}
+})
+
 export default {
 	components: {
 		Filter,
@@ -52,35 +69,29 @@ export default {
 	},
 	data () {
 		return {
-			queryForm: {},
+			queryForm: {
+				name: '', // 姓名
+				gradeCode: '', // 客户级别
+				leaderId: '', // 负责人id
+				makeBargainCode: '', // 成交状态
+				queryType: '', // 查询类型
+				sortType: '', // 排序类型
+				property: '', // 客户性质
+				followStatus: '', // 跟进状态
+				stageId: 0, // 销售阶段
+				sourceCode: 0 // 来源
+			},
+			// 筛选数据
 			filterData: [
 				{
-					prop: 'a',
-					current: { id: 0, name: '全部' },
-					list: [
-						{
-							id: 0,
-							name: '全部'
-						},
-						{
-							id: 1,
-							name: '我负责的'
-						}
-					]
+					prop: 'queryType',
+					current: queryType[0],
+					list: queryType
 				},
 				{
-					prop: 'b',
-					current: { id: 0, name: '时间' },
-					list: [
-						{
-							id: 0,
-							name: '时间'
-						},
-						{
-							id: 1,
-							name: '最新跟进时期'
-						}
-					]
+					prop: 'sortType',
+					current: sortType[0],
+					list: sortType
 				}
 			],
 			list: []
@@ -97,10 +108,14 @@ export default {
 		this.filterSelect = selects
 	},
 	methods: {
+		// 获取列表数据
 		getList (list) {
 			this.list = list
 		},
+		// 列表筛选方法
 		submit (item) {
+			this.queryForm[item.prop] = item.id
+			this.$refs.list.reload()
 			this.$refs.filter.hide()
 		},
 		clear () {

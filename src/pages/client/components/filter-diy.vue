@@ -12,7 +12,9 @@
                     </div>
                 </div>
             </filter-plane>
-            <filter-plane :title='item.title' :dataList='item.datalist' v-for='(item, index) in filterList' :key="index" />
+
+            <filter-plane :title='followStatuss.title' :prop='followStatuss.prop' @click='submit' :dataList='followStatuss.list' />
+
         </scroll-view>
         <div class='filter-btn d-center f18 d-text-blue'>
             <div class='btn-item hfull d-cell ac' @click='clear'>清空</div>
@@ -22,18 +24,9 @@
 </template>
 <script>
 import FilterPlane from '@/components/filter-plane'
-let filterList = [];
-['客户级别', '客户性质', '跟进状态', '成交状态', '来源', '销售阶段'].forEach(item => {
-	filterList.push({
-		title: item,
-		datalist: [
-			{
-				id: 1,
-				name: '非公海池客户'
-			}
-		]
-	})
-})
+
+let followStatuss = ['暂无', '跟进1次', '跟进多次'].map((name, id) => ({ id, name }))
+let property = ['非公海客户', '共享客户'].map((name, id) => ({ id, name }))
 
 export default {
 	components: {
@@ -41,7 +34,16 @@ export default {
 	},
 	data () {
 		return {
-			filterList: filterList,
+			property: {
+				prop: 'property',
+				title: '客户性质',
+				list: property
+			},
+			followStatuss: {
+				prop: 'followStatuss',
+				title: '客户性质',
+				list: followStatuss
+			},
 			principal: []
 		}
 	},
@@ -54,8 +56,9 @@ export default {
 		clear () {
 			this.$emit('clear')
 		},
-		submit () {
-			this.$emit('submit')
+		submit (item) {
+			console.log(item)
+			// this.$emit('submit')
 		}
 	}
 }
