@@ -8,7 +8,7 @@
 
 			<scroll-list
 				:height="'calc(100vh - ' + navH +' - 40px)'"
-				api="bizSystemService.getUserAuth"
+				api="seeCrmService.clientinfoPagelist"
 				:params="queryForm"
 				v-slot="{ row }"
 			>

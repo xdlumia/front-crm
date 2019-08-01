@@ -1,35 +1,39 @@
 <template>
-    <div class='filter-box d-bg-white' :style="top ? 'top:' + top :'top:' + navH">
-        <div class="d-flex filter-title pl15 pr15 f13 bb d-text-black">
-            <div
-                v-for='(item, index) in filterData'
-                :key='item.prop'
-                @click="openFilter(item.prop, index)"
-            >
-                <span class='iconfont iconpaixu f12 d-text-black b' v-if='index == filterData.length - 1'></span>
-                <span class='ml5 mr5 f13'>{{filterSelect[item.prop].name}}</span>
-                <span class='iconfont iconxiala f12 d-text-gray jt d-inline' :class='{active: filterProp === item.prop && filterShow}'></span>
-            </div>
+	<div>
+		<div class='filter-box d-bg-white' :style="top ? 'top:' + top :'top:' + navH" >
+			<div class="d-flex filter-title pl15 pr15 f13 bb d-text-black">
+				<div
+					v-for='(item, index) in filterData'
+					:key='item.prop'
+					@click.stop="openFilter(item.prop, index)"
+				>
+					<span class='iconfont iconpaixu f12 d-text-black b' v-if='index == filterData.length - 1'></span>
+					<span class='ml5 mr5 f13'>{{filterSelect[item.prop].name}}</span>
+					<span class='iconfont iconxiala f12 d-text-gray jt d-inline' :class='{active: filterProp === item.prop && filterShow}'></span>
+				</div>
 
-            <div @click="openFilter('diy')"><span class='iconfont iconshaixuan f13 d-text-black mr5 b'></span><span class='f13'>筛选</span></div>
-        </div>
-        <div class="filter-con" v-show='filterShow'>
-            <!-- 列表筛选 -->
-            <div class='filter-list-view d-bg-white d-relative' v-show='filterProp !== "diy"'>
-                <span
-                    class="filter-list-item f13  pl15 pr15 bb d-block"
-                    :class='filterSelect[filterProp].id == item.id ? "d-text-blue" : "d-text-black"'
-                    v-for='item in fitlerList'
-                    :key="item.id"
-                    @click.stop="selectItem(item)"
-                >{{item.name}}</span>
-            </div>
-            <!-- 自定义筛选 -->
-            <div class="filter-list-view d-bg-white d-relative" v-show="filterProp === 'diy'">
-                <slot />
-            </div>
-        </div>
-    </div>
+				<div @click.stop="openFilter('diy')"><span class='iconfont iconshaixuan f13 d-text-black mr5 b'></span><span class='f13'>筛选</span></div>
+			</div>
+			<div class="filter-con" v-show='filterShow'>
+				<!-- 列表筛选 -->
+				<div class='filter-list-view d-bg-white d-relative' v-show='filterProp !== "diy"'>
+					<span
+						class="filter-list-item f13  pl15 pr15 bb d-block"
+						:class='filterSelect[filterProp].id == item.id ? "d-text-blue" : "d-text-black"'
+						v-for='item in fitlerList'
+						:key="item.id"
+						@click.stop="selectItem(item)"
+					>{{item.name}}</span>
+				</div>
+				<!-- 自定义筛选 -->
+				<div class="filter-list-view d-bg-white d-relative" v-show="filterProp === 'diy'">
+					<slot />
+				</div>
+
+				<div class="filter-box hfull" @click='hide'></div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -67,9 +71,19 @@ export default {
 	methods: {
 		show () {
 			this.filterShow = true
+			try {
+				uni.hideTabBar()
+			} catch (err) {
+
+			}
 		},
 		hide () {
 			this.filterShow = false
+			try {
+				uni.showTabBar()
+			} catch (err) {
+
+			}
 		},
 		openFilter (prop, index) {
 			if (this.filterProp === prop) {
@@ -96,7 +110,6 @@ export default {
 <style scoped lang="scss">
 	.filter-box{
 		position: fixed;
-		top: 127rpx;
 		left: 0;
 		width: 100%;
 		z-index: 2;
