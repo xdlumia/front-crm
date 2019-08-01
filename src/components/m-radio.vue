@@ -34,6 +34,7 @@ export default {
 	methods: {
 		changeRadio () {
 			this.$emit('input', this.label)
+			this.$emit('change', this.label)
 		}
 	}
 

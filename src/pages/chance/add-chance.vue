@@ -32,7 +32,7 @@
             </picker-date>
             <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="行业" :options="upData"/>
             <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="来源" :options="upData"/>
-			<a url="/pages/common/more-tags">
+			<a url="/pages/common/more-tags?busType=2">
 				<i-input disabled v-model="form.userPosition" label="标签" placeholder="请选择">
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
