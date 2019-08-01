@@ -4,7 +4,7 @@
         <view class="uni-flex uni-column">
             <view class="flex-item flex-item-V bb uni-flex uni-row p15" v-for="(item) in teamDatas" :key="item.id">
                  <view class="flex-item width20 p10">
-                    <image class="ba" style="height: 51px;width: 51px;" src="/static/img/index.png"></image>
+                    <image class="ba" style="height: 51px;width: 51px;" src="/static/img/my-default.png"></image>
                 </view>
                 <view class="flex-item width32" @click="info(item)">
                     <view class="f14">{{item.name}}</view>
@@ -35,7 +35,7 @@ export default {
 			teamDatas: [
 				{
 					id: 0,
-					pic: '../../../../../dist/dev/mp-weixin/static/img/index.png',
+					pic: '../../../../../dist/dev/mp-weixin/static/img/my-default.png',
 					name: '付建达',
 					phone: '16619941016',
 					inviter: '方胜利',
@@ -44,7 +44,7 @@ export default {
 				},
 				{
 					id: 1,
-					pic: '../../../../../dist/dev/mp-weixin/static/img/index.png',
+					pic: '../../../../../dist/dev/mp-weixin/static/img/my-default.png',
 					name: '高阳',
 					phone: '16619941016',
 					inviter: '高德勇',
@@ -53,7 +53,7 @@ export default {
 				},
 				{
 					id: 2,
-					pic: '../../../../../dist/dev/mp-weixin/static/img/index.png',
+					pic: '../../../../../dist/dev/mp-weixin/static/img/my-default.png',
 					name: '梵高先生',
 					phone: '16619941016',
 					inviter: '李丽兰',

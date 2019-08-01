@@ -4,7 +4,7 @@
     <!-- 头部 -->
     <i-row class="m10">
         <i-col span="4" i-class="col-class">
-            <img class="h20" src="/static/img/index.png" style="border-radius: 5px;" />
+            <img class="h20" src="/static/img/my-default.png" style="border-radius: 5px;" />
         </i-col>
         <i-col span="4" i-class="col-class">
             <span class="b" ref="inviter">
