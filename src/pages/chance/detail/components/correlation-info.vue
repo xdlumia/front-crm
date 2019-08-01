@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import infoContact from '@/pages/chance/detail/components/info-contact' // 联系人
-import infoTransaction from '@/pages/chance/detail/components/info-transaction' // 成交记录
-import infoSchedule from '@/pages/chance/detail/components/info-schedule' //  日程
-import infoFile from '@/pages/chance/detail/components/info-file' //  附件
-import infoEmployee from '@/pages/chance/detail/components/info-employee' //  团队成员
+import infoContact from '@/pages/common/info-contact' // 联系人
+import infoTransaction from '@/pages/common/info-transaction' // 成交记录
+import infoSchedule from '@/pages/common/info-schedule' //  日程
+import infoFile from '@/pages/common/info-file' //  附件
+import infoEmployee from '@/pages/common/info-employee' //  团队成员
 export default {
 	props: ['height'],
 	components: {
