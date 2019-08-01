@@ -374,38 +374,38 @@
         "color": "#636468",
         "selectedColor": "#0079fe",
         "borderStyle": "black",
-        "backgroundColor": "#fff",
+		"backgroundColor": "#fff",
         "list": [
 			{
 				"pagePath": "pages/index/index",
-				"iconPath": "/static/img/news-default.png",
-				"selectedIconPath": "/static/img/news-active.png",
+				"iconPath": "/static/img/home.png",
+				"selectedIconPath": "/static/img/home-active.png",
 				"text": "首页"
 			},
 			{
 				"pagePath": "pages/client/index",
-				"iconPath": "/static/img/news-default.png",
-				"selectedIconPath": "/static/img/news-active.png",
+				"iconPath": "/static/img/client.png",
+				"selectedIconPath": "/static/img/client-active.png",
 				"text": "客户"
 			},
 			{
 				"pagePath": "pages/chance/index",
-				"iconPath": "/static/img/news-default.png",
-				"selectedIconPath": "/static/img/news-active.png",
+				"iconPath": "/static/img/chance.png",
+				"selectedIconPath": "/static/img/chance-active.png",
 				"text": "机会"
 			},
 			{
 				"pagePath": "pages/application/index",
-				"iconPath": "/static/img/news-default.png",
-				"selectedIconPath": "/static/img/news-active.png",
+				"iconPath": "/static/img/appli.png",
+				"selectedIconPath": "/static/img/appli-active.png",
 				"text": "应用"
 			},
 			{
 				"pagePath": "pages/user/index",
-				"iconPath": "/static/img/my-default.png",
-				"selectedIconPath": "/static/img/my-active.png",
+				"iconPath": "/static/img/user.png",
+				"selectedIconPath": "/static/img/user-active.png",
 				"text": "我的"
 			}
 		]
-    }
+	}
 }

@@ -9,6 +9,7 @@ import '@/static/IPconfig'
 import globalConfig from '@/utils/global-config.js'
 import local from '@/utils/localStorage'
 import '@/assets/css/app.css'
+import '@/assets/css/common.scss'
 
 /** 全局注册UI组件 - BEGIN */
 // iview UI component
@@ -64,6 +65,7 @@ import mRadioGroup from './components/m-radio-group'
 
 // 业务组件
 import authButton from './components/auth-button'
+import ecCanvas from './components/ec-canvas'
 import NavBar from './components/nav-bar'
 import circleProgress from './components/circle-progress'
 import scrollList from './components/scroll-list'
@@ -78,6 +80,7 @@ Vue.config.productionTip = false
 Vue.prototype.$store = store
 
 // iview UI
+Vue.component('ecCanvas', ecCanvas)
 Vue.component('iIcon', iIcon)
 Vue.component('iSpin', iSpin)
 Vue.component('iRow', iRow)
@@ -162,7 +165,6 @@ Vue.mixin({
 		chooseMap () {
 			uni.chooseLocation({
 				success: function (res) {
-					console.log(res)
 					// console.log('位置名称：' + res.name)
 					// console.log('详细地址：' + res.address)
 					// console.log('纬度：' + res.latitude)

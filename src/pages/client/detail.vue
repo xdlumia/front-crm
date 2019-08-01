@@ -34,7 +34,7 @@
 
         <div class="footer-fixed-menu d-center d-bg-white">
             <a url='/pages/client/add-follow' class="d-cell al">
-                <i-icon type='addressbook_fill' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">添加跟进</span>
+				<span class='iconfont icontianjiajihua f16' style='color:#696969'></span><span class="ml5 f13  d-text-gray">添加跟进</span>
             </a>
             <div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
                 <span class="iconfont iconcall f18" style='color: #696969'></span><span class="ml5 f13  d-text-gray">打电话</span>

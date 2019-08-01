@@ -1,13 +1,17 @@
 <template>
     <div class='setting-page'>
         <NavBar title='公海池设置' />
-        <scroll-view scroll-y :style="'height:calc(100vh - '+ navH +' - 46px)'">
+        <div class='d-bg-white setting-title d-flex pl15' :style='"top:"+ navH +""'>
+            <div class="tit-item mr20 f14 d-text-black" :class='{active: scrollTop == 0}' @click='handleScroll(0)'>基本信息</div>
+            <div class="tit-item ml20 f14 d-text-black" :class='{active: scrollTop > 0}' @click='handleScroll(500)'>规则设置</div>
+        </div>
+        <scroll-view :scroll-top='scrollTop' scroll-y :style="'height:calc(100vh - '+ navH +' - 46px);margin-top:40px;'">
             <m-form ref="mform" class="uni-pb100">
                 <div class='d-bg-white'>
-                    <mPanel top="10" title="基本信息" color="#4889f4">
+                    <mPanel title="基本信息" color="#4889f4">
                         <i-input label="公海名称" placeholder="北海一区公海" disabled required />
 
-                        <a url='/pages/application/enterprise-management/organizational-structure'>
+                        <a url='/pages/index/colleagueChoose'>
                             <i-input label="管理员" placeholder="添加管理员" disabled required>
                                 <div class="isarrow"></div>
                             </i-input>
@@ -132,51 +136,71 @@
 export default {
 	data () {
 		return {
-			switch1: false
+			switch1: false,
+			scrollTop: 0
 		}
 	},
 	methods: {
 		handleChange (val) {
 			this.switch1 = !this.switch1
+		},
+		handleScroll (top) {
+			this.scrollTop = top || 0
 		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-  .setting-page{
-      height: 100vh;
-      background: #f6f6f6;
-  }
 
-  .radio-box{
-    width: 15px;
-    height: 15px;
-    border-radius: 100px;
-    border: 1px solid #d9d9d9;
-    position: relative;
-    &.active{
-        border-color: #1890ff;
-        &::before{
-            content: '';
-            width: 11px;
-            height: 11px;
-            background: #1890ff;
-            border-radius: 100px;
-            position: absolute;
-            left: 2px;
-            top: 2px;
+    .setting-page{
+        height: 100vh;
+        background: #f6f6f6;
+    }
+
+    .setting-title{
+        position: fixed;
+        left: 0;
+        right: 0;
+        height: 37px;
+        border-bottom: 2px solid #dcdfe6;
+        .tit-item{
+            line-height: 37px;
+            position: relative;
+            &.active{
+                border-bottom: 2px solid #1890ff;
+            }
         }
     }
-}
 
-.input-box{
-    height: 33px;
-    border-radius: 5px;
-    border: 1px solid #d9d9d9;
-    padding:0 5px;
-    color: #c0c0c0;
-    width: 44px;
-}
+    .radio-box{
+        width: 15px;
+        height: 15px;
+        border-radius: 100px;
+        border: 1px solid #d9d9d9;
+        position: relative;
+        &.active{
+        border-color: #1890ff;
+            &::before{
+                content: '';
+                width: 11px;
+                height: 11px;
+                background: #1890ff;
+                border-radius: 100px;
+                position: absolute;
+                left: 2px;
+                top: 2px;
+            }
+        }
+    }
+
+    .input-box{
+        height: 33px;
+        border-radius: 5px;
+        border: 1px solid #d9d9d9;
+        padding:0 5px;
+        color: #c0c0c0;
+        width: 44px;
+    }
 
 </style>

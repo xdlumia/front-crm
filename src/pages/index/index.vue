@@ -11,8 +11,8 @@
             <!--显示本周-->
 
             <div v-if="timelong == 7">
-                <div class="d-text-black ml15 mt10">{{todayDate}}
-                    <uni-icon type="arrowdown" class="pl5" size="18" @click='timelong = 30'/>
+                <div class="d-text-black ml15 mt10" @click='timelong = 30'>{{todayDate}}
+                    <uni-icon type="arrowdown" class="pl5" size="18"/>
                 </div>
                 <div class="d-flex mt15">
                     <div v-for="item in aweek" :key='item' style="flex:1;color:#CCCCCC" class="d-text-qgray ac b">{{item}}</div>
@@ -183,6 +183,7 @@
                    <view class="echartsBox">
                         <!-- 引入的mpvue-echarts组件 -->
                         <!-- <mpvue-echarts :echarts='echarts' canvasId="chat1" @onInit="fn1OnInit" ref='lineChart' class="ec-canvas"/> -->
+                         <ec-canvas :ec="ec"></ec-canvas>
                     </view>
                 </div>
             </div>
@@ -214,51 +215,9 @@
 </template>
 
 <script>
-// import * as echarts from 'echarts'
-// import mpvueEcharts from 'mpvue-echarts/src/echarts.vue'
-function fn1 (e) {
-	let option = {
-		title: {
-			left: 'left',
-			top: 'bottom'
-		},
-		tooltip: {
-			trigger: 'item',
-			formatter: '{a} <br/>{b} : {c}%'
-		},
-		calculable: true,
-		series: [
-			{
-				type: 'funnel',
-				width: '60%',
-				height: '80%',
-				left: '15%',
-				top: '5%',
-				data: [
-					{ value: 60, name: '访问' },
-					{ value: 30, name: '咨询' },
-					{ value: 10, name: '订单' },
-					{ value: 80, name: '点击' },
-					{ value: 100, name: '展现' }
-				]
-			}
-		]
-	}
-	let { width, height } = e
-	let canvas = this.$refs.lineChart.canvas
-	echarts.setCanvasCreator(() => canvas)
-	let lineChart = echarts.init(canvas, null, {
-		width: width,
-		height: height
-	})
-	canvas.setChart(lineChart)
-	lineChart.setOption(option)
-	this.$refs.lineChart.setChart(lineChart)
-};
 export default {
 	data () {
 		return {
-			// echarts,
 			current: 0,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
@@ -267,7 +226,36 @@ export default {
 			TabList: [{ name: '今天' }, { name: '仪表盘' }],
 			selected: [{ date: '2019-07-24', info: '签到', data: { custom: '自定义信息', name: '自定义消息头' } }],
 			rankingList: [{ name: '王二小', num: 36098 }, { name: '王三小', num: 10025 }, { name: '王四小', num: 10020 }],
-			fn1OnInit: fn1
+			// fn1OnInit: fn1,
+			ec: {
+				option: {
+					title: {
+						left: 'left',
+						top: 'bottom'
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: '{a} <br/>{b} : {c}%'
+					},
+					calculable: true,
+					series: [
+						{
+							type: 'funnel',
+							width: '60%',
+							height: '80%',
+							left: '15%',
+							top: '5%',
+							data: [
+								{ value: 60, name: '访问' },
+								{ value: 30, name: '咨询' },
+								{ value: 10, name: '订单' },
+								{ value: 80, name: '点击' },
+								{ value: 100, name: '展现' }
+							]
+						}
+					]
+				}
+			}
 		}
 	},
 	components: {
@@ -275,7 +263,7 @@ export default {
 	},
 	computed: {
 		todayDate () {
-			return (new Date().toLocaleDateString().split('/').join('-'))
+			return (new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate())
 		}
 	},
 	created () {

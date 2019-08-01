@@ -10,7 +10,7 @@
  */ -->
 <template>
   <div class="down-search-section-list" :style="{height:height}">
-    <div v-for="(item,index) of 6" :key="index">
+    <div v-for="(item,index) of list" :key="index">
       <slot v-bind:row="item"  v-bind:index="index"  v-bind:select="select"></slot>
     </div>
     <div class="no-data-msg" v-if="pager.isLoaded&&!list.length">暂无数据</div>
