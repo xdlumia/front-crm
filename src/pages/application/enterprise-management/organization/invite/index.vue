@@ -42,7 +42,7 @@ export default {
 	methods: {
 		share () {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/organization/invite/invite'
+				url: '/pages/application/enterprise-management/organization/invite/invite?inviter=wyl&companyName=abcd&companyId=92'
 			})
 		},
 		copyToClip () {
