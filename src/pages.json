@@ -308,9 +308,15 @@
 			}
 		},
 		{
-			"path":"pages/application/enterprise-management/organization/invite-other",
+			"path":"pages/application/enterprise-management/organization/invite/index",
 			"style":{
 				"navigationBarTitleText":"邀请成员加入"
+			}
+		},
+		{
+			"path":"pages/application/enterprise-management/organization/invite/invite",
+			"style":{
+				"navigationBarTitleText":"申请加入页面"
 			}
 		},
 		{
