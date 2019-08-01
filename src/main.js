@@ -9,6 +9,7 @@ import '@/static/IPconfig'
 import globalConfig from '@/utils/global-config.js'
 import local from '@/utils/localStorage'
 import '@/assets/css/app.css'
+import '@/assets/css/common.scss'
 
 /** 全局注册UI组件 - BEGIN */
 // iview UI component
@@ -164,7 +165,6 @@ Vue.mixin({
 		chooseMap () {
 			uni.chooseLocation({
 				success: function (res) {
-					console.log(res)
 					// console.log('位置名称：' + res.name)
 					// console.log('详细地址：' + res.address)
 					// console.log('纬度：' + res.latitude)

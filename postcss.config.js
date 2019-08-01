@@ -1,11 +1,12 @@
+// eslint-disable-next-line no-unused-vars
 const pkg = require('./package.json')
 module.exports = {
-  parser: require('postcss-comment'),
-  plugins: [
-    require('postcss-import'),
-    require('autoprefixer')({
-      remove: process.env.UNI_PLATFORM !== 'h5'
-    }),
-    require('@dcloudio/vue-cli-plugin-uni/packages/postcss')
-  ]
+	parser: require('postcss-comment'),
+	plugins: [
+		require('postcss-import'),
+		require('autoprefixer')({
+			remove: process.env.UNI_PLATFORM !== 'h5'
+		}),
+		require('@dcloudio/vue-cli-plugin-uni/packages/postcss')
+	]
 }
