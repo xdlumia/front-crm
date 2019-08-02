@@ -39,23 +39,23 @@
 		<div class='highseas-list-view'>
 				<scroll-list
 					:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
-					api="bizSystemService.getUserAuth"
+					api="seeCrmService.transactionrecordList"
+					@getList='getTransactionList'
 					:params="queryForm"
-					v-slot="{ row }"
+					ref='list'
 				>
-
-						<a url='/pages/transaction/detail' class='d-relative'>
-							<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
-								<div class="d-cell">
-									<div class="f13 d-text-black">房屋租赁</div>
-									<div class="f12 d-text-qgray">客户：北京皇城责任有限公司</div>
-									<div class="f12 d-text-qgray">成交金额：86582元</div>
-								</div>
-								<div class="d-center">
-									<div class="f13 d-text-qgray">已成交</div>
-								</div>
-							</div>
-						</a>
+				<a v-for="(item,index) in transactionList" :key='index' url='/pages/transaction/detail' class='d-relative'>
+					<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
+						<div class="d-cell">
+							<div class="f13 d-text-black">{{item.name}}</div>
+							<div class="f12 d-text-qgray">客户：{{item.clientName}}</div>
+							<div class="f12 d-text-qgray">成交金额：{{item.totalAmount}}</div>
+						</div>
+						<div class="d-center">
+							<div class="f13 d-text-qgray">{{item.transactionStatus}}</div>
+						</div>
+					</div>
+				</a>
 				</scroll-list>
 		</div>
 
@@ -81,7 +81,15 @@ export default {
 	},
 	data () {
 		return {
-			queryForm: {},
+			queryForm: {
+				page: 1,
+				limit: 15,
+				name: '', // 名称
+				transactionStatus: '', // 成交记录状态
+				transationTime: '', // 成交时间
+				queryType: '', // 查询类型（0-全部，1-我负责的，2-我参与的，3-我下属负责的，4-我下属参与的, 5-我关注的）
+				sortType: ''// 排序查询类型（0-创建日期，1-最新修改日期）
+			},
 			transactionStatus: {
 				title: '成交记录状态',
 				list: [{
@@ -89,42 +97,34 @@ export default {
 					id: '1'
 				},
 				{
-					name: '进行中',
+					name: '执行中',
 					id: '2'
 				},
 				{
-					name: '进行中',
-					id: '2'
-				},
-				{
-					name: '进行中',
-					id: '2'
-				},
-				{
-					name: '进行中',
-					id: '2'
+					name: '意外终止',
+					id: '3'
 				}]
 			},
 			transactionTime: [
 				{
 					name: '本周',
-					id: '1'
+					id: '0'
 				},
 				{
 					name: '本季',
-					id: '2'
+					id: '1'
 				},
 				{
 					name: '本年',
-					id: '3'
+					id: '2'
 				},
 				{
 					name: '上周',
-					id: '4'
+					id: '3'
 				},
 				{
 					name: '上月',
-					id: '5'
+					id: '4'
 				}
 			],
 			filterData: [
@@ -146,7 +146,15 @@ export default {
 						},
 						{
 							id: 3,
-							name: '我下属的'
+							name: '我下属负责的'
+						},
+						{
+							id: 4,
+							name: '我下属参与的'
+						},
+						{
+							id: 5,
+							name: '我关注的'
 						}
 					]
 				},
@@ -164,7 +172,8 @@ export default {
 						}
 					]
 				}
-			]
+			],
+			transactionList: []// 列表数据
 		}
 	},
 	onReady () {
@@ -174,8 +183,16 @@ export default {
 		})
 		this.filterSelect = selects
 	},
+	created () {
+
+	},
 	methods: {
+		getTransactionList (list) {
+			this.transactionList = list
+			console.log(this.transactionList)
+		},
 		submit (item) {
+			this.$refs.list.reload()
 			this.$refs.filter.hide()
 		},
 		clear () {

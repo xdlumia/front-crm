@@ -202,7 +202,7 @@
 
                     <div class="d-flex" v-for='(item,index) in rankingList' :key='index'>
                         <div style="width: 70px;" class="ml15"><span class="d-text-black">{{item.rownum}}</span></div>
-                        <div style="width: 120px;"><span class="d-text-black">{{item.userId}}</span></div>
+                        <div style="width: 120px;"><span class="d-text-black">{{item.leaderName}}</span></div>
                         <div><span class=" d-text-black">{{item.amount}}</span></div>
                     </div>
 
