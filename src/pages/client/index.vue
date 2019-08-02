@@ -1,8 +1,8 @@
 <template>
     <div class="client-page">
         <NavBar isSearch placeholder='搜索客户' />
-		<Filter :filterData='filterData' @filterSubmit='submit' ref='filter'>
-			<filter-diy @submit='submit' @clear='clear' />
+		<Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
+			<filter-diy @submit='diyFilterSubmit' @clear='clear' />
 		</Filter>
 		<div class='client-list-view d-relative'>
 
@@ -97,9 +97,6 @@ export default {
 			list: []
 		}
 	},
-	filters: {
-
-	},
 	onReady () {
 		let selects = {}
 		this.filterData.forEach(item => {
@@ -113,10 +110,13 @@ export default {
 			this.list = list
 		},
 		// 列表筛选方法
-		submit (item) {
+		filterSubmit (item) {
 			this.queryForm[item.prop] = item.id
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
+		},
+		diyFilterSubmit (filterData) {
+			// console.log(filterData)
 		},
 		clear () {
 			this.$refs.filter.hide()

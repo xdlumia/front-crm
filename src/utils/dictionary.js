@@ -1,5 +1,5 @@
-
 /* eslint-disable */
+
 import _getIterator from 'babel-runtime/core-js/get-iterator'
 /** 前台字典表缓存
  * @author web-闫超
@@ -24,7 +24,7 @@ var getDictionaryArr = function getDictionaryArr (dicName) {
 		dictionaryArr = dictionaryCache[dicName]
 
 		var success = false
-		api.seeDataDictionaryService.dicCommonValueList({}, dicName).then(function (res) {
+		api.seeDataDictionaryService.valueListCode({}, dicName).then(function (res) {
 			dictionaryCache[dicName] = res.data || []
 			success = true
 		}).then(function () {
@@ -39,7 +39,7 @@ var findInArr = function findInArr (arr, key, idKey, valueKey) {
 	if (key && arr && arr.length) {
 		var _iteratorNormalCompletion = true
 		var _didIteratorError = false
-		var _iteratorError = undefined
+		var _iteratorError
 
 		try {
 			for (var _iterator = _getIterator(arr), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
