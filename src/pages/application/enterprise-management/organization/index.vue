@@ -1,3 +1,10 @@
+<!--
+/**
+* @author王艳龙
+* @name 组织架构
+* @date 2019年8月2日
+**/
+-->
 <template>
     <view>
         <NavBar title="组织架构" />
@@ -8,19 +15,19 @@
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V uni-flex uni-column" >
                 <i-cell-group v-for="(item) in depts" :key="item.id">
-                    <i-cell v-if="item.children != null && item.children.length > 0" is-link @click="toNextHierarchy(item.name,item.children)" >{{item.name}}({{item.childrenSize}})</i-cell>
-                    <i-cell v-else>{{item.name}}({{item.childrenSize}})</i-cell>
+                    <i-cell v-if="item.children != null && item.children.length > 0" is-link @click="toNextHierarchy(item.id,item.deptName)" >{{item.deptName}}({{item.children.length}})</i-cell>
+                    <i-cell v-else>{{item.deptName}}({{item.children.length}})</i-cell>
                 </i-cell-group>
             </view>
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
-            <view class="flex-item flex-item-V uni-flex uni-column" v-for="(item) in users" :key="item.id" @click="editUser">
+            <view class="flex-item flex-item-V uni-flex uni-column" v-for="(item) in users" :key="item.id" @click="editEmployee(item)">
                 <view class="flex-item flex-item-V bb p10">
                     <view class="fl width20">
                         <image class="ba" style="height: 51px;width: 51px;" src="/static/img/index.png"></image>
                     </view>
-                    <view class="fl width20 pl10 mt15">{{item.name}}</view>
+                    <view class="fl width20 pl10 mt15">{{item.employeeName}}</view>
                     <view class="fl ac ml10 pl5 pr5 mt15" style="color:#457FF5;border: 1px solid #457FF5;border-radius: 5px;">
-                        {{item.tag}}
+                        管理员
                     </view>
                 </view>
             </view>
@@ -31,14 +38,12 @@
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V bt h30" style="position: fixed;bottom: 0;width: 100%;padding-top: 10px;background-color: rgba(255,255,255,1)">
                 <view class="uni-flex uni-row">
-                    <a
-                        :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
+                    <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
                         style="text-align: center;color:#4D7FF5;"
                         url="/pages/application/enterprise-management/team/editor/index?isEditor=0">
                         添加员工
                     </a>
-                    <a
-                        :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
+                    <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
                         style="text-align: center;color:#4D7FF5;"
                         url="/pages/application/enterprise-management/organization/add-dept?isEditor=0&name=销售部">
                         添加子部门
@@ -61,89 +66,67 @@ export default {
 	},
 	data () {
 		return {
-			companyName: '北京凡特仁有限公司',
-			depts: [
-				{
-					id: 0,
-					name: '销售部',
-					childrenSize: 2,
-					children: [
-						{
-							id: 1,
-							name: '销售1部',
-							childrenSize: 2,
-							children: [
-								{
-									id: 3,
-									name: '销售1店',
-									childrenSize: 1,
-									children: [
-										{
-											id: 4,
-											name: '销售员1',
-											childrenSize: 0,
-											children: [
-
-											]
-										}
-									]
-								},
-								{
-									id: 4,
-									name: '销售2店',
-									childrenSize: 2,
-									children: [
-
-									]
-								}
-							]
-						},
-						{
-							id: 2,
-							name: '销售2部',
-							childrenSize: 2,
-							children: [
-
-							]
-						}
-					]
-				}
-			],
-			users: [
-				{
-					id: 0,
-					pic: 'xxx',
-					tag: '管理员',
-					name: '李志'
-				}
-			],
+			companyName: '',
+			depts: [],
+			users: [],
 			hierarchy: 0
 		}
 	},
 	onLoad (option) {
+		if (option.id) {
+			this.init(option.id)
+		} else {
+			this.init(1)
+		}
 		if (option.hierarchy) {
 			this.hierarchy = option.hierarchy
 		}
-		if (option.children) {
-			this.depts = JSON.parse(option.children)
-		}
+
 		// 动态修改追加部门名称
-		if (option.companyName && option.name) {
-			console.log(this.depts)
-			this.companyName = option.companyName + '>' + option.name
+		if (option.companyName && option.deptName) {
+			this.companyName = option.companyName + '>' + option.deptName
+		} else {
+			this.companyName = '北京凡特仁有限公司'
 		}
 	},
 	methods: {
+		// 初始化数据
+		init (deptId) {
+			// 获取部门数据
+			this.$api.enterpriseManagementService.getChildrenDepts({ 'deptId': deptId }).then((response) => {
+				if (response.code === 200) {
+					this.depts = response.data[0].children
+				} else {
+					uni.showToast({
+						title: '数据获取失败，请联系客服人员',
+						icon: 'success',
+						mask: !1
+					})
+				}
+			})
+			// 获取用户数据
+			this.$api.enterpriseManagementService.getChildrenEmployees({ 'deptId': deptId }).then((response) => {
+				if (response.code === 200) {
+					this.users = response.data
+				} else {
+					uni.showToast({
+						title: '数据获取失败，请联系客服人员',
+						icon: 'success',
+						mask: !1
+					})
+				}
+			})
+		},
 		// 为避免微信小程序只能进入5级层级的问题，通过控制this.hierarchy的值，使在点击返回按钮时页面直接返回到公司层级所在的页面
-		toNextHierarchy (name, children) {
+		toNextHierarchy (id, deptName) {
 			if (parseInt(this.hierarchy) > 0) {
 				uni.redirectTo({
-					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + this.hierarchy + '&children=' + JSON.stringify(children) + '&companyName=' + this.companyName + '&name=' + name
+					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + this.hierarchy + '&id=' + id + '&companyName=' + this.companyName + '&deptName=' + deptName
 				})
 			} else {
 				let param = parseInt(this.hierarchy) + 1
 				uni.navigateTo({
-					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + param + '&children=' + JSON.stringify(children) + '&companyName=' + this.companyName + '&name=' + name
+					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + param + '&id=' + id + '&companyName=' + this.companyName + '&deptName=' + deptName
 				})
 			}
 		},
@@ -154,9 +137,9 @@ export default {
 			})
 		},
 		// 编辑员工
-		editUser () {
+		editEmployee (item) {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/team/editor/index?isEditor=1'
+				url: '/pages/application/enterprise-management/team/editor/index?isEditor=1&employee=' + JSON.stringify(item)
 			})
 		}
 	}

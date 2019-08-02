@@ -1,4 +1,11 @@
-|<template>
+<!--
+/**
+* @author王艳龙
+* @name 邀请成员加入团队
+* @date 2019年8月2日
+**/
+-->
+<template>
     <view>
         <NavBar title="邀请成员加入团队" />
         <view class="uni-flex uni-column">

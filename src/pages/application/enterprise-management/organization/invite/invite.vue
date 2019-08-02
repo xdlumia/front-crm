@@ -1,3 +1,10 @@
+<!--
+/**
+* @author王艳龙
+* @name 邀请你加入
+* @date 2019年8月2日
+**/
+-->
 <template>
   <view>
     <NavBar title="邀请你加入" />

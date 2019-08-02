@@ -1,3 +1,10 @@
+<!--
+/**
+* @author王艳龙
+* @name 详细信息
+* @date 2019年8月2日
+**/
+-->
 <template>
     <view>
         <NavBar title="详细信息" />

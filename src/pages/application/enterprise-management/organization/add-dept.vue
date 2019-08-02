@@ -1,3 +1,10 @@
+<!--
+/**
+* @author王艳龙
+* @name 部门设置
+* @date 2019年8月2日
+**/
+-->
 <template>
     <view>
 		<NavBar v-if="isEditor == 1" title="部门设置" />

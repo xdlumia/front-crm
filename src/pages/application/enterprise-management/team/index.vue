@@ -1,3 +1,10 @@
+<!--
+/**
+* @author王艳龙
+* @name 团队申请
+* @date 2019年8月2日
+**/
+-->
 <template>
     <view>
         <NavBar title="团队申请" />
@@ -7,7 +14,7 @@
 				height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
 				api="userApplicationInformationService.getUserapplicationinformationList"
 				:params="queryForm"
-				v-slot="{ row }">
+				ref='teamDatas'>
 			<a url='./info'>
 				<view class="uni-flex uni-column">
 					<view class="flex-item flex-item-V bb uni-flex uni-row p15" v-for="(item) in teamDatas" :key="item.id">
@@ -46,41 +53,10 @@ export default {
 				limit: 10,
 				page: 1
 			},
-			teamDatas: [
-				{
-					id: 0,
-					pic: '../../../../../dist/dev/mp-weixin/static/img/index.png',
-					name: '付建达',
-					phone: '16619941016',
-					inviter: '方胜利',
-					verifier: 'lili',
-					applyReason: 'aaaaaaaaaaaaaaaaaaaaa'
-				},
-				{
-					id: 1,
-					pic: '../../../../../dist/dev/mp-weixin/static/img/index.png',
-					name: '高阳',
-					phone: '16619941016',
-					inviter: '高德勇',
-					verifier: 'lili',
-					applyReason: 'bbbbbbbbbbbbbbbbbbbbb'
-				},
-				{
-					id: 2,
-					pic: '../../../../../dist/dev/mp-weixin/static/img/index.png',
-					name: '梵高先生',
-					phone: '16619941016',
-					inviter: '李丽兰',
-					verifier: 'lili',
-					applyReason: 'cccccccccccccccccccccccccccccccc'
-				}
-			]
+			teamDatas: []
 		}
 	},
-	onLoad (option) {
-		this.$local.setItem('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJmZDE1N2Y4NzUwOGZlY2FmNWE3NzAyZGEyNDU3M2NkMCIsImNsaWVudElwIjoiMjIzLjcyLjgwLjI1MiIsImV4cCI6MTU2NDY5NTY0MCwidXNlcm5hbWUiOiJ1c2VyOjQ0MSJ9.fjkJIbLLMY_2MQp_yRmgfjz8NQgwjG5f_d3GONa6RDY')
-		this.$local.setItem('finger', 'fd157f87508fecaf5a7702da24573cd0')
-	},
+	onLoad (option) {},
 	methods: {
 		// 编辑
 		toEditor () {
