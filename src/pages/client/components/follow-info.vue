@@ -60,6 +60,7 @@ export default {
 			type: String,
 			default: ''
 		},
+		// 跟进记录列表额外的参数
 		query: {
 			type: Object,
 			default () {

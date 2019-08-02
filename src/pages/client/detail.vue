@@ -75,7 +75,7 @@
 
 <script>
 import detailInfo from './components/detail-info'
-import notesInfo from './components/notes-info'
+import notesInfo from './components/follow-info'
 import correlationInfo from './components/correlation-info'
 import attrInfo from './components/attr-info'
 

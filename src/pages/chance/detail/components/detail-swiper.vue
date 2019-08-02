@@ -16,7 +16,7 @@
 
 <script>
 import detailInfo from './detail-info'
-import notesInfo from '@/pages/client/components/notes-info'
+import notesInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './correlation-info'
 export default {
 	components: {
