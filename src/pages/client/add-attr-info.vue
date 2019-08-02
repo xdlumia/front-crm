@@ -1,5 +1,12 @@
+<!--
+/**
+* @author 冀猛超
+* @name  添加业务详情
+* @date  2019年8月02日
+**/
+-->
 <template>
-    <div>
+    <div class='attr-info-page'>
         <NavBar title='添加业务属性' />
 
         <div class="form-row d-flex">
@@ -7,7 +14,7 @@
                 标题:
             </div>
             <div class="d-cell mr10 form-row-item">
-                <input type="text" v-model='form.title' class='f12 d-text-black' placeholder="请填写标题" maxlength='20'>
+                <input type="text" v-model='form.headline' class='f12 d-text-black' placeholder="请填写标题" maxlength='20'>
             </div>
         </div>
 
@@ -40,7 +47,7 @@
                 <div style='line-height: 1'>文字:</div>
             </div>
             <div class="d-cell mr10 form-row-item">
-                <textarea v-model='form.content' class='wfull f12 d-text-gray' placeholder="请填写文字"></textarea>
+                <textarea v-model='form.text' class='wfull f12 d-text-gray' placeholder="请填写文字" maxlength="500"></textarea>
             </div>
         </div>
 
@@ -68,21 +75,43 @@
         </div>
 
         <div class="footer-fixed-menu">
-            <i-button type="primary" size="default" i-class="f15">保存</i-button>
+            <i-button type="primary" size="default" i-class="f15" @click='clientinfoSaveClientbusiness'>保存</i-button>
         </div>
     </div>
 </template>
 
 <script>
+import { setTimeout } from 'timers'
 export default {
 	data () {
 		return {
+			id: 0,
 			form: {
+				busId: 0,
+				busType: 0,
 				img: '',
 				video: '',
-				title: '',
-				content: '',
+				headline: '',
+				text: '',
 				file: []
+			}
+		}
+	},
+	onLoad (data) {
+		this.form.id = this.form.busId = data.id
+	},
+	methods: {
+		async clientinfoSaveClientbusiness () {
+			try {
+				let resulte = await this.$api.seeCrmService.clientinfoSaveClientbusiness(this.form)
+				if (resulte.code === 200) {
+					this.$utils.toast.text('保存成功')
+					setTimeout(() => {
+						this.$routing.navigateBack()
+					}, 800)
+				}
+			} catch (err) {
+
 			}
 		}
 	}
@@ -90,6 +119,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .attr-info-page{
+        padding-bottom:  50px;
+    }
     .form-row{
         margin-top: -1px;
         border-top: 1px solid #f2f2f2;

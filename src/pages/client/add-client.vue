@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 新建客户
+* @date 2019年8月02日
+**/
+-->
 <template>
     <div class='add-follow-page'>
         <NavBar title='新建客户信息' />

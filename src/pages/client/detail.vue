@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 客户详情
+* @date 2019年8月02日
+**/
+-->
 <template>
     <div class="client-detail-page">
 		<template v-if='!loading'>
@@ -35,16 +42,16 @@
 			<div class="">
 				<i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
 					<i-tab index="0">
-						<notesInfo :query='notesQuery' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
+						<followInfo :query='notesQuery' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="1">
-						<detailInfo :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="2">
 						<correlationInfo :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index='3'>
-						<attrInfo :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
+						<attrInfo :query='{cilentId: detailInfo.id}' :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
 					</i-tab>
 				</i-tabs>
 			</div>
@@ -75,16 +82,17 @@
 
 <script>
 import detailInfo from './components/detail-info'
-import notesInfo from './components/follow-info'
+import followInfo from './components/follow-info'
 import correlationInfo from './components/correlation-info'
 import attrInfo from './components/attr-info'
+import { setTimeout } from 'timers'
 
 let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程', '领取', '分配']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
 	components: {
 		detailInfo,
-		notesInfo,
+		followInfo,
 		correlationInfo,
 		attrInfo
 	},
@@ -93,8 +101,8 @@ export default {
 			loading: true,
 			id: 0, // 业务id
 			detailInfo: {},
-			moreShow: false,
-			phoneShow: false,
+			moreShow: false, // 更多按钮 选项
+			phoneShow: false, // 打电话选项
 			moreActions: moreActions,
 			phoneActions: [
 				{
@@ -182,6 +190,25 @@ export default {
 			this.currIndex = index
 		},
 
+		// 删除客户
+		clientinfoDelete () {
+			try {
+				this.$utils.showModal('确定要删除此客户？').then(async () => {
+					let resulte = await this.$api.seeCrmService.clientinfoDelete({ id: this.id })
+					if (resulte.code === 200) {
+						this.$utils.toast.text('删除成功')
+						setTimeout(() => {
+							this.$routing.navigateBack()
+						}, 800)
+					}
+				})
+			} catch (err) {
+				this.$utils.toast.text('删除失败')
+			} finally {
+
+			}
+		},
+
 		handleMore ({ target: { index } }) {
 			let fnType = {
 				1: () => {
@@ -195,9 +222,7 @@ export default {
 					this.$routing.navigateTo('/pages/index/colleagueChoose')
 				},
 				4: () => {
-					this.$utils.showModal().then(() => {
-						console.log('111')
-					})
+					this.clientinfoDelete()
 				},
 				5: () => {
 					// 更多日程

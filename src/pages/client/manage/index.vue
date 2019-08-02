@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name  管理客户信息
+* @date  2019年8月02日
+**/
+-->
 <template>
     <div class='tags-page'>
         <NavBar title='管理客户' />

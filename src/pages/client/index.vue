@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 客户列表
+* @date 2019年8月02日
+**/
+-->
 <template>
     <div class="client-page">
         <NavBar isSearch placeholder='搜索客户' />

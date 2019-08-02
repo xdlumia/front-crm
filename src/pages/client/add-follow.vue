@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 添加跟进
+* @date 2019年8月02日
+**/
+-->
 <template>
     <div class='add-follow-page'>
         <NavBar title='跟进客户' />

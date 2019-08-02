@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 业务属性详情
+* @date 2019年8月02日
+**/
+-->
 <template>
     <div class='attr-detail-page'>
         <NavBar />
