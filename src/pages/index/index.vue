@@ -94,7 +94,7 @@
                                     <i class="iconfont f24 iconwode lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
-                                    <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
+                                    <span class="f18 d-text-black">{{salesKitForm.clientCount}}</span><span class="mt10 ml5 d-gray"> 个</span>
                                 </div>
                             </div>
                             <div style="margin-left:53px;">
@@ -107,7 +107,7 @@
                                     <i class="iconfont f24 iconduoren lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
-                                    <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
+                                    <span class="f18 d-text-black">{{salesKitForm.linkCount}}</span><span class="mt10 ml5 d-gray"> 个</span>
                                 </div>
                             </div>
                             <div style="margin-left:53px;">
@@ -122,7 +122,7 @@
                                     <i class="iconfont f24 iconshangji lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
-                                    <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
+                                    <span class="f18 d-text-black">{{salesKitForm.salesChanceCount}}</span><span class="mt10 ml5 d-gray"> 个</span>
                                 </div>
                             </div>
                             <div style="margin-left:53px;">
@@ -135,7 +135,7 @@
                                     <i class="iconfont f24 iconzhuzhuangtu lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
-                                    <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
+                                    <span class="f18 d-text-black">{{salesKitForm.salesChanceChange}}</span><span class="mt10 ml5 d-gray"> 个</span>
                                 </div>
                             </div>
                             <div style="margin-left:53px;">
@@ -150,7 +150,7 @@
                                     <i class="iconfont f24 iconkehugenjin lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
-                                    <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
+                                    <span class="f18 d-text-black">{{salesKitForm.followUpCount}}</span><span class="mt10 ml5 d-gray"> 个</span>
                                 </div>
                             </div>
                             <div style="margin-left:53px;">
@@ -163,7 +163,7 @@
                                     <i class="iconfont f24 iconjilu lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
-                                    <span class="f18 d-text-black">56 </span><span class="mt10 ml5 d-gray"> 个</span>
+                                    <span class="f18 d-text-black">{{salesKitForm.tranRecordCount}}</span><span class="mt10 ml5 d-gray"> 个</span>
                                 </div>
                             </div>
                             <div style="margin-left:53px;">
@@ -183,7 +183,7 @@
                    <view class="echartsBox">
                         <!-- 引入的mpvue-echarts组件 -->
                         <!-- <mpvue-echarts :echarts='echarts' canvasId="chat1" @onInit="fn1OnInit" ref='lineChart' class="ec-canvas"/> -->
-                         <ec-canvas :ec="ec"></ec-canvas>
+                         <ec-canvas :ec="ec" ref='echart'></ec-canvas>
                     </view>
                 </div>
             </div>
@@ -201,9 +201,9 @@
                     </div>
 
                     <div class="d-flex" v-for='(item,index) in rankingList' :key='index'>
-                        <div style="width: 70px;" class="ml15"><span class="d-text-black">{{index+1}}</span></div>
-                        <div style="width: 120px;"><span class="d-text-black">{{item.name}}</span></div>
-                        <div><span class=" d-text-black">{{item.num}}</span></div>
+                        <div style="width: 70px;" class="ml15"><span class="d-text-black">{{item.rownum}}</span></div>
+                        <div style="width: 120px;"><span class="d-text-black">{{item.userId}}</span></div>
+                        <div><span class=" d-text-black">{{item.amount}}</span></div>
                     </div>
 
                 </div>
@@ -218,17 +218,17 @@
 export default {
 	data () {
 		return {
-			current: 0,
+			current: 1,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
 			timelong: 7,
 			clickDay: '',
 			TabList: [{ name: '今天' }, { name: '仪表盘' }],
 			selected: [{ date: '2019-07-24', info: '签到', data: { custom: '自定义信息', name: '自定义消息头' } }],
-			rankingList: [{ name: '王二小', num: 36098 }, { name: '王三小', num: 10025 }, { name: '王四小', num: 10020 }],
 			// fn1OnInit: fn1,
 			ec: {
 				option: {
+					color: ['#FF9900', '#ffe06c', '#b1e289', '#72daa3', '#53d1c6', '#5CBFF8', '#5cA1ff'],
 					title: {
 						left: 'left',
 						top: 'bottom'
@@ -243,19 +243,21 @@ export default {
 							type: 'funnel',
 							width: '60%',
 							height: '80%',
-							left: '15%',
+							left: '10%',
 							top: '5%',
-							data: [
-								{ value: 60, name: '访问' },
-								{ value: 30, name: '咨询' },
-								{ value: 10, name: '订单' },
-								{ value: 80, name: '点击' },
-								{ value: 100, name: '展现' }
-							]
+							data: this.funnelList,
+							label: {
+								fontSize: 12,
+								color: '#333'
+							}
 						}
 					]
 				}
-			}
+			},
+			userId: 1,
+			salesKitForm: {}, // 销售简报
+			rankingList: [], // 排行榜
+			funnelList: []// 漏斗数据
 		}
 	},
 	components: {
@@ -269,10 +271,40 @@ export default {
 	created () {
 		this.getDates(7)
 		this.getTodayDate()
+		this.scheduleSelectSalesKit()
+		this.scheduleSelectCompanyRanking()
+		this.scheduleSelectSalesFunnel()
 	},
 	onLoad (option) {
 	},
 	methods: {
+		// 查询本月当前人的销售简报
+		scheduleSelectSalesKit () {
+			this.$api.seeCrmService.scheduleSelectSalesKit(null, this.userId)
+				.then(res => {
+					this.salesKitForm = res.data
+				})
+		},
+		// 查询本月当前人的销售简报
+		scheduleSelectCompanyRanking () {
+			this.$api.seeCrmService.scheduleSelectCompanyRanking()
+				.then(res => {
+					this.rankingList = res.data
+				})
+		},
+		// 查询本月当前人的销售漏斗
+		scheduleSelectSalesFunnel () {
+			this.$api.seeCrmService.scheduleSelectSalesFunnel(null, this.userId)
+				.then(res => {
+					this.funnelList = []
+					console.log(res.data)
+					res.data.forEach((item) => {
+						this.funnelList.push({ value: item.amount, name: item.stageName + ':' + item.amount }, { value: 4000, name: '需求确定:4000' }, { value: 6589, name: '方案报价:6589' }, { value: 4852, name: '谈判审核:4000' }, { value: 1589, name: '赢单:4000' }, { value: 4295, name: '输单:4295' }, { value: 7852, name: '无效:7852' })
+					})
+					this.ec.option.series[0].data = this.funnelList
+					this.$refs.echart.init()
+				})
+		},
 		confirm () {
 
 		},
