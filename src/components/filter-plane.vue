@@ -29,11 +29,11 @@ export default {
 			ids: {}
 		}
 	},
-	watch: {
-		current (val) {
-			this.ids = val
-		}
-	},
+	// watch: {
+	// 	current (val) {
+	// 		this.ids = val
+	// 	}
+	// },
 	methods: {
 		tagClick (item) {
 			if (Object.keys(this.ids).includes(item[this.valueKey].toString())) {
@@ -43,9 +43,12 @@ export default {
 			}
 			this.$forceUpdate()
 			this.$emit('click', {
-				prop: this.pros,
+				prop: this.prop,
 				ids: Object.values(this.ids)
 			})
+		},
+		clear () {
+			this.ids = {}
 		}
 	}
 }

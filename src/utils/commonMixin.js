@@ -23,4 +23,5 @@ export default {
 	],
 	onReachBottom: CallChildrenHook('onReachBottom'),
 	onPageScroll: CallChildrenHook('onPageScroll')
+
 }

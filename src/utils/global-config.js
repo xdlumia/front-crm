@@ -3,6 +3,8 @@ import local from './localStorage'
 import router from './router'
 import utils from './utils'
 import commonMixin from './commonMixin'
+import dictionary from './dictionary'
+
 import {
 	$toast,
 	$message
@@ -10,6 +12,7 @@ import {
 
 export default {
 	install: function (vm) {
+		vm.mixin(dictionary)
 		vm.mixin(commonMixin)
 		vm.prototype.$local = local
 		vm.prototype.$api = api

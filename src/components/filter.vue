@@ -71,19 +71,9 @@ export default {
 	methods: {
 		show () {
 			this.filterShow = true
-			try {
-				uni.hideTabBar()
-			} catch (err) {
-
-			}
 		},
 		hide () {
 			this.filterShow = false
-			try {
-				uni.showTabBar()
-			} catch (err) {
-
-			}
 		},
 		openFilter (prop, index) {
 			if (this.filterProp === prop) {

@@ -1,8 +1,8 @@
 <template>
     <div class="client-page">
         <NavBar isSearch placeholder='搜索客户' />
-		<Filter :filterData='filterData' @filterSubmit='submit' ref='filter'>
-			<filter-diy @submit='submit' @clear='clear' />
+		<Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
+			<filter-diy @submit='diyFilterSubmit' @clear='clear' />
 		</Filter>
 		<div class='client-list-view d-relative'>
 
@@ -18,7 +18,7 @@
 						<div class='d-text-cgray'>{{item.makeBargainCode}}</div>
 					</div>
 					<div class="d-flex client-tags">
-						<div class="iconfont iconqian f16 d-text-blue mr10"></div>
+						<div class="iconfont iconqian f16 d-text-blue mr10" v-if='salesType === 1'></div>
 						<div class="c-tag f12 mr10">{{item.gradeCode}}</div>
 						<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
 						<div class="c-tag f12 mr10">{{item.finallyFollowTime|timeToStr('yyyy-mm-dd')}}</div>
@@ -96,9 +96,6 @@ export default {
 			list: []
 		}
 	},
-	filters: {
-
-	},
 	onReady () {
 		let selects = {}
 		this.filterData.forEach(item => {
@@ -112,10 +109,13 @@ export default {
 			this.list = list
 		},
 		// 列表筛选方法
-		submit (item) {
+		filterSubmit (item) {
 			this.queryForm[item.prop] = item.id
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
+		},
+		diyFilterSubmit (filterData) {
+			// console.log(filterData)
 		},
 		clear () {
 			this.$refs.filter.hide()

@@ -12,8 +12,10 @@
                     </div>
                 </div>
             </filter-plane>
-
-            <filter-plane :title='followStatuss.title' :prop='followStatuss.prop' @click='submit' :dataList='followStatuss.list' />
+            <!-- 客户性质 -->
+            <filter-plane :title='property.title' ref='filterplane' :prop='property.prop' @click='getFilterData' :dataList='property.list' />
+            <!-- 跟进状态 -->
+            <filter-plane :title='followStatuss.title' ref='filterplane' :prop='followStatuss.prop' @click='getFilterData' :dataList='followStatuss.list' />
 
         </scroll-view>
         <div class='filter-btn d-center f18 d-text-blue'>
@@ -41,10 +43,11 @@ export default {
 			},
 			followStatuss: {
 				prop: 'followStatuss',
-				title: '客户性质',
+				title: '跟进状态',
 				list: followStatuss
 			},
-			principal: []
+			principal: [],
+			filterData: {}
 		}
 	},
 	methods: {
@@ -56,29 +59,32 @@ export default {
 		clear () {
 			this.$emit('clear')
 		},
+		// 获取点击的数据
+		getFilterData (item) {
+			this.filterData[item.prop] = item.ids.map(item => item.id)
+		},
 		submit (item) {
-			console.log(item)
-			// this.$emit('submit')
+			this.$emit('submit', this.filterData)
 		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-	.filter-btn{
-		position: absolute;
-		width: 100%;
-		background: #fff;
-		height: 49px;
-		bottom: 0;
-		.btn-item{
-			line-height: 49px;
-		}
-	}
+    .filter-btn{
+        position: absolute;
+        width: 100%;
+        background: #fff;
+        height: 49px;
+        bottom: 0;
+        .btn-item{
+            line-height: 49px;
+        }
+    }
 
-	.diy-filter{
-		padding-bottom: 50px;
-		box-sizing: border-box;
-		background: #f2f2f2;
-	}
+    .diy-filter{
+        padding-bottom: 50px;
+        box-sizing: border-box;
+        background: #f2f2f2;
+    }
 </style>
