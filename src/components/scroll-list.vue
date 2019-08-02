@@ -33,7 +33,6 @@ export default {
 		},
 		// 参数
 		params: {
-			type: [Object, String, Number],
 			default: function () {
 				return { page: 1, limit: 15 }
 			}

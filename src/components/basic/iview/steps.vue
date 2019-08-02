@@ -24,7 +24,8 @@
                 type : String,
                 //value has horizontal or vertical 
                 default : 'horizontal'
-            } 
+            },
+            list:{} 
         },
         methods: {
             _updateDataChange() {
@@ -50,11 +51,17 @@
                 handler(){
                     this._updateDataChange()
                 }
+            },
+            list: {
+                handler(){
+                    this._updateDataChange()
+                },
+                deep:true
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .i-steps{width:100%}
+    .i-steps{width:100%;}
 </style>

@@ -11,8 +11,7 @@
 				api="seeCrmService.clientinfoPagelist"
 				:params="queryForm"
 				@getList='getList'
-				ref='list'
-			>
+				ref='list'>
 				<a v-for="item of list" :key="item.id" :url="'/pages/client/detail?id=' + item.id" class="client-item pb5 pt5 pl15 pr15 d-bg-white" >
 					<div class="d-flex f14 mb5">
 						<div class="d-text-black d-cell d-elip">{{item.name}}</div>

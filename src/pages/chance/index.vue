@@ -7,16 +7,16 @@
 		</Filter>
     <!-- 步骤 -->
     <i-steps
-      :current="current"
+      :current="currStage"
+      :list="stageList"
       class="change-steps d-fixed wfull pt5 pb5"
       :style="{top:`calc(${navH} + 39px)`}">
       <i-step
         @step="setpHandle(item,index)"
-        v-for="(item,index) of stepList"
+        v-for="(item,index) of stageList"
         :key="index"
-        :content="item.label"
-      >
-        <span slot="step">{{item.index}}</span>
+        :content="item.stageName">
+        <span slot="step">{{index==0?'all':index}}</span>
       </i-step>
     </i-steps>
     <!-- 统计 -->
@@ -30,21 +30,22 @@
       class="d-absolute wfull"
       :style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
       height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
-      api="bizSystemService.getUserAuth"
+      api="seeCrmService.saleschanceQueryPageList"
       :params="queryForm"
-      v-slot="{ row }">
-      <a url="./detail/index">
+      @getList='getList'
+      ref='list'>
+      <a v-for="item of list" :key="item.id" url="./detail/index">
         <div class="chance-item uni-flex uni-row">
           <div class="flex-item item-progress">
             <circleProgress width="45px" :max="5" :progress="2" />
           </div>
-          <div class="flex-item item-info d-elip">
-            <h4 class="d-elip">{{row}}车公庄地铁 文华园小区朝南一局560万车公庄地铁 文华园小区朝南一局560万</h4>
-            <p class="d-text-gray d-elip">华为技术有限公司</p>
-            <div>
-              <time class="d-text-gray f12 fl">2019-04-4</time>
-              <span class="f14 fr">¥5,000,000.00</span>
-            </div>
+          <div class="flex-item item-info d-elip wfull">
+            <h4 class="d-elip">{{item.chanceName || '-'}}</h4>
+            <p class="d-text-gray d-elip">{{item.clientName || '-'}}</p>
+            <i-row>
+              <i-col :span="12" class="d-text-gray f12">{{item.createTime}}</i-col>
+              <i-col :span="12" class="f14 ar">¥{{item.salesMoney}}</i-col>
+            </i-row>
           </div>
         </div>
       </a>
@@ -67,6 +68,27 @@
 
 import Filter from '@/components/filter'
 import FilterDiy from './filter-diy'
+// 筛选数据
+// let queryType = ['全部', '我负责的', '我下属的', '我关注的', '7天未跟进' ].map((item, index) => {
+// 	return {
+// 		name: item,
+// 		id: index
+// 	}
+// })
+let queryType = [
+	{ id: 0, val: '-1', name: '全部' },
+	{ id: 1, val: '0', name: '我负责的' },
+	{ id: 2, val: '4', name: '我下属的' },
+	{ id: 3, val: '2', name: '我关注的' },
+	{ id: 4, val: '3', name: '7天未跟进' }
+]
+// 列表排序数据
+let sortType = [
+	{ id: 0, val: 'a.follow_up_time', name: '最新跟进时间' },
+	{ id: 1, val: 'a.stage_propel_time', name: '阶段更新时间' },
+	{ id: 2, val: 'a.sales_money', name: '销售金额' },
+	{ id: 3, val: 'c.equityedge', name: '盈率(从高到底)' }
+]
 export default {
 	mixins: [],
 	components: {
@@ -75,54 +97,70 @@ export default {
 	},
 	data () {
 		return {
+			// 销售机会列表
+			list: [],
 			filterData: [
 				{
-					prop: 'a',
-					current: { id: 0, name: '我参与的' },
-					list: [
-						{ id: 0, name: '全部' },
-						{ id: 0, name: '我负责的' },
-						{ id: 1, name: '我下属的' },
-						{ id: 2, name: '我关注的' },
-						{ id: 3, name: '7天未跟进' },
-						{ id: 4, name: '最近浏览' }
-					]
+					prop: 'queryType',
+					current: queryType[0],
+					list: queryType
 				},
 				{
-					prop: 'b',
-					current: { id: 0, name: '最新跟进日期' },
-					list: [
-						{ id: 0, name: '最新跟进日期' },
-						{ id: 1, name: '阶段更新日期' },
-						{ id: 1, name: '销售金额(从高到底)' },
-						{ id: 1, name: '盈率(从高到底)' }
-					]
+					prop: 'orderByStr',
+					current: sortType[0],
+					list: sortType
 				}
 			],
 			// 步骤列表
-			stepList: [
-				{ label: '全部销售机会', index: 'all' },
-				{ label: '验证机会', index: 1 },
-				{ label: '需求确定', index: 2 },
-				{ label: '方案报价', index: 3 },
-				{ label: '谈判审核', index: 4 }
-			],
-			current: 2,
+			stageList: {},
+			currStage: 0,
 			queryForm: {
 				limit: 10,
-				page: 1
+				page: 1,
+				leaderIds: [1, 2, 3], // 负责人id
+				chanceName: '1', // 销售机会名称
+				stageIds: [1, 2, 3], // 阶段ids
+				clientOrChanceName: '', // 客户名称或机会名称（模糊查询）
+				transationTime: '', // 成交时间（0-本周，1-本季，2-本年，3-上周，4-上月,5-本月，6-今天，7-下周）
+				queryType: '', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
+				orderByStr: '' // 排序字段（a.follow_up_time跟进日期，a.stage_propel_time阶段更新日期，a.sales_money销售金额，c.equityedge赢率）
 			}
 		}
 	},
 	onLoad (option) {
 		console.log(option)
 	},
-	methods: {
-		setpHandle (row, index) {
-			this.current = index
-		}
+	created () {
+		// 获取销售阶段
+		this.salesstageList()
 	},
-	created () {}
+	methods: {
+		// 获取列表数据
+		getList (list) {
+			this.list = list
+		},
+
+		// 列表筛选方法
+		submit (item) {
+			this.queryForm[item.prop] = item.val
+			this.$refs.list.reload()
+			this.$refs.filter.hide()
+		},
+		setpHandle (row, index) {
+			this.currStage = index
+			this.stageIds = [row.id]
+			this.$refs.list.reload()
+		},
+		// 获取销售阶段
+		salesstageList () {
+			this.$api.seeCrmService.salesstageList()
+				.then(res => {
+					let data = res.data || []
+					data.splice(0, 0, { id: 'all', stageName: '全部' })
+					this.stageList = data
+				})
+		}
+	}
 }
 </script>
 
