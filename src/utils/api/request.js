@@ -16,8 +16,8 @@ Api = new Flyio()
 // #endif
 
 Api.interceptors.request.use((config, promise) => {
-	config.headers['token'] = local.getItem('token') || ''
-	config.headers['finger'] = local.getItem('finger') || ''
+	config.headers['token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJjMDU0NGQzMDkxYjJkNDRkN2MzYmEzY2QxNzU5NmI5OCIsImNsaWVudElwIjoiMjIzLjcyLjgwLjI1MiIsImV4cCI6MTU2NDc3MDQ5MywidXNlcm5hbWUiOiJ1c2VyOjQ0NiJ9.svMxlttgxYX3eZpPu_5PpX05OCQ2x-3x-pEdRdAhbHA' || local.getItem('token') || ''
+	config.headers['finger'] = 'c0544d3091b2d44d7c3ba3cd17596b98' || local.getItem('finger') || ''
 	config.headers['uid'] = uuid()
 	config.headers['verifycode'] = sha512(
 		config.headers['__'] + config.headers['token'] + config.headers['finger']

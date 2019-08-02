@@ -132,6 +132,34 @@ export default {
 	},
 	/* =============公海池基本信息表end=========== */
 
+	/* =============数据字典关系表start=========== */
+	// 删除
+	dictionaryrelationDelete: {
+		'url': '/dictionaryrelation/delete',
+		'mock': true,
+		'methods': 'delete'
+	},
+
+	// 查看详细信息
+	dictionaryrelationInfo: {
+		'url': '/dictionaryrelation/info/{id}',
+		'mock': true
+	},
+
+	// 获取列表
+	dictionaryrelationList: {
+		'url': '/dictionaryrelation/list',
+		'mock': true
+	},
+
+	// 保存
+	dictionaryrelationSave: {
+		'url': '/dictionaryrelation/save',
+		'mock': true,
+		'methods': 'post'
+	},
+	/* =============数据字典关系表end=========== */
+
 	/* =============评分权重表start=========== */
 	// 获取权重规则列表
 	fieldweightList: {
@@ -258,7 +286,7 @@ export default {
 		'mock': true
 	},
 
-	// 保存
+	// 信息保存
 	formsfieldconfigSave: {
 		'url': '/formsfieldconfig/save',
 		'mock': true,
@@ -441,9 +469,16 @@ export default {
 		'methods': 'delete'
 	},
 
-	// 保存
+	// 业务与联系人关系保存
 	linkmanrelationSave: {
 		'url': '/linkmanrelation/save',
+		'mock': true,
+		'methods': 'post'
+	},
+
+	// 批量保存业务与联系人关系
+	linkmanrelationSaveBatch: {
+		'url': '/linkmanrelation/saveBatch',
 		'mock': true,
 		'methods': 'post'
 	},
@@ -457,9 +492,27 @@ export default {
 	/* =============业务与联系人关系表end=========== */
 
 	/* =============组织架构start=========== */
-	// 获取下属人员列表(本部门及下级部门)
+	// 获取下属人员列表
 	organizationalStructureChildren: {
 		'url': '/organizationalStructure/children',
+		'mock': true
+	},
+
+	// 获取子级部门列表
+	organizationalStructureChildrenDepts: {
+		'url': '/organizationalStructure/childrenDepts',
+		'mock': true
+	},
+
+	// 获取下属人员列表
+	organizationalStructureChildrenEmployees: {
+		'url': '/organizationalStructure/childrenEmployees',
+		'mock': true
+	},
+
+	// 同事列表(公司内部的所有员工)
+	organizationalStructureColleagues: {
+		'url': '/organizationalStructure/colleagues',
 		'mock': true
 	},
 
@@ -472,6 +525,12 @@ export default {
 	// 获取子树（子部门及直属人员）
 	organizationalStructureDeptsAndUsers: {
 		'url': '/organizationalStructure/deptsAndUsers',
+		'mock': true
+	},
+
+	// 根据id[]返回用户对象列表)
+	organizationalStructureGetEmployeeByIds: {
+		'url': '/organizationalStructure/getEmployeeByIds',
 		'mock': true
 	},
 
@@ -502,7 +561,7 @@ export default {
 		'methods': 'post'
 	},
 
-	// 修改人员信息
+	// 修改员工信息
 	organizationalStructureUpdateUser: {
 		'url': '/organizationalStructure/updateUser',
 		'mock': true,
@@ -884,11 +943,24 @@ export default {
 		'methods': 'delete'
 	},
 
+	// 保存
+	userapplicationinformationSave: {
+		'url': '/userapplicationinformation/save',
+		'mock': true,
+		'methods': 'post'
+	},
+
 	// 修改
 	userapplicationinformationUpdate: {
 		'url': '/userapplicationinformation/update',
 		'mock': true,
 		'methods': 'post'
+	},
+
+	// 校验短信验证码
+	userapplicationinformationValidateSmsCode: {
+		'url': '/userapplicationinformation/validateSmsCode',
+		'mock': true
 	},
 
 	// 保存

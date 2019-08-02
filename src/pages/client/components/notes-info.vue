@@ -1,15 +1,16 @@
 <template>
     <div class="note-box">
         <div class="note-search-box d-center">
-            <input class="search-input f13 d-text-black pl10 d-cell" placeholder="请填写跟进内容，快速跟进" type="text">
-            <div class='f13 d-text-blue ml15'>快速跟进</div>
+            <input class="search-input f13 d-text-black pl10 d-cell" v-model.trim='followContent' placeholder="请填写跟进内容，快速跟进" type="text">
+            <div class='f13 d-text-blue ml15' @click='saveFollowup'>快速跟进</div>
         </div>
-        <scroll-view scroll-y :style="{height: height}">
-            <div class="d-bg-white" >
+        <scroll-view scroll-y :style="{height: height}" @scrolltolower='getFollowup()'>
+
+            <div class='d-bg-white' v-for='(item, index) in list' :key='item.id'>
                 <div class="note-time-title pt15 pb15 f12 d-text-qgray">
-                    2019-05-25
+                {{item.createTime | timeToStr('yyyy-mm-dd')}}
                 </div>
-                <i-swipeout  i-class="i-swipeout-demo-item" :operateWidth="80" :actions="[{
+                <i-swipeout  i-class="i-swipeout-demo-item" :operateWidth="80" @change='delFollowup(item, index)' :actions="[{
                     name : '删除',
                     color : '#fff',
                     fontsize : '14',
@@ -19,29 +20,35 @@
                     <div slot="content">
                         <div class="pl15 pr15 pb10 pt10">
                             <div class="d-center">
-                                <span class="f14 d-text-blue mr30">徐莉莉</span>
-                                <span class="d-cell f12 d-text-gray">10:25</span>
-                                <span class='note-tag f12 d-text-white'>电话跟进</span>
+                                <span class="f14 d-text-blue mr30">{{item.creatorName}}</span>
+                                <span class="d-cell f12 d-text-gray">{{item.createTime | timeToStr('hh:ii')}}</span>
+                                <span class='note-tag f12 d-text-white'>{{item.followType | dictionary('CRM_GJLX')}}</span>
                             </div>
                             <div class="note-content mb5">
-                                 客户终于成交了
+                                {{item.content}}
                             </div>
-                            <div class='d-flex'>
-                                <img class="note-img" src="http://file.515md.com:8888/%E4%BA%A7%E5%93%81/%E6%96%B0%E4%BA%A7%E5%93%81%E6%96%B9%E5%90%91/%E5%AE%A2%E6%88%B7%E7%AE%A1%E7%90%86v1.0.8/images/1_1客户公海池客户详情/u4074.png" alt="">
+                            <div class='d-flex' v-if='item.files && item.files.length'>
+                                <img class="note-img" v-for='imgItem in item.files' :key='imgItem.id' :src="imgItem.fileUrl" />
                             </div>
-                            <div class="mb5">
-                                <uni-tag size='small' text="关联联系人：王东亮" circle />
+                            <div class="mb5" v-if='item.linkName'>
+                                <uni-tag size='small' :text="'关联联系人：' + item.linkName" circle />
                             </div>
                             <div class="d-flex">
                                 <div class="mr10">
-                                    <uni-tag size='small' text="意向极高" circle />
+                                    <uni-tag size='small' :text="item.intention | dictionary('CRM_YXCD')" circle />
                                 </div>
-                                <uni-tag size='small' text="下次通话时间：2019-10-10" circle/>
+                                <uni-tag size='small' :text="'下次通话时间：' + item.nextTime | timeToStr('yyyy-mm-dd')" circle/>
                             </div>
                         </div>
                     </div>
                 </i-swipeout>
             </div>
+
+            <i-load-more
+                :tip=" !loading ?'没有更多了':'加载中'"
+                :loading="loading"
+            />
+
         </scroll-view>
     </div>
 </template>
@@ -52,6 +59,90 @@ export default {
 		height: {
 			type: String,
 			default: ''
+		},
+		query: {
+			type: Object,
+			default () {
+				return {}
+			}
+		}
+	},
+	data () {
+		return {
+			params: {
+				page: 1,
+				limit: 15
+			},
+			list: [], // 数据列表
+			followContent: '', // 跟进内容
+			loading: true
+		}
+	},
+	created () {
+		this.getFollowup()
+	},
+	methods: {
+
+		// 获取列表
+		async getFollowup (page) {
+			if (!this.loading && !page) return
+
+			if (page) {
+				this.params.page = page
+			}
+
+			try {
+				let params = Object.assign({}, this.params, this.query)
+				let resulte = await this.$api.seeCrmService.followupList(params)
+				if (resulte.code === 200) {
+					this.list = page ? resulte.data : [].concat(this.list, resulte.data)
+					this.params.page++
+					if (resulte.count <= this.list) {
+						this.loading = false
+					}
+				}
+			} catch (err) {
+				this.list = []
+			} finally {
+
+			}
+		},
+
+		// 删除跟进记录
+		delFollowup (item, index) {
+			try {
+				this.$utils.showModal().then(async () => {
+					let resulte = await this.$api.seeCrmService.followupLogicDelete({ id: item.id })
+					if (resulte.code === 200) {
+						this.$utils.toast.text('删除成功')
+						this.list.splice(index, 1)
+					}
+				})
+			} catch (err) {
+				this.$utils.toast.text('删除失败')
+			} finally {
+
+			}
+		},
+
+		// 快速跟进
+		async saveFollowup () {
+			let content = this.followContent
+			if (!content) return this.$utils.toast.text('跟进内容不能为空')
+			try {
+				let resulte = await this.$api.seeCrmService.followupSave({
+					...this.query,
+					content: content
+				})
+				if (resulte.code === 200) {
+					this.getFollowup(1)
+					this.followContent = ''
+				}
+			} catch (err) {
+				this.$utils.toast.text('添加失败')
+			} finally {
+
+			}
 		}
 	}
 }

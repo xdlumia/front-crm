@@ -150,9 +150,7 @@ export default {
                 this.closeButtonGroup()
             }
             const dataset = event.currentTarget.dataset
-            this.triggerEvent('change', {
-                index: dataset.index
-            })
+           
             this.$emit('change', {index: dataset.index})
         },
         closeButtonGroup () {

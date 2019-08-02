@@ -1,48 +1,69 @@
 <template>
     <div class="client-detail-page">
-        <NavBar title='客户详情' />
-		<!-- 顶部信息 -->
+		<template v-if='!loading'>
+			<NavBar title='客户详情' />
+			<!-- 顶部信息 -->
 
-        <div class="chance-datail-title pl15 pr15 pb10 f13 d-bg-white bb mb15">
-            <div class="uni-flex uni-row pt10 mb5">
-                <div class="flex-item d-elip wfull f16 d-text-black">华为技术有限公司</div>
-                <div class="flex-item datail-handle">
-                    <a url='./add-client' class='d-inline'><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
-                    <i-icon type="like_fill" size="20" class="ml15" color="#ff5533" />
-                </div>
-            </div>
+			<div class="chance-datail-title pl15 pr15 pb10 f13 d-bg-white bb mb15">
+				<div class="uni-flex uni-row pt10 mb5">
+					<div class="flex-item d-elip wfull f16 d-text-black">{{detailInfo.name}}</div>
+					<div class="flex-item datail-handle">
+						<a url='./add-client' class='d-inline'><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
+						<span @click='watchfulbusiness'>
+							<i-icon type="like_fill" size="20" class="ml15" :color="!detailInfo.watchfulBusinessStatus ? '#999' : '#ff5533'" />
+						</span>
+					</div>
+				</div>
 
-            <div class='d-text-gray f13 mb5'>
-                客户级别： <span class='d-text-black'>A(重点客户)</span>
-            </div>
-            <div class="d-center d-text-gray mb5">
-                <div class="d-cell f13">成交状态： <span class='d-text-blue'>已成交</span></div>
-                <div class="d-cell f13">负责人： <span>徐莉莉</span></div>
-            </div>
-            <div class='d-text-gray f13 mb5'>
-                最后跟进时间： <span>2019-06-17 20:23:07</span>
-            </div>
-            <div class="d-center d-text-gray">
-                <div class="d-cell f13"><span class="b">销售机会金额：</span> <span style='color: #FF9900'>12022元</span></div>
-                <div class="d-cell f13"><span class="b">成交金额: </span>： <span style='color: #FF9900'>12022元</span></div>
-            </div>
-        </div>
+				<div class='d-text-gray f13 mb5'>
+					客户级别： <span class='d-text-black'>{{ detailInfo.gradeCode | dictionary('CRM_KHJB')}}</span>
+				</div>
+				<div class="d-center d-text-gray mb5">
+					<div class="d-cell f13">成交状态： <span class='d-text-blue'>{{detailInfo.makeBargainCode | dictionary('CRM_CJZT')}}</span></div>
+					<div class="d-cell f13">负责人： <span>{{detailInfo.leaderName}}</span></div>
+				</div>
+				<div class='d-text-gray f13 mb5'>
+					最后跟进时间： <span>{{detailInfo.finallyFollowTime | timeToStr('yyyy-mm-dd')}}</span>
+				</div>
+				<div class="d-center d-text-gray">
+					<div class="d-cell f13"><span class="b">销售机会金额：</span> <span style='color: #FF9900'>{{detailInfo.totalSalesChanceMoney}}元</span></div>
+					<div class="d-cell f13"><span class="b">成交金额: </span>： <span style='color: #FF9900'>{{detailInfo.totalAmount}}元</span></div>
+				</div>
+			</div>
 
-        <div class="">
-            <detailSwiper />
-        </div>
+			<!-- 详情 -->
+			<div class="">
+				<i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
+					<i-tab index="0">
+						<notesInfo :query='notesQuery' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
+					</i-tab>
+					<i-tab index="1">
+						<detailInfo :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+					</i-tab>
+					<i-tab index="2">
+						<correlationInfo :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+					</i-tab>
+					<i-tab index='3'>
+						<attrInfo :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
+					</i-tab>
+				</i-tabs>
+			</div>
 
-        <div class="footer-fixed-menu d-center d-bg-white">
-            <a url='/pages/client/add-follow' class="d-cell al">
-				<span class='iconfont icontianjiajihua f16' style='color:#696969'></span><span class="ml5 f13  d-text-gray">添加跟进</span>
-            </a>
-            <div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
-                <span class="iconfont iconcall f18" style='color: #696969'></span><span class="ml5 f13  d-text-gray">打电话</span>
-            </div>
-            <div class="d-cell ar" @click="handlerAction('moreShow')">
-                <i-icon type='more' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">更多</span>
-            </div>
-        </div>
+			<div class="footer-fixed-menu d-center d-bg-white">
+				<a url='/pages/client/add-follow' class="d-cell al">
+					<span class='iconfont icontianjiajihua f16' style='color:#696969'></span><span class="ml5 f13  d-text-gray">添加跟进</span>
+				</a>
+				<div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
+					<span class="iconfont iconcall f18" style='color: #696969'></span><span class="ml5 f13  d-text-gray">打电话</span>
+				</div>
+				<div class="d-cell ar" @click="handlerAction('moreShow')">
+					<i-icon type='more' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">更多</span>
+				</div>
+			</div>
+
+		</template>
+
+		<i-spin fix fullscreen v-else></i-spin>
 
         <!-- 更多 action -->
         <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" @click="handleMore" />
@@ -53,16 +74,25 @@
 </template>
 
 <script>
-import detailSwiper from './components/detail-swiper'
+import detailInfo from './components/detail-info'
+import notesInfo from './components/notes-info'
+import correlationInfo from './components/correlation-info'
+import attrInfo from './components/attr-info'
 
 let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程', '领取', '分配']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
 	components: {
-		detailSwiper
+		detailInfo,
+		notesInfo,
+		correlationInfo,
+		attrInfo
 	},
 	data () {
 		return {
+			loading: true,
+			id: 0, // 业务id
+			detailInfo: {},
 			moreShow: false,
 			phoneShow: false,
 			moreActions: moreActions,
@@ -75,31 +105,81 @@ export default {
 					phone: 18910453728
 				}
 			],
-			detailInfo: {},
 			tabBars: [
 				{
-					name: '跟进记录',
-					id: '1'
+					title: '跟进记录'
 				},
 				{
-					name: '详细信息',
-					id: '2'
+					title: '详细信息'
 				},
 				{
-					name: '相关信息',
-					id: '3'
+					title: '相关信息'
+				},
+				{
+					title: '业务属性'
 				}
 			],
-			currIndex: 2
+			currIndex: 0
+		}
+	},
+	onLoad (data) {
+		this.id = data.id
+		this.getDetailInfo()
+	},
+	computed: {
+		notesQuery () {
+			let data = this.detailInfo
+			return {
+				clientId: data.id,
+				busId: data.id,
+				busType: 3
+			}
 		}
 	},
 	methods: {
+		// 获取详情信息
+		async getDetailInfo () {
+			try {
+				let resulte = await this.$api.seeCrmService.clientinfoInfo(null, this.id)
+				if (resulte.code === 200) {
+					this.detailInfo = resulte.data || {}
+				}
+			} catch (err) {
+				this.detailInfo = {}
+			} finally {
+				this.loading = false
+			}
+		},
+
+		// 关注/取消 客户
+		async watchfulbusiness () {
+			// watchfulbusinessSave 关注用户
+			// watchfulbusinessDelete 取消用户
+			let fn = !this.detailInfo.watchfulBusinessStatus ? 'watchfulbusinessSave' : 'watchfulbusinessDelete'
+			try {
+				let resulte = await this.$api.seeCrmService[fn]({
+					id: this.id,
+					busId: this.id,
+					busType: 0
+				})
+				if (resulte.code === 200) {
+					this.detailInfo.watchfulBusinessStatus = +!this.detailInfo.watchfulBusinessStatus
+				}
+			} catch (err) {
+
+			}
+		},
+
 		handlerAction (item) {
 			this[item] = !this[item]
 		},
-
+		// 拨打电话
 		handlePhone ({ target: { index } }) {
 			this.callPhone(this.phoneActions[index].phone)
+		},
+		// 切换 tab
+		handleChange ({ index }) {
+			this.currIndex = index
 		},
 
 		handleMore ({ target: { index } }) {
