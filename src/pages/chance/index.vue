@@ -3,7 +3,7 @@
     <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称" />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData='filterData' @filterSubmit='submit' ref='filter'>
-			<filter-diy @submit='submit' @clear='clear' />
+			<filter-diy :stageList="stageList" @submit='submit' @clear='clear' />
 		</Filter>
     <!-- 步骤 -->
     <i-steps
@@ -12,18 +12,23 @@
       class="change-steps d-fixed wfull pt5 pb5"
       :style="{top:`calc(${navH} + 39px)`}">
       <i-step
-        @step="setpHandle(item,index)"
+        @step="setpHandle('all',0)"
+        content="全部销售机会">
+        <span slot="step">all</span>
+      </i-step>
+      <i-step
+        @step="setpHandle(item,index+1)"
         v-for="(item,index) of stageList"
         :key="index"
         :content="item.stageName">
-        <span slot="step">{{index==0?'all':index}}</span>
+        <span slot="step">{{index+1}}</span>
       </i-step>
     </i-steps>
     <!-- 统计 -->
     <div class="chance-sts bt d-fixed wfull" :style="{top:`calc(${navH} + 39px + 65px)`}">
-      <li class="sts-item">1个商机</li>
-      <li class="sts-item">222元</li>
-      <li class="sts-item">赢率30%</li>
+      <li class="sts-item">{{stageSts.stageCount}}个商机</li>
+      <li class="sts-item">{{stageSts.totalSalesChanceMoney}}元</li>
+      <li class="sts-item" v-if="currStage != 0">赢率{{stageSts.equityedge}}%</li>
     </div>
     <!-- 列表内容 -->
     <scroll-list
@@ -34,10 +39,10 @@
       :params="queryForm"
       @getList='getList'
       ref='list'>
-      <a v-for="item of list" :key="item.id" url="./detail/index">
+      <a v-for="item of list" :key="item.id" :url="`./detail/index?id=${item.id}`">
         <div class="chance-item uni-flex uni-row">
           <div class="flex-item item-progress">
-            <circleProgress width="45px" :max="5" :progress="2" />
+            <circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" />
           </div>
           <div class="flex-item item-info d-elip wfull">
             <h4 class="d-elip">{{item.chanceName || '-'}}</h4>
@@ -76,18 +81,18 @@ import FilterDiy from './filter-diy'
 // 	}
 // })
 let queryType = [
-	{ id: 0, val: '-1', name: '全部' },
-	{ id: 1, val: '0', name: '我负责的' },
-	{ id: 2, val: '4', name: '我下属的' },
-	{ id: 3, val: '2', name: '我关注的' },
-	{ id: 4, val: '3', name: '7天未跟进' }
+	{ id: '-1', name: '全部' },
+	{ id: '0', name: '我负责的' },
+	{ id: '4', name: '我下属的' },
+	{ id: '2', name: '我关注的' },
+	{ id: '3', name: '7天未跟进' }
 ]
 // 列表排序数据
 let sortType = [
-	{ id: 0, val: 'a.follow_up_time', name: '最新跟进时间' },
-	{ id: 1, val: 'a.stage_propel_time', name: '阶段更新时间' },
-	{ id: 2, val: 'a.sales_money', name: '销售金额' },
-	{ id: 3, val: 'c.equityedge', name: '盈率(从高到底)' }
+	{ id: 'a.follow_up_time', name: '最新跟进时间' },
+	{ id: 'a.stage_propel_time', name: '阶段更新时间' },
+	{ id: 'a.sales_money', name: '销售金额' },
+	{ id: 'c.equityedge', name: '盈率(从高到底)' }
 ]
 export default {
 	mixins: [],
@@ -112,15 +117,17 @@ export default {
 				}
 			],
 			// 步骤列表
-			stageList: {},
+			stageList: [],
+			stageSts: {},
 			currStage: 0,
 			queryForm: {
 				limit: 10,
 				page: 1,
-				leaderIds: [1, 2, 3], // 负责人id
-				chanceName: '1', // 销售机会名称
-				stageIds: [1, 2, 3], // 阶段ids
+				leaderIds: [], // 负责人id
+				chanceName: '', // 销售机会名称
+				stageIds: [], // 阶段ids
 				clientOrChanceName: '', // 客户名称或机会名称（模糊查询）
+				sourceCode: [], // 来源
 				transationTime: '', // 成交时间（0-本周，1-本季，2-本年，3-上周，4-上月,5-本月，6-今天，7-下周）
 				queryType: '', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
 				orderByStr: '' // 排序字段（a.follow_up_time跟进日期，a.stage_propel_time阶段更新日期，a.sales_money销售金额，c.equityedge赢率）
@@ -128,11 +135,13 @@ export default {
 		}
 	},
 	onLoad (option) {
-		console.log(option)
+		// console.log(option)
 	},
 	created () {
 		// 获取销售阶段
 		this.salesstageList()
+		// 获取销售机会阶段统计
+		this.saleschanceAlesChanceStatistics()
 	},
 	methods: {
 		// 获取列表数据
@@ -142,21 +151,37 @@ export default {
 
 		// 列表筛选方法
 		submit (item) {
-			this.queryForm[item.prop] = item.val
+			let arrayType = ['sourceCode', 'stageIds']
+			if (arrayType.includes(item.prop)) {
+				this.queryForm[item.prop].push(item.id)
+			}
+			this.queryForm[item.prop] = item.id
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
 		},
+		// 销售阶段筛选
 		setpHandle (row, index) {
 			this.currStage = index
-			this.stageIds = [row.id]
+			this.queryForm.stageIds = [row.id]
+			// 获取销售机会阶段统计
+			this.saleschanceAlesChanceStatistics({ stageId: [row.id] })
 			this.$refs.list.reload()
+		},
+		// 获取销售统计
+		saleschanceAlesChanceStatistics (params) {
+			this.$api.seeCrmService.saleschanceAlesChanceStatistics(params)
+				.then(res => {
+					this.stageSts = res.data || {}
+				})
 		},
 		// 获取销售阶段
 		salesstageList () {
 			this.$api.seeCrmService.salesstageList()
 				.then(res => {
 					let data = res.data || []
-					data.splice(0, 0, { id: 'all', stageName: '全部' })
+					data.forEach(item => {
+						item.name = item.stageName
+					})
 					this.stageList = data
 				})
 		}
