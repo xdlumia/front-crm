@@ -19,7 +19,7 @@
 						<div class='d-text-cgray'>{{item.makeBargainCode}}</div>
 					</div>
 					<div class="d-flex client-tags">
-						<div class="iconfont iconqian f16 d-text-blue mr10"></div>
+						<div class="iconfont iconqian f16 d-text-blue mr10" v-if='salesType === 1'></div>
 						<div class="c-tag f12 mr10">{{item.gradeCode}}</div>
 						<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
 						<div class="c-tag f12 mr10">{{item.finallyFollowTime|timeToStr('yyyy-mm-dd')}}</div>
