@@ -61,8 +61,6 @@ export default {
 		}
 	},
 	onLoad (option) {
-		this.$local.setItem('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJmZDE1N2Y4NzUwOGZlY2FmNWE3NzAyZGEyNDU3M2NkMCIsImNsaWVudElwIjoiMjIzLjcyLjgwLjI1MiIsImV4cCI6MTU2NDY5Nzg5NywidXNlcm5hbWUiOiJ1c2VyOjQ0MSJ9.74yBnjSSVbVNQFiiOYGFI8npU2xVJCf8EepmC97gkss')
-		this.$local.setItem('finger', 'fd157f87508fecaf5a7702da24573cd0')
 		if (option.inviter) {
 			this.inviter = option.inviter
 		}

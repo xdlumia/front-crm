@@ -17,10 +17,7 @@
 
 <script>
 export default {
-	onLoad () {
-		this.$local.setItem('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJmZDE1N2Y4NzUwOGZlY2FmNWE3NzAyZGEyNDU3M2NkMCIsImNsaWVudElwIjoiMjIzLjcyLjgwLjI1MiIsImV4cCI6MTU2NDc2NDUzNCwidXNlcm5hbWUiOiJ1c2VyOjQ0MSJ9.rJqO0nbyhavZ1VpZnzGM4SG3f_cGZqYwAEuTpEVSJ7I')
-		this.$local.setItem('finger', 'fd157f87508fecaf5a7702da24573cd0')
-	}
+
 }
 </script>
 

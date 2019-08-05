@@ -44,10 +44,58 @@ export default {
 		methods: 'get',
 		mock: IS_MOCK
 	},
-	// 公司部门列表
+	// 公司角色列表
 	getRoles: {
 		url: '/organizationalStructure/roles',
 		methods: 'get',
+		mock: IS_MOCK
+	},
+	// 保存员工信息
+	saveEmployee: {
+		url: '/organizationalStructure/saveEmployee',
+		methods: 'post',
+		mock: IS_MOCK
+	},
+	// 修改员工信息
+	updateEmployee: {
+		url: '/organizationalStructure/updateEmployee',
+		methods: 'post',
+		mock: IS_MOCK
+	},
+	// 获取员工信息详情
+	getEmployeeDetail: {
+		url: '/organizationalStructure/getEmployeeDetail/{id}',
+		methods: 'get',
+		mock: IS_MOCK
+	},
+	// 删除员工
+	deleteEmployee: {
+		url: '/organizationalStructure/deleteEmployee',
+		methods: 'delete',
+		mock: IS_MOCK
+	},
+	// 保存部门信息
+	saveDept: {
+		url: '/organizationalStructure/saveDept',
+		methods: 'post',
+		mock: IS_MOCK
+	},
+	// 修改部门信息
+	updateDept: {
+		url: '/organizationalStructure/updateDept',
+		methods: 'post',
+		mock: IS_MOCK
+	},
+	// 获取上级部门
+	getSuperDept: {
+		url: '/organizationalStructure/getSuperDept',
+		methods: 'get',
+		mock: IS_MOCK
+	},
+	// 删除部门
+	deleteDept: {
+		url: '/organizationalStructure/deleteDept',
+		methods: 'delete',
 		mock: IS_MOCK
 	}
 }

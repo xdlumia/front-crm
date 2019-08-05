@@ -15,12 +15,12 @@
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V uni-flex uni-column" >
                 <i-cell-group v-for="(item) in depts" :key="item.id">
-                    <i-cell v-if="item.children != null && item.children.length > 0" is-link @click="toNextHierarchy(item.id,item.deptName)" >{{item.deptName}}({{item.children.length}})</i-cell>
-                    <i-cell v-else>{{item.deptName}}({{item.children.length}})</i-cell>
+                    <i-cell is-link @click="toNextHierarchy(item.id,item.deptName)" >{{item.deptName}}({{item.children.length + item.employeeList.length}})</i-cell>
+                    <!-- <i-cell v-if="item.children != null && (item.children.length + item.employeeList.length) > 0" is-link @click="toNextHierarchy(item.id,item.deptName)" >{{item.deptName}}({{item.children.length + item.employeeList.length}})</i-cell> -->
                 </i-cell-group>
             </view>
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
-            <view class="flex-item flex-item-V uni-flex uni-column" v-for="(item) in users" :key="item.id" @click="editEmployee(item)">
+            <view class="flex-item flex-item-V uni-flex uni-column" v-for="(item) in users" :key="item.id" @click="editEmployee(item.id)">
                 <view class="flex-item flex-item-V bb p10">
                     <view class="fl width20">
                         <image class="ba" style="height: 51px;width: 51px;" src="/static/img/index.png"></image>
@@ -36,7 +36,7 @@
                <view class="pl5 fl">邀请同事加入</view>
             </view>
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
-            <view class="flex-item flex-item-V bt h30" style="position: fixed;bottom: 0;width: 100%;padding-top: 10px;background-color: rgba(255,255,255,1)">
+            <view class="flex-item flex-item-V bt pt10 pb10 wfull" style="position: fixed;bottom: 0;background-color: rgba(255,255,255,1)">
                 <view class="uni-flex uni-row">
                     <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
                         style="text-align: center;color:#4D7FF5;"
@@ -45,13 +45,13 @@
                     </a>
                     <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
                         style="text-align: center;color:#4D7FF5;"
-                        url="/pages/application/enterprise-management/organization/add-dept?isEditor=0&name=销售部">
+                        :url="'/pages/application/enterprise-management/organization/add-dept?isEditor=0&deptName=' + deptName + '&deptId=' + deptId">
                         添加子部门
                     </a>
                     <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
                         v-if="hierarchy != 0"
                         style="text-align: center;color:#4D7FF5;"
-                        url="/pages/application/enterprise-management/organization/add-dept?isEditor=1&name=销售部">
+                        :url="'/pages/application/enterprise-management/organization/add-dept?isEditor=1&deptName=' + deptName + '&deptId=' + deptId">
                         部门设置
                     </a>
                 </view>
@@ -69,51 +69,50 @@ export default {
 			companyName: '',
 			depts: [],
 			users: [],
-			hierarchy: 0
+			hierarchy: 0,
+			deptName: '',
+			deptId: 1,
+			superDeptName: ''
 		}
 	},
 	onLoad (option) {
-		if (option.id) {
-			this.init(option.id)
-		} else {
-			this.init(1)
+		if (option.deptId) {
+			this.deptId = option.deptId
 		}
+		this.init()
 		if (option.hierarchy) {
 			this.hierarchy = option.hierarchy
 		}
+		// if(option.superDeptName){
+		// 	this.superDeptName = option.superDeptName
+		// }
 
 		// 动态修改追加部门名称
 		if (option.companyName && option.deptName) {
 			this.companyName = option.companyName + '>' + option.deptName
+			this.deptName = option.deptName
 		} else {
 			this.companyName = '北京凡特仁有限公司'
+			this.deptName = this.companyName
 		}
 	},
 	methods: {
 		// 初始化数据
-		init (deptId) {
+		init () {
 			// 获取部门数据
-			this.$api.enterpriseManagementService.getChildrenDepts({ 'deptId': deptId }).then((response) => {
+			this.$api.enterpriseManagementService.getChildrenDepts({ 'deptId': this.deptId }).then((response) => {
 				if (response.code === 200) {
 					this.depts = response.data[0].children
 				} else {
-					uni.showToast({
-						title: '数据获取失败，请联系客服人员',
-						icon: 'success',
-						mask: !1
-					})
+					this.$utils.toast.text('数据获取失败，请联系客服人员')
 				}
 			})
 			// 获取用户数据
-			this.$api.enterpriseManagementService.getChildrenEmployees({ 'deptId': deptId }).then((response) => {
+			this.$api.enterpriseManagementService.getChildrenEmployees({ 'deptId': this.deptId }).then((response) => {
 				if (response.code === 200) {
 					this.users = response.data
 				} else {
-					uni.showToast({
-						title: '数据获取失败，请联系客服人员',
-						icon: 'success',
-						mask: !1
-					})
+					this.$utils.toast.text('数据获取失败，请联系客服人员')
 				}
 			})
 		},
@@ -121,12 +120,12 @@ export default {
 		toNextHierarchy (id, deptName) {
 			if (parseInt(this.hierarchy) > 0) {
 				uni.redirectTo({
-					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + this.hierarchy + '&id=' + id + '&companyName=' + this.companyName + '&deptName=' + deptName
+					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + this.hierarchy + '&deptId=' + id + '&companyName=' + this.companyName + '&deptName=' + deptName
 				})
 			} else {
 				let param = parseInt(this.hierarchy) + 1
 				uni.navigateTo({
-					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + param + '&id=' + id + '&companyName=' + this.companyName + '&deptName=' + deptName
+					url: '/pages/application/enterprise-management/organization/index?hierarchy=' + param + '&deptId=' + id + '&companyName=' + this.companyName + '&deptName=' + deptName
 				})
 			}
 		},
@@ -137,9 +136,9 @@ export default {
 			})
 		},
 		// 编辑员工
-		editEmployee (item) {
+		editEmployee (id) {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/team/editor/index?isEditor=1&employee=' + JSON.stringify(item)
+				url: '/pages/application/enterprise-management/team/editor/index?isEditor=1&employeeId=' + JSON.stringify(id)
 			})
 		}
 	}

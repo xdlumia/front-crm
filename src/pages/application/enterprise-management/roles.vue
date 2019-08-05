@@ -17,7 +17,7 @@
 				<checkbox-group @change="checkboxChange">
 					<label class="uni-list-cell uni-list-cell-pd" v-for="(item) in roles" :key="item.id">
 						<view>
-							<checkbox :value="item.id" :checked="item.checked" />
+							<checkbox :value="item.id" :checked="ckeckedRoleIds.includes('' +item.id)" />
 						</view>
 						<view style="width:85%">
 							<view >{{item.roleName}}</view>
@@ -45,22 +45,25 @@ export default {
 	},
 	onLoad (option) {
 		// 回显选中角色
-		if (option.roleList) {
+		if (option.roleIds) {
+			this.ckeckedRoleIds = option.roleIds
 		}
 	},
 	methods: {
 		checkboxChange: function (e) {
-			var items = this.roles
+			// var items = this.roles
 			var values = e.detail.value
+			this.ckeckedRoleIds = []
 			this.ckeckedRoleIds = values
-			for (var i = 0, lenI = items.length; i < lenI; ++i) {
-				const item = items[i]
-				if (values.includes(item.id)) {
-					this.$set(item, 'checked', true)
-				} else {
-					this.$set(item, 'checked', false)
-				}
-			}
+
+			// for (var i = 0, lenI = items.length; i < lenI; ++i) {
+			// 	const item = items[i]
+			// 	if (values.includes(item.id)) {
+			// 		this.$set(item, 'checked', true)
+			// 	} else {
+			// 		this.$set(item, 'checked', false)
+			// 	}
+			// }
 		},
 		// 获取列表数据
 		getRoles (roles) {
