@@ -11,7 +11,7 @@
             style="color:#333"
           >{{datailInfo.chanceName}}</div>
           <div class="flex-item datail-handle">
-            <a class="d-inline" :url="`/pages/chance/add-chance?id=${datailInfo.id}`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
+            <a class="d-inline" :url="`/pages/chance/add-chance?id=${datailInfo.id}&editType=1`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
             <span @click="updateAttention(datailInfo.watchfulId)">
 				<i-icon :type="datailInfo.watchfulId?'like_fill':'like'" size="20" class="ml15" :color="datailInfo.watchfulId?'#FF5533':'#999'" />
 			</span>
@@ -182,8 +182,8 @@ export default {
 			if (index === 0) return
 			let fnType = {
 				1: () => {
-					// 复制
-					this.$routing.navigateTo(`/pages/chance/add-chance?id=${datailInfo.id}&isEdit=1`)
+					// 1编辑 2复制
+					this.$routing.navigateTo(`/pages/chance/add-chance?id=${datailInfo.id}&editType=2`)
 				},
 				2: () => {
 					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${datailInfo.id}`)
