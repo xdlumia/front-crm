@@ -6,37 +6,32 @@
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc">
-            <m-list label="机会名称">{{detailInfo.aaa}}</m-list>
-            <m-list label="所属部门">{{detailInfo.aaa}}</m-list>
-            <m-list label="客户名称">{{detailInfo.aaa}}</m-list>
-            <m-list label="负责人">{{detailInfo.aaa}}</m-list>
-            <m-list label="销售金额（元）">{{detailInfo.aaa}}</m-list>
-            <m-list label="销售阶段">{{detailInfo.aaa}}</m-list>
-            <m-list label="赢率">{{detailInfo.aaa}}</m-list>
-            <m-list label="预计成交日期">{{detailInfo.aaa}}</m-list>
-            <m-list label="行业">{{detailInfo.aaa}}</m-list>
-            <m-list label="来源">{{detailInfo.aaa}}</m-list>
-            <m-list label="备注">{{detailInfo.aaa}}</m-list>
+            <m-list label-width="120" label="机会名称">{{data.chanceName || '-'}}</m-list>
+            <m-list label-width="120" label="所属部门">{{data.aaa || '-'}}</m-list>
+            <m-list label-width="120" label="客户名称">{{data.clientName || '-'}}</m-list>
+            <m-list label-width="120" label="负责人">{{data.leaderName || '-'}}</m-list>
+            <m-list label-width="120" label="销售金额（元）">{{data.salesMoney || '-'}}</m-list>
+            <m-list label-width="120" label="销售阶段">{{data.stageName || '-'}}</m-list>
+            <m-list label-width="120" label="赢率">{{data.salesStageEntity.equityedge || '-'}}</m-list>
+            <m-list label-width="120" label="预计成交日期">{{data.reckonFinishTime | timeToStr('y-m-d')}}</m-list>
+            <m-list label-width="120" label="行业">{{data.tradeCode || '-'}}</m-list>
+            <m-list label-width="120" label="来源">{{data.sourceCode || '-'}}</m-list>
+            <m-list label-width="120" label="备注">{{data.note || '-'}}</m-list>
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc">
-            <m-list label="创建日期">{{detailInfo.aaa}}</m-list>
-            <m-list label="最后跟进">{{detailInfo.aaa}}</m-list>
-            <m-list label="最新修改">{{detailInfo.aaa}}</m-list>
+            <m-list label-width="120" v-for="(item,index) of data.formsFieldValueEntityList" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
         </mPanel>
     </div>
 </template>
 
 <script>
 export default {
-	props: ['height'],
+	props: ['height', 'data'],
 	components: {
 		// mPager
 	},
 	data () {
 		return {
-			detailInfo: {
-				aaa: '王晓冬1'
-			}
 		}
 	},
 	onLoad (option) {

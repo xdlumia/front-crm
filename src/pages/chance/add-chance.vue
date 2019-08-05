@@ -5,9 +5,9 @@
     <NavBar title="新建销售机会"/>
     <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
-            <i-input v-model="form.userName" label="机会名称" placeholder="请填写销售机会名称" required />
+            <i-input v-model="form.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
 			<a url="/pages/client/index" openType="switchTab">
-				<i-input disabled v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required>
+				<i-input disabled v-model="form.clientId" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
@@ -19,26 +19,26 @@
                 required
                 :options="upData">
             </i-select>
-            <i-input v-model="form.userPosition" label="销售金额" placeholder="请填写销售金额" required />
+            <i-input v-model="form.salesMoney" label="销售金额" placeholder="请填写销售金额" required />
             <i-select
-                v-model="form.phone"
+                v-model="form.stageId"
                 :props="{label:'name',value:'id'}"
                 label="销售阶段"
                 placeholder="请选择销售阶段"
                 required
-                :options="upData">
+                :options="stageList">
             </i-select>
-            <picker-date v-model="form.personalProfile" label="预计成交日期" placeholder="请选择日期">
+            <picker-date v-model="form.reckonFinishTime" label="预计成交日期" placeholder="请选择日期">
             </picker-date>
-            <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="行业" :options="upData"/>
-            <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="来源" :options="upData"/>
+            <i-select v-model="form.tradeCode" :props="{label:'name',value:'id'}" label="行业" :options="upData"/>
+            <i-select v-model="form.sourceCode" :props="{label:'name',value:'id'}" label="来源" :options="upData"/>
 			<a url="/pages/common/more-tags?busType=2">
 				<i-input disabled v-model="form.userPosition" label="标签" placeholder="请选择">
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
             <!-- <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="标签" :options="upData"/> -->
-            <i-input v-model="form.personalProfile" label="备注" placeholder="点击填写" type="textarea" />
+            <i-input v-model="form.note" label="备注" placeholder="点击填写" type="textarea" />
         </m-form>
         <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
@@ -54,68 +54,93 @@ export default {
 	},
 	data () {
 		return {
-			upTypeIndex: '',
+			stageList: [], // 销售阶段列表
 			upData: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			form: {
-				// 当前名片风格 CARD_BG_WHITE CARD_BG_BLUE CARD_BG_GREY
-				currentThemeCode: '',
-				// 邮箱
-				email: '',
-				// 手机号
-				phone: '1',
-				// 姓名
-				userName: '',
-				// 个人简介
-				personalProfile: 1567209600000,
-				// 名片海报文案
-				posterDescription: '',
-				// 公司
-				userCompany: '',
-				// 职位
-				userPosition: ''
+				chanceName: '', // '示例：机会名称',
+				clientId: '', // 客户id
+				formsFieldValueSaveVoList: [
+					// {
+					// busId:'', // 100000,
+					// busType:'', // 0,
+					// fieldConfigId:'', // 100000,
+					// fieldValue:'', // '示例：字段值'
+					// }
+				],
+				lableBusinessSaveVo: {
+					busId: '', // 100000,
+					busType: '', // 0,
+					labelIdArray: []
+				},
+				leaderId: '', // 100000,
+				note: '', // '示例：备注',
+				reckonFinishTime: '', // 预计成交日期,
+				salesMoney: '', // 销售金额,
+				sourceCode: '', // '示例：来源',
+				stageId: '', // 阶段id,
+				stagePropelTime: '', // 1564043542293,
+				tradeCode: '' // '示例：行业'
 			},
 			rules: {
-				userName: [{
+				chanceName: [{
 					required: true,
-					message: '请输入姓名'
+					message: '请输入名称'
 				}],
-				phone: [{
+				clientId: [{
 					required: true,
-					message: '请输入手机号'
+					message: '请选择客户名称'
+				}],
+				salesMoney: [{
+					required: true,
+					message: '请输入金额'
 				}, {
-					type: 'phone',
-					message: '手机号格式不正确'
+					type: 'price',
+					message: '金额格式不正确'
 				}],
-				userPosition: [{
+				stageId: [{
 					required: true,
-					message: '请输入职位'
+					message: '请选择阶段'
 				}],
-				userCompany: [{
+				reckonFinishTime: [{
 					required: true,
-					message: '请输入公司'
-				}],
-				email: [{
-					required: false
-				}, {
-					type: 'email',
-					message: '请输入正确的邮箱',
-					trigger: 'blur'
+					message: '请选择日期'
 				}]
-
 			}
 		}
 	},
 	onLoad (option) {
-		this.type = option.type || 'add'
-		this.cardCode = option.cardCode || ''
-		if (this.type === 'edit') {
-			this.getCardInfo()
+		if (option.id) {
+			// 获取详情
+			this.saleschanceInfo(option.id)
 		}
 	},
-	methods: {
-
+	created () {
+		// 获取销售阶段
+		this.salesstageList()
 	},
-	created () {},
+	methods: {
+		// 查询机会详情
+		saleschanceInfo (id) {
+			this.$api.seeCrmService.saleschanceInfo(null, id)
+				.then(res => {
+					let data = res.data || {}
+					for (let key in this.form) {
+						this.form[key] = data[key]
+					}
+				})
+		},
+		// 获取销售阶段
+		salesstageList () {
+			this.$api.seeCrmService.salesstageList()
+				.then(res => {
+					let data = res.data || []
+					data.forEach(item => {
+						item.name = item.stageName
+					})
+					this.stageList = data
+				})
+		}
+	},
 	computed: {
 	}
 }

@@ -12,8 +12,8 @@
           >{{detailInfo.chanceName}}</div>
           <div class="flex-item datail-handle">
             <a class="d-inline" :url="`/pages/chance/add-chance?id=${detailInfo.id}`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
-            <span @click="updateAttention(detailInfo.clientInfoEntity.watchfulBusinessStatus)">
-				<i-icon :type="detailInfo.watchfulBusinessStatus?'like_fill':'like'" size="20" class="ml15" :color="detailInfo.watchfulBusinessStatus?'#FF5533':'#999'" />
+            <span @click="updateAttention(detailInfo.watchfulId)">
+				<i-icon :type="detailInfo.watchfulId?'like_fill':'like'" size="20" class="ml15" :color="detailInfo.watchfulId?'#FF5533':'#999'" />
 			</span>
           </div>
         </div>
@@ -26,14 +26,14 @@
       <!-- 当前阶段 -->
       <div class="mt10 mb10 change-steps " style="background-color:#fff">
         <i-steps
-          :current="current"
+          :current="stageActive"
           class="wfull">
           <i-step
             @step="setpHandle(item,index)"
             v-for="(item,index) of stageList"
             :key="index"
             :content="item.stageName">
-            <span slot="step">{{item.index}}</span>
+            <span slot="step">{{index+1}}</span>
           </i-step>
         </i-steps>
         <p class="f12 d-text-gray"> <i class="uni-icon uni-icon-info-filled f12 mr5"></i> 点击商机阶段，商机阶段变更</p>
@@ -44,13 +44,13 @@
       </detail-swiper> -->
 	<i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
         <i-tab index="0">
-            <followInfo  height="calc(100vh - 380px)"/>
+            <followInfo query="{}" height="calc(100vh - 380px)"/>
         </i-tab>
         <i-tab index="1">
-            <detailInfo height="calc(100vh - 380px)"/>
+            <detailInfo :data="detailInfo" height="calc(100vh - 380px)"/>
         </i-tab>
         <i-tab index="2">
-            <correlationInfo height="calc(100vh - 380px)"/>
+            <correlationInfo :data="detailInfo" height="calc(100vh - 380px)"/>
         </i-tab>
     </i-tabs>
       <!-- 底部操作按钮 -->
@@ -90,41 +90,30 @@ export default {
 	data () {
 		return {
 			tabBars: [
-				{
-					title: '跟进记录'
-				},
-				{
-					title: '详细信息'
-				},
-				{
-					title: '相关信息'
-				}
+				{ title: '跟进记录' },
+				{ title: '详细信息' },
+				{ title: '相关信息' }
 			],
+			id: '', // 当前详情id
 			currTabIndex: 0,
 			// 商机阶段列表
 			stageList: [],
-			// 当前
-			current: '1',
+			// 当前阶段
+			stageActive: 1,
 			// 机会详情
 			detailInfo: {},
 			moreShow: false,
 			phoneShow: false,
 			moreActions: moreActions,
-			phoneActions: [
-				{
-					name: '联系人电话'
-				},
-				{
-					name: '赵利春 18910453728',
-					phone: 18910453728
-				}
-			]
+			phoneActions: []
 		}
 	},
 	onLoad (option) {
+		this.id = option.id
+		// 获取详情
 		this.saleschanceInfo(option.id)
-		// 获取销售阶段
-		this.salesstageList()
+		// 获取联系人列表
+		this.linkmanQueryList({ id: option.id })
 	},
 	created () {
 
@@ -135,6 +124,8 @@ export default {
 			this.$api.seeCrmService.saleschanceInfo(null, id)
 				.then(res => {
 					this.detailInfo = res.data || {}
+					// 获取销售阶段
+					this.salesstageList()
 				})
 		},
 		// 获取销售阶段
@@ -142,10 +133,24 @@ export default {
 			this.$api.seeCrmService.salesstageList()
 				.then(res => {
 					let data = res.data || []
-					// data.forEach(item => {
-					// 	item.name = item.stageName
-					// })
+					data.forEach((item, index) => {
+						if (this.detailInfo === item.id) {
+							this.stageActive = index + 1
+							this.detailInfo.stageName = item.stageName
+						}
+					})
 					this.stageList = data
+				})
+		},
+		// 获取联系人列表
+		linkmanQueryList (params) {
+			this.$api.seeCrmService.linkmanQueryList(params)
+				.then(res => {
+					let data = res.data || []
+					this.phoneActions = data.map(item => {
+						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+					})
+					this.phoneActions.unshift({ name: '联系人电话' })
 				})
 		},
 		// 标签切换
@@ -177,18 +182,24 @@ export default {
 			let fnType = {
 				1: () => {
 					// 复制
-					this.$routing.navigateTo('/pages/chance/add-chance')
+					this.$routing.navigateTo(`/pages/chance/add-chance?id=${detailInfo.id}&isEdit=1`)
 				},
 				2: () => {
-					this.$routing.navigateTo('/pages/index/colleagueChoose')
+					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${detailInfo.id}`)
 				},
 				3: () => {
-					this.$utils.showModal().then(() => {
-					}).catch(() => {})
+					this.$utils.showModal()
+						.then(() => {
+							this.$api.seeCrmService.linkmanDelete({ id: this.id })
+								.then(res => {
+									this.$routing.navigateTo(`/pages/chance/index`)
+								})
+						})
+						.catch(() => {})
 				},
 				4: () => {
 					// 更多日程
-					this.$routing.navigateTo('/pages/index/scheduleAdd')
+					this.$routing.navigateTo(`/pages/index/scheduleAdd?id=${detailInfo.id}`)
 				}
 			}
 			fnType[index]()
