@@ -3,7 +3,7 @@
         <NavBar title='成交记录' />
         <div>
             <div class="page-search-box d-flex" :style="'top: '+ navH">
-				<a url='/pages/common/search' class="wfull">
+				<a url="/pages/common/search?searchType=trasaction" class="wfull">
 					<div class="search-input d-center d-cell pl10">
 						<i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">搜成交记录名称</span>
 					</div>
@@ -12,7 +12,7 @@
             <!-- <filter-diy @submit='submit' @clear='clear' /> -->
             <Filter :filterData='filterData' @filterSubmit='submit' ref='filter' :top='"calc("+ navH +" + 49px)"'>
 				<div  style="padding-bottom:50px">
-					<filter-plane :title='transactionStatus.title' :dataList='transactionStatus.list'/>
+					<filter-plane v-model='queryForm.transactionStatus' :title='transactionStatus.title' :dataList='transactionStatus.list'/>
 					<div style="height:10px;background:#F2F2F2"></div>
 					<filter-plane title='总金额'>
 						<div class="d-flex wfull" style="justify-content:center;alibackground:#FFF;align-items:center;height:60px">
@@ -26,7 +26,7 @@
 						</div>
 					</filter-plane>
 					<div style="height:10px;background:#F2F2F2"></div>
-					<filter-plane title='成交时间' :dataList='transactionTime'/>
+					<filter-plane v-model='queryForm.transationTime' title='成交时间' isSingle :dataList='transactionTime'/>
 				</div>
 
                 <div class='filter-btn d-center f18 d-text-blue'>
@@ -38,7 +38,7 @@
 
 		<div class='highseas-list-view'>
 				<scroll-list
-					:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
+					:height="'calc(100vh - ' + navH +' - 90px)'"
 					api="seeCrmService.transactionrecordList"
 					@getList='getTransactionList'
 					:params="queryForm"
@@ -85,7 +85,7 @@ export default {
 				page: 1,
 				limit: 15,
 				name: '', // 名称
-				transactionStatus: '', // 成交记录状态
+				transactionStatus: [], // 成交记录状态
 				transationTime: '', // 成交时间
 				queryType: '', // 查询类型（0-全部，1-我负责的，2-我参与的，3-我下属负责的，4-我下属参与的, 5-我关注的）
 				sortType: ''// 排序查询类型（0-创建日期，1-最新修改日期）
@@ -93,43 +93,43 @@ export default {
 			transactionStatus: {
 				title: '成交记录状态',
 				list: [{
-					name: '结束',
-					id: '1'
+					content: '结束',
+					code: '1'
 				},
 				{
-					name: '执行中',
-					id: '2'
+					content: '执行中',
+					code: '2'
 				},
 				{
-					name: '意外终止',
-					id: '3'
+					content: '意外终止',
+					code: '3'
 				}]
 			},
 			transactionTime: [
 				{
-					name: '本周',
-					id: '0'
+					content: '本周',
+					code: '0'
 				},
 				{
-					name: '本季',
-					id: '1'
+					content: '本季',
+					code: '1'
 				},
 				{
-					name: '本年',
-					id: '2'
+					content: '本年',
+					code: '2'
 				},
 				{
-					name: '上周',
-					id: '3'
+					content: '上周',
+					code: '3'
 				},
 				{
-					name: '上月',
-					id: '4'
+					content: '上月',
+					code: '4'
 				}
 			],
 			filterData: [
 				{
-					prop: 'a',
+					prop: 'queryType',
 					current: { id: 0, name: '全部' },
 					list: [
 						{
@@ -159,7 +159,7 @@ export default {
 					]
 				},
 				{
-					prop: 'b',
+					prop: 'sortType',
 					current: { id: 0, name: '创建日期' },
 					list: [
 						{
@@ -182,6 +182,11 @@ export default {
 			selects[item.prop] = item.current || item.list[0]
 		})
 		this.filterSelect = selects
+
+		uni.$on('updatedate', (data) => {
+			this.queryForm.name = data.searchInfo
+			this.$refs.list.reload()
+		})
 	},
 	created () {
 
@@ -189,13 +194,28 @@ export default {
 	methods: {
 		getTransactionList (list) {
 			this.transactionList = list
-			console.log(this.transactionList)
 		},
+		// 筛选提交
 		submit (item) {
-			this.$refs.list.reload()
+			if (item) {
+				this.queryForm[item.prop] = item.id
+				this.$refs.list.reload()
+			} else {
+				this.$refs.list.reload()
+			}
 			this.$refs.filter.hide()
 		},
 		clear () {
+			this.queryForm = {
+				page: 1,
+				limit: 15,
+				name: '', // 名称
+				transactionStatus: [], // 成交记录状态
+				transationTime: '', // 成交时间
+				queryType: '', // 查询类型（0-全部，1-我负责的，2-我参与的，3-我下属负责的，4-我下属参与的, 5-我关注的）
+				sortType: ''// 排序查询类型（0-创建日期，1-最新修改日期）
+			}
+			this.$refs.list.reload()
 			this.$refs.filter.hide()
 		}
 	}

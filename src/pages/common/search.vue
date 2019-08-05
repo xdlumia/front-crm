@@ -27,7 +27,7 @@
                 <span @click="deleteSearchList()" class="d-text-blue f13 mr15 mt15">清除</span>
             </div>
             <div class="search-history p15" style="padding-top: 10px;">
-                <div class="d-bg-white p1 searchistory mr5" v-for="(item,index) in searchHistoryList" :key="index">
+                <div class="d-bg-white p1 searchistory mr5 mb5" v-for="(item,index) in searchHistoryList" :key="index">
                     <span style="color: #666;" class="pl5">{{item}}</span>
                     <uni-icon @click="deleteSearchList(index)" class="ml5 fr" type='closeempty' color="#999" size='20'/>
                 </div>
@@ -56,8 +56,18 @@ export default {
 			statusHeight: 0,
 			titleBarHeight: 0,
 			searchInfo: '',
-			searchHistoryList: []
+			searchHistoryList: [],
+			searchForm: {
+				trasaction: [],
+				chance: [],
+				client: [],
+				application: []
+			},
+			optionType: 0
 		}
+	},
+	onLoad (option) {
+		this.optionType = option.searchType
 	},
 	onReady () {
 		let { systemInfo } = this.$store.state
@@ -71,8 +81,12 @@ export default {
 		this.titleBarHeight = titleBarHeight
 		this.statusHeight = systemInfo.statusBarHeight * 2
 		this.$local.save('navH', +this.titleBarHeight + +this.statusHeight)
-		this.searchHistoryList = this.$local.fetch('searchHistoryList')
-		console.log(this.searchHistoryList)
+
+		this.searchForm = this.$local.fetch('searchForm') || {}
+		if (Object.keys(this.searchForm).length > 0) {
+			this.searchHistoryList = this.searchForm[this.optionType] || []
+		}
+
 		// local.fetch('navH')
 	},
 	computed: {
@@ -87,10 +101,19 @@ export default {
 	methods: {
 		// 进行搜索的方法
 		searchData () {
-			if (this.searchInfo && this.searchHistoryList.indexOf(this.searchInfo) < 0) {
+			if (this.searchHistoryList.length > 0) {
+				if (this.searchInfo && this.searchHistoryList.indexOf(this.searchInfo) < 0) {
+					this.searchHistoryList.push(this.searchInfo)
+				}
+			} else {
 				this.searchHistoryList.push(this.searchInfo)
 			}
-			this.$local.save('searchHistoryList', this.searchHistoryList)
+
+			this.searchForm[this.optionType] = this.searchHistoryList
+			this.$local.save('searchForm', this.searchForm)
+
+			uni.$emit('updatedate', { searchInfo: this.searchInfo })
+			this.$routing.navigateBack()
 		},
 		// 删除和清空
 		deleteSearchList (index) {
@@ -99,7 +122,8 @@ export default {
 			} else {
 				this.searchHistoryList = []
 			}
-			this.$local.save('searchHistoryList', this.searchHistoryList)
+			this.searchForm[this.optionType] = this.searchHistoryList
+			this.$local.save('searchForm', this.searchForm)
 		}
 	}
 
