@@ -9,7 +9,7 @@
     <div class="client-page">
         <NavBar isSearch placeholder='搜索客户' />
 		<Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
-			<filter-diy @submit='diyFilterSubmit' @clear='clear' />
+			<filter-diy @submit='diyFilterSubmit' />
 		</Filter>
 		<div class='client-list-view d-relative'>
 
@@ -76,16 +76,8 @@ export default {
 	data () {
 		return {
 			queryForm: {
-				name: '', // 姓名
-				gradeCode: '', // 客户级别
-				leaderId: '', // 负责人id
-				makeBargainCode: '', // 成交状态
 				queryType: '', // 查询类型
-				sortType: '', // 排序类型
-				property: '', // 客户性质
-				followStatus: '', // 跟进状态
-				stageId: 0, // 销售阶段
-				sourceCode: 0 // 来源
+				sortType: '' // 排序类型
 			},
 			// 筛选数据
 			filterData: [
@@ -122,9 +114,8 @@ export default {
 			this.$refs.filter.hide()
 		},
 		diyFilterSubmit (filterData) {
-			// console.log(filterData)
-		},
-		clear () {
+			this.queryForm = Object.assign({}, this.queryForm, filterData)
+			this.$refs.list.reload()
 			this.$refs.filter.hide()
 		}
 	}

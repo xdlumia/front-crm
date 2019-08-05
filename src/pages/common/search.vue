@@ -1,11 +1,6 @@
 <!-- /**
- * @author 冀猛超
- * @description 公共自定义头部
- * @param {boolean} isSearch 是否显示搜索框
- * @param {string} placeholder 搜索框文案 默认为 搜索
- * @param {string} title 标题
-
-    <NavBar title="首页"  />
+ * @author 徐贺
+ * @description 公共搜索框
  */ -->
 <template>
     <div class='nav'>
@@ -21,7 +16,7 @@
                         <div class="hfull d-center pl30 ml5 search-box-right">
                             <div>
                                 <i-icon type="search" size="18" color='#999' class="b searchicon"/>
-                                <input class="wfull searchname" type="text" placeholder="搜索成交记录">
+                                <input v-model='searchInfo' class="wfull searchname" type="text" placeholder="搜索成交记录">
                             </div>
                         </div>
                     </div>
@@ -29,16 +24,17 @@
 
                 <div class="search-jl">
                 <span class="d-text-black ml15 mt15">历史搜索</span>
-                <span class="d-text-blue f13 mr15 mt15">清除</span>
+                <span @click="deleteSearchList()" class="d-text-blue f13 mr15 mt15">清除</span>
             </div>
             <div class="search-history p15" style="padding-top: 10px;">
-                <div class="d-bg-white p1 searchistory">
-                    <span style="color: #666;" class="pl5">小米科技有限责任公司</span>
+                <div class="d-bg-white p1 searchistory mr5" v-for="(item,index) in searchHistoryList" :key="index">
+                    <span style="color: #666;" class="pl5">{{item}}</span>
                     <uni-icon @click="deleteSearchList(index)" class="ml5 fr" type='closeempty' color="#999" size='20'/>
                 </div>
             </div>
+             <i-button @click="searchData">搜索</i-button>
         </div>
-        <button @click="searchData">搜索</button>
+
     </div>
 </template>
 
@@ -58,7 +54,9 @@ export default {
 	data () {
 		return {
 			statusHeight: 0,
-			titleBarHeight: 0
+			titleBarHeight: 0,
+			searchInfo: '',
+			searchHistoryList: []
 		}
 	},
 	onReady () {
@@ -73,6 +71,9 @@ export default {
 		this.titleBarHeight = titleBarHeight
 		this.statusHeight = systemInfo.statusBarHeight * 2
 		this.$local.save('navH', +this.titleBarHeight + +this.statusHeight)
+		this.searchHistoryList = this.$local.fetch('searchHistoryList')
+		console.log(this.searchHistoryList)
+		// local.fetch('navH')
 	},
 	computed: {
 		isBack () {
@@ -81,6 +82,24 @@ export default {
 		pages () {
 			let pageLen = getCurrentPages().length
 			return pageLen
+		}
+	},
+	methods: {
+		// 进行搜索的方法
+		searchData () {
+			if (this.searchInfo && this.searchHistoryList.indexOf(this.searchInfo) < 0) {
+				this.searchHistoryList.push(this.searchInfo)
+			}
+			this.$local.save('searchHistoryList', this.searchHistoryList)
+		},
+		// 删除和清空
+		deleteSearchList (index) {
+			if (index) {
+				this.searchHistoryList.splice(index, 1)
+			} else {
+				this.searchHistoryList = []
+			}
+			this.$local.save('searchHistoryList', this.searchHistoryList)
 		}
 	}
 

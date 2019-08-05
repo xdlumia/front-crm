@@ -3,52 +3,78 @@
         <div class="f13 d-text-qgray pt10 pb10">{{title}}</div>
         <div class="d-flex d-flex-wrap">
             <slot />
-            <div class="f-tag" @click='tagClick(item)' v-for='(item, index) in dataList' :key='index' :class="{active: Object.keys(ids).includes(item[valueKey].toString())}">{{item.name}}</div>
+            <div
+				class="f-tag"
+				@click='tagClick(item)'
+				v-for='(item, index) in dataList'
+				:key='index'
+				:class="{active: isSingle ? ids === item[valueKey] : [].includes.call(ids, item[valueKey])}"
+			>{{item[labelKey]}}</div>
         </div>
     </div>
 </template>
 <script>
 export default {
 	props: {
-		prop: String,
+		value: {
+			type: [String, Number, Array],
+			default () {
+				return []
+			}
+		},
 		title: String,
-		current: [Number, String],
 		valueKey: {
 			type: String,
-			default: 'id'
+			default: 'code'
+		},
+		labelKey: {
+			type: String,
+			default: 'content'
 		},
 		dataList: {
 			type: Array,
 			default () {
 				return []
 			}
+		},
+		isSingle: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data () {
 		return {
-			ids: {}
+			ids: []
 		}
 	},
-	// watch: {
-	// 	current (val) {
-	// 		this.ids = val
-	// 	}
-	// },
+	watch: {
+		value: {
+			immediate: true,
+			handler (value) {
+				this.ids = value
+			}
+		},
+		ids: {
+			deep: true,
+			handler (value) {
+				this.$emit('input', this.ids)
+			}
+		}
+	},
 	methods: {
 		tagClick (item) {
-			if (Object.keys(this.ids).includes(item[this.valueKey].toString())) {
-				delete this.ids[item[this.valueKey]]
+			if (!this.isSingle) {
+				if (!this.ids.includes(item[this.valueKey])) {
+					this.ids.push(item[this.valueKey])
+					return
+				}
+
+				let index = this.ids.indexOf(item[this.valueKey])
+				index !== -1 && this.ids.splice(index, 1)
 			} else {
-				this.$set(this.ids, item[this.valueKey], item)
+				this.ids = item[this.valueKey]
 			}
 			this.$forceUpdate()
-			this.$emit('click', {
-				prop: this.prop,
-				ids: Object.values(this.ids)
-			})
-		},
-		clear () {
-			this.ids = {}
 		}
 	}
 }
