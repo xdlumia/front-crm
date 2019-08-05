@@ -19,7 +19,7 @@
 
 <script>
 export default {
-	props: ['id', 'busType'],
+	props: ['query'],
 	components: {
 		// mPager
 	},

@@ -8,12 +8,12 @@
 <template>
     <div>
         <mPanel title="联系人" color="#7765cc" url="/pages/contact/index?select=1">
-            <div class="detail-list">
+            <div class="detail-list" v-for="(item,index) of contactList" :key="index">
                 <div class="list-title">
-                    <title>黄玉里</title> <span class="d-text-qgray">总精力</span>
-                    <span @click="callPhone(18210256005)" class="fr iconfont iconcall f18 d-text-gray" ></span>
+                    <title>{{item.linkkanName}}</title> <span class="d-text-qgray">{{item.position}}</span>
+                    <span @click="callPhone(item.mobile)" class="fr iconfont iconcall f18 d-text-gray" ></span>
                 </div>
-                <p class="f12 d-elip d-text-qgray">华为技术有限公司</p>
+                <p class="f12 d-elip d-text-qgray">{{item.clientName}}</p>
             </div>
         </mPanel>
     </div>
@@ -21,20 +21,30 @@
 
 <script>
 export default {
-	props: ['id', 'busType'],
+	props: ['query'],
 	components: {
 		// mPager
 	},
 	data () {
 		return {
-			list: []
+			contactList: []
 		}
 	},
 	onLoad (option) {
 	},
-	methods: {
+	created () {
+		this.linkmanQueryList(this.query)
 	},
-	created () {}
+	methods: {
+		// 获取联系人列表
+		linkmanQueryList (params) {
+			this.$api.seeCrmService.linkmanQueryList(params)
+				.then(res => {
+					this.contactList = res.data || []
+				})
+		}
+	}
+
 }
 </script>
 

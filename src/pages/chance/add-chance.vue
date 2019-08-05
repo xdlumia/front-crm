@@ -31,7 +31,7 @@
             <picker-date v-model="form.reckonFinishTime" label="预计成交日期" placeholder="请选择日期">
             </picker-date>
             <i-select v-model="form.tradeCode" :props="{label:'name',value:'id'}" label="行业" :options="upData"/>
-            <i-select v-model="form.sourceCode" :props="{label:'name',value:'id'}" label="来源" :options="upData"/>
+            <i-select v-model="form.sourceCode" :props="{label:'name',value:'id'}" label="来源" :options="dictionaryOptions('CRM_LY')"/>
 			<a url="/pages/common/more-tags?busType=2">
 				<i-input disabled v-model="form.userPosition" label="标签" placeholder="请选择">
 					<i-icon type="enter" size="16" color="#999" />
