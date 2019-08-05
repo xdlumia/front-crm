@@ -16,7 +16,7 @@ Api = new Flyio()
 // #endif
 
 Api.interceptors.request.use((config, promise) => {
-	config.headers['token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJjMDU0NGQzMDkxYjJkNDRkN2MzYmEzY2QxNzU5NmI5OCIsImNsaWVudElwIjoiMjIzLjcyLjc4LjM5IiwiZXhwIjoxNTY1MDMyMzExLCJ1c2VybmFtZSI6InVzZXI6NDQ2In0.rHvJye3qjGg8Gkaz71svqTKu-6-wczY3S4OqOdqErh4' || local.getItem('token') || ''
+	config.headers['token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJjMDU0NGQzMDkxYjJkNDRkN2MzYmEzY2QxNzU5NmI5OCIsImNsaWVudElwIjoiMjIzLjcyLjc4LjM5IiwiZXhwIjoxNTY1MDM2NDQ0LCJ1c2VybmFtZSI6InVzZXI6NDQ2In0.syRzg9Wo9UQOkAT7Ui7v2OAwLFxz7zk5HjFT3TQHA4c' || local.getItem('token') || ''
 	config.headers['finger'] = 'c0544d3091b2d44d7c3ba3cd17596b98' || local.getItem('finger') || ''
 	config.headers['uid'] = uuid()
 	config.headers['verifycode'] = sha512(

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import modules from './modules'
 import storage from '@/utils/localStorage'
 
 Vue.use(Vuex)
@@ -44,10 +45,12 @@ let actions = {
 		}
 	}
 }
+
 const store = new Vuex.Store({
 	state,
 	mutations,
 	actions,
+	modules,
 	strict: true
 })
 

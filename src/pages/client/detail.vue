@@ -15,7 +15,7 @@
 				<div class="uni-flex uni-row pt10 mb5">
 					<div class="flex-item d-elip wfull f16 d-text-black">{{detailInfo.name}}</div>
 					<div class="flex-item datail-handle">
-						<a url='./add-client' class='d-inline'><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
+						<div @click='editClient(id)' class='d-inline'><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></div>
 						<span @click='watchfulbusiness'>
 							<i-icon type="like_fill" size="20" class="ml15" :color="!detailInfo.watchfulBusinessStatus ? '#999' : '#ff5533'" />
 						</span>
@@ -132,6 +132,8 @@ export default {
 	},
 	onLoad (data) {
 		this.id = data.id
+	},
+	onShow () {
 		this.getDetailInfo()
 	},
 	computed: {
@@ -145,6 +147,12 @@ export default {
 		}
 	},
 	methods: {
+
+		editClient (id = '') {
+			this.$routing.navigateTo('./add-client?id=' + id)
+			this.$store.commit('client/setClientInfo', this.detailInfo)
+		},
+
 		// 获取详情信息
 		async getDetailInfo () {
 			try {
@@ -213,7 +221,7 @@ export default {
 			let fnType = {
 				1: () => {
 					// 复制
-					this.$routing.navigateTo('./add-client')
+					this.editClient()
 				},
 				2: () => {
 					this.$routing.navigateTo('/pages/highseas/return-client')

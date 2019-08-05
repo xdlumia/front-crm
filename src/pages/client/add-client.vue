@@ -8,105 +8,90 @@
 <template>
     <div class='add-follow-page'>
         <NavBar title='新建客户信息' />
-        <div class="d-bg-white">
+        <scroll-view scroll-y style="height:calc(100vh - 115px)">
 
-            <i-input v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required type="text" />
+            <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
 
-            <i-input v-model="form.phone" label="手机号" placeholder="请填写" required type="number">
-                <div class="check-repeat">查重</div>
-            </i-input>
-            <i-select
-                v-model="form.phone"
-                :props="{label:'name',value:'id'}"
-                label="所属部门"
-                placeholder="请选择所属部门"
-                required
-                :options="upData">
-            </i-select>
+                <div class="d-bg-white">
 
-            <!--
-            <div class="form-row isarrow d-center">
-                <div class="f13 d-text-black form-row-item form-row-label">
-                    <span class='d-text-red'>*</span>所属部门
+                    <i-input v-model="form.name" label="客户名称" maxlength='32' placeholder="请填写客户名称" required type="text" />
+
+                    <i-input v-model="form.phone" label="手机号" @input='changePhone' placeholder="请填写" required type="number" maxlength='11'>
+                        <div class="check-repeat" @click='checkRepeat'>{{ isRepeat ? '已查重' : '查重' }}</div>
+                    </i-input>
+
+                    <i-select
+                        v-model="form.phone"
+                        :props="{label:'name',value:'id'}"
+                        label="所属部门"
+                        placeholder="请选择所属部门"
+                        required
+                        :options="upData">
+                    </i-select>
+
+                    <i-input v-model="form.address" label="详细地址" maxlength='32' placeholder="请填写详细地址"  type="number">
+                        <div @click="chooseMap" class="ml15 ac hfull pl15 d-center" style="border-left: 1px solid #F2F2F2;">
+                            <i-icon type="coordinates" size="22" color="#999" />
+                        </div>
+                    </i-input>
+
+                    <i-select
+                        v-model="form.gradeCode"
+                        :props="{label:'content',value:'code'}"
+                        label="客户级别"
+                        placeholder="请选择客户级别"
+                        :options="CRM_KHJB"
+                    />
+
+                    <i-select
+                        v-model="form.tradeCode"
+                        :props="{label:'content',value:'code'}"
+                        label="行业"
+                        placeholder="请选择行业"
+                        :options="CRM_KH_HY"
+                    />
+
+                    <i-select
+                        v-model="form.sourceCode"
+                        :props="{label:'content',value:'code'}"
+                        label="来源"
+                        placeholder="请选择来源"
+                        :options="CRM_LY"
+                    />
+
+                    <a url="/pages/common/more-tags?busType=0">
+                        <i-input disabled v-model="form.userPosition" label="标签" placeholder="请选择">
+                            <i-icon type="enter" size="16" color="#999" />
+                        </i-input>
+                    </a>
                 </div>
-                <a url='/pages/application/enterprise-management/organizational-structure' class="d-cell mr10 form-row-item">
-                    <input type="text" disabled class='f12 d-text-gray' placeholder="请选择">
-                </a>
-            </div> -->
 
-            <i-input v-model="form.phone" label="详细地址" placeholder="请填写详细地址"  type="number">
-                <div @click="chooseMap" class="ml15 ac hfull pl15 d-center" style="border-left: 1px solid #F2F2F2;">
-                    <i-icon type="coordinates" size="22" color="#999" />
-                </div>
-            </i-input>
-
-            <!-- <div class="form-row d-center">
-                <div class="f13 d-text-black form-row-item form-row-label">
-
-                </div>
-                <div class="d-cell mr10 form-row-item">
-                    <input type="text" disabled class='f12 d-text-gray' placeholder="请填写详细地址">
+                <div class="pt10 pb10 pl15 pr15 d-bg-white">
+                    <div class='f13 mb10 d-text-black'>备注</div>
+                    <textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
                 </div>
 
-            </div> -->
+            </m-form>
 
-            <i-select
-                v-model="form.phone"
-                :props="{label:'name',value:'id'}"
-                label="客户级别"
-                placeholder="请选择客户级别"
-                @change='change($event, "levelTypeIndex")'
-                :options="levelData"
-            />
+            <div class="d-center pl15 pr15 mt5">
+                <div class='d-cell'>
+                    <i-icon size="18" color="#999" type='prompt_fill' />
+                    <span class=" ml10 f12 d-text-black">提交之后同时新建联系人</span>
+                </div>
 
-            <i-select
-                v-model="form.phone"
-                :props="{label:'name',value:'id'}"
-                label="行业"
-                placeholder="请选择行业"
-                @change='change($event, "levelTypeIndex")'
-                :options="levelData"
-            />
-            <i-select
-                v-model="form.phone"
-                :props="{label:'name',value:'id'}"
-                label="来源"
-                placeholder="请选择来源"
-                @change='change($event, "levelTypeIndex")'
-                :options="levelData"
-            />
-            <i-select
-                v-model="form.phone"
-                :props="{label:'name',value:'id'}"
-                label="标签"
-                placeholder="请选择标签"
-                @change='change($event, "levelTypeIndex")'
-                :options="levelData"
-            />
-        </div>
-
-        <div class="pt10 pb10 pl15 pr15 d-bg-white">
-            <div class='f13 mb10'>备注</div>
-            <textarea rows="5" class="f12 d-text-gray" style='width: auto; height:60px' placeholder="点击填写"></textarea>
-        </div>
-
-        <div class="d-center pl15 pr15 mt5">
-            <div class='d-cell'>
-                <i-icon size="18" color="#999" type='prompt_fill' />
-                <span class=" ml10 f12 d-text-black">提交之后同时新建联系人</span>
+                <i-switch :value="isSkipContact" @change='handleChange' slot="footer">
+                    <i-icon type="right" slot="open"></i-icon>
+                    <i-icon type="close" slot="close"></i-icon>
+                </i-switch>
             </div>
-            <i-switch :value="switch1" @change='handleChange' slot="footer">
-                <i-icon type="right" slot="open"></i-icon>
-                <i-icon type="close" slot="close"></i-icon>
-            </i-switch>
-        </div>
 
-        <a url='/pages/common/more-list' class='d-center d-text-black mt10'>
-            <i-icon type='add' size="20" color='#333' /> <span class='ml15'>添加更多条目</span>
-        </a>
+            <a url='/pages/common/more-list' class='d-center d-text-gray mt10 pb10'>
+                <i-icon type='add' size="20" color='#333' /> <span class='ml15'>添加更多条目</span>
+            </a>
+        </scroll-view>
 
         <div class="footer-fixed-menu">
-            <i-button type="primary" i-class="f16">保存</i-button>
+            <i-button type="primary" i-class="f16" @click='submit'>保存</i-button>
         </div>
 
     </div>
@@ -115,23 +100,137 @@
 export default {
 	data () {
 		return {
-			switch1: false,
-			upTypeIndex: '',
-			upData: ['打电话', '发邮件', '发短信', '见面拜访', '活动'],
-			timeData: '',
-			levelData: ['无意向', '略有意向', '意向一般', '意向较高', '意向极高'],
-			levelTypeIndex: ''
+			id: 0,
+			isRepeat: false,
+			isSkipContact: false, // 是否新建联系人
+			form: {
+				name: '', // 姓名
+				phone: '', // 手机
+				address: '', // 地址
+				lat: '', // 维度
+				lon: '', // 经度
+				note: '', // 备注
+				poolId: '', // 公海池id
+				score: '', // 评分
+				sourceCode: '', // 来源
+				tradeCode: '', // 行业
+				gradeCode: '', // 客户级别
+				clientStatus: '' // 客户状态
+			},
+			rules: {
+				name: [{
+					required: true,
+					message: '请输入客户名称'
+				}],
+				phone: [{
+					required: true,
+					message: '请输入手机号'
+				}, {
+					type: 'phone',
+					message: '手机号格式不正确'
+				}]
+			},
+			moreField: [] // 更多条目字段
 		}
 	},
+	computed: {
+		CRM_KH_HY () {
+			return this.dictionaryOptions('CRM_KH_HY')
+		},
+		CRM_KHJB () {
+			return this.dictionaryOptions('CRM_KHJB')
+		},
+		CRM_LY () {
+			return this.dictionaryOptions('CRM_LY')
+		}
+	},
+	onLoad (params) {
+		this.id = params.id || 0
+		this.getDetailInfo()
+		this.getMoreField()
+	},
+	onUnload () {
+		this.id = 0
+		this.$store.commit('client/setClientInfo', {})
+	},
 	methods: {
-		change ({ mp: { detail } }, filed) {
-			let index = detail.value
-			this[filed] = index
+		getDetailInfo () {
+			let info = this.$store.state.client.clientInfo || {}
+			for (let key in this.form) {
+				this.form[key] = info[key]
+			}
+		},
+		handleChange ({ value }) {
+			this.isSkipContact = value
 		},
 
-		handleChange ({ value }) {
-			this.switch1 = value
+		changePhone () {
+			this.isRepeat = false
+		},
+		// 获取已选中的更多条目
+		getMoreField () {
+			this.$api.seeCrmService.formsfieldconfigQueryList({
+				busType: 0,
+				isEnabled: 0
+			}).then(res => {
+				if (res.code === 200) {
+				}
+			})
+		},
+
+		// 选择地图
+		chooseMap () {
+			uni.chooseLocation({
+				success (data) {
+					this.form.address = data.address
+					this.form.lon = data.longitude
+					this.form.lat = data.latitude
+				}
+			})
+		},
+
+		// 查重
+		async checkRepeat () {
+			if (this.isRepeat) return
+			await this.$refs.mform.validate()
+			try {
+				let resulte = await this.$api.seeCrmService.clientinfoList({
+					phone: this.form.phone
+				})
+				if (resulte.code === 200 && !resulte.data.length) {
+					this.isRepeat = true
+				} else {
+					this.$utils.toast.text('此客户已存在')
+				}
+			} catch (err) {
+				this.$utils.toast.text('此客户已存在')
+			}
+		},
+
+		// 保存
+		async submit () {
+			// if( !this.isRepeat ){
+			//     this.$utils.toast.text('请先查重')
+			// }
+			await this.$refs.mform.validate()
+			try {
+				let params = {
+					...this.form
+				}
+
+				// this.id 为 false 则是新增
+				await this.$api.seeCrmService[!this.id ? 'clientinfoSave' : 'clientinfoUpdate'](params)
+
+				// 是否同时新建联系人
+				if (this.isSkipContact) {
+					this.$routing.redirectTo('pages/contact/add-contact')
+				} else {
+					this.$routing.navigateBack()
+				}
+			} catch (err) {
+			}
 		}
+
 	}
 }
 </script>

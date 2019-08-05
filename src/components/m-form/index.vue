@@ -132,12 +132,13 @@ export default {
 			// [
 			//   { "message": "describes is required", "field": "describes" }
 			// ]
-			let fieldChildren = this.getFieldChildren();
-			(errors || []).map(err => {
-				if (fieldChildren[err.field]) {
-					fieldChildren[err.field].setTip(err.message)
-				}
-			})
+			// let fieldChildren = this.getFieldChildren();
+			// (errors || []).map(err => {
+			// 	if (fieldChildren[err.field]) {
+			// 		fieldChildren[err.field].setTip(err.message)
+			// 	}
+			// })
+			this.$utils.toast.text(errors[0].message);
 		},
 		/** 获取子节点信息 */
 		getFieldChildren () {
