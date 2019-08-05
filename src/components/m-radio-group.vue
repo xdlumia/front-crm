@@ -35,8 +35,6 @@ export default {
 	},
 	methods: {
 		changeCurrent (val = this.value) {
-			let cells = this.getRelationNodes('../cell/index')
-			console.log(cells)
 			const len = items.length
 			if (len > 0) {
 				items.forEach(item => {
@@ -49,7 +47,6 @@ export default {
 		}
 	},
 	onReady () {
-		console.log(this.value)
 	},
 	computed: {
 	}

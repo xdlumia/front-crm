@@ -44,14 +44,14 @@
       </detail-swiper> -->
 	<i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
         <i-tab index="0">
-            <followInfo :query="{id:id}" height="calc(100vh - 380px)"/>
+            <followInfo :query="{busId:id}" height="calc(100vh - 380px)"/>
         </i-tab>
         <i-tab index="1">
-            <datailInfo :data="datailInfo" height="calc(100vh - 380px)"/>
+            <datailInfo :detailInfo="datailInfo" height="calc(100vh - 380px)"/>
         </i-tab>
         <i-tab index="2">
 			<!-- 相关信息 -->
-            <correlationInfo :query="{id:id,busType:1}" height="calc(100vh - 380px)"/>
+            <correlationInfo :query="{busId:id,busType:1}" height="calc(100vh - 380px)"/>
         </i-tab>
     </i-tabs>
       <!-- 底部操作按钮 -->

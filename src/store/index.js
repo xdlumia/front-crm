@@ -35,7 +35,7 @@ let mutations = {
 let actions = {
 	async checkOssTicket ({ commit, state }, component) {
 		if (state.oss.expiration && state.oss.expiration > +new Date()) return
-		let { code, data } = await component.$api.seeExternService.getPublicOssTicket()
+		let { code, data } = await component.$api.seeExternService.ossGetOssTicket()
 		if (+code === 200) {
 			storage.save('ossPublic', data)
 			commit('setOssTicket', data)
