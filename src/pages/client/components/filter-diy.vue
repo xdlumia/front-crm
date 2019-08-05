@@ -12,10 +12,23 @@
                     </div>
                 </div>
             </filter-plane>
+
+            <!-- 客户级别 -->
+            <filter-plane v-model='filterData.gradeCodes' title='客户级别' :dataList='CRM_KHJB' />
+
             <!-- 客户性质 -->
-            <filter-plane :title='property.title' ref='filterplane' :prop='property.prop' @click='getFilterData' :dataList='property.list' />
+            <filter-plane v-model='filterData.property' isSingle title='客户性质' :dataList='property' />
+
             <!-- 跟进状态 -->
-            <filter-plane :title='followStatuss.title' ref='filterplane' :prop='followStatuss.prop' @click='getFilterData' :dataList='followStatuss.list' />
+            <filter-plane v-model='filterData.followStatuss' isSingle title='跟进状态' :dataList='followStatuss' />
+
+            <!-- 成交状态 -->
+            <filter-plane v-model='filterData.makeBargainCodes' title='成交状态' :dataList='CRM_CJZT' />
+
+            <!-- 来源 -->
+            <filter-plane v-model='filterData.sourceCodes' title='来源' :dataList='CRM_LY' />
+            <!-- 销售阶段 -->
+            <filter-plane v-model='filterData.stageIds' title='销售阶段' :dataList='CRM_XSJD' />
 
         </scroll-view>
         <div class='filter-btn d-center f18 d-text-blue'>
@@ -25,10 +38,10 @@
     </div>
 </template>
 <script>
-import FilterPlane from '@/components/filter-plane'
 
-let followStatuss = ['暂无', '跟进1次', '跟进多次'].map((name, id) => ({ id, name }))
-let property = ['非公海客户', '共享客户'].map((name, id) => ({ id, name }))
+import FilterPlane from '@/components/filter-plane'
+let followStatuss = ['暂无', '跟进1次', '跟进多次'].map((content, code) => ({ code, content }))
+let property = ['非公海客户', '共享客户'].map((content, code) => ({ code, content }))
 
 export default {
 	components: {
@@ -36,18 +49,31 @@ export default {
 	},
 	data () {
 		return {
-			property: {
-				prop: 'property',
-				title: '客户性质',
-				list: property
-			},
-			followStatuss: {
-				prop: 'followStatuss',
-				title: '跟进状态',
-				list: followStatuss
-			},
+			property, // 客户性质
+			followStatuss, // 跟进状态
 			principal: [],
-			filterData: {}
+			filterData: {
+				followStatuss: '', // 跟进状态
+				property: '', // 客户性质
+				gradeCodes: [], // 客户级别
+				makeBargainCodes: [], // 成交状态
+				sourceCodes: [], // 来源
+				stageIds: [] // 销售阶段
+			}
+		}
+	},
+	computed: {
+		CRM_KHJB () {
+			return this.dictionaryOptions('CRM_KHJB')
+		},
+		CRM_CJZT () {
+			return this.dictionaryOptions('CRM_CJZT')
+		},
+		CRM_LY () {
+			return this.dictionaryOptions('CRM_LY')
+		},
+		CRM_XSJD () {
+			return this.dictionaryOptions('CRM_XSJD')
 		}
 	},
 	methods: {
@@ -57,11 +83,7 @@ export default {
 			})
 		},
 		clear () {
-			this.$emit('clear')
-		},
-		// 获取点击的数据
-		getFilterData (item) {
-			this.filterData[item.prop] = item.ids.map(item => item.id)
+			Object.assign(this.filterData, this.$options.data().filterData)
 		},
 		submit (item) {
 			this.$emit('submit', this.filterData)
