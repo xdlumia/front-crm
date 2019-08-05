@@ -16,8 +16,8 @@ Api = new Flyio()
 // #endif
 
 Api.interceptors.request.use((config, promise) => {
-	config.headers['token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJjMDU0NGQzMDkxYjJkNDRkN2MzYmEzY2QxNzU5NmI5OCIsImNsaWVudElwIjoiMjIzLjcyLjc4LjM5IiwiZXhwIjoxNTY1MDM2NDQ0LCJ1c2VybmFtZSI6InVzZXI6NDQ2In0.syRzg9Wo9UQOkAT7Ui7v2OAwLFxz7zk5HjFT3TQHA4c' || local.getItem('token') || ''
-	config.headers['finger'] = 'c0544d3091b2d44d7c3ba3cd17596b98' || local.getItem('finger') || ''
+	config.headers['token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJmZDE1N2Y4NzUwOGZlY2FmNWE3NzAyZGEyNDU3M2NkMCIsImNsaWVudElwIjoiMjIzLjcyLjc4LjM5IiwiZXhwIjoxNTY1MDMyNzM2LCJ1c2VybmFtZSI6InVzZXI6NDQxIn0.6vGeB_u3rdf89VWOFdRbX7hJ7E4FHlYITlPNX6cdIvQ' || local.getItem('token') || ''
+	config.headers['finger'] = 'fd157f87508fecaf5a7702da24573cd0' || local.getItem('finger') || ''
 	config.headers['uid'] = uuid()
 	config.headers['verifycode'] = sha512(
 		config.headers['__'] + config.headers['token'] + config.headers['finger']

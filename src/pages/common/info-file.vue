@@ -7,21 +7,26 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="附件" color="#4889f4" url @add="handle">
-            <div class="detail-list">
-                <p class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> 我是附件名称</p>
-                <p class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> 我是附件名称</p>
-                <p class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> 我是附件名称</p>
+        <mPanel top="10" title="附件" color="#4889f4">
+			<span slot="add">
+				<upload-file>
+					<i-icon type="add" size="24" color="#466bef"></i-icon>
+				</upload-file>
+			</span>
+            <div class="detail-list" v-for="(item,index) of list" :key="index">
+                <a :href="item.fileUrl" class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> {{item.filelName}}</a>
             </div>
+			<uploadFile></uploadFile>
         </mPanel>
     </div>
 </template>
 
 <script>
+import uploadFile from '@/components/m-upload-file'
 export default {
-	props: ['id', 'busType'],
+	props: ['query'],
 	components: {
-		// mPager
+		uploadFile
 	},
 	data () {
 		return {
@@ -30,9 +35,18 @@ export default {
 	},
 	onLoad (option) {
 	},
-	methods: {
+	created () {
+		this.fileinfoQueryList()
 	},
-	created () {}
+	methods: {
+		fileinfoQueryList () {
+			this.$api.seeCrmService.fileinfoQueryList(this.query)
+				.then(res => {
+					this.list = res.data || []
+				})
+		}
+	}
+
 }
 </script>
 

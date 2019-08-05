@@ -297,7 +297,6 @@ export default {
 			this.$api.seeCrmService.scheduleSelectSalesFunnel(null, this.userId)
 				.then(res => {
 					this.funnelList = []
-					console.log(res.data)
 					res.data.forEach((item) => {
 						this.funnelList.push({ value: item.amount, name: item.stageName + ':' + item.amount }, { value: 4000, name: '需求确定:4000' }, { value: 6589, name: '方案报价:6589' }, { value: 4852, name: '谈判审核:4000' }, { value: 1589, name: '赢单:4000' }, { value: 4295, name: '输单:4295' }, { value: 7852, name: '无效:7852' })
 					})

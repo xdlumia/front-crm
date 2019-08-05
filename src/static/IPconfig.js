@@ -3,7 +3,7 @@
 const model = 'dev' 
 
 var api = ''
-var ossUrl = ''
+var ossUrl = 'https://oss-a-develop.oss-cn-beijing.aliyuncs.com/'
 if (model === 'dev') {
   // api = 'http://39.105.103.188:9011'
   // api = 'http://10.168.1.145:7300/mock/5d42880818ed947b04cebc75/crm'
@@ -21,6 +21,8 @@ var baseURL = {
     bizSystemService: api + 'biz-system-service',
     seeCrmService: api + 'see-crm-service',
     seeDataDictionaryService: api + 'https://testcrm.zhenkehu.com/apis/see-data-dictionary-service',
+    // ossUrl
+    ossUrl: ossUrl
 }
 if (window) {
   global = window

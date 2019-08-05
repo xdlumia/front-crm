@@ -6,27 +6,27 @@
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc">
-            <m-list label-width="120" label="机会名称">{{data.chanceName || '-'}}</m-list>
-            <m-list label-width="120" label="所属部门">{{data.aaa || '-'}}</m-list>
-            <m-list label-width="120" label="客户名称">{{data.clientName || '-'}}</m-list>
-            <m-list label-width="120" label="负责人">{{data.leaderName || '-'}}</m-list>
-            <m-list label-width="120" label="销售金额（元）">{{data.salesMoney || '-'}}</m-list>
-            <m-list label-width="120" label="销售阶段">{{data.stageName || '-'}}</m-list>
-            <m-list label-width="120" label="赢率">{{data.salesStageEntity.equityedge || '-'}}</m-list>
-            <m-list label-width="120" label="预计成交日期">{{data.reckonFinishTime | timeToStr('y-m-d')}}</m-list>
-            <m-list label-width="120" label="行业">{{data.tradeCode || '-'}}</m-list>
-            <m-list label-width="120" label="来源">{{data.sourceCode || '-'}}</m-list>
-            <m-list label-width="120" label="备注">{{data.note || '-'}}</m-list>
+            <m-list label-width="120" label="机会名称">{{detailInfo.chanceName || '-'}}</m-list>
+            <m-list label-width="120" label="所属部门">{{detailInfo.aaa || '-'}}</m-list>
+            <m-list label-width="120" label="客户名称">{{detailInfo.clientName || '-'}}</m-list>
+            <m-list label-width="120" label="负责人">{{detailInfo.leaderName || '-'}}</m-list>
+            <m-list label-width="120" label="销售金额（元）">{{detailInfo.salesMoney || '-'}}</m-list>
+            <m-list label-width="120" label="销售阶段">{{detailInfo.stageName || '-'}}</m-list>
+            <m-list label-width="120" label="赢率">{{detailInfo.salesStageEntity.equityedge || '-'}}</m-list>
+            <m-list label-width="120" label="预计成交日期">{{detailInfo.reckonFinishTime | timeToStr('y-m-d')}}</m-list>
+            <m-list label-width="120" label="行业">{{detailInfo.tradeCode || '-'}}</m-list>
+            <m-list label-width="120" label="来源">{{detailInfo.sourceCode || '-'}}</m-list>
+            <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc">
-            <m-list label-width="120" v-for="(item,index) of data.formsFieldValueEntityList" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
+            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntityList" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
         </mPanel>
     </div>
 </template>
 
 <script>
 export default {
-	props: ['height', 'data'],
+	props: ['height', 'detailInfo'],
 	components: {
 		// mPager
 	},

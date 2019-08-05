@@ -8,15 +8,15 @@
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
         <!-- 联系人 -->
-        <infoContact/>
+        <infoContact :query="query"/>
         <!-- 成交记录 -->
-        <infoTransaction/>
+        <infoTransaction :query="query"/>
         <!-- 日程 -->
-        <infoSchedule/>
+        <infoSchedule :query="query"/>
         <!-- 附件 -->
-        <infoFile/>
+        <infoFile :query="query"/>
         <!-- 团队成员 -->
-        <infoEmployee/>
+        <infoEmployee :query="query"/>
     </div>
 </template>
 
@@ -27,7 +27,7 @@ import infoSchedule from '@/pages/common/info-schedule' //  日程
 import infoFile from '@/pages/common/info-file' //  附件
 import infoEmployee from '@/pages/common/info-employee' //  团队成员
 export default {
-	props: ['height'],
+	props: ['height', 'query'],
 	components: {
 		infoContact,
 		infoTransaction,
@@ -37,9 +37,6 @@ export default {
 	},
 	data () {
 		return {
-			detailInfo: {
-				aaa: '王晓冬'
-			}
 		}
 	},
 	onLoad (option) {
