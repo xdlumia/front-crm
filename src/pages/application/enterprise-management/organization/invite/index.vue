@@ -33,11 +33,10 @@
     </view>
 </template>
 <script>
-import { encode } from 'querystring'
 export default {
 	data () {
 		return {
-			link: 'file:///H:/%E5%AE%A2%E6%88%B7%E7%AE%A1%E7%90%86/front/single-invite-page/single-invite-page.html?inviter=wyl&companyName=北京凡特仁科技有限公司&companyCode=1016'
+			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html?inviter=wyl&companyName=北京凡特仁科技有限公司&companyCode=1016'
 		}
 	},
 	onShareAppMessage () {
@@ -54,7 +53,7 @@ export default {
 			})
 		},
 		copyToClip () {
-			var data = encode(this.link)
+			var data = encodeURI(this.link)
 			if (data.length === 0) {
 				uni.showModal({
 					title: '设置剪贴板失败',

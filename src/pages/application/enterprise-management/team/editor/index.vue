@@ -153,15 +153,12 @@ export default {
 		}
 		// 从“选择角色”页面返回的数据
 		if (currPage.data.backFromRole) {
-			this.formData.roleNames = ''
-			this.formData.roleIds = []
 			let items = currPage.data.ckeckedRoles
-			this.formData.roleList = items
-			for (var i = 0, lenI = items.length; i < lenI; ++i) {
-				const item = items[i]
-				this.formData.roleIds.push(item.id)
-				this.formData.roleNames = this.formData.roleNames + ' ' + item.roleName
-			}
+			this.formData.roleList = []
+			this.formData.roleList.push(items)
+			this.formData.roleNames = items.roleName
+			this.formData.roleIds = []
+			this.formData.roleIds.push(items.id)
 		}
 	},
 	methods: {
