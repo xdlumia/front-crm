@@ -4,6 +4,7 @@
  * @param {boolean} isSearch 是否显示搜索框
  * @param {string} placeholder 搜索框文案 默认为 搜索
  * @param {string} title 标题
+ * @param {string} searchType 搜索类型 0 => 客户 1 => 机会 2 => 成交记录 3 => 联系人 4 => 公海池
 
     <NavBar title="首页"  />
  */ -->
@@ -29,12 +30,12 @@
                         <slot />
                     </div>
 
-                    <div class="search-box ac" v-else>
+                    <a :url="'/pages/common/search?searchType=' + searchType" class="search-box ac" v-else>
                         <div style="margin-top:-6rpx" class="d-inline">
                             <i-icon type="search" size="18" color='#c5c5c5' />
                         </div>
                         <span class="f12" style="color: #575757;">{{placeholder}}</span>
-                    </div>
+                    </a>
                 </div>
 
             </div>
@@ -53,6 +54,10 @@ export default {
 		placeholder: {
 			type: String,
 			default: '搜索'
+		},
+		searchType: {
+			type: String,
+			default: ''
 		}
 	},
 	data () {

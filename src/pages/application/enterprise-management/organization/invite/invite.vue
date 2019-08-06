@@ -33,8 +33,9 @@
         <i-input v-model="name" label ="真实姓名" autofocus placeholder="真实姓名" prop="name" />
         <i-input v-model="phone"  type="number" label ="手机号码" placeholder="请输入手机号" prop="phone" maxlength="11" />
         <div class="d-center bb">
-            <div class="d-cell"><input class="pt10 pb10 pl20" type="number" v-model="validateCode" prop="validateCode" placeholder="请输入验证码"/></div>
-            <div class="pr50"><a class="d-text-blue" @click="getValidateCode">获取验证码</a></div>
+            <div class="d-cell"><input class="pt10 pb10 pl20" type="number" v-model="validateCode" prop="validateCode" placeholder="请输入验证码" @blur="checkValidateCode"/></div>
+            <div v-if="show" class="pr50"><a class="d-text-blue" @click="getValidateCode">获取验证码</a></div>
+            <div v-if="!show" class="pr50"><span class="d-text-blue">{{count}} s后可重新获取</span></div>
         </div>
         <i-input  label ="申请理由" v-model="applyReason" prop="applyReason" placeholder="选填" maxlength="50" />
     </i-panel>
@@ -57,7 +58,12 @@ export default {
 			applyReason: '',
 			inviter: '',
 			companyName: '',
-			companyId: ''
+			companyCode: '',
+			validateOk: false,
+
+			show: true,
+			count: '',
+			timer: null
 		}
 	},
 	onLoad (option) {
@@ -66,32 +72,54 @@ export default {
 		}
 		if (option.companyName) {
 			this.companyName = option.companyName
-			this.companyId = option.companyId
+			this.companyCode = option.companyCode
 		}
 	},
 	methods: {
 		// 提交申请
 		submitApply () {
-			this.$api.enterpriseManagementService.saveUserapplicationinformation({
-				'name': this.name,
-				'phone': this.phone,
-				'applyReason': this.applyReason,
-				'ownerDeptId': this.companyId
-			}).then((response) => {
-
-			})
+			if (this.validateOk) {
+				this.$api.enterpriseManagementService.saveUserapplicationinformation({
+					'name': this.name,
+					'phone': this.phone,
+					'applyReason': this.applyReason,
+					'ownerDeptTotalCode': this.companyCode,
+					'inviter': this.inviter
+				}).then((response) => {
+					this.$utils.toast.text(response.msg)
+				})
+			} else {
+				this.$utils.toast.text('请填写完整信息')
+			}
 		},
 		// 校验验证码validateSmsCode
 		checkValidateCode () {
-			if (this.phone && this.code) {
+			if (this.phone !== '' && this.code !== '') {
 				this.$api.enterpriseManagementService.validateSmsCode({ 'phone': this.phone, 'verificationCode': this.validateCode }).then((response) => {
-
+					this.$utils.toast.text(response.msg)
+					if (response.code === 200) {
+						this.validateOk = true
+					}
 				})
 			} else {
-				uni.showModal({
-					content: '电话号码和验证码不能为空',
-					showCancel: false
-				})
+				this.$utils.toast.text('电话号码和验证码不能为空')
+			}
+		},
+		// 验证码发送后的倒计时
+		timeGo () {
+			const TIME_COUNT = 60
+			if (!this.timer) {
+				this.count = TIME_COUNT
+				this.show = false
+				this.timer = setInterval(() => {
+					if (this.count > 0 && this.count <= TIME_COUNT) {
+						this.count--
+					} else {
+						this.show = true
+						clearInterval(this.timer)
+						this.timer = null
+					}
+				}, 1000)
 			}
 		},
 		// 获取验证码
@@ -99,25 +127,14 @@ export default {
 			if (this.phone) {
 				this.$api.enterpriseManagementService.getSmsCode({}, this.phone).then((response) => {
 					if (response.code === 200) {
-						uni.showToast({
-							title: '验证码发送成功',
-							icon: 'success',
-							mask: !1
-						})
+						this.$utils.toast.text('验证码发送成功')
+						this.timeGo()
 					} else {
-						uni.showModal({
-							title: '验证码发送失败',
-							content: response.msg,
-							showCancel: false
-						})
+						this.$utils.toast.text('验证码发送失败')
 					}
 				})
 			} else {
-				uni.showModal({
-					title: '电话号码校验失败',
-					content: '电话号码不能为空',
-					showCancel: false
-				})
+				this.$utils.toast.text('电话号码不能为空')
 			}
 		}
 	}

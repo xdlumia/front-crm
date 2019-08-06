@@ -44,7 +44,8 @@
       </detail-swiper> -->
 	<i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
         <i-tab index="0">
-            <followInfo :query="{busId:id}" height="calc(100vh - 380px)"/>
+			<!-- 跟进: -->
+            <followInfo :query="{salesFunnelId:id}" height="calc(100vh - 380px)"/>
         </i-tab>
         <i-tab index="1">
             <datailInfo :detailInfo="datailInfo" height="calc(100vh - 380px)"/>
@@ -56,7 +57,7 @@
     </i-tabs>
       <!-- 底部操作按钮 -->
       <div class="footer-fixed-menu d-center d-bg-white">
-        <a class="d-cell al" url='/pages/chance/add-follow'>
+        <a class="d-cell al" url='/pages/common/add-follow'>
           <span class='iconfont icontianjiajihua f16' style='color:#696969'></span><span class="ml5 f13  d-text-gray">添加跟进</span>
         </a>
         <div class="d-cell ac d-center" @click="handlerAction('phoneShow')">

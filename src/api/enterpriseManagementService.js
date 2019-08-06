@@ -20,6 +20,12 @@ export default {
 		methods: 'get',
 		mock: IS_MOCK
 	},
+	// 获取申请列表
+	deleteUserApply: {
+		url: '/userapplicationinformation/logicDelete',
+		methods: 'delete',
+		mock: IS_MOCK
+	},
 	// 提交申请
 	saveUserapplicationinformation: {
 		url: '/userapplicationinformation/save',
