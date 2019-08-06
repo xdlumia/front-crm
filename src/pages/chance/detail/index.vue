@@ -44,7 +44,8 @@
       </detail-swiper> -->
 	<i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
         <i-tab index="0">
-            <followInfo :query="{busId:id}" height="calc(100vh - 380px)"/>
+			<!-- 跟进: -->
+            <followInfo :query="{salesFunnelId:id}" height="calc(100vh - 380px)"/>
         </i-tab>
         <i-tab index="1">
             <datailInfo :detailInfo="datailInfo" height="calc(100vh - 380px)"/>

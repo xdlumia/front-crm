@@ -2,7 +2,7 @@
 <!-- wangxiaodong -->
 <template>
 <div class="d-bg-white">
-    <NavBar title="新建销售机会"/>
+    <NavBar :title="`${titleType}销售机会`"/>
     <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
@@ -57,9 +57,11 @@ export default {
 		return {
 			stageList: [], // 销售阶段列表
 			busId: '',
+			editType: '', // 编辑类型 1为编辑. 2为复制 空为新建
 			upData: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			fieldList: [], // 自定义字段列表
 			form: {
+				id: '', // 主键id
 				chanceName: '', // '示例：机会名称',
 				clientId: '', // 客户id
 				formsFieldValueSaveVoList: [
@@ -111,7 +113,7 @@ export default {
 			}
 		}
 	},
-	onShow (option) {
+	onShow () {
 		if (this.busId) {
 			// 获取详情
 			this.saleschanceInfo(this.busId)
@@ -121,8 +123,10 @@ export default {
 		}
 	},
 	onLoad (option) {
+		console.log(option)
 		if (option.id) {
 			this.busId = option.id
+			this.editType = option.editType
 		}
 	},
 	created () {
@@ -132,13 +136,12 @@ export default {
 	methods: {
 		// 保存
 		saveChance () {
-			uni.showLoading({
-				title: '数据保存中...',
-				mask: true
-			})
-			this.$api.seeCrmService.saleschanceSave(this.form)
+			let api = 'saleschanceSave'
+			if (this.editType === '1') {
+				api = 'saleschanceUpdate'
+			}
+			this.$api.seeCrmService[api](this.form)
 				.then(res => {
-					uni.hideLoading()
 					// 返回上一页
 					this.$routing.navigateBack()
 				})
@@ -170,6 +173,9 @@ export default {
 		}
 	},
 	computed: {
+		titleType () {
+			return this.editType === '1' ? '编辑' : this.editType === '2' ? '复制' : '新建'
+		}
 	}
 }
 </script>
