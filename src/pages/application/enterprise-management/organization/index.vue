@@ -16,7 +16,6 @@
             <view class="flex-item flex-item-V uni-flex uni-column" >
                 <i-cell-group v-for="(item) in depts" :key="item.id">
                     <i-cell is-link @click="toNextHierarchy(item.id,item.deptName)" >{{item.deptName}}({{item.children.length + item.employeeList.length}})</i-cell>
-                    <!-- <i-cell v-if="item.children != null && (item.children.length + item.employeeList.length) > 0" is-link @click="toNextHierarchy(item.id,item.deptName)" >{{item.deptName}}({{item.children.length + item.employeeList.length}})</i-cell> -->
                 </i-cell-group>
             </view>
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
@@ -35,7 +34,7 @@
                <i class="iconfont f28 iconxinjian fl " style="color: #4D7FF5;"></i>
                <view class="pl5 fl">邀请同事加入</view>
             </view>
-            <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
+            <view class="flex-item flex-item-V" style="height: 50px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V bt pt10 pb10 wfull" style="position: fixed;bottom: 0;background-color: rgba(255,255,255,1)">
                 <view class="uni-flex uni-row">
                     <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
@@ -83,9 +82,6 @@ export default {
 		if (option.hierarchy) {
 			this.hierarchy = option.hierarchy
 		}
-		// if(option.superDeptName){
-		// 	this.superDeptName = option.superDeptName
-		// }
 
 		// 动态修改追加部门名称
 		if (option.companyName && option.deptName) {
@@ -95,6 +91,9 @@ export default {
 			this.companyName = '北京凡特仁有限公司'
 			this.deptName = this.companyName
 		}
+	},
+	onShow () {
+		this.init()
 	},
 	methods: {
 		// 初始化数据

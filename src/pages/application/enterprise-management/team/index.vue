@@ -9,35 +9,35 @@
     <view>
         <NavBar title="团队申请" />
 		<scroll-list
-				class="d-absolute wfull"
-				:style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
-				height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
-				api="userApplicationInformationService.getUserapplicationinformationList"
+				api="enterpriseManagementService.getUserapplicationinformationList"
 				:params="queryForm"
+				@getList='getList'
 				ref='teamDatas'>
-			<a url='./info'>
-				<view class="uni-flex uni-column">
-					<view class="flex-item flex-item-V bb uni-flex uni-row p15" v-for="(item) in teamDatas" :key="item.id">
-						<view class="flex-item width20 p10">
-							<image class="ba" style="height: 51px;width: 51px;" src="/static/img/index.png"></image>
+			<view class="uni-flex uni-column">
+				<view class="flex-item flex-item-V bb uni-flex uni-row p15" v-for="(item) in teamDatas" :key="item.id">
+					<view class="flex-item width20 p10">
+						<image class="ba" style="height: 51px;width: 51px;" src="/static/img/index.png"></image>
+					</view>
+					<view class="flex-item width32" @click="info(item)">
+						<view class="f14">{{item.name}}</view>
+						<view class="d-text-qgray">来源</view>
+						<view>由<span style="color:#5081F5;">{{item.inviter}}</span>邀请加入</view>
+						<view class="d-text-qgray">申请理由</view>
+						<view>{{item.applyReason}}</view>
+					</view>
+					<view class="flex-item width48 d-center" style="margin: 40px 0;">
+						<view v-if="item.isAgree == 1" class="fl ml5 d-text-cgray">
+							已同意
 						</view>
-						<view class="flex-item width32" @click="info(item)">
-							<view class="f14">{{item.name}}</view>
-							<view class="d-text-qgray">来源</view>
-							<view>由<span style="color:#5081F5;">{{item.inviter}}</span>邀请加入</view>
-							<view class="d-text-qgray">申请理由</view>
-							<view>{{item.applyReason}}</view>
-						</view>
-						<view class="flex-item width48" style="margin: 40px 0;">
-							<button type="primary"
-							size="8px" plain="true"
-							style="float: left;margin-left: 4px;color: #4889F4;border-color: #4889F4;"
-							@tap="toEditor">同意</button>
-							<button type="warn" size="8px" plain="true" style="float: left;margin-left: 4px;">删除</button>
-						</view>
+						<button v-else type="primary"
+						size="8px" plain="true"
+						class="fl ml5"
+						style="color: #4889F4;border-color: #4889F4;"
+						@tap="agreeApply(item)">同意</button>
+						<button type="warn" size="8px" plain="true" class="fl ml5" @click="deleteApply(item.id)">删除</button>
 					</view>
 				</view>
-			</a>
+			</view>
 		</scroll-list>
     </view>
 </template>
@@ -57,12 +57,32 @@ export default {
 		}
 	},
 	onLoad (option) {},
+	onShow () {
+		this.$refs.teamDatas.reload(1)
+	},
 	methods: {
-		// 编辑
-		toEditor () {
+		getList (teamDatas) {
+			this.teamDatas = teamDatas
+		},
+		// 同意
+		agreeApply (item) {
 			uni.navigateTo({
-				url: 'editor/index?isEditor=1'
+				url: '/pages/application/enterprise-management/team/editor/index?isEditor=0&isApply=1&apply=' + JSON.stringify(item)
 			})
+		},
+		// 删除
+		deleteApply (id) {
+			try {
+				this.$utils.showModal('确定要删除此申请记录？').then(async () => {
+					let resulte = await this.$api.enterpriseManagementService.deleteUserApply({ 'id': id })
+					this.$utils.toast.text(resulte.msg)
+					this.$refs.teamDatas.reload(1)
+				})
+			} catch (err) {
+				this.$utils.toast.text('删除失败')
+			} finally {
+
+			}
 		},
 		// 详情
 		info (item) {
