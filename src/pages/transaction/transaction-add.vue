@@ -3,18 +3,18 @@
     <NavBar title="新增成交记录"/>
     <div>
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
-            <i-input v-model="form.userName" label="名称" placeholder="请输入" required />
+            <i-input maxlength='32' v-model="form.userName" label="名称" placeholder="请输入" required />
 			<i-select
-                v-model="form.phone"
+                v-model="form.name"
                 :props="{label:'name',value:'id'}"
                 label="销售机会"
                 placeholder="请选择"
                 required
                 :options="upData">
             </i-select>
-            <i-input v-model="form.phone" disabled label="客户名称" placeholder="请输入"/>
+            <i-input maxlength='32' v-model="form.phone" disabled label="客户名称" placeholder="请输入"/>
             <i-select
-                v-model="form.phone"
+                v-model="form.clientId"
                 :props="{label:'name',value:'id'}"
                 label="联系人"
                 placeholder="请选择"
@@ -22,32 +22,32 @@
                 :options="upData">
             </i-select>
 			<i-select
-                v-model="form.phone"
+                v-model="form.transactionStatus"
                 :props="{label:'name',value:'id'}"
                 label="成交状态"
                 placeholder="请选择"
                 required
                 :options="upData">
             </i-select>
-			<picker-date v-model="form.personalProfile" label="开始时间" placeholder="请选择" required>
+			<picker-date v-model="form.startTime" label="开始时间" placeholder="请选择" required>
             </picker-date>
-			<picker-date v-model="form.personalProfile" label="结束时间" placeholder="请选择" required>
+			<picker-date v-model="form.endTime" label="结束时间" placeholder="请选择" required>
             </picker-date>
-			<i-input v-model="form.phone" label="总金额" placeholder="请输入" required/>
+			<i-input maxlength='32' type='number' v-model="form.totalAmount" label="总金额" placeholder="请输入" required/>
 			<i-select
-                v-model="form.phone"
+                v-model="form.belongDeptCode"
                 :props="{label:'name',value:'id'}"
                 label="所属部门"
                 placeholder="请选择"
                 required
                 :options="upData">
             </i-select>
-            <picker-date v-model="form.personalProfile" label="签约日期" placeholder="请选择日期" :required='false'>
+            <picker-date v-model="form.signDate" label="签约日期" placeholder="请选择日期">
             </picker-date>
         </m-form>
         <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
 		<div class="footer-fixed-menu">
-            <i-button type="primary" i-class="f16">保 存</i-button>
+            <i-button @click="fsubmit" type="primary" i-class="f16">保 存</i-button>
         </div>
     </div>
 </div>
@@ -61,22 +61,15 @@ export default {
 			upTypeIndex: '',
 			upData: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			form: {
-				// 当前名片风格 CARD_BG_WHITE CARD_BG_BLUE CARD_BG_GREY
-				currentThemeCode: '',
-				// 邮箱
-				email: '',
-				// 手机号
-				phone: '1',
-				// 姓名
-				userName: '',
-				// 个人简介
-				personalProfile: 1567209600000,
-				// 名片海报文案
-				posterDescription: '',
-				// 公司
-				userCompany: '',
-				// 职位
-				userPosition: ''
+				name: '', // 名称
+				salesFunnelId: '', // 销售机会id
+				clientId: '', // 客户名称id
+				linkId: '', // 联系人id
+				transactionStatus: '', // 成交状态(数据字典)
+				startTime: '', // 开始时间
+				endTime: '', // 结束时间
+				belongDeptCode: '', // 所属部门code
+				signDate: ''// 签约日期
 			},
 			rules: {
 				userName: [{
@@ -117,7 +110,14 @@ export default {
 		}
 	},
 	methods: {
-
+		fsubmit () {
+			this.$api.seeCrmService.transactionrecordSave(this.form)
+				.then(res => {
+					console.log(res)
+					this.$routing.navigateBack()
+					uni.$emit('updatetransList', { params: '' })
+				})
+		}
 	},
 	created () {},
 	computed: {
