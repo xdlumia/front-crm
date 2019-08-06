@@ -45,7 +45,7 @@
     </scroll-view>
 	<!-- 保存 -->
     <div class="footer-fixed-menu">
-      <i-button type="primary" i-class="f16">保存</i-button>
+      <i-button type="primary" i-class="f16" @click="saveChance()">保存</i-button>
     </div>
 </div>
 </template>
@@ -115,13 +115,14 @@ export default {
 		if (this.busId) {
 			// 获取详情
 			this.saleschanceInfo(this.busId)
+		} else {
+			// 获取字段列表
+			this.formsfieldconfigQueryList()
 		}
 	},
 	onLoad (option) {
 		if (option.id) {
-		} else {
-			// 获取字段列表
-			this.formsfieldconfigQueryList()
+			this.busId = option.id
 		}
 	},
 	created () {
@@ -129,6 +130,19 @@ export default {
 		this.salesstageList()
 	},
 	methods: {
+		// 保存
+		saveChance () {
+			uni.showLoading({
+				title: '数据保存中...',
+				mask: true
+			})
+			this.$api.seeCrmService.saleschanceSave(this.form)
+				.then(res => {
+					uni.hideLoading()
+					// 返回上一页
+					this.$routing.navigateBack()
+				})
+		},
 		// 查询机会详情
 		saleschanceInfo (id) {
 			this.$api.seeCrmService.saleschanceInfo(null, id)

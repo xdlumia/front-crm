@@ -62,12 +62,6 @@
 				"navigationBarTitleText":"新建客户"
 			}
 		},
-		{
-			"path":"pages/client/add-follow",
-			"style":{
-				"navigationBarTitleText":"添加跟进"
-			}
-		},
 		/** 销售机会——BEGIN */
 		{
 			"path": "pages/chance/index",
@@ -97,18 +91,20 @@
 			}
 		},
 		{
-			"path":"pages/chance/add-follow",
-			"style":{
-				"navigationBarTitleText":"添加跟进"
-			}
-		},
-		{
 			"path":"pages/chance/manage/stage-set",
 			"style":{
 				"navigationBarTitleText":"编辑销售阶段"
 			}
 		},
 		/** 销售机会——END*/
+		/** 公共——BEGIN */
+		{
+			"path":"pages/common/add-follow",
+			"style":{
+				"navigationBarTitleText":"添加跟进"
+			}
+		},
+		/** 公共——END*/
 		/** 联系人——BEGIN */
 		{
 			"path": "pages/common/more-list",
@@ -154,12 +150,6 @@
 			"path": "pages/contact/manage/index",
 			"style": {
 				"navigationBarTitleText": "管理联系人"
-			}
-		},
-		{
-			"path":"pages/contact/add-follow",
-			"style":{
-				"navigationBarTitleText":"添加跟进"
 			}
 		},
 		/** 联系人——END*/
