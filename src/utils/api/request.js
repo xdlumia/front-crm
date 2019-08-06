@@ -28,7 +28,7 @@ Api.interceptors.request.use((config, promise) => {
 
 Api.interceptors.response.use(
 	(response, promise) => {
-		if (response.data && response.data.code === 200 && response.request.method === 'POST') {
+		if (response.data && response.request.method === 'POST') {
 			uni.showToast({ title: response.data.msg, icon: 'none' })
 		}
 		if (+response.data.code === 402) {

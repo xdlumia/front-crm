@@ -64,9 +64,20 @@ export default {
 		// 保存字段
 		saveField () {
 			let params = this.fieldList.filter(item => this.selList.includes(item.id))
+			params = params.map(item => {
+				return {
+					busType: item.busType,
+					fieldType: item.fieldType,
+					fieldName: item.fieldName,
+					groupCode: item.groupCode,
+					id: item.id,
+					isEnabled: 0
+				}
+			})
 			this.$api.seeCrmService.formsfieldconfigSave(params)
 				.then(res => {
-
+					// 返回上一页
+					this.$routing.navigateBack()
 				})
 		}
 	},
