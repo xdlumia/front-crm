@@ -85,7 +85,6 @@ import detailInfo from './components/detail-info'
 import followInfo from './components/follow-info'
 import correlationInfo from './components/correlation-info'
 import attrInfo from './components/attr-info'
-import { setTimeout } from 'timers'
 
 let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程', '领取', '分配']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
@@ -107,10 +106,6 @@ export default {
 			phoneActions: [
 				{
 					name: '联系人电话'
-				},
-				{
-					name: '赵利春 18910453728',
-					phone: 18910453728
 				}
 			],
 			tabBars: [
@@ -134,7 +129,10 @@ export default {
 		this.id = data.id
 	},
 	onShow () {
+		// 获取客户详情
 		this.getDetailInfo()
+		// 获取联系人列表
+		this.linkmanQueryList({ id: this.id, busType: 0 })
 	},
 	computed: {
 		notesQuery () {
@@ -191,8 +189,10 @@ export default {
 		},
 		// 拨打电话
 		handlePhone ({ target: { index } }) {
+			if (!index) return
 			this.callPhone(this.phoneActions[index].phone)
 		},
+
 		// 切换 tab
 		handleChange ({ index }) {
 			this.currIndex = index
@@ -217,6 +217,18 @@ export default {
 			}
 		},
 
+		// 获取联系人列表
+		linkmanQueryList (params) {
+			this.$api.seeCrmService.linkmanQueryList(params)
+				.then(res => {
+					let data = res.data || []
+					let phones = data.map(item => {
+						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+					})
+					this.phoneActions.push(...phones)
+				})
+		},
+		// 更多 点击事件
 		handleMore ({ target: { index } }) {
 			let fnType = {
 				1: () => {
@@ -239,6 +251,9 @@ export default {
 			}
 			fnType[index]()
 		}
+	},
+	onHide () {
+		this.moreShow && (this.moreShow = false)
 	},
 	onUnload () {
 		this.moreShow && (this.moreShow = false)

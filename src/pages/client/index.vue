@@ -15,25 +15,30 @@
 
 			<scroll-list
 				:height="'calc(100vh - ' + navH +' - 40px)'"
-				api="seeCrmService.clientinfoPagelist"
+				:api="api"
 				:params="queryForm"
 				@getList='getList'
 				ref='list'>
-				<a v-for="item of list" :key="item.id" :url="'/pages/client/detail?id=' + item.id" class="client-item pb5 pt5 pl15 pr15 d-bg-white" >
-					<div class="d-flex f14 mb5">
-						<div class="d-text-black d-cell d-elip">{{item.name}}</div>
-						<div class='d-text-cgray'>{{item.makeBargainCode}}</div>
+				<div @click='handlerClient(item, index)' v-for="(item, index) of list" :key="item.id" class="d-center client-item pb5 pt5 pl15 pr15 d-bg-white" >
+					<div class="d-cell">
+						<div class="d-flex f14 mb5">
+							<div class="d-text-black d-cell d-elip">{{item.name}}</div>
+							<div class='d-text-cgray' v-if='!isSelect'>{{item.makeBargainCode}}</div>
+						</div>
+						<div class="d-flex client-tags">
+							<div class="iconfont iconqian f16 d-text-blue mr10" v-if='salesType === 1'></div>
+							<div class="c-tag f12 mr10">{{item.gradeCode}}</div>
+							<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
+							<div class="c-tag f12 mr10">{{item.finallyFollowTime|timeToStr('yyyy-mm-dd')}}</div>
+						</div>
 					</div>
-					<div class="d-flex client-tags">
-						<div class="iconfont iconqian f16 d-text-blue mr10" v-if='salesType === 1'></div>
-						<div class="c-tag f12 mr10">{{item.gradeCode}}</div>
-						<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
-						<div class="c-tag f12 mr10">{{item.finallyFollowTime|timeToStr('yyyy-mm-dd')}}</div>
+					<div v-if='isSelect'>
+						<m-radio :label='item.id' v-model="chooseData" />
 					</div>
-				</a>
+				</div>
 			</scroll-list>
 
-			<div class="footer-fixed-menu d-center d-bg-white">
+			<div class="footer-fixed-menu d-center d-bg-white" v-if='!isSelect'>
 				<a url='/pages/client/add-client' class="d-cell al">
 					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
 				</a>
@@ -43,6 +48,10 @@
 				<a url='./manage/index' class="d-cell ar">
 					<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理</span>
 				</a>
+			</div>
+
+			<div class="footer-fixed-menu" v-if='isSelect'>
+				<i-button type="primary" i-class="f16" @click='submitChooseData'>确定</i-button>
 			</div>
 
 		</div>
@@ -69,6 +78,13 @@ let sortType = ['最新跟进', '最新创建', '离我最近', '最高成交'].
 })
 
 export default {
+	props: {
+		// 是否为 选择 客户
+		isSelect: {
+			type: Boolean,
+			default: false
+		}
+	},
 	components: {
 		Filter,
 		FilterDiy
@@ -92,7 +108,15 @@ export default {
 					list: sortType
 				}
 			],
-			list: []
+			list: [], // 列表数据
+			chooseDataIndex: '', // 已选择的索引
+			chooseData: '' // 已选择的数据
+
+		}
+	},
+	computed: {
+		api () {
+			return !this.isSelect ? 'seeCrmService.clientinfoPagelist' : 'seeCrmService.clientinfoList'
 		}
 	},
 	onReady () {
@@ -113,10 +137,31 @@ export default {
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
 		},
+		// 自定义筛选回调
 		diyFilterSubmit (filterData) {
 			this.queryForm = Object.assign({}, this.queryForm, filterData)
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
+		},
+		//
+		handlerClient (item, index) {
+			if (!this.isSelect) {
+				this.$routing.navigateTo('/pages/client/detail?id=' + item.id)
+				return
+			}
+			this.chooseDataIndex = index
+			this.chooseData = item.id
+		},
+
+		// 确定选中
+		submitChooseData () {
+			if (!this.chooseData) {
+				this.$utils.toast.text('请选择客户')
+				return
+			}
+			let { id, name } = this.list[this.chooseDataIndex]
+			uni.$emit('chooseClient', { id, name })
+			this.$routing.navigateBack()
 		}
 	}
 }

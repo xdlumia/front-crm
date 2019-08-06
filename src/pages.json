@@ -33,6 +33,12 @@
 			}
 		},
 		{
+			"path": "pages/client/choose-client",
+			"style": {
+				"navigationBarTitleText": "选择客户"
+			}
+		},
+		{
 			"path": "pages/client/manage/index",
 			"style": {
 				"navigationBarTitleText": "管理信息设置"

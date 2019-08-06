@@ -6,7 +6,7 @@
     <div>
         <NavBar title="关联业务" />
         <i-cell-group>
-            <a url='/pages/client/index' open-type='switchTab'>
+            <a url='/pages/client/choose-client'>
                 <i-cell title="客户" is-link></i-cell>
             </a>
             <a url='/pages/contact/index'>
@@ -38,6 +38,10 @@ export default {
 	created () {
 	},
 	onLoad (option) {
+		// 客户回调
+		uni.$once('chooseClient', data => {
+			// console.log(data)
+		})
 	},
 	methods: {
 	},

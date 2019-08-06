@@ -223,7 +223,7 @@ export default {
 
 				// 是否同时新建联系人
 				if (this.isSkipContact) {
-					this.$routing.redirectTo('pages/contact/add-contact')
+					this.$routing.redirectTo('/pages/contact/add-contact')
 				} else {
 					this.$routing.navigateBack()
 				}
