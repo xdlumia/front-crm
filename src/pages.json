@@ -97,18 +97,20 @@
 			}
 		},
 		{
-			"path":"pages/chance/add-follow",
-			"style":{
-				"navigationBarTitleText":"添加跟进"
-			}
-		},
-		{
 			"path":"pages/chance/manage/stage-set",
 			"style":{
 				"navigationBarTitleText":"编辑销售阶段"
 			}
 		},
 		/** 销售机会——END*/
+		/** 公共——BEGIN */
+		{
+			"path":"pages/common/add-follow",
+			"style":{
+				"navigationBarTitleText":"添加跟进"
+			}
+		},
+		/** 公共——END*/
 		/** 联系人——BEGIN */
 		{
 			"path": "pages/common/more-list",
