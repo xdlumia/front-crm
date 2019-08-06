@@ -18,9 +18,9 @@
 						<div class="d-flex wfull" style="justify-content:center;alibackground:#FFF;align-items:center;height:60px">
 							<div class="page-search-box d-flex" style="background:#f5f6fa;width:90%;position:relative">
 								<div class="search-input d-center d-cell pl10 wfull" style="display:flex !important;">
-									<input type="text" placeholder='最小值' style="width:40%">
+									<input v-model="queryForm.totalAmountMin" type="text" placeholder='最小值' style="width:40%">
 									<div style="width:20%;color:#999">——</div>
-									<input type="text" placeholder='最大值' style="width:40%">
+									<input v-model="queryForm.totalAmountMax" type="text" placeholder='最大值' style="width:40%">
 								</div>
 							</div>
 						</div>
@@ -84,6 +84,8 @@ export default {
 			queryForm: {
 				page: 1,
 				limit: 15,
+				totalAmountMin: '', // 总金额最小值
+				totalAmountMax: '', // 总金额最大值
 				name: '', // 名称
 				transactionStatus: [], // 成交记录状态
 				transationTime: '', // 成交时间
@@ -187,6 +189,10 @@ export default {
 			this.queryForm.name = data.searchInfo
 			this.$refs.list.reload()
 		})
+
+		uni.$on('updatetransList', (data) => {
+			this.$refs.list.reload()
+		})
 	},
 	created () {
 
@@ -210,6 +216,8 @@ export default {
 				page: 1,
 				limit: 15,
 				name: '', // 名称
+				totalAmountMin: '', // 总金额最小值
+				totalAmountMax: '', // 总金额最大值
 				transactionStatus: [], // 成交记录状态
 				transationTime: '', // 成交时间
 				queryType: '', // 查询类型（0-全部，1-我负责的，2-我参与的，3-我下属负责的，4-我下属参与的, 5-我关注的）
