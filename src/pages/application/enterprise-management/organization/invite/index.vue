@@ -33,27 +33,28 @@
     </view>
 </template>
 <script>
+import { encode } from 'querystring'
 export default {
 	data () {
 		return {
-			link: 'https://wx.dingtalk.com/invite-page/weix'
+			link: 'file:///H:/%E5%AE%A2%E6%88%B7%E7%AE%A1%E7%90%86/front/single-invite-page/single-invite-page.html?inviter=wyl&companyName=北京凡特仁科技有限公司&companyCode=1016'
 		}
 	},
 	onShareAppMessage () {
 		return {
 			title: this.shareText ? this.shareText : '欢迎体验',
-			path: '/pages/application/enterprise-management/organization/invite/invite',
+			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=wyl&companyName=北京凡特仁科技有限公司&companyCode=1016',
 			imageUrl: this.image ? this.image : 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/app/share-logo@3.png'
 		}
 	},
 	methods: {
 		share () {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/organization/invite/invite?inviter=wyl&companyName=abcd&companyId=92'
+				url: '/pages/application/enterprise-management/organization/invite/invite?inviter=wyl&companyName=北京凡特仁科技有限公司&companyCode=1016'
 			})
 		},
 		copyToClip () {
-			var data = this.link
+			var data = encode(this.link)
 			if (data.length === 0) {
 				uni.showModal({
 					title: '设置剪贴板失败',
