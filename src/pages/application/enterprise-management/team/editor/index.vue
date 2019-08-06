@@ -60,8 +60,8 @@
                 </view>
                 <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view>
                 <view class="d-absolute wfull d-fixed" style="bottom:0">
-                    <i-button class="fl width50" v-if="isEditor == 1" type="warn" @click="deleteEmployee">刪除</i-button>
-                    <i-button class="fl width50" v-if="isEditor == 1" type="primary" @click="update">完成</i-button>
+                    <!-- <i-button class="fl width50" v-if="isEditor == 1" type="warn" @click="deleteEmployee">刪除</i-button> -->
+                    <i-button  v-if="isEditor == 1" type="primary" @click="update">保存</i-button>
                     <i-button v-if="isEditor == 0" type="primary" @click="save">保存</i-button>
                 </view>
             </form>
