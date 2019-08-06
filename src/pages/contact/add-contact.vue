@@ -1,33 +1,27 @@
-<!--
-/**
-* @author 添加跟进
-* @date 2019年7月299日
-* @example 调用示例
-*    <head-info :houseDicForm="houseDicForm"></head-info>
-**/
--->
+<!-- 添加机会 -->
+<!-- wangxiaodong -->
 <template>
-<div style="background-color:#f9f9f9">
-    <NavBar title="添加跟进"/>
+<div class="d-bg-white">
+    <NavBar title="新建联系人"/>
     <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
-            <div class="d-bg-white">
-                <i-select
-                    v-model="form.phone"
-                    :props="{label:'name',value:'id'}"
-                    label="跟进类型"
-                    placeholder="请选择跟进类型"
-                    required
-                    :options="upData">
-                </i-select>
-                <picker-date v-model="form.personalProfile" label="预计成交日期" placeholder="请选择日期">
-                </picker-date>
-            </div>
-            <div class="d-bg-white mt10">
-                <i-input v-model="form.personalProfile" label="跟进内容" placeholder="备注" type="textarea" required/>
-                <div class="pl15 pr15 mt5"><imagePick /></div>
-            </div>
+            <i-input v-model="form.userName" label="姓名" placeholder="请填写" required />
+            <a url="/pages/client/index" openType="switchTab">
+				<i-input disabled v-model="form.phone" label="客户名称" placeholder="请填写客户名称" required>
+					<i-icon type="enter" size="16" color="#999" />
+				</i-input>
+			</a>
+            <i-input v-model="form.userPosition" label="职位" placeholder="请填写"/>
+            <i-input v-model="form.userPosition" label="电话" placeholder="请填写"/>
+            <i-input v-model="form.userPosition" label="手机" placeholder="请填写"/>
+            <i-input v-model="form.userPosition" label="电子邮件" placeholder="请填写"/>
+            <i-input v-model="form.userPosition" label="地址" placeholder="请填写"/>
+            <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="所属部门" :options="upData"/>
+            <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="联系人角色" :options="upData"/>
+            <i-input v-model="form.personalProfile" label="备注" placeholder="备注" type="textarea" />
+
         </m-form>
+        <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
 	<!-- 保存 -->
     <div class="footer-fixed-menu">
@@ -36,10 +30,8 @@
 </div>
 </template>
 <script>
-import imagePick from '@/components/image-pick'
 export default {
 	components: {
-		imagePick
 	},
 	data () {
 		return {
@@ -111,4 +103,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+page {
+  background-color: #fff;
+  padding-bottom: 140upx;
+}
 </style>
