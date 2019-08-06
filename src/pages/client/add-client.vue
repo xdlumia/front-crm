@@ -219,11 +219,11 @@ export default {
 				}
 
 				// this.id 为 false 则是新增
-				await this.$api.seeCrmService[!this.id ? 'clientinfoSave' : 'clientinfoUpdate'](params)
+				let resulte = await this.$api.seeCrmService[!this.id ? 'clientinfoSave' : 'clientinfoUpdate'](params)
 
 				// 是否同时新建联系人
 				if (this.isSkipContact) {
-					this.$routing.redirectTo('pages/contact/add-contact')
+					this.$routing.redirectTo(`/pages/contact/add-contact?buyType=0&clientId=${resulte.id || 0}&clientName=${this.form.name}`)
 				} else {
 					this.$routing.navigateBack()
 				}

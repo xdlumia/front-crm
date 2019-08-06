@@ -39,6 +39,13 @@
 </template>
 
 <script>
+const searchType = {
+	0: 'client', // 客户
+	1: 'chance', // 机会
+	2: 'trasaction', // 成交记录
+	3: 'contact', // 联系人
+	4: 'highseas' // 公海池
+}
 export default {
 	props: {
 		// title: String, // 标题
@@ -61,13 +68,14 @@ export default {
 				trasaction: [],
 				chance: [],
 				client: [],
-				application: []
+				contact: [],
+				highseas: []
 			},
 			optionType: 0
 		}
 	},
 	onLoad (option) {
-		this.optionType = option.searchType
+		this.optionType = searchType[option.searchType] || 0
 	},
 	onReady () {
 		let { systemInfo } = this.$store.state
@@ -86,8 +94,6 @@ export default {
 		if (Object.keys(this.searchForm).length > 0) {
 			this.searchHistoryList = this.searchForm[this.optionType] || []
 		}
-
-		// local.fetch('navH')
 	},
 	computed: {
 		isBack () {

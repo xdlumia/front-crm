@@ -34,7 +34,7 @@
 				</div>
 				<div class="d-center d-text-gray">
 					<div class="d-cell f13"><span class="b">销售机会金额：</span> <span style='color: #FF9900'>{{detailInfo.totalSalesChanceMoney}}元</span></div>
-					<div class="d-cell f13"><span class="b">成交金额: </span>： <span style='color: #FF9900'>{{detailInfo.totalAmount}}元</span></div>
+					<div class="d-cell f13"><span class="b">成交金额: </span>： <span style='color: #FF9900'>{{detailInfo.bargainSum}}元</span></div>
 				</div>
 			</div>
 
@@ -42,7 +42,7 @@
 			<div class="">
 				<i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
 					<i-tab index="0">
-						<followInfo :query='notesQuery' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
+						<followInfo :query='{cilentId: detailInfo.id}' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="1">
 						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
@@ -57,7 +57,7 @@
 			</div>
 
 			<div class="footer-fixed-menu d-center d-bg-white">
-				<a url='/pages/client/add-follow' class="d-cell al">
+				<a :url="'/pages/common/add-follow?busId='+ id +'&busType=3'" class="d-cell al">
 					<span class='iconfont icontianjiajihua f16' style='color:#696969'></span><span class="ml5 f13  d-text-gray">添加跟进</span>
 				</a>
 				<div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
@@ -85,7 +85,6 @@ import detailInfo from './components/detail-info'
 import followInfo from './components/follow-info'
 import correlationInfo from './components/correlation-info'
 import attrInfo from './components/attr-info'
-import { setTimeout } from 'timers'
 
 let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程', '领取', '分配']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
@@ -107,10 +106,6 @@ export default {
 			phoneActions: [
 				{
 					name: '联系人电话'
-				},
-				{
-					name: '赵利春 18910453728',
-					phone: 18910453728
 				}
 			],
 			tabBars: [
@@ -134,17 +129,10 @@ export default {
 		this.id = data.id
 	},
 	onShow () {
+		// 获取客户详情
 		this.getDetailInfo()
-	},
-	computed: {
-		notesQuery () {
-			let data = this.detailInfo
-			return {
-				clientId: data.id,
-				busId: data.id,
-				busType: 3
-			}
-		}
+		// 获取联系人列表
+		this.linkmanQueryList({ id: this.id, busType: 0 })
 	},
 	methods: {
 
@@ -191,8 +179,10 @@ export default {
 		},
 		// 拨打电话
 		handlePhone ({ target: { index } }) {
+			if (!index) return
 			this.callPhone(this.phoneActions[index].phone)
 		},
+
 		// 切换 tab
 		handleChange ({ index }) {
 			this.currIndex = index
@@ -217,6 +207,18 @@ export default {
 			}
 		},
 
+		// 获取联系人列表
+		linkmanQueryList (params) {
+			this.$api.seeCrmService.linkmanQueryList(params)
+				.then(res => {
+					let data = res.data || []
+					let phones = data.map(item => {
+						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+					})
+					this.phoneActions.push(...phones)
+				})
+		},
+		// 更多 点击事件
 		handleMore ({ target: { index } }) {
 			let fnType = {
 				1: () => {
@@ -239,6 +241,9 @@ export default {
 			}
 			fnType[index]()
 		}
+	},
+	onHide () {
+		this.moreShow && (this.moreShow = false)
 	},
 	onUnload () {
 		this.moreShow && (this.moreShow = false)
