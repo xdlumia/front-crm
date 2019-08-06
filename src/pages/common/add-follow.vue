@@ -3,7 +3,9 @@
 * @author 添加跟进
 * @date 2019年7月299日
 * @example 调用示例
-*    <head-info :houseDicForm="houseDicForm"></head-info>
+* @params busType 类型(0=>跟进公海池,1=>跟进销售机会,2=>跟进联系人,3=>客户)
+* @params busId 业务id
+*    <add-follow busId="1" busType="1"></add-follow>
 **/
 -->
 <template>
@@ -13,18 +15,39 @@
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <div class="d-bg-white">
                 <i-select
-                    v-model="form.phone"
-                    :props="{label:'name',value:'id'}"
+                    v-model="form.followType"
+                    :props="{label:'content',value:'code'}"
                     label="跟进类型"
                     placeholder="请选择跟进类型"
                     required
-                    :options="upData">
+                    :options="dictionaryOptions('CRM_GJLX')">
                 </i-select>
-                <picker-date v-model="form.personalProfile" label="预计成交日期" placeholder="请选择日期">
-                </picker-date>
+				<a url="/pages/client/index" openType="switchTab" v-if="form.busType != 2">
+					<i-input disabled v-model="form.clientId" label="客户名称" placeholder="请填写客户名称" required>
+						<i-icon type="enter" size="16" color="#999" />
+					</i-input>
+				</a>
+				<i-select
+					v-if="form.busType == 0 || form.busType == 3"
+                    v-model="form.salesFunnelId"
+                    :props="{label:'content',value:'code'}"
+                    label="销售机会"
+                    required
+                    :options="dictionaryOptions('CRM_GJLX')">
+                </i-select>
+                <picker-date v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期">
+				</picker-date>
+				<i-select
+					v-if="form.busType == 0 || form.busType == 3"
+                    v-model="form.intention"
+                    :props="{label:'content',value:'code'}"
+                    label="意向程度"
+                    required
+                    :options="dictionaryOptions('CRM_YXCD')">
+                </i-select>
             </div>
             <div class="d-bg-white mt10">
-                <i-input v-model="form.personalProfile" label="跟进内容" placeholder="备注" type="textarea" required/>
+                <i-input v-model="form.content" label="跟进内容" placeholder="备注" type="textarea" required/>
                 <div class="pl15 pr15 mt5"><imagePick /></div>
             </div>
         </m-form>
@@ -43,66 +66,40 @@ export default {
 	},
 	data () {
 		return {
-			upTypeIndex: '',
-			upData: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			form: {
-				// 当前名片风格 CARD_BG_WHITE CARD_BG_BLUE CARD_BG_GREY
-				currentThemeCode: '',
-				// 邮箱
-				email: '',
-				// 手机号
-				phone: '1',
-				// 姓名
-				userName: '',
-				// 个人简介
-				personalProfile: 1567209600000,
-				// 名片海报文案
-				posterDescription: '',
-				// 公司
-				userCompany: '',
-				// 职位
-				userPosition: ''
+				busId: '', // 业务id,
+				busType: '', // 业务类型(0=>跟进公海池,1=>跟进销售机会,2=>跟进联系人,3=>客户)
+				clientId: '', // 客户id
+				content: '', // 示例：跟进内容,
+				fileAddress: '', // 附件地址,
+				followType: '', // 跟进类型 CRM_GJLX-1,
+				intention: '', // 意向程度：CRM_YXCD-5,
+				linkId: '', // 联系人id,
+				nextTime: '', // 下次联系时间
+				salesFunnelId: '' // 销售机会id
 			},
 			rules: {
-				userName: [{
+				content: [{
 					required: true,
-					message: '请输入姓名'
-				}],
-				phone: [{
-					required: true,
-					message: '请输入手机号'
-				}, {
-					type: 'phone',
-					message: '手机号格式不正确'
-				}],
-				userPosition: [{
-					required: true,
-					message: '请输入职位'
-				}],
-				userCompany: [{
-					required: true,
-					message: '请输入公司'
-				}],
-				email: [{
-					required: false
-				}, {
-					type: 'email',
-					message: '请输入正确的邮箱',
-					trigger: 'blur'
+					message: '请输跟进内容'
 				}]
 
 			}
 		}
 	},
 	onLoad (option) {
-		this.type = option.type || 'add'
-		this.cardCode = option.cardCode || ''
-		if (this.type === 'edit') {
-			this.getCardInfo()
-		}
+		this.form.busId = option.busId
+		this.form.busType = option.busType
 	},
 	methods: {
-
+		followupSave () {
+			this.$api.seeCrmService.followupSave()
+				.then(res => {
+					// 返回上一页
+					this.$routing.navigateBack()
+					// console.log('保存成功')
+				})
+		}
 	},
 	created () {},
 	computed: {

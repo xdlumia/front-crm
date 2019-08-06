@@ -62,12 +62,6 @@
 				"navigationBarTitleText":"新建客户"
 			}
 		},
-		{
-			"path":"pages/client/add-follow",
-			"style":{
-				"navigationBarTitleText":"添加跟进"
-			}
-		},
 		/** 销售机会——BEGIN */
 		{
 			"path": "pages/chance/index",
@@ -156,12 +150,6 @@
 			"path": "pages/contact/manage/index",
 			"style": {
 				"navigationBarTitleText": "管理联系人"
-			}
-		},
-		{
-			"path":"pages/contact/add-follow",
-			"style":{
-				"navigationBarTitleText":"添加跟进"
 			}
 		},
 		/** 联系人——END*/
