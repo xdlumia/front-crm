@@ -44,7 +44,7 @@ button::-moz-focus-inner {
 button::after{ border: none; }
 .button-hover{
     opacity: 1;
-    color: transparent;
+    color: initial;
     background: transparent;
 }
 .navigator-hover{

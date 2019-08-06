@@ -152,7 +152,7 @@ export default {
 		'mock': true
 	},
 
-	// 保存
+	// 保存/修改
 	dictionaryrelationSave: {
 		'url': '/dictionaryrelation/save',
 		'mock': true,
@@ -296,6 +296,13 @@ export default {
 	// 修改
 	formsfieldconfigUpdate: {
 		'url': '/formsfieldconfig/update',
+		'mock': true,
+		'methods': 'post'
+	},
+
+	// 修改
+	formsfieldconfigUpdateBatch: {
+		'url': '/formsfieldconfig/updateBatch',
 		'mock': true,
 		'methods': 'post'
 	},
@@ -504,7 +511,7 @@ export default {
 		'mock': true
 	},
 
-	// 获取下属人员列表
+	// 根据部门id获取其下人员列表
 	organizationalStructureChildrenEmployees: {
 		'url': '/organizationalStructure/childrenEmployees',
 		'mock': true
@@ -534,6 +541,12 @@ export default {
 		'mock': true
 	},
 
+	// 获取用户详细信息)
+	organizationalStructureGetEmployeeDetail: {
+		'url': '/organizationalStructure/getEmployeeDetail/{id}',
+		'mock': true
+	},
+
 	// 获取角色列表
 	organizationalStructureRoles: {
 		'url': '/organizationalStructure/roles',
@@ -548,6 +561,13 @@ export default {
 	},
 
 	// 保存员工信息
+	organizationalStructureSaveEmployee: {
+		'url': '/organizationalStructure/saveEmployee',
+		'mock': true,
+		'methods': 'post'
+	},
+
+	// 保存员工信息
 	organizationalStructureSaveUser: {
 		'url': '/organizationalStructure/saveUser',
 		'mock': true,
@@ -557,6 +577,13 @@ export default {
 	// 修改部门信息
 	organizationalStructureUpdateDept: {
 		'url': '/organizationalStructure/updateDept',
+		'mock': true,
+		'methods': 'post'
+	},
+
+	// 修改员工信息
+	organizationalStructureUpdateEmployee: {
+		'url': '/organizationalStructure/updateEmployee',
 		'mock': true,
 		'methods': 'post'
 	},
@@ -638,6 +665,12 @@ export default {
 		'mock': true
 	},
 
+	// 销售机会列表统计数据
+	saleschanceSalesChanceStatistics: {
+		'url': '/saleschance/salesChanceStatistics',
+		'mock': true
+	},
+
 	// 新增销售机会
 	saleschanceSave: {
 		'url': '/saleschance/save',
@@ -692,6 +725,12 @@ export default {
 		'methods': 'delete'
 	},
 
+	// 获取销售阶段列表
+	salesstageQueryList: {
+		'url': '/salesstage/queryList',
+		'mock': true
+	},
+
 	// 保存销售阶段表
 	salesstageSave: {
 		'url': '/salesstage/save',
@@ -699,15 +738,28 @@ export default {
 		'methods': 'post'
 	},
 
-	// 修改销售阶段表
+	// 修改销售阶段
 	salesstageUpdate: {
 		'url': '/salesstage/update',
+		'mock': true,
+		'methods': 'post'
+	},
+
+	// 批量修改销售阶段
+	salesstageUpdateBatch: {
+		'url': '/salesstage/updateBatch',
 		'mock': true,
 		'methods': 'post'
 	},
 	/* =============销售阶段表end=========== */
 
 	/* =============销售阶段变更消息提示start=========== */
+	// 核实员工机会列表是否需要消息提示
+	salesstagemessageCheckisMsgUser: {
+		'url': '/salesstagemessage/checkisMsgUser/{userId}',
+		'mock': true
+	},
+
 	// 删除
 	salesstagemessageDelete: {
 		'url': '/salesstagemessage/delete',
@@ -809,6 +861,13 @@ export default {
 	/* =============首页日程表end=========== */
 
 	/* =============业务与所属团队成员信息表start=========== */
+	// 批量修改
+	teammemberinfoBatchUpdate: {
+		'url': '/teammemberinfo/batchUpdate',
+		'mock': true,
+		'methods': 'post'
+	},
+
 	// 删除
 	teammemberinfoDelete: {
 		'url': '/teammemberinfo/delete',
