@@ -12,9 +12,9 @@
                 <view :id="item.tag" class="wxaSortPickerTag">{{item.tag}}</view>
                 <view class='wxaSortPickerItem-box'>
                     <block v-for="(child,inde) in item.textArray" :key="inde">
-                            <view class="wxaSortPickerItem" :data-text="child.name" :data-value="child.value"  @click="wxaSortPickerItemTap(child,'child')">
-                                <uni-icon v-if='isRadio' type='checkbox-filled' :color="child.value == isCheckedData.value ? '#1890FF' : '#999'" size='26' />
-                                <uni-icon v-else type='checkbox-filled' color="'#999'" size='26' />
+                            <view class="wxaSortPickerItem" :data-text="child.name" :data-value="child.value"  @click="wxaSortPickerItemTap(child)">
+                                <uni-icon type='checkbox-filled' :color="childEchodata.includes(child.value) ? '#1890FF' : '#999'" size='26' />
+                                <!-- <uni-icon v-else type='checkbox-filled' color="'#999'" size='26' /> -->
                                 <span class="ml5">{{child.name}}</span>
                             </view>
                     </block>
@@ -38,7 +38,8 @@ export default {
 	props: {
 		phones: Object,
 		isRadio: Boolean,
-		dadchild: Object
+		echodata:Array,
+		isCheckedAllData:Array
 	},
 	data () {
 		return {
@@ -54,25 +55,15 @@ export default {
 				textData: null,
 				dataType: 'dataType'
 			},
-			isCheckedData: {},
+			isCheckedData: [],
 			isAllData: [],
 			thiscolor: '#1890FF',
 			child: {},
-			scrollHeight: 0
+			scrollHeight: 0,
+			childEchodata:[]
 		}
 	},
 	computed: {
-		haveChecked () {
-			let valueArr = []
-			this.isAllData.forEach((item) => {
-				valueArr.push(item.value)
-			})
-			if(valueArr.includes(this.child.value)){
-				return '#1890FF'
-			}else{
-				return '#999'
-			}
-		}
 	},
 	mounted () {
 		let windowHeight = uni.getSystemInfoSync().windowHeight
@@ -102,38 +93,27 @@ export default {
 			if (typeof temData === 'undefined') {
 				temData = {}
 			}
-
+			that.childEchodata = [...this.echodata]
+			that.isCheckedData = [...this.isCheckedAllData]
 			that.setViewWH(that)
 			that.buildTextData(that, array)
 		},
-		wxaSortPickerItemTap: function (child, type) {
+		wxaSortPickerItemTap: function (child) {
 			this.child = child
 			if (this.isRadio) {
-				this.isCheckedData.value == child.value ? this.isCheckedData = {} : this.isCheckedData = child
-				if (type != 'dad') {
-					this.$emit('clickData', this.isCheckedData)
-				}
+				this.childEchodata.includes(child.value) ? (this.childEchodata = []) : (this.childEchodata = [child.value])
+				this.isCheckedData.length>0 ? (this.isCheckedData = []) :( this.isCheckedData.push(child))
+				this.$emit('clickData', this.isCheckedData)
 			} else {
-				// let isAllData = [...this.isAllData]
-				// let valueArr = []
-				// isAllData.map((item)=>{
-				// 	valueArr.push(item.value)
-				// })
-				
-				// if(valueArr.length){
-				// 	if(valueArr.includes(child.value)){
-				// 		this.isAllData.splice(child.value.indexOf(valueArr),1)
-				// 		valueArr.splice(child.value.indexOf(valueArr),1)
-				// 	}else{
-				// 		this.isAllData.push(child)
-				// 		valueArr.push(child.value)
-				// 	}
-				// }else{
-				// 	this.isAllData.push(child)
-				// 	valueArr.push(child.value)
-				// }
-				// console.log(this.isAllData)
-				// this.$emit('clickData', this.isAllData)
+				if(this.childEchodata.includes(child.value)){
+					let i = this.childEchodata.indexOf(child.value)
+					this.childEchodata.splice(i,1)
+					this.isCheckedData.splice(i,1)
+				}else{
+					this.childEchodata.push(child.value)
+					this.isCheckedData.push(child)
+				}
+				this.$emit('clickData', this.isCheckedData)
 			}
 		},
 		wxaSortPickerTemTagTap: function (e) {

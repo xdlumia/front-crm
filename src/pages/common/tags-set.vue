@@ -3,8 +3,8 @@
 <template>
   <div class="d-bg-white">
     <NavBar :title="`${typeform[astype]}标签管理`"/>
+    <!-- :height="'calc(100vh - ' + navH +' - 230px)'" -->
     <scroll-list
-      :height="'calc(100vh - ' + navH +' - 230px)'"
       api="seeCrmService.dictionaryrelationList"
       @getList="getTagsList"
       :params="queryForm"
