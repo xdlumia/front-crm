@@ -12,7 +12,7 @@
         <view class="uni-flex uni-column">
             <view class="flex-item flex-item-V uni-flex uni-row bb pt10">
                     <view class="flex-item ml10">
-                    <image class="ba" style="height: 51px;width: 51px;" :src=pic></image>
+                    <image class="ba" style="height: 51px;width: 51px;" :src='pic'></image>
                     </view>
                     <view class="flex-item ml10">
                         <view class="m5 f14">{{name}}</view>
@@ -52,7 +52,7 @@ export default {
 	onLoad (option) {
 		if (option.item) {
 			let item = JSON.parse(option.item)
-			this.pic = item.pic
+			this.pic = item.pic ? item.pic : '/static/img/index.png'
 			this.name = item.name
 			this.phone = item.phone
 			this.inviter = item.inviter
