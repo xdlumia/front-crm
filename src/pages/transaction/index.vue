@@ -1,6 +1,6 @@
 <template>
     <div class="highseas-page">
-        <NavBar title='成交记录' />
+        <NavBar title='成交记录' searchType='2' />
         <div>
             <div class="page-search-box d-flex" :style="'top: '+ navH">
 				<a url="/pages/common/search?searchType=trasaction" class="wfull">

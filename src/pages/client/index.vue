@@ -7,7 +7,7 @@
 -->
 <template>
     <div class="client-page">
-        <NavBar isSearch placeholder='搜索客户' />
+        <NavBar isSearch placeholder='搜索客户' searchType='0' />
 		<Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
 			<filter-diy @submit='diyFilterSubmit' />
 		</Filter>

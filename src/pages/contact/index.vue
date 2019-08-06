@@ -1,6 +1,6 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会" :isSearch="true" placeholder="输入联系人姓名,手机号" />
+    <NavBar title="机会" :isSearch="true" placeholder="输入联系人姓名,手机号" searchType='3' />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData='filterData' @filterSubmit='submit' ref='filter'>
 			<filter-diy @submit='submit' @clear='clear' />
