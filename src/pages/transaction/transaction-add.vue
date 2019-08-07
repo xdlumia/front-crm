@@ -12,9 +12,9 @@
                 required
                 :options="upData">
             </i-select>
-            <i-input maxlength='32' v-model="form.phone" disabled label="客户名称" placeholder="请输入"/>
+            <i-input maxlength='32' v-model="form.clientId" disabled label="客户名称" placeholder="请输入"/>
             <i-select
-                v-model="form.clientId"
+                v-model="form.linkId"
                 :props="{label:'name',value:'id'}"
                 label="联系人"
                 placeholder="请选择"
@@ -74,7 +74,35 @@ export default {
 			rules: {
 				userName: [{
 					required: true,
-					message: '请输入姓名'
+					message: '请输入名称'
+				}],
+				clientId: [{
+					required: true,
+					message: '请输入客户名称'
+				}],
+				linkId: [{
+					required: true,
+					message: '请选择联系人',
+					trigger: 'change'
+				}],
+				transactionStatus: [{
+					required: true,
+					message: '请选择成交状态',
+					trigger: 'change'
+				}],
+				startTime: [{
+					required: true,
+					message: '请选择开始时间',
+					trigger: 'change'
+				}],
+				endTime: [{
+					required: true,
+					message: '请选择结束时间',
+					trigger: 'change'
+				}],
+				totalAmount: [{
+					required: true,
+					message: '请输入总金额'
 				}],
 				phone: [{
 					required: true,
@@ -82,23 +110,7 @@ export default {
 				}, {
 					type: 'phone',
 					message: '手机号格式不正确'
-				}],
-				userPosition: [{
-					required: true,
-					message: '请输入职位'
-				}],
-				userCompany: [{
-					required: true,
-					message: '请输入公司'
-				}],
-				email: [{
-					required: false
-				}, {
-					type: 'email',
-					message: '请输入正确的邮箱',
-					trigger: 'blur'
 				}]
-
 			}
 		}
 	},
@@ -110,7 +122,8 @@ export default {
 		}
 	},
 	methods: {
-		fsubmit () {
+		async fsubmit () {
+			await this.$refs.mform.validate()
 			this.$api.seeCrmService.transactionrecordSave(this.form)
 				.then(res => {
 					console.log(res)
