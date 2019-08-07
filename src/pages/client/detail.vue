@@ -48,7 +48,7 @@
 						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="2">
-						<correlationInfo :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+						<correlationInfo :query='{id: detailInfo.id, type: 0}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index='3'>
 						<attrInfo :query='{cilentId: detailInfo.id}' :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
