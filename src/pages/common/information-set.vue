@@ -51,29 +51,38 @@
         <div class="d-flex mationInfo" v-if="isShow">
             <div class="hfull flexcenter mationInfo-top">
                 <uni-icon @click="isShow = false" class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20'/>
-                <input maxlength="6" v-model="listForm.name" placeholder="属性名称" class="ml5"/>
+                <input maxlength="6" v-model="listForm.fieldName" placeholder="属性名称" class="ml5"/>
                 <uni-icon type='arrowright' size='18' color='#696969' />
             </div>
             <div class="hfull d-flex mationInfo-middle">
-                <picker mode='multiSelector' class="flexcenter" @change="bindPickerChange" @columnchange='bindColumnChange' :value="msgIndex" :range="msgArr">
-                    <view class="class='formType flexcenter'">
-                        <view class="flexcenter wfull hfull">
-                                <view class="uni-list-cell-left d-text-black ml10">
-                                        表单类型
-                                </view>
-                                <view class="uni-list-cell-db flexcenter">
-                                    <view class="uni-input f12"  style="color: #999;min-width:58px">
-                                        {{msgArr[0][msgIndex[0]]|| '请选择'}}
-                                        <uni-icon type='arrowright' size='16' color='#696969' />
-                                    </view>
-                                </view>
-                        </view>
+                    <view class="formType wfull" @click="openPopup">
+                        <div class="d-text-black f13 ml5 fl hfull" style="width:52px;line-height:60px">表单类型</div>
+                        <div style="display:flex;justify-content: space-between;align-items: center;width:92px;" class="fl hfull">
+                            <div class="f12 pl5 d-elip" style="color:#999">{{tagName ? (msgName+'/'+tagName) : msgName || '请选择'}}</div>
+                            <uni-icon type='arrowright' size='16' color='#696969' />
+                        </div>
                     </view>
-                </picker>
+                    <uni-popup ref="popup" type="bottom" style="height:303px">
+                        <div style="width:100%;height:50px;line-height:50px;border-bottom:1px solid #f2f2f2;color:333" class="f13 ac">选择表单类型</div>
+                        <div style="height:204px;display:flex">
+                            <div class="hfull d-auto-y" style="flex:1;border-right:1px solid #f2f2f2">
+                                <div @click="getmsgName(item)" v-for="(item,index) in msgArr" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
+                                    {{item.name}}
+                                </div>
+                            </div>
+                            <div v-if='msgid == 3' class="hfull d-auto-y" style="width:270px">
+                                <div @click="gettagName(item)" v-for="(item,index) in tagAllList" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
+                                    {{item.labelName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div @click="closePopup" style="width:100%;height:50px;line-height:50px;border-top:3px solid #E4E4E4;color:333" class="f13 ac">取消</div>
+                    </uni-popup>
+
             </div>
 
             <div style="calc(100vw - 310px)" class="hfull flexcenter">
-                <div class="ac d-text-blue m5 subButton">
+                <div class="ac d-text-blue m5 subButton" @click="saveformsfieldconfig">
                     <span class="f13">确定</span>
                 </div>
             </div>
@@ -101,11 +110,16 @@ export default {
 		return {
 			informationList: [], // 列表所有list
 			statusTypes: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
-			msgArr: [['文字', '数字', '日期', '标签']],
+			msgArr: [{ name: '文字', type: 0 }, { name: '数字', type: 1 }, { name: '日期', type: 2 }, { name: '标签', type: 3 }, { name: '标签', type: 3 }, { name: '标签', type: 3 }],
+			tagAllList: [], // 所有标签的数组
+			msgName: '',
+			msgid: '',
+			tagName: '',
+			tagId: '',
 			status: '',
 			userName: '',
 			msgIndex: [],
-			listForm: { name: '', meg: [] },
+			listForm: { fieldName: '', fieldType: [] },
 			isShow: false,
 			iscollapse: false,
 			checkList: [],
@@ -119,18 +133,57 @@ export default {
 		}
 	},
 	onLoad (option) {
+		this.astype = option.busType || 3
 	},
 	created () {
-		this.getTagsList()
+		this.getInfosList()
+		this.getTagList()
 	},
 	methods: {
+		// 获取所有的标签
+		getTagList () {
+			this.$api.seeCrmService.dictionaryrelationList({ busType: this.astype })
+				.then(res => {
+					if (res.code === 200) {
+						this.tagAllList = res.data
+						// console.log(this.tagAllList, 'tagAllList')
+					}
+				})
+		},
+		// 点击属性
+		getmsgName (item) {
+			if (item.type !== 3) {
+				this.tagName = ''
+				this.tagId = ''
+				this.$refs.popup.close()
+			}
+			this.msgName = item.name
+			this.msgid = item.type
+		},
+		// 点击标签
+		gettagName (item) {
+			this.tagName = item.labelName
+			this.tagId = item.labelCode
+			this.$refs.popup.close()
+		},
+		openPopup () {
+			this.$refs.popup.open()
+		},
+		closePopup () {
+			this.tagName = ''
+			this.tagId = ''
+			this.msgName = ''
+			this.msgid = ''
+			this.$refs.popup.close()
+		},
 		// 获取所有列表
-		getTagsList () {
+		getInfosList () {
 			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: this.astype, isOriginal: -1 })
 				.then(res => {
 					if (res.code === 200) {
 						// console.log(res)
 						// this.informationList = res.data || []
+
 					}
 					this.informationList = [{ fieldName: '内置字段', groupCode: '1', isOriginal: 1, ishandel: false, id: 1, isEnabled: 0 }, { fieldName: '非内置字段', groupCode: '2', isOriginal: 0, ishandel: false, id: 2, isEnabled: 0 }]
 					this.informationList.forEach((item) => {
@@ -173,7 +226,7 @@ export default {
 					.then(res => {
 						this.isShow = false
 						setTimeout(() => {
-							this.getTagsList()
+							this.getInfosList()
 						}, 800)
 					})
 			} else {
@@ -189,7 +242,7 @@ export default {
 							if (res.code === 200) {
 								this.$utils.toast.text('删除成功')
 								setTimeout(() => {
-									this.getTagsList()
+									this.getInfosList()
 								}, 800)
 							}
 						})
@@ -212,10 +265,37 @@ export default {
 				.then(res => {
 					if (res.code === 200) {
 						setTimeout(() => {
-							this.getTagsList()
+							this.getInfosList()
 						}, 800)
 					}
 				})
+		},
+		// 新增保存
+		saveformsfieldconfig () {
+			if (!this.listForm.fieldName) {
+				this.$utils.toast.text('属性名称不能为空')
+			} else if (!this.msgid) {
+				this.$utils.toast.text('表单类型不能为空')
+			} else {
+				let params = {
+					busType: this.astype,
+					fieldName: this.listForm.fieldName,
+					isEnabled: 0,
+					fieldType: this.msgid,
+					groupCode: this.tagId
+				}
+				this.$api.seeCrmService.formsfieldconfigSave(params)
+					.then(res => {
+						if (res.code === 200) {
+							setTimeout(() => {
+								this.getInfosList()
+								this.closePopup()
+								this.listForm.fieldName = ''
+								this.isShow = false
+							}, 800)
+						}
+					})
+			}
 		}
 	},
 	computed: {
@@ -247,4 +327,5 @@ radio-group label, checkbox-group label{
   border: 1px dashed #4889f4;
   border-radius: 5px;
 }
+.uni-popup__wrapper.uni-custom .uni-popup__wrapper-box{padding:0 !important;}
 </style>

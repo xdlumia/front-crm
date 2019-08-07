@@ -77,7 +77,7 @@
                 </div>
                 <div class="mr15" style="height:26px;line-height:26px">
                      <i class="iconfont f16 iconshouye_chengjiaoshujurili" style="color: #B9C5CF;"></i>
-                     <span class="d-text-qgray f12 ml5">本月(截至昨日)</span>
+                     <span class="d-text-qgray f12 ml5">本月</span>
                 </div>
             </div>
             <div style="height: 10px;background: #F1F1F1;"></div>
