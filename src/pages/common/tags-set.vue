@@ -81,6 +81,7 @@ export default {
 	},
 	onLoad (option) {
 		// console.log(option)
+		this.astype = option.busType
 	},
 	methods: {
 		// 所有标签项
@@ -100,8 +101,7 @@ export default {
 		deleteTag (code) {
 			this.$utils.showModal('确定删除当前标签？')
 				.then(() => {
-					this.$api.seeCrmService
-						.dictionaryrelationDelete(null, code)
+					this.$api.seeCrmService.dictionaryrelationDelete(null, code)
 						.then(res => {
 							if (res.code === 200) {
 								this.$utils.toast.text('删除成功')
