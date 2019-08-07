@@ -2,8 +2,8 @@
 <div class="d-bg-white" style="heigth:100vh">
     <NavBar title="新增成交记录"/>
     <div>
-        <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
-            <i-input maxlength='32' v-model="form.userName" label="名称" placeholder="请输入" required />
+        <m-form ref="form" class="uni-pb100" :model="form" :rules="rules">
+            <i-input maxlength='32' v-model="form.name" label="名称" placeholder="请输入" required />
 			<i-select
                 v-model="form.name"
                 :props="{label:'name',value:'id'}"
@@ -72,13 +72,9 @@ export default {
 				signDate: ''// 签约日期
 			},
 			rules: {
-				userName: [{
+				name: [{
 					required: true,
 					message: '请输入名称'
-				}],
-				clientId: [{
-					required: true,
-					message: '请输入客户名称'
 				}],
 				linkId: [{
 					required: true,
@@ -123,7 +119,7 @@ export default {
 	},
 	methods: {
 		async fsubmit () {
-			await this.$refs.mform.validate()
+			await this.$refs.form.validate()
 			this.$api.seeCrmService.transactionrecordSave(this.form)
 				.then(res => {
 					console.log(res)
