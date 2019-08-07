@@ -1,22 +1,35 @@
+<!-- /**
+ * @author 冀猛超
+ * @description 评分管理
+ */ -->
 <template>
 	<div class="score-manage-page">
 		<NavBar title="客户评分"/>
 
 		<div class="pb20" v-for='(item, index) in scoreData' :key='index'>
 			<div class='d-bg-white'>
-				<i-select labelWidth='230' :props="{label:'name',value:'id'}" label="字段名称一" :options="upData" />
-				<i-input labelWidth='230' label="权重" type='number' placeholder="请输入" ><span>%</span></i-input>
+				<i-select labelWidth='230' :props="{label:'fieldName',value:'id'}" v-model='item.fieldConfigId' label="字段名称一" :options="fieldData" @input='getField($event, index)' />
+				<i-input labelWidth='150' i-class='ar pr5' label="权重" type='number' v-model='item.weight' placeholder="请输入" ><span class='pl5'>%</span></i-input>
 			</div>
 			<div class='d-center score-rule pl15 pr15'>
 				<div class="d-cell f13 d-text-black">评分规则条件</div>
 				<div class="btn-score f12" @click='addChildField(index)'>添加字段</div>
 			</div>
 
-			<div class="mb5 d-bg-white" v-for='(subItem, subIndex) in item.child' :key='subIndex'>
-				<i-select labelWidth='230' :props="{label:'name',value:'id'}" label="行业一" :options="upData" />
-				<div class="d-center">
-					<i-input labelWidth='230' label="计算评分为" type='number' placeholder="请输入" ><span>%</span></i-input>
-				</div>
+			<div class="mb5 d-bg-white" v-for='(subItem, subIndex) in item.fieldRuleEntityList' :key='subIndex'>
+				<!-- filedType == 0 是填写数字 -->
+				<i-input labelWidth='100' :label=" item.fieldName + '一'" disabled v-if="item.filedType == 0">
+					<div class='d-center' style='width:200px;'>
+						<input type="number" v-model='subItem.minValue' class='input-box f13 d-text-black d-cell' /><span class="ml5 mr5 d-text-qgray">-</span><input type="number" v-model='subItem.minValue' class='input-box d-text-black f13 d-cell'  />
+					</div>
+				</i-input>
+				<!-- filedType == 1 是选择标签 -->
+				<i-select v-if="item.filedType == 1" labelWidth='150' i-class='ar pr20' :props="{label:'fieldName',value:'id'}" :label=" item.fieldName + '一'" :options="subFieldData[index][subIndex]" />
+
+				<i-input labelWidth='150' label="计算评分为" type='number' v-model='subItem.fieldGrade' placeholder="请输入" i-class='ar pr20'></i-input>
+			</div>
+			<div v-if='item.fieldRuleEntityList.length' class='d-bg-white'>
+				<i-input labelWidth='150' label="否者，计算项的评分为" type='number' v-model='subItem.fieldGrade' placeholder="请输入" i-class='ar pr20' ></i-input>
 			</div>
 		</div>
 
@@ -24,50 +37,138 @@
 			<div class="btn-score f12" @click="addParentField">添加更多字段</div>
 		</div>
 
-		<div class="footer-fixed-menu">
-            <i-button type="primary" i-class="f16">保存</i-button>
+		<div class="footer-fixed-menu" >
+            <i-button type="primary" @click='submit' i-class="f16">保存</i-button>
         </div>
 
 	</div>
 </template>
 <script>
 export default {
-	components: {
-	},
 	data () {
 		return {
-			upData: [
+			fieldData: [],
+			subFieldData: [],
+			scoreData: [
 				{
-					name: '1', id: 1
+					busType: '',
+					fieldConfigId: '',
+					fieldDescribe: '',
+					fieldName: '',
+					fieldRuleEntityList: [],
+					filedType: '',
+					userDefinedType: '',
+					weight: '',
+					groupCode: ''
 				}
 			],
-			scoreData: [{ child: [] }]
+			scoreList: []
 		}
 	},
 	onLoad (option) {
+		this.getFormsfieldconfig().then(res => {
+			this.getWeightList(option.busType)
+		})
 	},
 	methods: {
-		addParentField () {
-			this.scoreData.push({
-				child: []
+		async getFormsfieldconfig () {
+			let resulte = await this.$api.seeCrmService.formsfieldconfigQueryList({
+				fieldTypes: [1, 3]
+			})
+			this.fieldData = resulte.data
+			return Promise.resolve()
+		},
+		// 获取列表
+		getWeightList (busType) {
+			this.$api.seeCrmService.fieldweightList({
+				busType: busType
+			}).then(res => {
+				// 设置 数据
+				res.data.forEach((item, index) => {
+					this.$set(this.subFieldData, index, [])
+					item.fieldRuleEntityList.forEach((subItem, subIndex) => {
+						this.setDisCodeData(subItem.fieldAccordingTo, index, subIndex)
+					})
+				})
+
+				this.scoreData = res.data
 			})
 		},
-		addChildField (parentIndex) {
-			this.scoreData[parentIndex].child.push({})
+		// 添加 字段
+		addParentField (index) {
+			this.scoreData.push({
+				busType: '',
+				fieldConfigId: '',
+				fieldDescribe: '',
+				fieldName: '',
+				fieldRuleEntityList: [],
+				filedType: '',
+				userDefinedType: '',
+				weight: '',
+				groupCode: ''
+			})
+
+			// 添加子段 添加 空数据 用来展示字典数据
+			this.subFieldData.push([])
+		},
+		// 添加 子项字段
+		addChildField (index) {
+			// 添加子项先判断是否选择了 字段
+			if (!this.scoreData[index].fieldName) {
+				return this.$utils.toast.text('请先选择字段')
+			}
+
+			let len = this.scoreData[index].fieldRuleEntityList.length
+			this.scoreData[index].fieldRuleEntityList.push({
+				elseFieldGrade: '',
+				fieldAccordingTo: '',
+				fieldGrade: '',
+				fieldName: '',
+				maxValue: '',
+				minValue: '',
+				sort: len + 1
+			})
+			this.setDisCodeData('code', index, len)
+		},
+
+		// 选择 字段
+		getField (id, index) {
+			let fieldItem = this.fieldData.filter(item => item.id === id)[0]
+			this.scoreData[index] = {
+				busType: fieldItem.busType,
+				fieldConfigId: fieldItem.id,
+				// fieldDescribe: '',
+				fieldName: fieldItem.fieldName,
+				fieldRuleEntityList: [],
+				filedType: fieldItem.fieldType,
+				groupCode: fieldItem.groupCode
+			}
+		},
+
+		// 添加数据字典数据
+		setDisCodeData (code, parentIndex, index) {
+			// console.log(code, parentIndex, index)
+			let data = [{ id: 1, fieldName: '测试' + index, filedType: 1 }] || this.dictionaryOptions(code)
+			this.$set(this.subFieldData[parentIndex], index, data)
+		},
+
+		// 保存方法
+		submit () {
+			this.$api.seeCrmService.fieldweightSave({ saveVo: this.scoreData }).then(res => {
+				// console.log(res)
+			})
 		}
-	},
-	created () {},
-	computed: {
+
 	}
+
 }
 </script>
 
 <style lang="scss" scoped>
 .score-manage-page{
-	height: 100vh;
+	min-height: 100vh;
 	background: #f2f2f2;
-	padding-bottom: 75px;
-	box-sizing: border-box;
+	padding-bottom: 80px;
 }
 
 .score-rule{
@@ -83,6 +184,12 @@ export default {
 	line-height: 27px;
 	color: #1890ff;
 	background: #fff;
+}
+
+.input-box{
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 5px;
 }
 
 </style>

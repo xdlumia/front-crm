@@ -18,6 +18,7 @@
                     :placeholder="placeholder"
                     :maxlength="maxlength"
                     class="i-input-textarea wfull uni-h100 f13"
+					:class='iClass'
                     @input="handleInputChange"
                     @focus="handleInputFocus"
                     @blur="handleInputBlur"
@@ -38,6 +39,7 @@
                     :placeholder="placeholder"
                     :maxlength="maxlength == 300?32:maxlength"
                     class=" i-input-input uni-lh50 uni-h50 f13 wfull"
+					:class='iClass'
                     @input="handleInputChange"
                     @focus="handleInputFocus"
                     @blur="handleInputBlur"
@@ -55,6 +57,10 @@ export default {
 		event: 'change'
 	},
 	props: {
+		iClass: {
+			type: String,
+			default: ''
+		},
 		value: {
 			type: String
 		},

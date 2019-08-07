@@ -16,7 +16,7 @@
 export default {
 	data () {
 		return {
-			upData: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }]
+
 		}
 	}
 }

@@ -20,14 +20,13 @@
 		<div class='highseas-list-view d-relative'>
 			<scroll-list
 				:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
-				api="bizSystemService.getUserAuth"
+				api="seeCrmService.clientpublicpoolList"
 				:params="queryForm"
-				v-slot="{ row }"
 			>
-				<a  url='/pages/client/detail' class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
+				<a url='/pages/client/detail' v-for="(item) of list" :key="item.id" class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
                     <div class="d-cell">
-                        <div class="f13 d-text-black">北京奥运会有限责任公司</div>
-                        <div class="f12 d-text-qgray">退回时间：2019-06-03 15:33</div>
+                        <div class="f13 d-text-black">{{item.name}}</div>
+                        <div class="f12 d-text-qgray">退回时间：{{}}</div>
                         <div class="f12 d-text-qgray">退回次数：0</div>
                     </div>
                     <div class="d-center">
@@ -64,6 +63,7 @@ export default {
 	data () {
 		return {
 			queryForm: {},
+			list: [],
 			filterData: [
 				{
 					prop: 'a',
@@ -104,6 +104,10 @@ export default {
 		this.filterSelect = selects
 	},
 	methods: {
+		// 获取列表数据
+		getList (list) {
+			this.list = list
+		},
 		submit (item) {
 			this.$refs.filter.hide()
 		},

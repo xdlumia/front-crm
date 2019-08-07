@@ -5,6 +5,17 @@
 * @date 2019年7月299日
 **/
 -->
+{
+	isRadio,
+	ids,
+	partiType // 是负责人 还是参与人
+	type： 客户 机会 擦
+}
+
+{
+	partiType // 是负责人 还是参与人
+
+}
 <template>
     <div>
         <mPanel top="10" title="团队成员" color="#4889f4" :url="'/pages/index/colleagueChoose?isRadio=1&ids=' + ids + '&partiType=0&type=' + query.type">
@@ -42,7 +53,11 @@ export default {
 		this.getEmployeeList()
 		// 注册 事件
 		uni.$on('chooseEmployee', data => {
-			// console.log(data)
+			if (data.partiType === 1) {
+				this.updateEmployee(data.data.map(item => item.id))
+			} else {
+				this.updateLeader(data.data.map(item => item.id)[0])
+			}
 		})
 	},
 	methods: {
@@ -53,13 +68,17 @@ export default {
 				}
 			})
 		},
+
 		// 更新参与人
 		updateEmployee () {
 			this.$api.seeCrmService.teammemberinfoBatchUpdate({
-
+				busId: this.query.id,
+				busType: this.query.type,
+				leaderId: leaderId,
+				partiType: 1
 			}).then(res => {
 				if (res.code === 200) {
-
+					this.getEmployeeList()
 				}
 			})
 		},
@@ -73,7 +92,7 @@ export default {
 				partiType: 0
 			}).then(res => {
 				if (res.code === 200) {
-
+					this.getEmployeeList()
 				}
 			})
 		}

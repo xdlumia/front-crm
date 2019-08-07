@@ -33,7 +33,7 @@
                     label="销售机会"
                     :options="dictionaryOptions('CRM_GJLX')">
                 </i-select>
-                <picker-date v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期">
+                <picker-date :required='false' v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期">
 				</picker-date>
 				<i-select
 					v-if="form.busType == 0 || form.busType == 3"
