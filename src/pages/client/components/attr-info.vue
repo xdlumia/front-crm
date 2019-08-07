@@ -43,7 +43,7 @@ export default {
 			default: ''
 		},
 		query: {
-			type: String,
+			type: Object,
 			default () {
 				return {}
 			}

@@ -161,6 +161,7 @@ export default {
 			}
 			let { id, name } = this.list[this.chooseDataIndex]
 			uni.$emit('chooseClient', { id, name })
+
 			this.$routing.navigateBack()
 		}
 	}

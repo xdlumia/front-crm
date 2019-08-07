@@ -7,12 +7,12 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="团队成员" color="#4889f4" url="/pages/index/colleagueChoose">
-            <div class="detail-list d-flex-lr bb">
+        <mPanel top="10" title="团队成员" color="#4889f4" :url="'/pages/index/colleagueChoose?isRadio=1&ids=' + ids + '&partiType=0&type=' + query.type">
+            <div class="detail-list d-flex-lr bb" v-for='item in list' :key='item.id'>
                 <image class="detail-list-img" data-name="徐丽丽" src="" alt=""></image>
                 <p>
-                    <b class="f16">徐丽丽</b>
-                    <span class="f12 d-text-qgray">负责人</span>
+                    <b class="f16">{{item.rmEmployeeEntity.employeeName}}</b>
+                    <span class="f12 d-text-qgray">{{ item.partiType == 0 ? '负责人' : '参与人' }}</span>
                 </p>
             </div>
         </mPanel>
@@ -21,20 +21,64 @@
 
 <script>
 export default {
-	props: ['query'],
-	components: {
-		// mPager
+	props: {
+		query: {
+			type: Object
+		}
 	},
 	data () {
 		return {
 			list: []
 		}
 	},
-	onLoad (option) {
+	computed: {
+		ids () {
+			return this.list.filter(item => item.partiType === 1).map(item => {
+				return item.rmEmployeeEntity.id
+			}).join(',')
+		}
+	},
+	created () {
+		this.getEmployeeList()
+		// 注册 事件
+		uni.$on('chooseEmployee', data => {
+			// console.log(data)
+		})
 	},
 	methods: {
-	},
-	created () {}
+		getEmployeeList () {
+			this.$api.seeCrmService.teammemberinfoQueryTeamMemberListById(this.query).then(res => {
+				if (res.code === 200) {
+					this.list = res.data || []
+				}
+			})
+		},
+		// 更新参与人
+		updateEmployee () {
+			this.$api.seeCrmService.teammemberinfoBatchUpdate({
+
+			}).then(res => {
+				if (res.code === 200) {
+
+				}
+			})
+		},
+
+		// 更新负责人
+		updateLeader (leaderId) {
+			this.$api.seeCrmService.teammemberinfoUpdate({
+				busId: this.query.id,
+				busType: this.query.type,
+				leaderId: leaderId,
+				partiType: 0
+			}).then(res => {
+				if (res.code === 200) {
+
+				}
+			})
+		}
+
+	}
 }
 </script>
 

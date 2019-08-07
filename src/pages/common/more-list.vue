@@ -12,11 +12,11 @@
 	</scroll-view>
 	<!-- 客户 -->
     <div class="footer-fixed-menu d-center d-bg-white bt">
-      <div class="d-cell ac">
-        <span class="ml5 f16 b d-text-gray d-text-blue" @click="resetField()">重置</span>
+      <div class="d-cell ac" @click="resetField()">
+        <span class="ml5 f16 b d-text-gray d-text-blue" >重置</span>
       </div>
-      <div class="d-cell ac d-bg-blue">
-        <span class="ml5 f16 b d-text-white" @click="saveField()">确定</span>
+      <div class="d-cell ac d-bg-blue" @click="saveField()">
+        <span class="ml5 f16 b d-text-white" >确定</span>
       </div>
     </div>
 </div>

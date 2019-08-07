@@ -64,6 +64,9 @@
                             <i-icon type="enter" size="16" color="#999" />
                         </i-input>
                     </a>
+
+					<i-input v-for="(item,index) of fieldList" :key="index" v-model="form.note" :label="item.fieldName" placeholder="点击填写" />
+
                 </div>
 
                 <div class="pt10 pb10 pl15 pr15 d-bg-white">
@@ -85,7 +88,7 @@
                 </i-switch>
             </div>
 
-            <a url='/pages/common/more-list' class='d-center d-text-gray mt10 pb10'>
+            <a url='/pages/common/more-list?busType=0&isEnabled=-1' class='d-center d-text-gray mt10 pb10'>
                 <i-icon type='add' size="20" color='#333' /> <span class='ml15'>添加更多条目</span>
             </a>
         </scroll-view>
@@ -115,7 +118,13 @@ export default {
 				sourceCode: '', // 来源
 				tradeCode: '', // 行业
 				gradeCode: '', // 客户级别
-				clientStatus: '' // 客户状态
+				clientStatus: '', // 客户状态
+				formsFieldValueSaveVoList: [],
+				lableBusinessSaveVo: {
+					busId: '', // 100000,
+					busType: '', // 0,
+					labelIdArray: []
+				}
 			},
 			rules: {
 				name: [{
@@ -130,7 +139,7 @@ export default {
 					message: '手机号格式不正确'
 				}]
 			},
-			moreField: [] // 更多条目字段
+			fieldList: [] // 更多条目字段
 		}
 	},
 	computed: {
@@ -147,6 +156,8 @@ export default {
 	onLoad (params) {
 		this.id = params.id || 0
 		this.getDetailInfo()
+	},
+	onShow () {
 		this.getMoreField()
 	},
 	onUnload () {
@@ -174,6 +185,7 @@ export default {
 				isEnabled: 0
 			}).then(res => {
 				if (res.code === 200) {
+					this.fieldList = res.data || []
 				}
 			})
 		},
