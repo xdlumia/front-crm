@@ -12,7 +12,9 @@
                     </div>
                 </div>
             </filter-plane>
-            <filter-plane :title='item.title' :dataList='item.datalist' :prop="item.prop" @click='getFilterData' v-for='(item, index) in filterList' :key="index" />
+            <filter-plane title='销售阶段' v-model='filterData.stageIds' :dataList='stageList'/>
+            <filter-plane title='预计成交日期' v-model='filterData.transationTime' isSingle :dataList='dateList'/>
+            <filter-plane title='机会来源' v-model='filterData.sourceCode' :dataList='sourceCode'/>
         </scroll-view>
         <div class='filter-btn d-center f18 d-text-blue'>
             <div class='btn-item hfull d-cell ac' @click='clear'>清空</div>
@@ -22,63 +24,47 @@
 </template>
 <script>
 import FilterPlane from '@/components/filter-plane'
-let closingDate = [
-	{ id: '0', name: '本周' },
-	{ id: '1', name: '本季' },
-	{ id: '2', name: '本年' },
-	{ id: '3', name: '上周' },
-	{ id: '4', name: '上月' },
-	{ id: '5', name: '本月' },
-	{ id: '6', name: '今天' },
-	{ id: '7', name: '下周' }
+let dateList = [
+	{ code: '0', content: '本周' },
+	{ code: '1', content: '本季' },
+	{ code: '2', content: '本年' },
+	{ code: '3', content: '上周' },
+	{ code: '4', content: '上月' },
+	{ code: '5', content: '本月' },
+	{ code: '6', content: '今天' },
+	{ code: '7', content: '下周' }
 ]
-let source = [
-	{ id: '0', name: '广告' },
-	{ id: '1', name: '研讨会' },
-	{ id: '2', name: '搜索引擎' }
+let sourceCode = [
+	{ code: '0', content: '广告' },
+	{ code: '1', content: '研讨会' },
+	{ code: '2', content: '搜索引擎' }
 ]
 export default {
-	props: ['stageList'],
+	props: ['stageList', 'form'],
 	components: {
 		FilterPlane
 	},
 	data () {
 		return {
-			// filterList: [{
-			// 	title: '销售阶段',
-			// 	datalist: this.stageList
-			// }, {
-			// 	title: '预计成交日期',
-			// 	datalist: this.stageList
-			// }, {
-			// 	title: '机会来源',
-			// 	datalist: this.stageList
-			// }
-			// ],
-			principal: []
+			principal: [],
+			dateList: dateList,
+			sourceCode: sourceCode,
+			filterData: {
+				stageIds: [], // 销售阶段
+				transationTime: '', // 预计成交日期
+				sourceCode: []
+			}
 		}
 	},
 	created () {
-
+		console.log(this.stageList)
 	},
 	watch: {
 	},
 	computed: {
-		filterList () {
-			return [{
-				prop: 'stageIds',
-				title: '销售阶段',
-				datalist: this.stageList
-			}, {
-				prop: 'transationTime',
-				title: '预计成交日期',
-				datalist: closingDate
-			}, {
-				prop: 'sourceCode',
-				title: '机会来源',
-				datalist: source
-			}
-			]
+		b () {
+			console.log(this.stageList)
+			return this.stageList
 		}
 	},
 	methods: {
@@ -88,14 +74,10 @@ export default {
 			})
 		},
 		clear () {
-			this.$emit('clear')
+			Object.assign(this.filterData, this.$options.data().filterData)
 		},
-		// 获取点击的数据
-		getFilterData (item) {
-			this.filterData[item.prop] = item.ids.map(item => item.id)
-		},
-		submit () {
-			this.$emit('submit', this.getFilterData())
+		submit (item) {
+			this.$emit('submit', this.filterData)
 		}
 	}
 }

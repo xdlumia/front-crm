@@ -2,8 +2,8 @@
   <div class="chance-bg">
     <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称" searchType='1' />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
-    <Filter :filterData='filterData' @filterSubmit='submit' ref='filter'>
-			<filter-diy :stageList="stageList" @submit='submit' @clear='clear' />
+    <Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
+			<filter-diy :stageList="stageList"  @submit='diyFilterSubmit' @clear='clear' />
 		</Filter>
     <!-- 步骤 -->
     <i-steps
@@ -150,12 +150,17 @@ export default {
 		},
 
 		// 列表筛选方法
-		submit (item) {
+		filterSubmit (item) {
 			let arrayType = ['sourceCode', 'stageIds']
 			if (arrayType.includes(item.prop)) {
 				this.queryForm[item.prop].push(item.id)
 			}
 			this.queryForm[item.prop] = item.id
+			this.$refs.list.reload()
+			this.$refs.filter.hide()
+		},
+		diyFilterSubmit (filterData) {
+			this.queryForm = Object.assign({}, this.queryForm, filterData)
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
 		},
