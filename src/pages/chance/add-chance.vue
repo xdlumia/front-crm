@@ -123,7 +123,6 @@ export default {
 		}
 	},
 	onLoad (option) {
-		console.log(option)
 		if (option.id) {
 			this.busId = option.id
 			this.editType = option.editType

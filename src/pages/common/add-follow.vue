@@ -19,11 +19,10 @@
                     :props="{label:'content',value:'code'}"
                     label="跟进类型"
                     placeholder="请选择跟进类型"
-                    required
                     :options="dictionaryOptions('CRM_GJLX')">
                 </i-select>
 				<a url="/pages/client/index" openType="switchTab" v-if="form.busType != 2">
-					<i-input disabled v-model="form.clientId" label="客户名称" placeholder="请填写客户名称" required>
+					<i-input disabled v-model="form.clientId" label="客户名称" placeholder="请填写客户名称">
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>
 				</a>
@@ -32,7 +31,6 @@
                     v-model="form.salesFunnelId"
                     :props="{label:'content',value:'code'}"
                     label="销售机会"
-                    required
                     :options="dictionaryOptions('CRM_GJLX')">
                 </i-select>
                 <picker-date v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期">
@@ -42,7 +40,6 @@
                     v-model="form.intention"
                     :props="{label:'content',value:'code'}"
                     label="意向程度"
-                    required
                     :options="dictionaryOptions('CRM_YXCD')">
                 </i-select>
             </div>
