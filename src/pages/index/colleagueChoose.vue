@@ -13,7 +13,7 @@
 
         </div>
         <div style="height:50px;justify-content: space-between;align-items: center;position:fixed;bottom:0;z-index:30;background:#FFF;border-top:1px solid #F2F2F2" class="d-flex wfull">
-                <div class="d-text-blue ml15 d-elip">已选择：<span v-for="(item,index) in isCheckedAllData" :key="index" class="ml5">{{item.name}}<span></div>
+                <div class="d-text-blue ml15 d-elip">已选择：<span v-for="(item,index) in isCheckedAllData" :key="index" class="ml5">{{item.name}}</span></div>
                 <i-button class="mr15" @click="handleClick" type="primary" size='small'>确定</i-button>
         </div>
 
