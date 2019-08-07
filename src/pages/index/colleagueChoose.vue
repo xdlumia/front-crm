@@ -7,26 +7,13 @@
         <NavBar title="首页" />
         <div>
             <div class="d-flex mt5">
-                <div @click="isColleague = false" class="f16 d-text-gray b ml10 ac w50" :class="!isColleague ? 'brblur' : ''">最近</div>
-                <div @click="isColleague = true" class="f16 d-text-gray b ml10 ac w50" :class="isColleague ? 'brblur' : ''">同事 </div>
+                <div class="f16 d-text-gray b ml10 ac w50">同事 </div>
             </div>
-            <!--  -->
-            <div v-show="!isColleague">
-                <block v-for="(child,index) in dataArr" :key="index">
-                    <view class="wxaSortPickerItem" :data-text="child.name" :data-value="child.value"  @click="wxaSortPickerItemTap(child)">
-                        <uni-icon class="ml15" type='checkbox-filled' :color="child.value == isCheckedData.value ? '#1890FF' : '#999'" size='26' />
-                        <span class="ml5">{{child.name}}</span>
-                    </view>
-                </block>
-            </div>
-
-            <div v-show="isColleague">
-                <indexed-list :isRadio='isRadio' :dadchild='isCheckedData' ref="sortPickerList" @clickData="clickData"></indexed-list>
-            </div>
+			<indexed-list :isRadio='isRadio' ref="sortPickerList" :isCheckedAllData='isCheckedAllData' @clickData="clickData" :echodata='echodata'></indexed-list>
 
         </div>
         <div style="height:50px;justify-content: space-between;align-items: center;position:fixed;bottom:0;z-index:30;background:#FFF;border-top:1px solid #F2F2F2" class="d-flex wfull">
-                <div class="d-text-blue ml15">已选择：{{isCheckedData.name || ''}}</div>
+                <div class="d-text-blue ml15 d-elip">已选择：<span v-for="(item,index) in isCheckedAllData" :key="index" class="ml5">{{item.name}}</span></div>
                 <i-button class="mr15" @click="handleClick" type="primary" size='small'>确定</i-button>
         </div>
 
@@ -41,7 +28,6 @@ export default {
 	},
 	data () {
 		return {
-			isColleague: true,
 			dataArr: [
 				{ name: '中国', value: 'China' },
 				{ name: '俄罗斯', value: 'Russia' },
@@ -56,8 +42,9 @@ export default {
 				{ name: '非洲', value: 'New Zealand' }
 			],
 			clickDatas: {},
-			isRadio: true,
-			isCheckedData: { name: '', value: '' }
+			isRadio: false,
+			isCheckedAllData: [{ name: '', value: '' }],
+			echodata: ['Australia']// 用来做回显的数据
 		}
 	},
 	components: {
@@ -67,22 +54,26 @@ export default {
 
 	},
 	created () {
+		this.init()
 	},
 	mounted () {
 		this.$refs.sortPickerList.initPage(this.dataArr)
 	},
 	onLoad (option) {
+
 	},
 	methods: {
-		clickData (data) {
-			this.isCheckedData = data
+		init () {
+			this.isCheckedAllData = this.dataArr.filter((item) => {
+				return this.echodata.includes(item.value)
+			})
 		},
+		clickData (data) {
+			this.isCheckedAllData = data
+		},
+		// 点击确定
 		handleClick () {
 			this.$emit('clickAllData', this.isCheckedData)
-		},
-		wxaSortPickerItemTap (child) {
-			this.isCheckedData.value === child.value ? this.isCheckedData = {} : this.isCheckedData = child
-			this.$refs.sortPickerList.wxaSortPickerItemTap(this.isCheckedData, 'dad')
 		}
 	},
 	onReady () {

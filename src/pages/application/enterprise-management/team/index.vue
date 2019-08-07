@@ -26,9 +26,9 @@
 						<view>{{item.applyReason}}</view>
 					</view>
 					<view class="flex-item width48 d-center" style="margin: 40px 0;">
-						<view v-if="item.isAgree == 1" class="fl ml5 d-text-cgray">
+						<button v-if="item.isAgree == 1" class="fl ml5 d-text-cgray">
 							已同意
-						</view>
+						</button>
 						<button v-else type="primary"
 						size="8px" plain="true"
 						class="fl ml5"
@@ -86,9 +86,11 @@ export default {
 		},
 		// 详情
 		info (item) {
-			uni.navigateTo({
-				url: 'info?item=' + JSON.stringify(item)
-			})
+			if (parseInt(item.isAgree) === 1) {
+				uni.navigateTo({
+					url: '/pages/application/enterprise-management/team/info?item=' + JSON.stringify(item)
+				})
+			}
 		}
 	},
 	created () {

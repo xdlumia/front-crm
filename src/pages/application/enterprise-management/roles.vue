@@ -14,18 +14,16 @@
 				@getList='getRoles'
 				ref='roles'>
 			<view class="uni-list">
-				<checkbox-group @change="checkboxChange">
+				<radio-group @change="radioChange">
 					<label class="uni-list-cell uni-list-cell-pd" v-for="(item) in roles" :key="item.id">
 						<view>
-							<checkbox :value="item.id" :checked="ckeckedRoleIds.includes('' +item.id)" />
+							<radio :value="item.id" :checked="ckeckedRoleIds.includes('' +item.id)" />
 						</view>
 						<view style="width:85%">
 							<view >{{item.roleName}}</view>
-							<view style="color: #999999">管理范围: 全公司</view>
-							<view style="color: #999999">权限：全部</view>
 						</view>
 					</label>
-				</checkbox-group>
+				</radio-group>
 			</view>
 		</scroll-list>
 		<i-button style="position: fixed;bottom: 0;" class="wfull" type="primary" @click="makeSure">确定</i-button>
@@ -36,11 +34,11 @@
 export default {
 	data () {
 		return {
-			current: 0,
 			roles: [],
 			roleId: 0,
 			ckeckedRoleIds: [],
-			ckeckedRoles: []
+			ckeckedRoles: [],
+			current: 0
 		}
 	},
 	onLoad (option) {
@@ -50,39 +48,40 @@ export default {
 		}
 	},
 	methods: {
-		checkboxChange: function (e) {
-			// var items = this.roles
-			var values = e.detail.value
-			this.ckeckedRoleIds = []
-			this.ckeckedRoleIds = values
-
-			// for (var i = 0, lenI = items.length; i < lenI; ++i) {
-			// 	const item = items[i]
-			// 	if (values.includes(item.id)) {
-			// 		this.$set(item, 'checked', true)
-			// 	} else {
-			// 		this.$set(item, 'checked', false)
-			// 	}
-			// }
+		radioChange: function (evt) {
+			for (let i = 0; i < this.roles.length; i++) {
+				if (parseInt(this.roles[i].id) === parseInt(evt.target.value)) {
+					this.current = i
+					break
+				}
+			}
 		},
+
+		// checkboxChange: function (e) {
+		// 	// var items = this.roles
+		// 	var values = e.detail.value
+		// 	this.ckeckedRoleIds = []
+		// 	this.ckeckedRoleIds = values
+		// },
 		// 获取列表数据
 		getRoles (roles) {
 			this.roles = roles
 		},
 		// 确定
 		makeSure () {
-			var items = this.roles
-			for (var i = 0, lenI = items.length; i < lenI; ++i) {
-				const item = items[i]
-				if (this.ckeckedRoleIds.includes('' + item.id)) {
-					this.ckeckedRoles.push(item)
-				}
-			}
+			// var items = this.roles
+			// for (var i = 0, lenI = items.length; i < lenI; ++i) {
+			// 	const item = items[i]
+			// 	if (this.ckeckedRoleIds.includes('' + item.id)) {
+			// 		this.ckeckedRoles.push(item)
+			// 	}
+			// }
+
 			// 返回参数给上一级页面
 			let pages = getCurrentPages()
 			let prevPage = pages[ pages.length - 2 ]
 			prevPage.setData({
-				ckeckedRoles: this.ckeckedRoles,
+				ckeckedRoles: this.roles[this.current],
 				backFromRole: true
 			})
 			uni.navigateBack({
