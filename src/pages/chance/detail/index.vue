@@ -12,8 +12,8 @@
           >{{datailInfo.chanceName}}</div>
           <div class="flex-item datail-handle">
             <a class="d-inline" :url="`/pages/chance/add-chance?id=${datailInfo.id}&editType=1`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
-            <span @click="updateAttention(datailInfo.watchfulId)">
-				<i-icon :type="datailInfo.watchfulId?'like_fill':'like'" size="20" class="ml15" :color="datailInfo.watchfulId?'#FF5533':'#999'" />
+            <span @click="updateAttention(datailInfo.isWatchful)">
+				<i-icon :type="datailInfo.isWatchful?'like_fill':'like'" size="20" class="ml15" :color="datailInfo.isWatchful?'#FF5533':'#999'" />
 			</span>
           </div>
         </div>
@@ -167,9 +167,9 @@ export default {
 		updateAttention (val) {
 			// 是否关注（0-未关注，1-已关注）
 			if (val) {
-				this.datailInfo.watchfulBusinessStatus = 1
+				this.datailInfo.isWatchful = 1
 			} else {
-				this.datailInfo.watchfulBusinessStatus = 0
+				this.datailInfo.isWatchful = 0
 			}
 		},
 		handlerAction (item) {

@@ -97,7 +97,11 @@ export default {
     transform: translate3d(0, 0, 0);
     visibility: visible
 }
-
+.i-as{height: 80%;}
+.i-as-actions{
+    height: calc(100% - 54px);
+    overflow-y: auto
+}
 .i-as-mask {
     position: fixed;
     top: 0;
@@ -108,6 +112,7 @@ export default {
     z-index: 900;
     transition: all .2s ease-in-out;
     opacity: 0;
+    height: 100vh;
     visibility: hidden
 }
 
@@ -159,7 +164,7 @@ export default {
 }
 
 .i-as-cancel {
-    margin-top: 6px
+    margin-top: 6px;
 }
 
 .i-as-btn-loading {

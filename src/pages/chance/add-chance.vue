@@ -141,12 +141,32 @@ export default {
 	created () {
 		// 获取销售阶段
 		this.salesstageQueryList()
+		// 获取部门列表
+		this.getDepts()
 	},
 	methods: {
 		// 保存
 		async saveChance () {
 			await this.$refs.mform.validate()
+			// 验证机会名称
+			this.$api.seeCrmService.saleschanceVerifyChanceName({ chanceName: this.form.chanceName })
+				.then(res => {
+					if (res.data) {
+						// 如果没有重复提交表单
+						this.submitForm()
+						return
+					}
+					this.$utils.showModal('已有重复的销售机会,是否继续创建?')
+						.then(async () => {
+							// 如果没有重复提交表单
+							this.submitForm()
+						})
+						.catch(() => {})
+				})
 			// saleschance/verifyChanceName
+		},
+		// 提交表单
+		submitForm () {
 			let api = 'saleschanceSave'
 			if (this.editType === '1') {
 				api = 'saleschanceUpdate'
@@ -158,8 +178,8 @@ export default {
 				})
 		},
 		// 获取部门列表
-		getChildrenEmployees () {
-			this.$api.enterpriseManagementService.organizationalStructureDepts({ limit: 100, paeg: 1 })
+		getDepts () {
+			this.$api.enterpriseManagementService.getDepts({ limit: 100, paeg: 1 })
 				.then(res => {
 					this.deptList = res.data || []
 				})

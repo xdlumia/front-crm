@@ -3,24 +3,25 @@
         <NavBar title='编辑销售阶段' />
         <i-cell-group class="f13">
             <!-- <dragSort  v-slot="{ row,index }" :list="resultList" @change="onDragSortChange"> -->
-                <i-cell class="wfull" v-for="(item,index) of resultList" :key="index">
+                <i-cell class="wfull" v-for="(item,index) of stageList" :key="index">
                     <i-row>
                         <i-col span="3">
-                            <p><i class="stage-index">{{index}}</i></p>
+                            <p><i class="stage-index">{{index+1}}</i></p>
                         </i-col>
                         <i-col span="3">
-                            <span @click="delResult(index)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
+                            <span @click="delStage(index)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
                         </i-col>
                         <i-col span="4">
-                            <p @click="handlerAction()" class="f13">80%</p>
+                            <p @click="handlerAction(item)" class="f13">{{item.equityedge}}%</p>
                         </i-col>
                         <i-col span="2">
-                            <p @click="handlerAction()"><i-icon type="enter" size="20" color="#999" /></p>
+                            <p @click="handlerAction(item)"><i-icon type="enter" size="20" color="#999" /></p>
                         </i-col>
-                        <i-col span="8" i-class="col-class">
-                        <span class="pl5 f13">{{row.title}}</span>
+                        <i-col span="10" i-class="col-class">
+                            <i-input class="stage-name" :label-width="0" v-model="item.stageName" placeholder="请输入名称"></i-input>
+                        <!-- <span class="pl5 f13">{{item.stageName}}</span> -->
                         </i-col>
-                        <i-col span="4" class="ar">
+                        <i-col span="2" class="ar">
                             <i class="uni-icon uni-icon-bars f16"></i>
                         </i-col>
                     </i-row>
@@ -54,24 +55,22 @@
         </i-cell-group>
         <!-- 保存 -->
         <div class="footer-fixed-menu">
-            <i-button type="primary" i-class="f16">保存</i-button>
+            <i-button type="primary" i-class="f16" @click="submit()">保存</i-button>
         </div>
         <!-- 更多 action -->
-        <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" @click="handleMore" />
+        <i-actionSheet :visible="moreShow" :actions="equityList" show-cancel @cancel="handlerAction()" @click="handleMore" />
 
     </div>
 </template>
 
 <script>
-let moreActionsTitle = ['0', '50', '100', '80', '90']
-let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
-
 	data () {
 		return {
-			moreActions: moreActions,
 			moreShow: false,
-			upData: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
+			stageList: [],
+			equityList: [],
+			tempRowStage: {},
 			resultList: [
 				{ title: '赢单', value: '100%' },
 				{ title: '输单', value: '0%' },
@@ -79,30 +78,79 @@ export default {
 			]
 		}
 	},
+	created () {
+		this.salesstageQueryList()
+		this.equityList = this.equityedgeList()
+	},
 	methods: {
+		equityedgeList () {
+			let list = []
+			for (var i = 5; i <= 100; i += 5) {
+				list.push({ name: i + '%' })
+			}
+			return list
+		},
+		// 获取销售阶段列表
+		salesstageQueryList () {
+			this.$api.seeCrmService.salesstageQueryList()
+				.then(res => {
+					this.stageList = res.data || []
+				})
+		},
+		// 添加阶段
 		addStage () {
-			if (this.resultList.length >= 5) {
+			if (this.stageList.length >= 5) {
 				uni.showToast({ title: '最大只能添加5条', icon: 'none' })
 				return
 			}
-			this.resultList.push({})
-			console.log('添加阶段')
+			this.stageList.push({ equityedge: '', stageName: '' })
 		},
-		delResult (index) {
-			console.log(index)
-			this.resultList.splice(index, 1)
+		// 删除阶段列表
+		delStage (index) {
+			this.stageList.splice(index, 1)
 		},
 		// onDragSortChange (e) {
 		// 	console.log(e)
 		// 	// frontData 插到谁后面
 		// 	// data 操作的数据
 		// },
-		handlerAction (item) {
+		handlerAction (row) {
+			if (row) {
+				this.tempRowStage = row
+			}
 			this.moreShow = !this.moreShow
 		},
 		handleMore ({ target: { index } }) {
-			console.log(index)
+			this.tempRowStage.equityedge = this.equityList[index].name.replace('%', '')
 			this.moreShow = !this.moreShow
+		},
+		// 提交表单
+		submit () {
+			// 验证
+			for (let i = 0; i < this.stageList.length; i++) {
+				if (!this.stageList[i].stageName || !this.stageList[i].equityedge) {
+					this.$utils.toast.text('阶段赢率和名称是必填项')
+					return
+				}
+				if (this.stageList[i + 1] && this.stageList[i].equityedge >= this.stageList[i + 1].equityedge) {
+					this.$utils.toast.text('阶段赢率是递增关系')
+					return
+				}
+			}
+			// 调用保存接口
+			let params = this.stageList.map((item, index) => {
+				return {
+					equityedge: item.equityedge,
+					id: item.id || '',
+					stageName: item.stageName,
+					positionNum: index + 1
+				}
+			})
+			this.$api.seeCrmService.salesstageUpdateBatch(params)
+				.then(res => {
+					// 返回上一页
+					this.$routing.navigateBack()
+				})
 		}
 	}
 }
@@ -110,6 +158,12 @@ export default {
 
 <style lang="scss" scoped>
     .stage-page{
+        .stage-name{
+            /deep/ .detail-panel-item{
+                padding:0;
+                border:none
+            }
+        }
         /deep/ scoped-slots-default{width:100%}
         background: #f2f2f2;
         height: 100vh;

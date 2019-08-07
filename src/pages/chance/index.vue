@@ -141,7 +141,7 @@ export default {
 		// 获取销售阶段
 		this.salesstageQueryList()
 		// 获取销售机会阶段统计
-		this.saleschanceAlesChanceStatistics()
+		this.saleschanceSalesChanceStatistics()
 	},
 	methods: {
 		// 获取列表数据
@@ -164,12 +164,13 @@ export default {
 			this.currStage = index
 			this.queryForm.stageIds = [row.id]
 			// 获取销售机会阶段统计
-			this.saleschanceAlesChanceStatistics({ stageId: [row.id] })
+			this.saleschanceSalesChanceStatistics({ stageId: [row.id] })
+			// 刷新列表
 			this.$refs.list.reload()
 		},
 		// 获取销售统计
-		saleschanceAlesChanceStatistics (params) {
-			this.$api.seeCrmService.saleschanceAlesChanceStatistics(params)
+		saleschanceSalesChanceStatistics (params) {
+			this.$api.seeCrmService.saleschanceSalesChanceStatistics(params)
 				.then(res => {
 					this.stageSts = res.data || {}
 				})
