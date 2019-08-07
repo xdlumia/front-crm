@@ -7,8 +7,8 @@
 -->
 <template>
     <view>
-		<NavBar v-if="isEditor == 1" title="编辑员工" />
-        <NavBar v-if="isEditor == 0" title="添加员工" />
+		<NavBar v-if="isEditor == 1 || formData.isApply == 1 " title="编辑员工" />
+        <NavBar v-if="isEditor == 0 && formData.isApply == 0" title="添加员工" />
         <view class="uni-common-mt wfull">
             <m-form ref="mform" :model="formData" :rules="rules">
                 <view class="bb">

@@ -103,7 +103,7 @@ export default {
 						if (response.code === 200) {
 							this.$utils.toast.text('修改成功')
 							setTimeout(() => {
-								this.$routing.navigateBack()
+								this.backToSuper()
 							}, 800)
 						} else {
 							this.$utils.toast.text(response.msg)
@@ -113,6 +113,18 @@ export default {
 					this.$utils.toast.text('修改失败')
 				}
 			}
+		},
+		// 修改成功后返回沙发上一级携带参数
+		backToSuper () {
+			let pages = getCurrentPages()
+			let prevPage = pages[ pages.length - 2 ]
+			prevPage.setData({
+				'deptName': this.deptName,
+				'backFromUpdateDept': true
+			})
+			uni.navigateBack({
+				delta: 1
+			})
 		},
 		// 删除
 		deleteDept () {
