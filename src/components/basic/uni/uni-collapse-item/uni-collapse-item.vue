@@ -129,11 +129,11 @@
 	}
 
 	.uni-collapse-cell--hover {
-		background-color: #f1f1f1
+		background-color: #F9F9F9
 	}
 
 	.uni-collapse-cell--open {
-		background-color: #f1f1f1
+		background-color: #F9F9F9
 	}
 
 	.uni-collapse-cell--disabled {
