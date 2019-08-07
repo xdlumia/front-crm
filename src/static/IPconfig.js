@@ -5,7 +5,7 @@ const model = 'dev'
 var api = ''
 var ossUrl = 'https://oss-a-develop.oss-cn-beijing.aliyuncs.com/'
 if (model === 'dev') {
-  // api = 'http://39.105.103.188:9011'
+  api = 'http://39.105.103.188:9011'
   // api = 'http://10.168.1.145:7300/mock/5d42880818ed947b04cebc75/crm'
   // api = ''
 } else if (model === 'build') {
