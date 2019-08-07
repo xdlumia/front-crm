@@ -22,7 +22,7 @@
         placeholder="请输入选项名称"
         @focus="focusChange(item,index)">
             <div slot="label" v-show="isEdit" @click="deleteMoreList(item.labelName)" class="uni-icon uni-icon-minus-filled f18 d-text-red"></div>
-            <m-checkbox :max="5" v-if="!isEdit" v-model="selCheked"  :label="index" />
+            <m-checkbox :max="5" v-if="!isEdit" v-model="selCheked"  :label="item.id" />
             <span v-if="isEdit" class="d-block ar" style="width:90px;">
                 <i @click="clear(item,index)" v-if="item.focus" class="uni-icon uni-icon-clear mr10 f18 d-text-qgray"></i>
                 <i class="uni-icon uni-icon-bars f18 ml10"></i>
@@ -56,7 +56,7 @@ export default {
 		return {
 			// 标签列表
 			tagList: [],
-			selCheked: [1],
+			selCheked: [],
 			// 是否编辑
 			isEdit: false,
 			// 业务类型(0客户，1联系人，2机会，3成交)
@@ -66,10 +66,8 @@ export default {
 	},
 	onLoad (option) {
 		this.busType = option.busType
-		let params = {
-			busType: option.busType
-		}
-		this.lableinfoList(params)
+		// 获取标签列表
+		this.lableinfoList({ busType: this.busType })
 	},
 	methods: {
 		submitForm () {
@@ -86,20 +84,22 @@ export default {
 				this.$api.seeCrmService.lableinfoSave(tagParams)
 					.then(res => {
 						this.isEdit = false
+						// 获取标签列表
+						this.lableinfoList({ busType: this.busType })
 					})
 			} else {
+				let checkArray = this.tagList.filter(item => this.selCheked.includes(item.id))
 				// 多选状态下保存
-				console.log(this.selCheked)
+				uni.$emit('moreTags', checkArray)
+				// 返回上一页
+				this.$routing.navigateBack()
 			}
 		},
 		// 获取标签列表
 		lableinfoList (params) {
 			this.$api.seeCrmService.lableinfoList(params)
 				.then(res => {
-					let data = res.data || []
-					this.tagList = data.map(item => {
-						return { labelName: item.labelName }
-					})
+					this.tagList = res.data || []
 				})
 		},
 		// 添加标签

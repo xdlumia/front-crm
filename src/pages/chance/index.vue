@@ -10,7 +10,7 @@
       :current="currStage"
       :list="stageList"
       class="change-steps d-fixed wfull pt5 pb5"
-      :style="{top:`calc(${navH} + 39px)`}">
+      :style="{top:`calc(64px + 39px)`}">
       <i-step
         @step="setpHandle('all',0)"
         content="全部销售机会">
@@ -25,7 +25,7 @@
       </i-step>
     </i-steps>
     <!-- 统计 -->
-    <div class="chance-sts bt d-fixed wfull" :style="{top:`calc(${navH} + 39px + 65px)`}">
+    <div class="chance-sts bt d-fixed wfull" :style="{top:`calc(64px + 39px + 65px)`}">
       <li class="sts-item">{{stageSts.stageCount}}个商机</li>
       <li class="sts-item">{{stageSts.totalSalesChanceMoney}}元</li>
       <li class="sts-item" v-if="currStage != 0">赢率{{stageSts.equityedge}}%</li>
@@ -33,8 +33,8 @@
     <!-- 列表内容 -->
     <scroll-list
       class="d-absolute wfull"
-      :style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
-      height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
+      :style="{top:`calc(64px + 39px + 65px + 35px)`}"
+      height="`calc(100vh - 64px - 39px - 65px + 35px)`"
       api="seeCrmService.saleschanceQueryPageList"
       :params="queryForm"
       @getList='getList'
@@ -139,7 +139,7 @@ export default {
 	},
 	created () {
 		// 获取销售阶段
-		this.salesstageList()
+		this.salesstageQueryList()
 		// 获取销售机会阶段统计
 		this.saleschanceAlesChanceStatistics()
 	},
@@ -175,8 +175,8 @@ export default {
 				})
 		},
 		// 获取销售阶段
-		salesstageList () {
-			this.$api.seeCrmService.salesstageList()
+		salesstageQueryList () {
+			this.$api.seeCrmService.salesstageQueryList()
 				.then(res => {
 					let data = res.data || []
 					data.forEach(item => {

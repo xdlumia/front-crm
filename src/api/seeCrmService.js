@@ -1,4 +1,4 @@
-const MOCK_ADDRESS = 'http://10.168.1.145:7300/mock/5d42880818ed947b04cebc75/crm'
+const MOCK_ADDRESS = 'http://39.105.103.188:9011/mock/5d42880818ed947b04cebc75/crm'
 let _isMock = true
 export default {
 	__mockAddress: MOCK_ADDRESS,
@@ -300,7 +300,7 @@ export default {
 		'methods': 'post'
 	},
 
-	// 修改
+	// 批量修改
 	formsfieldconfigUpdateBatch: {
 		'url': '/formsfieldconfig/updateBatch',
 		'mock': _isMock,
@@ -337,6 +337,13 @@ export default {
 	/* =============业务扩展信息中间表end=========== */
 
 	/* =============客户领取记录表start=========== */
+	// 验证查看客户数量
+	getclientlogCheckClientInfoNum: {
+		'url': '/getclientlog/checkClientInfoNum',
+		'mock': _isMock,
+		'methods': 'post'
+	},
+
 	// 删除
 	getclientlogDelete: {
 		'url': '/getclientlog/delete',
@@ -447,6 +454,12 @@ export default {
 		'mock': _isMock,
 		'methods': 'post'
 	},
+
+	// 联系人手机号校验
+	linkmanVerifLinkmanPhone: {
+		'url': '/linkman/verifLinkmanPhone',
+		'mock': _isMock
+	},
 	/* =============联系人基本信息表end=========== */
 
 	/* =============业务与联系人关系表start=========== */
@@ -523,6 +536,20 @@ export default {
 		'mock': _isMock
 	},
 
+	// 删除部门)
+	organizationalStructureDeleteDept: {
+		'url': '/organizationalStructure/deleteDept',
+		'mock': _isMock,
+		'methods': 'delete'
+	},
+
+	// 删除员工)
+	organizationalStructureDeleteEmployee: {
+		'url': '/organizationalStructure/deleteEmployee',
+		'mock': _isMock,
+		'methods': 'delete'
+	},
+
 	// 获取部门列表
 	organizationalStructureDepts: {
 		'url': '/organizationalStructure/depts',
@@ -544,6 +571,12 @@ export default {
 	// 获取用户详细信息)
 	organizationalStructureGetEmployeeDetail: {
 		'url': '/organizationalStructure/getEmployeeDetail/{id}',
+		'mock': _isMock
+	},
+
+	// 获取上级部门)
+	organizationalStructureGetSuperDept: {
+		'url': '/organizationalStructure/getSuperDept',
 		'mock': _isMock
 	},
 
@@ -709,12 +742,6 @@ export default {
 	// 查看详细信息
 	salesstageInfo: {
 		'url': '/salesstage/info/{id}',
-		'mock': _isMock
-	},
-
-	// 获取销售阶段列表
-	salesstageList: {
-		'url': '/salesstage/list',
 		'mock': _isMock
 	},
 
@@ -1012,6 +1039,13 @@ export default {
 	// 修改
 	userapplicationinformationUpdate: {
 		'url': '/userapplicationinformation/update',
+		'mock': _isMock,
+		'methods': 'post'
+	},
+
+	// 更新
+	userapplicationinformationUpdateUserApply: {
+		'url': '/userapplicationinformation/updateUserApply',
 		'mock': _isMock,
 		'methods': 'post'
 	},

@@ -6,8 +6,8 @@
     <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
-			<a url="/pages/client/index" openType="switchTab">
-				<i-input disabled v-model="form.clientId" label="客户名称" placeholder="请填写客户名称" required>
+			<a url="/pages/client/choose-client">
+				<i-input disabled v-model="clientName" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
@@ -17,7 +17,7 @@
                 label="所属部门"
                 placeholder="请选择所属部门"
                 required
-                :options="upData">
+                :options="deptList">
             </i-select>
             <i-input v-model="form.salesMoney" label="销售金额" placeholder="请填写销售金额" required />
             <i-select
@@ -30,14 +30,13 @@
             </i-select>
             <picker-date v-model="form.reckonFinishTime" label="预计成交日期" placeholder="请选择日期">
             </picker-date>
-            <i-select v-model="form.tradeCode" :props="{label:'name',value:'id'}" label="行业" :options="upData"/>
+            <i-select v-model="form.tradeCode" :props="{label:'content',value:'code'}" label="行业" :options="dictionaryOptions('CRM_HY')"/>
             <i-select v-model="form.sourceCode" :props="{label:'content',value:'code'}" label="来源" :options="dictionaryOptions('CRM_LY')"/>
 			<a url="/pages/common/more-tags?busType=2">
-				<i-input disabled v-model="form.userPosition" label="标签" placeholder="请选择">
+				<i-input disabled v-model="labelNames" label="标签" placeholder="请选择">
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
-            <!-- <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="标签" :options="upData"/> -->
             <i-input v-model="form.note" label="备注" placeholder="点击填写" type="textarea" />
             <i-input v-for="(item,index) of fieldList" :key="index" v-model="form.note" :label="item.fieldName" placeholder="点击填写" />
         </m-form>
@@ -58,13 +57,14 @@ export default {
 			stageList: [], // 销售阶段列表
 			busId: '',
 			editType: '', // 编辑类型 1为编辑. 2为复制 空为新建
-			upData: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			fieldList: [], // 自定义字段列表
+			clientName: '', // 客户名称
+			labelNames: '', // 标签名称组合
 			form: {
 				id: '', // 主键id
 				chanceName: '', // '示例：机会名称',
 				clientId: '', // 客户id
-				formsFieldValueSaveVoList: [
+				formsFieldValueSaveVos: [
 					// {
 					// busId:'', // 100000,
 					// busType:'', // 0,
@@ -73,8 +73,8 @@ export default {
 					// }
 				],
 				lableBusinessSaveVo: {
-					busId: '', // 100000,
-					busType: '', // 0,
+					busId: this.busId, // 100000,
+					busType: 2, // 业务类型(0客户，1联系人，2机会，3成交)
 					labelIdArray: []
 				},
 				leaderId: '', // 100000,
@@ -89,7 +89,7 @@ export default {
 			rules: {
 				chanceName: [{
 					required: true,
-					message: '请输入名称'
+					message: '请输入机会名称'
 				}],
 				clientId: [{
 					required: true,
@@ -127,14 +127,26 @@ export default {
 			this.busId = option.id
 			this.editType = option.editType
 		}
+		// 客户回调
+		uni.$once('chooseClient', data => {
+			this.clientName = data.name
+			this.form.clientId = data.id
+		})
+		// 标签回掉
+		uni.$once('moreTags', data => {
+			this.labelNames = data.map(item => item.labelName).join(',')
+			this.form.lableBusinessSaveVo.labelIdArray = data.map(item => item.id)
+		})
 	},
 	created () {
 		// 获取销售阶段
-		this.salesstageList()
+		this.salesstageQueryList()
 	},
 	methods: {
 		// 保存
-		saveChance () {
+		async saveChance () {
+			await this.$refs.mform.validate()
+			// saleschance/verifyChanceName
 			let api = 'saleschanceSave'
 			if (this.editType === '1') {
 				api = 'saleschanceUpdate'
@@ -143,6 +155,13 @@ export default {
 				.then(res => {
 					// 返回上一页
 					this.$routing.navigateBack()
+				})
+		},
+		// 获取部门列表
+		getChildrenEmployees () {
+			this.$api.enterpriseManagementService.organizationalStructureDepts({ limit: 100, paeg: 1 })
+				.then(res => {
+					this.deptList = res.data || []
 				})
 		},
 		// 查询机会详情
@@ -163,8 +182,8 @@ export default {
 				})
 		},
 		// 获取销售阶段
-		salesstageList () {
-			this.$api.seeCrmService.salesstageList()
+		salesstageQueryList () {
+			this.$api.seeCrmService.salesstageQueryList()
 				.then(res => {
 					let data = res.data || []
 					this.stageList = data

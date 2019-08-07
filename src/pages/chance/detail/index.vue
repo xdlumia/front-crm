@@ -127,12 +127,12 @@ export default {
 				.then(res => {
 					this.datailInfo = res.data || {}
 					// 获取销售阶段
-					this.salesstageList()
+					this.salesstageQueryList()
 				})
 		},
 		// 获取销售阶段
-		salesstageList () {
-			this.$api.seeCrmService.salesstageList()
+		salesstageQueryList () {
+			this.$api.seeCrmService.salesstageQueryList()
 				.then(res => {
 					let data = res.data || []
 					data.forEach((item, index) => {
