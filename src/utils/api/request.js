@@ -20,7 +20,7 @@ Api.interceptors.request.use((config, promise) => {
 		title: '加载中...',
 		mask: true
 	})
-	config.headers['token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJmZDE1N2Y4NzUwOGZlY2FmNWE3NzAyZGEyNDU3M2NkMCIsImNsaWVudElwIjoiMjIzLjcyLjc4LjM5IiwiZXhwIjoxNTY1MTM3MzQxLCJ1c2VybmFtZSI6InVzZXI6NDQxIn0.uz5sAX4WOQwbsWHZiDJURW5IGHuDh5oK0PxgA0XEUzk' || local.getItem('token') || ''
+	config.headers['token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJmZDE1N2Y4NzUwOGZlY2FmNWE3NzAyZGEyNDU3M2NkMCIsImNsaWVudElwIjoiMjIzLjcyLjc4LjM5IiwiZXhwIjoxNTY1MTkzMTcyLCJ1c2VybmFtZSI6InVzZXI6NDQxIn0.MxsDLjsZqF4jwVnWGrvICIidW0sOek-hzfPrHJx_jx8' || local.getItem('token') || ''
 	config.headers['finger'] = 'fd157f87508fecaf5a7702da24573cd0' || local.getItem('finger') || ''
 	config.headers['uid'] = uuid()
 	config.headers['verifycode'] = sha512(

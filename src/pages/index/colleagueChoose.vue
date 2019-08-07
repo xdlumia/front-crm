@@ -73,7 +73,8 @@ export default {
 		},
 		// 点击确定
 		handleClick () {
-			this.$emit('clickAllData', this.isCheckedData)
+			uni.$emit('updatedate', { data: this.isCheckedAllData, partiType: this.partiType })
+			// this.$emit('clickAllData', this.isCheckedAllData)
 		}
 	},
 	onReady () {

@@ -3,12 +3,33 @@
 <template>
 <div class="d-bg-white">
     <NavBar title="成交记录信息设置"/>
+    <!-- <uni-list>
+        <uni-list-item  title="hahah"  :show-extra-icon="true" :extra-icon="true">
+        </uni-collapse-item>
+    </uni-list> -->
+
+    <uni-collapse ref="add" class="warp">
+        <uni-collapse-item :show-animation="true" title="系统内置字段">
+            <template>
+                 <i-cell title="嗯哼"></i-cell>
+                 <div style="height:50px;line-height:50px;background:#F9F9F9">
+                     <span class="f12 ml15" style="color:#999"><i-icon type='prompt_fill' color="#999" size='20' class="mr5"/>系统内置字段不可以选择、删除；</span>
+                  </div>
+                 <!-- <i-cell style="background:#F1F1F1 !important;color:#999"><span class="f12"><i-icon type='prompt_fill' color="#999" size='20' class="mr5"/>系统内置字段不可以选择、删除；</span></i-cell> -->
+            </template>
+        </uni-collapse-item>
+    </uni-collapse>
+
     <scroll-view style="height:calc(100vh - 133px)" scroll-y>
         <radio-group class="uni-list" @change="onChange">
             <i-cell-group>
-                <i-cell v-for="(item, index) in 5" :key="index" :title="`测试${index}`" style="position:relative;">
-                    <uni-icon class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20' style="position:absolute;right:55px;top:13px"/>
-                    <radio style="transform:scale(0.7)" slot="footer" value="32" :checked="item.checked" />
+                <i-cell v-for="(item, index) in 5" :key="index" class="setCell" :title="`测试${index}`" style="position:relative;">
+                    <div>
+                        <uni-icon class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20' style="position:absolute;right:55px;top:13px"/>
+                        <!-- <div class="hfull fr" slot='footer' style="display:flex;align-items:center"> -->
+                            <m-checkbox class="fr" v-model="checkList" :label="item" style="position:absolute;right:15px;top:16px"/>
+                        <!-- </div> -->
+                    </div>
                 </i-cell>
             </i-cell-group>
         </radio-group>
@@ -59,8 +80,16 @@
 </div>
 </template>
 <script>
+import uniCollapse from '@/components/basic/uni/uni-collapse/uni-collapse.vue'
+import uniCollapseItem from '@/components/basic/uni/uni-collapse-item/uni-collapse-item.vue'
+// import uniList from '@/components/basic/uni/uni-list/uni-list.vue'
+// import uniListItem from '@/components/basic/uni/uni-list-item/uni-list-item.vue'
 export default {
 	components: {
+		uniCollapse,
+		uniCollapseItem
+		// uniList,
+		// uniListItem
 	},
 	data () {
 		return {
@@ -117,4 +146,11 @@ export default {
 .mationInfo-top{width: 155px;border-right: 1px solid #f2f2f2;}
 .mationInfo-middle{ width: 155px;border-right: 1px solid #f2f2f2;justify-content: space-between;}
 .subButton{width: 63px;height: 25px;line-height: 25px;border: 1px dashed #4889F4;border-radius: 5px;}
+radio-group label, checkbox-group label{
+	padding-right:0upx;
+}
+.uni-collapse-cell__title-text{font-size: 28rpx !important;color: #333 !important;}
+.uni-collapse{position: static !important;}
+.uni-collapse-cell{position: static !important;}
+.uni-collapse-cell__title{border-bottom:1px solid #F1F1F1;}
 </style>

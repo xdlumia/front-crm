@@ -26,7 +26,7 @@
                     </view>
                     <view class="fl width20 pl10 mt15">{{item.employeeName}}</view>
                     <view class="fl ac ml10 pl5 pr5 mt15" style="color:#457FF5;border: 1px solid #457FF5;border-radius: 5px;">
-                        管理员
+                        {{item.roleNames.split(',')[0]}}
                     </view>
                 </view>
             </view>
@@ -93,6 +93,16 @@ export default {
 		}
 	},
 	onShow () {
+		let pages = getCurrentPages()
+		let currPage = pages[pages.length - 1]
+		// 回显修改的部门设置
+		if (currPage.data.backFromUpdateDept) {
+			this.deptName = currPage.data.deptName
+			let names = this.companyName.split('>')
+			names[names.length - 1] = currPage.data.deptName
+			this.companyName = names.join('>')
+		}
+
 		this.init()
 	},
 	methods: {

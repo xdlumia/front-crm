@@ -56,27 +56,12 @@ export default {
 				}
 			}
 		},
-
-		// checkboxChange: function (e) {
-		// 	// var items = this.roles
-		// 	var values = e.detail.value
-		// 	this.ckeckedRoleIds = []
-		// 	this.ckeckedRoleIds = values
-		// },
 		// 获取列表数据
 		getRoles (roles) {
 			this.roles = roles
 		},
 		// 确定
 		makeSure () {
-			// var items = this.roles
-			// for (var i = 0, lenI = items.length; i < lenI; ++i) {
-			// 	const item = items[i]
-			// 	if (this.ckeckedRoleIds.includes('' + item.id)) {
-			// 		this.ckeckedRoles.push(item)
-			// 	}
-			// }
-
 			// 返回参数给上一级页面
 			let pages = getCurrentPages()
 			let prevPage = pages[ pages.length - 2 ]
