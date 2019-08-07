@@ -167,7 +167,10 @@ export default {
 		// 销售阶段筛选
 		setpHandle (row, index) {
 			this.currStage = index
-			this.queryForm.stageIds = [row.id]
+			if (index !== 0) {
+				this.queryForm.stageIds = [row.id]
+				this.stageSts.equityedge = row.equityedge
+			}
 			// 获取销售机会阶段统计
 			this.saleschanceSalesChanceStatistics({ stageId: [row.id] })
 			// 刷新列表
