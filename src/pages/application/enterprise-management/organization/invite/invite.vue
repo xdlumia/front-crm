@@ -86,7 +86,13 @@ export default {
 					'ownerDeptTotalCode': this.companyCode,
 					'inviter': this.inviter
 				}).then((response) => {
-					this.$utils.toast.text(response.msg)
+					if (response.code === 200) {
+						uni.redirectTo({
+							url: '/pages/application/enterprise-management/organization/invite/ok'
+						})
+					} else {
+						this.$utils.toast.text(response.msg)
+					}
 				})
 			} else {
 				this.$utils.toast.text('请填写完整信息')

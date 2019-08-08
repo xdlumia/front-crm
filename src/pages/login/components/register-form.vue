@@ -56,14 +56,25 @@
         </div>
 
         <div class="login-btn">
-            <i-button type="primary" size="default" i-class="f16">立即获取</i-button>
+            <i-button type="primary" size="default" i-class="f16" @click="apply">立即获取</i-button>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+	data () {
+		return {
+			form: {
 
+			}
+		}
+	},
+	methods: {
+		apply () {
+
+		}
+	}
 }
 </script>
 
