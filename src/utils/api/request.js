@@ -20,8 +20,8 @@ Api.interceptors.request.use((config, promise) => {
 		title: '加载中...',
 		mask: true
 	})
-	config.headers['token'] = local.getItem('token') || ''
-	config.headers['finger'] = local.getItem('finger') || ''
+	config.headers['token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJmZDE1N2Y4NzUwOGZlY2FmNWE3NzAyZGEyNDU3M2NkMCIsImNsaWVudElwIjoiMjIzLjcyLjc4LjM5IiwiZXhwIjoxNTY1Mjg5NjEwLCJ1c2VybmFtZSI6InVzZXI6NDQxIn0.bBUtPCa2DT4sNlZfZBcgYEcBuICDwmJaLQq6teUVcSg' || local.getItem('token') || ''
+	config.headers['finger'] = 'fd157f87508fecaf5a7702da24573cd0' || local.getItem('finger') || ''
 	config.headers['uid'] = uuid()
 	config.headers['verifycode'] = sha512(
 		config.headers['__'] + config.headers['token'] + config.headers['finger']

@@ -86,6 +86,7 @@ export default {
 			local.setItem('token', data.token)
 			local.setItem('finger', data.finger)
 			local.setItem('sysCode', data.sysCode)
+			this.$store.commit('setUserInfo', data)
 		},
 		// 验证码发送后的倒计时
 		timeGo () {

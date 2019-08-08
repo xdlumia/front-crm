@@ -59,7 +59,6 @@
     </view>
 </template>
 <script>
-import local from '@/utils/localStorage'
 export default {
 	components: {
 
@@ -89,7 +88,7 @@ export default {
 			this.companyName = option.companyName + '>' + option.deptName
 			this.deptName = option.deptName
 		} else {
-			this.companyName = JSON.parse(local.getItem('companyInfo')).companyName
+			this.companyName = this.$local.fetch('companyInfo').companyName
 			this.deptName = this.companyName
 		}
 	},

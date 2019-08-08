@@ -50,7 +50,7 @@ export default {
 	data () {
 		return {
 			queryForm: {
-				limit: 10,
+				limit: 30,
 				page: 1
 			},
 			teamDatas: []

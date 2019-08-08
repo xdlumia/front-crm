@@ -34,8 +34,8 @@
 </template>
 <script>
 import local from '@/utils/localStorage'
-let company = JSON.parse(local.getItem('companyInfo'))
-let user = JSON.parse(local.getItem('userInfo'))
+let company = local.fetch('companyInfo')
+let user = local.fetch('userInfo')
 export default {
 	data () {
 		return {
