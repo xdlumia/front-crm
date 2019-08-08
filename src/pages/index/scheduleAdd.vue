@@ -34,16 +34,8 @@
                 :options="tixData">
             </i-select>
 
-            <a url="/pages/index/colleagueChoose">
-                <i-select
-                    v-model="acheduleForm.participants"
-                    disabled
-                    :props="{label:'name',value:'id'}"
-                    label="参与人"
-                    placeholder="请选择"
-                    required
-                    :options="tixData">
-                </i-select>
+            <a :url="`/pages/index/colleagueChoose?isRadio=0`">
+                <i-input disabled label="参与人" v-model="acheduleForm.particiNames" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
             </a>
             <div class="d-bg-schedule"></div>
             <!-- <a url='/pages/index/affiliated'>
@@ -61,10 +53,10 @@
                 <a :url='`/pages/client/choose-client?id=${clientData.id}`'>
                     <i-input disabled label="客户" v-model="clientData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                 </a>
-                <a :url='`/pages/contact/index??select=1&id=${contactData.id}`'>
+                <a :url='`/pages/contact/index?select=1&id=${contactData.id}`'>
                     <i-input disabled label="联系人" v-model="contactData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                 </a>
-                <a :url='`/pages/chance/choose-chance?&id=${chanceData.id}`' open-type='switchTab'>
+                <a :url='`/pages/chance/choose-chance?&id=${chanceData.id}`'>
                     <i-input disabled label="销售机会" v-model="chanceData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                 </a>
                 <a :url='`/pages/transaction/index?select=1&id=${transactionData.id}`'>
@@ -98,6 +90,7 @@ export default {
 				endTime: '', // 结束时间
 				remindSecond: '', // 提醒时间（秒）
 				remindType: 0, // 提醒方式(0=>提前，1=>推后)
+				particiNames: '', // 选择的人名称
 				participants: '', // 参与人(多个)
 				clientId: '', // 客户id
 				linkId: '', // 联系人id
@@ -110,36 +103,21 @@ export default {
 					required: true,
 					message: '请输入主题'
 				}],
-				linkId: [{
-					required: true,
-					message: '请选择联系人',
-					trigger: 'change'
-				}],
-				transactionStatus: [{
-					required: true,
-					message: '请选择成交状态',
-					trigger: 'change'
-				}],
 				startTime: [{
 					required: true,
-					message: '请选择开始时间',
-					trigger: 'change'
+					message: '请选择开始时间'
 				}],
 				endTime: [{
 					required: true,
-					message: '请选择结束时间',
-					trigger: 'change'
+					message: '请选择结束时间'
 				}],
-				totalAmount: [{
+				remindSecond: [{
 					required: true,
-					message: '请输入总金额'
+					message: '请选择提醒时间'
 				}],
-				phone: [{
+				particiNames: [{
 					required: true,
-					message: '请输入手机号'
-				}, {
-					type: 'phone',
-					message: '手机号格式不正确'
+					message: '请选择参与人'
 				}]
 			},
 			value1: '',
@@ -161,24 +139,39 @@ export default {
 	},
 	onLoad (option) {
 		// 客户回调
-		uni.$once('chooseClient', data => {
+		uni.$on('chooseClient', data => {
 			this.clientData = data
 		})
 		// 成交记录回调
-		uni.$once('chooseTransaction', data => {
+		uni.$on('chooseTransaction', data => {
 			this.transactionData = data
 		})
 		// 销售机会回调
-		uni.$once('chooseChance', data => {
+		uni.$on('chooseChance', data => {
 			this.chanceData = data
 		})
 		// 联系人回调
-		uni.$once('chooseContact', data => {
+		uni.$on('chooseContact', data => {
 			this.contactData = data
 		})
 		// 公海池回调
-		uni.$once('chooseHighseas', data => {
+		uni.$on('choosePool', data => {
 			this.highseasData = data
+		})
+
+		// 选择的参与人
+		uni.$once('colleagueChoose', data => {
+			// this.highseasData = data
+			let idsArr = []
+			let namesArr = []
+			if (data.data) {
+				data.data.forEach((item) => {
+					idsArr.push(item.id)
+					namesArr.push(item.employeeName)
+				})
+			}
+			this.acheduleForm.participants = idsArr.join(',')
+			this.acheduleForm.particiNames = namesArr.join(',')
 		})
 	},
 	methods: {
@@ -191,13 +184,25 @@ export default {
 		},
 		// 保存日程
 		async fsubmit () {
-			// await this.$refs.acheduleForm.validate()
+			await this.$refs.acheduleForm.validate()
 			// this.$api.seeCrmService.transactionrecordSave(this.acheduleForm)
 			// 	.then(res => {
 			// 		console.log(res)
 			// 		this.$routing.navigateBack()
 			// 		uni.$emit('updatetransList', { params: '' })
 			// 	})
+		},
+		// 选择地图
+		chooseMap () {
+			let that = this
+			uni.chooseLocation({
+				success (data) {
+					that.acheduleForm.address = data.address
+					that.acheduleForm.lon = data.longitude
+					that.acheduleForm.lat = data.latitude
+					// console.log(data)
+				}
+			})
 		}
 	},
 
