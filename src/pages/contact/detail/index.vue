@@ -19,9 +19,17 @@
         <div class="f12">华为技术有限公司</div>
       </div>
       <!-- tabs切换组件 -->
-      <detail-swiper :tabBars='tabBars'>
-            <swiper-item slot='swiper'></swiper-item>
-      </detail-swiper>
+      <i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
+			<i-tab index="0">
+				<notesInfo height="calc(100vh - 280px)"/>
+			</i-tab>
+			<i-tab index="1">
+				<detailInfo height="calc(100vh - 280px)"/>
+			</i-tab>
+			<i-tab index="2">
+				<correlationInfo height="calc(100vh - 280px)"/>
+			</i-tab>
+		</i-tabs>
       <!-- 底部操作按钮 -->
       <div class="footer-fixed-menu d-center d-bg-white">
         <a class="d-cell al" url='/pages/chance/add-follow'>
@@ -45,64 +53,50 @@
 </template>
 
 <script>
-import detailSwiper from './components/detail-swiper'
+import detailInfo from './components/detail-info'
+import notesInfo from '@/pages/client/components/follow-info'
+import correlationInfo from './components/correlation-info'
 
-let moreActionsTitle = ['更多操作', '复制', '转移给他人', '删除', '日程']
+let moreActionsTitle = ['更多操作', '转移', '删除', '复制']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 
 export default {
 	components: {
-		detailSwiper
+		detailInfo,
+		notesInfo,
+		correlationInfo
 	},
 	data () {
 		return {
 			tabBars: [
-				{
-					name: '跟进记录',
-					id: '1'
-				},
-				{
-					name: '详细信息',
-					id: '2'
-				},
-				{
-					name: '相关信息',
-					id: '3'
-				},
-				{
-					name: '相关信息',
-					id: '3'
-				}
+				{ title: '跟进记录' },
+				{ title: '详细信息' },
+				{ title: '相关信息' }
 			],
-			// 步骤列表
-			stepList: [
-				{ label: '验证机会', index: 1 },
-				{ label: '需求确定', index: 2 },
-				{ label: '方案报价', index: 3 },
-				{ label: '谈判审核', index: 4 }
-			],
-			current: '1',
-			detailInfo: {
-				name: '客户名称'
-			},
+			id: '', // 当前详情id
+			// tab当前选中项
+			currTabIndex: 0,
+			detailInfo: {},
 			moreShow: false,
 			phoneShow: false,
 			moreActions: moreActions,
-			phoneActions: [
-				{
-					name: '联系人电话'
-				},
-				{
-					name: '赵利春 18910453728',
-					phone: 18910453728
-				}
-			]
+			phoneActions: []
 		}
 	},
-	onLoad (option) {},
+	onLoad (option) {
+		this.id = option.id
+		// 获取详情
+		this.linkmanInfo(option.id)
+		// 获取联系人列表
+		this.linkmanQueryList({ id: option.id, busType: 1 })
+	},
 	methods: {
-		setpHandle (row, index) {
-			this.current = index
+		// 查询联系人详情
+		linkmanInfo (id) {
+			this.$api.seeCrmService.linkmanInfo(null, id)
+				.then(res => {
+					this.datailInfo = res.data || {}
+				})
 		},
 		handlerAction (item) {
 			this[item] = !this[item]
@@ -110,25 +104,44 @@ export default {
 		handlePhone ({ target: { index } }) {
 			this.callPhone(this.phoneActions[index].phone)
 		},
+		// 标签切换
+		tagsChange ({ index }) {
+			this.currTabIndex = index
+		},
+		// 获取联系人列表
+		linkmanQueryList (params) {
+			this.$api.seeCrmService.linkmanQueryList(params)
+				.then(res => {
+					let data = res.data || []
+					this.phoneActions = data.map(item => {
+						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+					})
+					this.phoneActions.unshift({ name: '联系人电话' })
+				})
+		},
 
 		handleMore ({ target: { index } }) {
 			if (index === 0) return
 			let fnType = {
+				// 转移
 				1: () => {
-					// 复制
-					this.$routing.navigateTo('/pages/chance/add-chance')
+					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${datailInfo.id}`)
 				},
+				// 删除
 				2: () => {
-					this.$routing.navigateTo('/pages/index/colleagueChoose')
+					this.$utils.showModal()
+						.then(() => {
+							this.$api.seeCrmService.linkmanDelete({ id: this.id })
+								.then(res => {
+									// 删除成功跳转到列表页
+									this.$routing.navigateTo(`/pages/contact/index`)
+								})
+						})
+						.catch(() => {})
 				},
+				// 复制 editType = 1编辑 2复制
 				3: () => {
-					this.$utils.showModal().then(() => {
-						// console.log('111')
-					}).catch(() => {})
-				},
-				4: () => {
-					// 更多日程
-					this.$routing.navigateTo('/pages/index/scheduleAdd')
+					this.$routing.navigateTo(`/pages/contact/add-catact?id=${datailInfo.id}&editType=2`)
 				}
 			}
 			fnType[index]()

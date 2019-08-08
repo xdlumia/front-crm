@@ -16,11 +16,11 @@
       ref='list'>
         <div @click='handlerClient(item, index)' class="chance-item uni-flex uni-row" v-for="(item,index) of list" :key="item.id">
           <div class="wfull flex-item item-info d-elip">
-            <a url="./detail/index">
+            <!-- <a url="./detail/index"> -->
               <h4 class="d-elip">{{item.linkkanName}}</h4>
               <p class="d-text-qgray d-elip f12 ">{{item.clientName}}</p>
               <time class="d-text-qgray f12 fl">创建日期: {{item.createTime}}</time>
-            </a>
+            <!-- </a> -->
           </div>
           <div class="flex-item item-progress">
             <span v-if="select==1">
@@ -72,6 +72,7 @@ export default {
 	},
 	data () {
 		return {
+			list: [], // 联系人列表
 			chooseRowIndex: '', // 选中行数据的下标
 			busId: '', // 当为选择页面的时候选中的id
 			filterData: [
@@ -86,6 +87,7 @@ export default {
 					list: sortType
 				}
 			],
+			// 查询vo
 			queryForm: {
 				limit: 10,
 				page: 1,
@@ -109,9 +111,10 @@ export default {
 		// 当前行点击
 		handlerClient (row, index) {
 			if (!this.select) {
-				this.$routing.navigateTo('/pages/contact/detail?id=' + item.id)
+				this.$routing.navigateTo('/pages/contact/detail?id=' + row.id)
 			} else {
 				this.chooseRowIndex = index
+				this.busId = row.id
 			}
 		},
 		// 确定选中

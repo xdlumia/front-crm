@@ -186,9 +186,11 @@ export default {
 					// 1编辑 2复制
 					this.$routing.navigateTo(`/pages/chance/add-chance?id=${datailInfo.id}&editType=2`)
 				},
+				// 转移
 				2: () => {
 					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${datailInfo.id}`)
 				},
+				// 删除
 				3: () => {
 					this.$utils.showModal()
 						.then(() => {
