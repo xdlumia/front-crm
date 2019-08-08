@@ -45,7 +45,7 @@
             </i-select>
         </a>
         <div class="d-bg-schedule"></div>
-        <a url='/pages/index/affiliated'>
+        <!-- <a url='/pages/index/affiliated'>
             <i-select
                 v-model="tixIndex"
                 disabled
@@ -55,7 +55,26 @@
                 required
                 :options="tixData">
             </i-select>
-        </a>
+        </a> -->
+        <i-cell-group>
+            <a :url='`/pages/client/choose-client?id=${clientData.id}`'>
+                <i-cell title="客户" is-link></i-cell>
+            </a>
+            <a :url='`/pages/contact/index??select=1&id=${contactData.id}`'>
+                <i-cell title="联系人" is-link></i-cell>
+            </a>
+            <a :url='`/pages/chance/choose-chance?&id=${chanceData.id}`' open-type='switchTab'>
+                <i-cell title="销售机会" is-link></i-cell>
+            </a>
+            <a :url='`/pages/transaction/index?select=1&id=${transactionData.id}`'>
+            <!-- {{transactionData.name}} -->
+                <i-cell title="成交记录" is-link><span>{{transactionData.name}}</span></i-cell>
+            </a>
+            <a :url='`/pages/highseas/index?select=1&id=${highseasData.id}`'>
+                <i-cell title="客户公海池" is-link></i-cell>
+            </a>
+        </i-cell-group>
+
         <div class="footer-fixed-menu">
             <i-button type="primary" i-class="f16">确 定</i-button>
         </div>
@@ -74,7 +93,12 @@ export default {
 			array: ['中国', '美国', '巴西', '日本'],
 			timeIndex: '',
 			tixIndex: '',
-			tixData: [{ name: '提前十分钟', id: '1' }, { name: '提前30分钟', id: '2' }, { name: '提前一小时', id: '3' }, { name: '提前三小时', id: '4' }]
+			tixData: [{ name: '提前十分钟', id: 600 }, { name: '提前30分钟', id: 1800 }, { name: '提前一小时', id: 3600 }, { name: '提前三小时', id: 10800 }],
+			clientData: {}, // 关联的客户data
+			transactionData: {}, // 关联的成交记录data
+			chanceData: {}, // 关联的机会data
+			contactData: {}, // 联系人的data
+			highseasData: {}// 公海池的data
 		}
 	},
 	computed: {
@@ -82,6 +106,26 @@ export default {
 	created () {
 	},
 	onLoad (option) {
+		// 客户回调
+		uni.$once('chooseClient', data => {
+			this.clientData = data
+		})
+		// 成交记录回调
+		uni.$once('chooseTransaction', data => {
+			this.transactionData = data
+		})
+		// 销售机会回调
+		uni.$once('chooseChance', data => {
+			this.chanceData = data
+		})
+		// 联系人回调
+		uni.$once('chooseContact', data => {
+			this.contactData = data
+		})
+		// 公海池回调
+		uni.$once('chooseHighseas', data => {
+			this.highseasData = data
+		})
 	},
 	methods: {
 		bindDateChange () {

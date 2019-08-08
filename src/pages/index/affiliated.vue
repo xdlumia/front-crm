@@ -12,11 +12,11 @@
             <a url='/pages/contact/index'>
                 <i-cell title="联系人" is-link></i-cell>
             </a>
-            <a url='/pages/chance/index' open-type='switchTab'>
+            <a :url='`/pages/choose-chance?&id=${transactionData.id}`' open-type='switchTab'>
                 <i-cell title="销售机会" is-link></i-cell>
             </a>
-            <a url='/pages/transaction/index'>
-                <i-cell title="成交记录" is-link></i-cell>
+            <a :url='`/pages/transaction/index?chooseType=1&id=${transactionData.id}`'>
+                <i-cell title="成交记录" is-link>{{transactionData.name}}</i-cell>
             </a>
             <a url='/pages/highseas/index'>
                 <i-cell title="客户公海池" is-link></i-cell>
@@ -31,6 +31,8 @@ export default {
 	},
 	data () {
 		return {
+			clientData: {},
+			transactionData: {}
 		}
 	},
 	computed: {
@@ -40,7 +42,11 @@ export default {
 	onLoad (option) {
 		// 客户回调
 		uni.$once('chooseClient', data => {
-			// console.log(data)
+			this.clientData = data
+		})
+		// 成交记录回调
+		uni.$once('chooseTransaction', data => {
+			this.transactionData = data
 		})
 	},
 	methods: {

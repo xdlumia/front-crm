@@ -44,7 +44,7 @@
 					:params="queryForm"
 					ref='list'
 				>
-				<a v-for="(item,index) in transactionList" :key='index' url='/pages/transaction/detail' class='d-relative'>
+				<a v-for="(item,index) in transactionList" :key='index' :url="chooseType == 0 ? '/pages/transaction/detail' : ''" class='d-relative'>
 					<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
 						<div class="d-cell">
 							<div class="f13 d-text-black">{{item.name}}</div>
@@ -52,14 +52,15 @@
 							<div class="f12 d-text-qgray">成交金额：{{item.totalAmount}}</div>
 						</div>
 						<div class="d-center">
-							<div class="f13 d-text-qgray">{{item.transactionStatus}}</div>
+							<div v-if="chooseType == 0" class="f13 d-text-qgray">{{item.transactionStatus}}</div>
+							<m-radio v-else :label='item.id' v-model="chooseData" />
 						</div>
 					</div>
 				</a>
 				</scroll-list>
 		</div>
 
-		<div class="footer-fixed-menu d-center d-bg-white">
+		<div v-if="chooseType == 0" class="footer-fixed-menu d-center d-bg-white">
 			<a url='/pages/transaction/transaction-add' class="d-cell al">
 				<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建成交</span>
 			</a>
@@ -67,6 +68,10 @@
 				<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理成交记录</span>
 			</a>
 		</div>
+
+		<div v-else class="footer-fixed-menu">
+            <i-button @click="fsubmit" type="primary" i-class="f16">确 定</i-button>
+        </div>
     </div>
 </template>
 
@@ -175,8 +180,14 @@ export default {
 					]
 				}
 			],
+			chooseType: 0, // 是否被选择
+			chooseData: '', // 被选中的id
 			transactionList: []// 列表数据
 		}
+	},
+	onLoad (options) {
+		this.chooseType = options.select || 0
+		this.chooseData = options.id || ''
 	},
 	onReady () {
 		let selects = {}
@@ -225,6 +236,18 @@ export default {
 			}
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
+		},
+		// 被选中的确定
+		fsubmit () {
+			if (!this.chooseData) {
+				this.$utils.toast.text('请选择成交记录')
+			} else {
+				let form = this.transactionList.filter((item) => {
+					return item.id === this.chooseData
+				})
+				uni.$emit('chooseTransaction', { id: form[0].id, name: form[0].name })
+				this.$routing.navigateBack()
+			}
 		}
 	}
 }

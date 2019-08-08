@@ -4,9 +4,11 @@
       <slot name="icon"></slot>
     </div>
     <div class="i-cell-bd">
-      <div v-if="title" class="i-cell-text">{{ title }}</div>
-      <div v-if="label" class="i-cell-desc">{{ label }}</div>
-      <slot></slot>
+      <div v-if="title" class="i-cell-text fl w100">{{ title }}</div>
+      <div v-if="label" class="i-cell-desc fl w100">{{ label }}</div>
+      <div class="fl f13 ml10">
+        <slot></slot>
+      </div>
     </div>
     <div @click="navigateTo" class="i-cell-ft">
       <div v-if="value">{{ value }}</div>
