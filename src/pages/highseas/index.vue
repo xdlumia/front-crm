@@ -25,7 +25,7 @@
 				:params="queryForm"
 				@getList='getList'
 			>
-				<div  @click='handlerClient(item, index)'  v-for="(item) of list" :key="item.id" class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
+				<div  @click='handlerClient(item, index)'  v-for="(item, index) of list" :key="item.id" class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
 					<div class="d-cell d-center">
 						<div class="d-cell">
 							<div class="f13 d-text-black">{{item.name}}</div>
