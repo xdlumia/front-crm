@@ -19,11 +19,25 @@
             </div>
             <div class="d-bg-schedule"></div>
 
-            <picker-date v-model="acheduleForm.startTime" label="开始" placeholder="请选择" required>
-            </picker-date>
+            <ruiDatePicker
+                fields="minute"
+                start="2010-00-00 00:00"
+                end="2030-12-30 23:59"
+                :value="value"
+                @change="startTimeChange"
+            >
+                <i-input disabled label="开始" v-model="acheduleForm.startTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
+            </ruiDatePicker>
 
-            <picker-date v-model="acheduleForm.endTime" label="结束" placeholder="请选择" required>
-            </picker-date>
+            <ruiDatePicker
+                fields="minute"
+                start="2010-00-00 00:00"
+                end="2030-12-30 23:59"
+                :value="value"
+                @change="endTimeChange"
+            >
+                <i-input disabled label="结束" v-model="acheduleForm.endTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
+            </ruiDatePicker>
 
             <i-select
                 v-model="acheduleForm.remindSecond"
@@ -57,10 +71,9 @@
                     <i-input disabled label="联系人" v-model="contactData.linkkanName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                 </a>
                 <a :url='`/pages/chance/choose-chance?&id=${chanceData.id}`'>
-                    <i-input disabled label="销售机会" v-model="chanceData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    <i-input disabled label="销售机会" v-model="chanceData.chanceName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                 </a>
                 <a :url='`/pages/transaction/index?select=1&id=${transactionData.id}`'>
-                <!-- {{transactionData.name}} -->
                     <i-input disabled label="成交记录" v-model="transactionData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                 </a>
                 <a :url='`/pages/highseas/index?select=1&id=${highseasData.id}`'>
@@ -76,8 +89,10 @@
 </template>
 
 <script>
+import ruiDatePicker from '@/components/basic/uni/rattenking-dtpicker/rattenking-dtpicker.vue'
 export default {
 	components: {
+		ruiDatePicker
 	},
 	data () {
 		return {
@@ -98,6 +113,7 @@ export default {
 				transactionRecordId: '', // 成交记录id
 				seaPoolId: ''// 客户公海池id
 			},
+			value: '',
 			rules: {
 				content: [{
 					required: true,
@@ -151,7 +167,6 @@ export default {
 		})
 		// 联系人回调
 		uni.$on('chooseContact', data => {
-			console.log(data)
 			this.contactData = data
 		})
 		// 公海池回调
@@ -160,7 +175,7 @@ export default {
 		})
 
 		// 选择的参与人
-		uni.$once('colleagueChoose', data => {
+		uni.$on('colleagueChoose', data => {
 			// this.highseasData = data
 			let idsArr = []
 			let namesArr = []
@@ -178,6 +193,12 @@ export default {
 		bindDateChange () {
 
 		},
+		startTimeChange (val) {
+			this.acheduleForm.startTime = val
+		},
+		endTimeChange (val) {
+			this.acheduleForm.endTime = val
+		},
 		tixChange ({ mp: { detail } }, filed) {
 			let index = detail.value
 			this[filed] = index
@@ -190,8 +211,8 @@ export default {
 			this.acheduleForm.linkId = this.contactData.id || ''
 			this.acheduleForm.salesFunnelId = this.chanceData.id || ''
 			this.acheduleForm.transactionRecordId = this.transactionData.id || ''
-			this.acheduleForm.seaPoolId = this.highseasData.id || ''
-
+			this.acheduleForm.startTime = Date.parse(this.acheduleForm.startTime)
+			this.acheduleForm.endTime = Date.parse(this.acheduleForm.endTime)
 			this.$api.seeCrmService.transactionrecordSave(this.acheduleForm)
 				.then(res => {
 					console.log(res)
