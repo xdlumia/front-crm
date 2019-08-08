@@ -54,7 +54,7 @@
                     <i-input disabled label="客户" v-model="clientData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                 </a>
                 <a :url='`/pages/contact/index?select=1&id=${contactData.id}`'>
-                    <i-input disabled label="联系人" v-model="contactData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    <i-input disabled label="联系人" v-model="contactData.linkkanName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                 </a>
                 <a :url='`/pages/chance/choose-chance?&id=${chanceData.id}`'>
                     <i-input disabled label="销售机会" v-model="chanceData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
@@ -122,12 +122,11 @@ export default {
 			},
 			value1: '',
 			date: '',
-			array: ['中国', '美国', '巴西', '日本'],
 			timeIndex: '',
 			tixIndex: '',
 			tixData: [{ name: '提前十分钟', id: 600 }, { name: '提前30分钟', id: 1800 }, { name: '提前一小时', id: 3600 }, { name: '提前三小时', id: 10800 }],
 			clientData: {}, // 关联的客户data
-			transactionData: { name: 'hahah' }, // 关联的成交记录data
+			transactionData: {}, // 关联的成交记录data
 			chanceData: {}, // 关联的机会data
 			contactData: {}, // 联系人的data
 			highseasData: {}// 公海池的data
@@ -152,6 +151,7 @@ export default {
 		})
 		// 联系人回调
 		uni.$on('chooseContact', data => {
+			console.log(data)
 			this.contactData = data
 		})
 		// 公海池回调
@@ -185,12 +185,19 @@ export default {
 		// 保存日程
 		async fsubmit () {
 			await this.$refs.acheduleForm.validate()
-			// this.$api.seeCrmService.transactionrecordSave(this.acheduleForm)
-			// 	.then(res => {
-			// 		console.log(res)
-			// 		this.$routing.navigateBack()
-			// 		uni.$emit('updatetransList', { params: '' })
-			// 	})
+
+			this.acheduleForm.clientId = this.clientData.id || ''
+			this.acheduleForm.linkId = this.contactData.id || ''
+			this.acheduleForm.salesFunnelId = this.chanceData.id || ''
+			this.acheduleForm.transactionRecordId = this.transactionData.id || ''
+			this.acheduleForm.seaPoolId = this.highseasData.id || ''
+
+			this.$api.seeCrmService.transactionrecordSave(this.acheduleForm)
+				.then(res => {
+					console.log(res)
+					this.$routing.navigateBack()
+					uni.$emit('updatetransList', { params: '' })
+				})
 		},
 		// 选择地图
 		chooseMap () {
