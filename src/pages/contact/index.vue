@@ -111,7 +111,7 @@ export default {
 		// 当前行点击
 		handlerClient (row, index) {
 			if (!this.select) {
-				this.$routing.navigateTo('/pages/contact/detail?id=' + row.id)
+				this.$routing.navigateTo('/pages/contact/detail/index?id=' + row.id)
 			} else {
 				this.chooseRowIndex = index
 				this.busId = row.id

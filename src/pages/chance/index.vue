@@ -166,7 +166,7 @@ export default {
 		// 当前行点击
 		handlerClient (row, index) {
 			if (!this.isSelect) {
-				this.$routing.navigateTo('/pages/chance/detail?id=' + item.id)
+				this.$routing.navigateTo('/pages/chance/detail/index?id=' + item.id)
 			} else {
 				this.chooseRowIndex = index
 				this.busId = row.id

@@ -37,19 +37,6 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
-		// // 滚动到顶部刷新
-		// scrolltoupper (e) {
-		// 	console.log(e)
-		// },
-		// // 滚动到底部加载
-		// scrolltolower (e) {
-		// 	console.log(e)
-		// },
-		// 打开列表详情
-		openDetail (index) {
-			this.$routing.navigateTo('./detail/index')
-		}
-
 	},
 	// // 监听用户下拉动作，一般用于下拉刷新
 	// onPullDownRefresh  () {

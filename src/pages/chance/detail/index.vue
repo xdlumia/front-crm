@@ -9,18 +9,18 @@
           <div
             class="flex-item d-elip wfull f16"
             style="color:#333"
-          >{{datailInfo.chanceName}}</div>
+          >{{detailsInfo.chanceName}}</div>
           <div class="flex-item datail-handle">
-            <a class="d-inline" :url="`/pages/chance/add-chance?id=${datailInfo.id}&editType=1`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
-            <span @click="updateAttention(datailInfo.isWatchful)">
-				<i-icon :type="datailInfo.isWatchful?'like_fill':'like'" size="20" class="ml15" :color="datailInfo.isWatchful?'#FF5533':'#999'" />
+            <a class="d-inline" :url="`/pages/chance/add-chance?id=${detailsInfo.id}&editType=1`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
+            <span @click="updateAttention(detailsInfo.isWatchful)">
+				<i-icon :type="detailsInfo.isWatchful?'like_fill':'like'" size="20" class="ml15" :color="detailsInfo.isWatchful?'#FF5533':'#999'" />
 			</span>
           </div>
         </div>
-        <div class="f12">客户名称: <a :url="`/pages/client/detail?id=${datailInfo.id}`" class="d-elip d-text-blue" style="display:inline">{{datailInfo.clientName}}</a></div>
-        <div class="f12">负责人: {{datailInfo.leaderName || '-'}}</div>
-        <div class="f12">销售金额(元): {{datailInfo.salesMoney || '-'}}
-          <span class="fr">预计成交日期<time class="d-inline d-text-blue f12">{{datailInfo.reckonFinishTime | timeToStr('y-m-d')}}</time></span>
+        <div class="f12">客户名称: <a :url="`/pages/client/detail?id=${detailsInfo.id}`" class="d-elip d-text-blue" style="display:inline">{{detailsInfo.clientName}}</a></div>
+        <div class="f12">负责人: {{detailsInfo.leaderName || '-'}}</div>
+        <div class="f12">销售金额(元): {{detailsInfo.salesMoney || '-'}}
+          <span class="fr">预计成交日期<time class="d-inline d-text-blue f12">{{detailsInfo.reckonFinishTime | timeToStr('y-m-d')}}</time></span>
         </div>
       </div>
       <!-- 当前阶段 -->
@@ -48,7 +48,7 @@
             <followInfo :query="{salesFunnelId:id}" height="calc(100vh - 380px)"/>
         </i-tab>
         <i-tab index="1">
-            <datailInfo :detailInfo="datailInfo" height="calc(100vh - 380px)"/>
+            <detailsInfo :detailInfo="detailsInfo" height="calc(100vh - 380px)"/>
         </i-tab>
         <i-tab index="2">
 			<!-- 相关信息 -->
@@ -78,14 +78,14 @@
 </template>
 
 <script>
-import datailInfo from './components/detail-info'
+import detailsInfo from './components/detail-info'
 import followInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './components/correlation-info'
 let moreActionsTitle = ['更多操作', '复制', '转移给他人', '删除', '日程']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
 	components: {
-		datailInfo,
+		detailsInfo,
 		followInfo,
 		correlationInfo
 	},
@@ -103,7 +103,7 @@ export default {
 			// 当前阶段
 			stageActive: 1,
 			// 机会详情
-			datailInfo: {},
+			detailsInfo: {},
 			moreShow: false,
 			phoneShow: false,
 			moreActions: moreActions,
@@ -125,7 +125,7 @@ export default {
 		saleschanceInfo (id) {
 			this.$api.seeCrmService.saleschanceInfo(null, id)
 				.then(res => {
-					this.datailInfo = res.data || {}
+					this.detailsInfo = res.data || {}
 					// 获取销售阶段
 					this.salesstageQueryList()
 				})
@@ -136,9 +136,9 @@ export default {
 				.then(res => {
 					let data = res.data || []
 					data.forEach((item, index) => {
-						if (this.datailInfo === item.id) {
+						if (this.detailsInfo === item.id) {
 							this.stageActive = index + 1
-							this.datailInfo.stageName = item.stageName
+							this.detailsInfo.stageName = item.stageName
 						}
 					})
 					this.stageList = data
@@ -167,9 +167,9 @@ export default {
 		updateAttention (val) {
 			// 是否关注（0-未关注，1-已关注）
 			if (val) {
-				this.datailInfo.isWatchful = 1
+				this.detailsInfo.isWatchful = 1
 			} else {
-				this.datailInfo.isWatchful = 0
+				this.detailsInfo.isWatchful = 0
 			}
 		},
 		handlerAction (item) {
@@ -184,11 +184,11 @@ export default {
 			let fnType = {
 				1: () => {
 					// 1编辑 2复制
-					this.$routing.navigateTo(`/pages/chance/add-chance?id=${datailInfo.id}&editType=2`)
+					this.$routing.navigateTo(`/pages/chance/add-chance?id=${detailsInfo.id}&editType=2`)
 				},
 				// 转移
 				2: () => {
-					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${datailInfo.id}`)
+					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${detailsInfo.id}`)
 				},
 				// 删除
 				3: () => {
@@ -203,7 +203,7 @@ export default {
 				},
 				4: () => {
 					// 更多日程
-					this.$routing.navigateTo(`/pages/index/scheduleAdd?id=${datailInfo.id}`)
+					this.$routing.navigateTo(`/pages/index/scheduleAdd?id=${detailsInfo.id}`)
 				}
 			}
 			fnType[index]()

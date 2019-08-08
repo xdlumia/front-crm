@@ -8,26 +8,26 @@
         <div class="uni-flex uni-row">
           <div
             class="flex-item d-elip wfull f16"
-            style="color:#333">王东亮</div>
+            style="color:#333">{{detailInfo.linkkanName || '-'}}</div>
           <div class="flex-item datail-handle">
             <a class="d-inline" url="/pages/contact/add-contact"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
             <i-icon type="like" size="20" class="ml15" color="#1890FF" />
           </div>
         </div>
-        <div class="f12">负责人: {{detailInfo.name}}</div>
-        <div class="f12"><a url="/pages/client/detail" class="d-elip d-text-blue" style="display:inline">华为技术有限公司</a></div>
-        <div class="f12">华为技术有限公司</div>
+        <div class="f12">负责人: {{detailInfo.leaderName || '-'}}</div>
+        <div class="f12"><a url="`/pages/client/detail/index?id=${detailInfo.clientId}`" class="d-elip d-text-blue" style="display:inline">{{detailInfo.clientName}}</a></div>
+        <div class="f12">{{detailInfo.address || '-'}}</div>
       </div>
       <!-- tabs切换组件 -->
       <i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
 			<i-tab index="0">
-				<notesInfo height="calc(100vh - 280px)"/>
+				<notesInfo :query="{salesFunnelId:id}" height="calc(100vh - 280px)"/>
 			</i-tab>
 			<i-tab index="1">
-				<detailInfo height="calc(100vh - 280px)"/>
+				<detailInfo :detailInfo="detailsInfo" height="calc(100vh - 280px)"/>
 			</i-tab>
 			<i-tab index="2">
-				<correlationInfo height="calc(100vh - 280px)"/>
+				<correlationInfo :query="{busId:id,busType:1}" height="calc(100vh - 280px)"/>
 			</i-tab>
 		</i-tabs>
       <!-- 底部操作按钮 -->
@@ -95,7 +95,7 @@ export default {
 		linkmanInfo (id) {
 			this.$api.seeCrmService.linkmanInfo(null, id)
 				.then(res => {
-					this.datailInfo = res.data || {}
+					this.detailInfo = res.data || {}
 				})
 		},
 		handlerAction (item) {
