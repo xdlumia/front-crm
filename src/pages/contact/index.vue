@@ -51,6 +51,19 @@
 
 import Filter from '@/components/filter'
 import FilterDiy from './filter-diy'
+let queryType = [
+	{ id: '0', name: '我负责的' },
+	{ id: '1', name: '我参与的' },
+	{ id: '-1', name: '全部' },
+	{ id: '3', name: '7天未跟进的' },
+	{ id: '4', name: '我下属的' }
+]
+// 列表排序数据
+let sortType = [
+	{ id: 'a.follow_up_time', name: '最新跟进日期' },
+	{ id: 'a.create_time', name: '最新创建日期' },
+	{ id: 'a.modify_time', name: '最新修改日期' }
+]
 export default {
 	mixins: [],
 	components: {
@@ -63,39 +76,24 @@ export default {
 			busId: '', // 当为选择页面的时候选中的id
 			filterData: [
 				{
-					prop: 'a',
-					current: { id: 0, name: '我参与的' },
-					list: [
-						{ id: 0, name: '我负责的' },
-						{ id: 1, name: '我参与的' },
-						{ id: 1, name: '全部' },
-						{ id: 1, name: '7天未跟进' },
-						{ id: 1, name: '最近浏览' },
-						{ id: 1, name: '我下属的' }
-					]
+					prop: 'queryType',
+					current: queryType[0],
+					list: queryType
 				},
 				{
-					prop: 'b',
-					current: { id: 0, name: '最新跟进日期' },
-					list: [
-						{ id: 0, name: '最新跟进日期' },
-						{ id: 1, name: '最新创建日期' },
-						{ id: 1, name: '最新修改日期' }
-					]
+					prop: 'orderByStr',
+					current: sortType[0],
+					list: sortType
 				}
 			],
-			// 步骤列表
-			stepList: [
-				{ label: '全部销售机会', index: 'all' },
-				{ label: '验证机会', index: 1 },
-				{ label: '需求确定', index: 2 },
-				{ label: '方案报价', index: 3 },
-				{ label: '谈判审核', index: 4 }
-			],
-			current: 2,
 			queryForm: {
 				limit: 10,
-				page: 1
+				page: 1,
+				linkkanName: '', // 联系人名称
+				linkanNameOrMobile: '', // 姓名或手机号
+				queryType: '', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
+				orderByStr: '', // 排序字段（a.follow_up_time，a.modify_time阶段更新日期，a.create_time创建日期）
+				createTimeType: '' // 创建时间（0-本周，1-本季，2-本年，3-上周，4-上月,5-本月，6-今天，7-下周）
 			}
 		}
 	},

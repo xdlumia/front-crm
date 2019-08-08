@@ -78,12 +78,6 @@
 import Filter from '@/components/filter'
 import FilterDiy from './filter-diy'
 // 筛选数据
-// let queryType = ['全部', '我负责的', '我下属的', '我关注的', '7天未跟进' ].map((item, index) => {
-// 	return {
-// 		name: item,
-// 		id: index
-// 	}
-// })
 let queryType = [
 	{ id: '-1', name: '全部' },
 	{ id: '0', name: '我负责的' },
