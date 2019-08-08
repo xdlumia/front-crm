@@ -23,7 +23,7 @@
             <!-- </a> -->
           </div>
           <div class="flex-item item-progress">
-            <span v-if="select==1">
+            <span v-if="select=='1'">
                   <m-radio v-model="busId" :label='item.id'></m-radio>
             </span>
             <i v-else @click="callPhone(item.mobile)" class="iconfont f20 d-text-blue iconcall"></i>
@@ -73,6 +73,7 @@ export default {
 	data () {
 		return {
 			list: [], // 联系人列表
+			select: '',
 			chooseRowIndex: '', // 选中行数据的下标
 			busId: '', // 当为选择页面的时候选中的id
 			filterData: [
@@ -133,7 +134,7 @@ export default {
 	},
 	computed: {
 		api () {
-			return !this.isSelect ? 'seeCrmService.linkmanQueryList' : 'seeCrmService.linkmanQueryPageList'
+			return !this.select ? 'seeCrmService.linkmanQueryList' : 'seeCrmService.linkmanQueryPageList'
 		}
 	}
 }
