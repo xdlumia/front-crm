@@ -25,17 +25,27 @@
 				<div class='d-text-gray f13 mb5'>
 					客户级别： <span class='d-text-black'>{{ detailInfo.gradeCode | dictionary('CRM_KHJB')}}</span>
 				</div>
-				<div class="d-center d-text-gray mb5">
-					<div class="d-cell f13">成交状态： <span class='d-text-blue'>{{detailInfo.makeBargainCode | dictionary('CRM_CJZT')}}</span></div>
-					<div class="d-cell f13">负责人： <span>{{detailInfo.leaderName}}</span></div>
-				</div>
-				<div class='d-text-gray f13 mb5'>
-					最后跟进时间： <span>{{detailInfo.finallyFollowTime | timeToStr('yyyy-mm-dd')}}</span>
-				</div>
-				<div class="d-center d-text-gray">
-					<div class="d-cell f13"><span class="b">销售机会金额：</span> <span style='color: #FF9900'>{{detailInfo.totalSalesChanceMoney}}元</span></div>
-					<div class="d-cell f13"><span class="b">成交金额: </span>： <span style='color: #FF9900'>{{detailInfo.bargainSum}}元</span></div>
-				</div>
+
+				<template v-if="!source">
+					<div class="d-center d-text-gray mb5">
+						<div class="d-cell f13">成交状态： <span class='d-text-blue'>{{detailInfo.makeBargainCode | dictionary('CRM_CJZT')}}</span></div>
+						<div class="d-cell f13">负责人： <span>{{detailInfo.leaderName}}</span></div>
+					</div>
+					<div class='d-text-gray f13 mb5'>
+						最后跟进时间： <span>{{detailInfo.finallyFollowTime | timeToStr('yyyy-mm-dd')}}</span>
+					</div>
+
+					<div class="d-center d-text-gray">
+						<div class="d-cell f13"><span class="b">销售机会金额：</span> <span style='color: #FF9900'>{{detailInfo.totalSalesChanceMoney}}元</span></div>
+						<div class="d-cell f13"><span class="b">成交金额: </span>： <span style='color: #FF9900'>{{detailInfo.bargainSum}}元</span></div>
+					</div>
+				</template>
+				<template v-if='source'>
+					<div class='d-text-gray f13 mb5'>
+						详细地址： <span class='d-text-gray'>{{ detailInfo.address}}</span>
+					</div>
+				</template>
+
 			</div>
 
 			<!-- 详情 -->
@@ -86,8 +96,60 @@ import followInfo from './components/follow-info'
 import correlationInfo from './components/correlation-info'
 import attrInfo from './components/attr-info'
 
-let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程', '领取', '分配']
-let moreActions = moreActionsTitle.map(item => ({ name: item }))
+// 普通客户
+// let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程']
+// let moreActions = moreActionsTitle.map(item => ({ name: item }))
+
+let moreActions = [
+	{
+		name: '更多操作',
+		id: 0
+	},
+	{
+		name: '复制',
+		id: 1
+	},
+	{
+		name: '退回公海',
+		id: 2
+	},
+	{
+		name: '变更负责人',
+		id: 3
+	},
+	{
+		name: '删除',
+		id: 4
+	},
+	{
+		name: '日程',
+		id: 5
+	}
+]
+
+let moreActionsPool = [
+	{
+		name: '更多操作',
+		id: 0
+	},
+	{
+		name: '分配',
+		id: 6
+	},
+	{
+		name: '删除',
+		id: 4
+	},
+	{
+		name: '领取',
+		id: 7
+	},
+	{
+		name: '日程',
+		id: 5
+	}
+]
+
 export default {
 	components: {
 		detailInfo,
@@ -102,7 +164,7 @@ export default {
 			detailInfo: {},
 			moreShow: false, // 更多按钮 选项
 			phoneShow: false, // 打电话选项
-			moreActions: moreActions,
+			moreActions: [], // 更多按钮
 			phoneActions: [
 				{
 					name: '联系人电话'
@@ -122,11 +184,16 @@ export default {
 					title: '业务属性'
 				}
 			],
-			currIndex: 0
+			currIndex: 0,
+			source: 0 // 来源是否为公海池 1 为公海池进入的详情
 		}
 	},
 	onLoad (data) {
 		this.id = data.id
+		this.source = data.source || 0
+
+		// 区分 更多按钮选项
+		this.moreActions = data.source ? moreActionsPool : moreActions
 	},
 	onShow () {
 		// 获取客户详情
@@ -138,6 +205,7 @@ export default {
 
 		editClient (id = '') {
 			this.$routing.navigateTo('./add-client?id=' + id)
+
 			this.$store.commit('client/setClientInfo', this.detailInfo)
 		},
 
@@ -220,26 +288,42 @@ export default {
 		},
 		// 更多 点击事件
 		handleMore ({ target: { index } }) {
+			// 如果index 为 false 则 return
+			if (!index) return
+			// 获取 id 项
+			let itemIndex = this.moreActions[index].id
+
 			let fnType = {
 				1: () => {
 					// 复制
 					this.editClient()
 				},
 				2: () => {
+					// 退回公海
 					this.$routing.navigateTo('/pages/highseas/return-client')
 				},
 				3: () => {
+					// 变更负责人
 					this.$routing.navigateTo('/pages/index/colleagueChoose')
 				},
 				4: () => {
+					// 删除
 					this.clientinfoDelete()
 				},
 				5: () => {
 					// 更多日程
 					this.$routing.navigateTo('/pages/index/scheduleAdd')
+				},
+				6: () => {
+					// 分配
+					this.$routing.navigateTo('/pages/index/scheduleAdd')
+				},
+				7: () => {
+					// 领取
+					this.$routing.navigateTo('/pages/index/scheduleAdd')
 				}
 			}
-			fnType[index]()
+			fnType[itemIndex]()
 		}
 	},
 	onHide () {

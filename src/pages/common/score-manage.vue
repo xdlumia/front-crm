@@ -4,7 +4,7 @@
  */ -->
 <template>
 	<div class="score-manage-page">
-		<NavBar title="客户评分"/>
+		<NavBar :title="title"/>
 
 		<div class="pb20" v-for='(item, index) in scoreData' :key='index'>
 			<div class='d-bg-white'>
@@ -33,7 +33,7 @@
 			</div>
 		</div>
 
-		<div class="d-center mt20">
+		<div class="d-center mt20" style='padding-bottom: 80px;'>
 			<div class="btn-score f12" @click="addParentField">添加更多字段</div>
 		</div>
 
@@ -47,6 +47,7 @@
 export default {
 	data () {
 		return {
+			title: '',
 			fieldData: [],
 			subFieldData: [],
 			scoreData: [
@@ -66,6 +67,7 @@ export default {
 		}
 	},
 	onLoad (option) {
+		this.title = option.title // 页面标题
 		this.getFormsfieldconfig().then(res => {
 			this.getWeightList(option.busType)
 		})
@@ -128,7 +130,9 @@ export default {
 				minValue: '',
 				sort: len + 1
 			})
-			this.setDisCodeData('code', index, len)
+
+			// 设置 当前字段下 字段数据
+			this.setDisCodeData(this.scoreData[index].groupCode, index, len)
 		},
 
 		// 选择 字段
@@ -154,6 +158,15 @@ export default {
 
 		// 保存方法
 		submit () {
+			let count = this.scoreData.reduce((cu, item) => {
+				return cu + item.weight
+			}, 0)
+
+			if (+count !== 100) {
+				this.$utils.toast.text('权重必须为100%')
+				return
+			}
+
 			this.$api.seeCrmService.fieldweightSave({ saveVo: this.scoreData }).then(res => {
 				// console.log(res)
 			})
@@ -168,7 +181,6 @@ export default {
 .score-manage-page{
 	min-height: 100vh;
 	background: #f2f2f2;
-	padding-bottom: 80px;
 }
 
 .score-rule{

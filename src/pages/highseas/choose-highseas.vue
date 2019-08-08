@@ -3,20 +3,15 @@
         <NavBar title='选择客户公海池' />
 
         <i-cell-group>
-            <i-cell title="华北一区" label='领取客户上限：16'>
+            <i-cell :title="item.name" :label='"领取客户上限：" + item.getClientNumMax' v-for="item in list" :key="item.id" @click='choosePool(item)'>
                 <div class="d-center" slot='footer'>
-                    <span class='radio-box d-inline'></span>
-                </div>
-            </i-cell>
-            <i-cell title="华北一区" label='领取客户上限：16'>
-                <div class="d-center" slot='footer'>
-                    <span class='radio-box d-inline active'></span>
+                    <m-radio :label='item.id' v-model="id" />
                 </div>
             </i-cell>
         </i-cell-group>
 
         <div class="footer-fixed-menu">
-            <i-button type="primary" i-class="f16">确定</i-button>
+            <i-button type="primary" i-class="f16" @click='submit'>确定</i-button>
         </div>
 
     </div>
@@ -25,11 +20,27 @@
 export default {
 	data () {
 		return {
-
+			id: 0,
+			pool: {}
+		}
+	},
+	onLoad (option) {
+		this.id = option.poolId
+	},
+	computed: {
+		list () {
+			return this.$store.state.highseas.list
 		}
 	},
 	methods: {
-
+		choosePool (item) {
+			this.pool = item
+			this.id = item.id
+		},
+		submit () {
+			Object.keys(this.pool).length && this.$store.commit('highseas/setPool', this.pool)
+			this.$routing.navigateBack()
+		}
 	}
 }
 </script>

@@ -7,7 +7,7 @@
 -->
 <template>
     <div class='add-follow-page'>
-        <NavBar title='新建客户信息' />
+        <NavBar :title='title' />
         <scroll-view scroll-y style="height:calc(100vh - 115px)">
 
             <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
@@ -103,6 +103,7 @@
 export default {
 	data () {
 		return {
+			title: '新建客户信息',
 			id: 0,
 			isRepeat: false,
 			isSkipContact: false, // 是否新建联系人
@@ -155,6 +156,11 @@ export default {
 	},
 	onLoad (params) {
 		this.id = params.id || 0
+		if (this.id) {
+			this.title = '编辑客户信息'
+		}
+		// 公海池 id
+		this.form.poolId = params.poolId || ''
 		this.getDetailInfo()
 	},
 	onShow () {

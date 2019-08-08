@@ -5,17 +5,6 @@
 * @date 2019年7月299日
 **/
 -->
-{
-	isRadio,
-	ids,
-	partiType // 是负责人 还是参与人
-	type： 客户 机会 擦
-}
-
-{
-	partiType // 是负责人 还是参与人
-
-}
 <template>
     <div>
         <mPanel top="10" title="团队成员" color="#4889f4" :url="'/pages/index/colleagueChoose?isRadio=1&ids=' + ids + '&partiType=0&type=' + query.type">
@@ -52,8 +41,8 @@ export default {
 	created () {
 		this.getEmployeeList()
 		// 注册 事件
-		uni.$on('chooseEmployee', data => {
-			if (data.partiType === 1) {
+		uni.$on('colleagueChoose', data => {
+			if (+data.query.partiType === 1) {
 				this.updateEmployee(data.data.map(item => item.id))
 			} else {
 				this.updateLeader(data.data.map(item => item.id)[0])

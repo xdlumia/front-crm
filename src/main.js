@@ -1,3 +1,5 @@
+import '@/static/IPconfig'
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App'
@@ -5,7 +7,6 @@ import App from './App'
 import store from './store'
 
 // 其他资源
-import '@/static/IPconfig'
 import globalConfig from '@/utils/global-config.js'
 import local from '@/utils/localStorage'
 import '@/assets/css/app.css'

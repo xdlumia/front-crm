@@ -97,7 +97,7 @@ export default {
     transform: translate3d(0, 0, 0);
     visibility: visible
 }
-.i-as{height: 80%;}
+.i-as{max-height: 80%;}
 .i-as-actions{
     height: calc(100% - 54px);
     overflow-y: auto
