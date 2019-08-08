@@ -49,7 +49,7 @@ export default {
 				condition: ''// 姓名或者手机号
 			},
 			option: {},
-			isCheckedAllData: [{ employeeName: '', id: '' }],
+			isCheckedAllData: [],
 			echodata: [], // 用来做回显的数据
 			query: {}
 		}
@@ -67,7 +67,7 @@ export default {
 
 	},
 	onLoad (option) {
-		this.isRadio = option.isRadio || true
+		this.isRadio = option.isRadio == 0 ? false : true// eslint-disable-line
 		this.query = option
 		this.echodata = option.ids ? option.ids.split(',') : []
 	},
@@ -85,6 +85,7 @@ export default {
 			this.isCheckedAllData = this.dataArr.filter((item) => {
 				return this.echodata.includes(item.id)
 			})
+			console.log(this.isCheckedAllData)
 		},
 		clickData (data) {
 			this.isCheckedAllData = data
