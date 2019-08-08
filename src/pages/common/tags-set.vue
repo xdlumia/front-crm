@@ -39,8 +39,8 @@
       </div>
       <input maxlength="6" v-model="labelName" placeholder="标签名称" class="ml5" style="flex: 1;">
       <div style="calc(100vw - 310px)" class="hfull flexcenter mr15">
-        <div class="ac d-text-blue m5 subButton">
-          <span @click="addTagsList" class="f13">确定</span>
+        <div class="ac d-text-blue m5 subButton" @click="addTagsList">
+          <span class="f13">确定</span>
         </div>
       </div>
     </div>

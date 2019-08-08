@@ -34,7 +34,7 @@
                                         size="20"
                                     />
                                 </div>
-                                <input v-if="item.ishandel" maxlength="20" v-model="item.fieldName" class="ml5 fl" style="flex: 1;border:1px solid #F2F2F2;padding-left:10px;">
+                                <input v-if="item.ishandel" maxlength="6" v-model="item.fieldName" class="ml5 fl" style="flex: 1;border:1px solid #F2F2F2;padding-left:10px;">
                                 <div class="ac d-text-blue m5 fl subButton" v-if="item.ishandel" @click="handelTags(item.id,item.fieldName)">
                                     <span class="f13">确定</span>
                                 </div>
