@@ -25,7 +25,7 @@
 				:params="queryForm"
 				@getList='getList'
 			>
-				<div  @click='handlerClient(item, index)'  v-for="(item) of list" :key="item.id" class="pb10 pt10 pl15 pr15 highseas-item d-flex d-bg-white">
+				<div  @click='handlerClient(item, index)'  v-for="(item) of list" :key="item.id" class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
 					<div class="d-cell d-center">
 						<div class="d-cell">
 							<div class="f13 d-text-black">{{item.name}}</div>
@@ -119,7 +119,7 @@ export default {
 		}
 	},
 	onLoad (option) {
-		option.select = option.select || 0
+		this.select = option.select || 0
 		this.$store.dispatch('highseas/getList')
 		this.queryForm.poolId = this.pool.id
 	},
@@ -188,6 +188,18 @@ export default {
 			// 设置当前选中的 客户项
 			this.cuClient = item
 			this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=1')
+		},
+
+		// 选择 公海池客户 回调
+		submitChooseData () {
+			if (!this.chooseData) {
+				this.$utils.toast.text('请选择客户')
+				return
+			}
+			let { id, name } = this.list[this.chooseDataIndex]
+			uni.$emit('choosePool', { id, name })
+
+			this.$routing.navigateBack()
 		},
 
 		// 分配公海池客户

@@ -300,7 +300,7 @@ export default {
 				},
 				2: () => {
 					// 退回公海
-					this.$routing.navigateTo('/pages/highseas/return-client')
+					this.$routing.navigateTo('/pages/highseas/return-client?clientId=' + this.id + '&leaderId=' + detailInfo.leaderId)
 				},
 				3: () => {
 					// 变更负责人

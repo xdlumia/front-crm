@@ -3,23 +3,18 @@
         <NavBar title='公海池选择' />
 
         <i-cell-group>
-            <i-cell title="华北一区">
+             <i-cell :title="item.name" v-for="item in list" :key="item.id" @click='choosePool(item)'>
                 <div class="d-center" slot='footer'>
-                    <span class='radio-box d-inline'></span>
-                </div>
-            </i-cell>
-            <i-cell title="华北一区">
-                <div class="d-center" slot='footer'>
-                    <span class='radio-box d-inline active'></span>
+                    <m-radio :label='item.id' v-model="id" />
                 </div>
             </i-cell>
         </i-cell-group>
 
         <div class="footer-fixed-menu d-center d-bg-white">
-            <div class="d-cell ac">
+            <div class="d-cell ac" @click='returnPool(-1)'>
                 <span class="iconfont iconfanhui1 f16 d-text-gray"></span><span class="ml5 f13  d-text-gray">直接退回</span>
             </div>
-            <div  class="d-cell ac">
+            <div  class="d-cell ac" @click='returnPool(1)'>
                 <span class="iconfont iconleijixunhuan f16 d-text-gray"></span><span class="ml5 f13  d-text-gray">保留退回</span>
             </div>
         </div>
@@ -29,11 +24,43 @@
 export default {
 	data () {
 		return {
-
+			clientId: 0,
+			id: 0,
+			pool: {}
+		}
+	},
+	onLoad (option) {
+		this.clientId = option.clientId
+	},
+	computed: {
+		list () {
+			return this.$store.state.highseas.list
 		}
 	},
 	methods: {
+		choosePool (item) {
+			this.pool = item
+			this.id = item.id
+		},
+		// 退回公海
+		returnPool (sendBackType) {
+			this.$api.seeCrmService.clientinfoSendBackPool({
+				clientId: this.clientId,
+				poolId: this.id,
+				sendBackType: sendBackType,
+				leaderId: this.leaderId
+			}).then(res => {
+				if (res.code === 200) {
+					console.log(res)
+					// this.$routing.navigateBack()
+				}
+			})
+		}
 
+		// submit () {
+		// 	Object.keys(this.pool).length && this.$store.commit('highseas/setPool', this.pool)
+		// 	this.$routing.navigateBack()
+		// }
 	}
 }
 </script>
@@ -42,26 +69,5 @@ export default {
 .setting-page{
     height: 100vh;
     background: #f6f6f6;
-}
-
-.radio-box{
-    width: 15px;
-    height: 15px;
-    border-radius: 100px;
-    border: 1px solid #d9d9d9;
-    position: relative;
-    &.active{
-        border-color: #1890ff;
-        &::before{
-            content: '';
-            width: 11px;
-            height: 11px;
-            background: #1890ff;
-            border-radius: 100px;
-            position: absolute;
-            left: 2px;
-            top: 2px;
-        }
-    }
 }
 </style>
