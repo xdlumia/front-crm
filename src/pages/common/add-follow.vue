@@ -21,18 +21,16 @@
                     placeholder="请选择跟进类型"
                     :options="dictionaryOptions('CRM_GJLX')">
                 </i-select>
-				<a url="/pages/client/index" openType="switchTab" v-if="form.busType != 2">
-					<i-input disabled v-model="form.clientId" label="客户名称" placeholder="请填写客户名称">
+				<a url="/pages/client/choose-client" openType="switchTab" v-if="form.busType != 2">
+					<i-input disabled v-model="clientName" label="客户名称" placeholder="请选择客户名称">
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>
 				</a>
-				<i-select
-					v-if="form.busType == 0 || form.busType == 3"
-                    v-model="form.salesFunnelId"
-                    :props="{label:'content',value:'code'}"
-                    label="销售机会"
-                    :options="dictionaryOptions('CRM_GJLX')">
-                </i-select>
+				<a url="/pages/chance/choose-chance" openType="switchTab" v-if="form.busType == 0 || form.busType == 3">
+					<i-input disabled v-model="chanceName" label="销售机会" placeholder="请选择客户名称">
+						<i-icon type="enter" size="16" color="#999" />
+					</i-input>
+				</a>
                 <picker-date :required='false' v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期">
 				</picker-date>
 				<i-select
@@ -63,6 +61,8 @@ export default {
 	},
 	data () {
 		return {
+			clientName: '', // 客户名称
+			chanceName: '', // 销售机会名称
 			form: {
 				busId: '', // 业务id,
 				busType: '', // 业务类型(0=>跟进公海池,1=>跟进销售机会,2=>跟进联系人,3=>客户)
@@ -85,8 +85,18 @@ export default {
 		}
 	},
 	onLoad (option) {
-		this.form.busId = option.busId
+		this.form.busId = option.id
 		this.form.busType = option.busType
+		// 客户回调
+		uni.$once('chooseClient', data => {
+			this.clientName = data.name
+			this.form.clientId = data.id
+		})
+		// 机会回调
+		uni.$once('chooseClient', data => {
+			this.chanceName = data.chanceName
+			this.form.salesFunnelId = data.id
+		})
 	},
 	methods: {
 		async followupSave () {
