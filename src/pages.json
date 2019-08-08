@@ -39,7 +39,7 @@
 			}
 		},
 		{
-			"path": "pages/client/choose-chance",
+			"path": "pages/chance/choose-chance",
 			"style": {
 				"navigationBarTitleText": "选择机会"
 			}
