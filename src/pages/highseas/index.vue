@@ -123,9 +123,6 @@ export default {
 		this.$store.dispatch('highseas/getList')
 		this.queryForm.poolId = this.pool.id
 	},
-	onShow () {
-		console.log(this.pool)
-	},
 	onReady () {
 		let selects = {}
 		this.filterData.forEach(item => {

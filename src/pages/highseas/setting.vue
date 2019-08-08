@@ -2,9 +2,15 @@
     <div class='setting-page'>
         <NavBar title='管理客户公海' />
         <i-cell-group>
-            <i-cell title="华北一区公海" label='领取客户上限：16' is-link url='./setting-detail'></i-cell>
-            <i-cell title="华北二区公海" label='领取客户上限：11' is-link url='./setting-detail'></i-cell>
-            <i-cell title="华北三区公海" label='领取客户上限：13' is-link url='./setting-detail'></i-cell>
+            <i-cell
+                :title="item.name"
+                :label='"领取客户上限：" + item.getClientNumMax'
+                v-for="item in list"
+                :key="item.id"
+                @click='choosePool(item)'
+                is-link
+                :url="'./setting-detail?poolId=' + item.id"
+            />
         </i-cell-group>
         <div class="footer-fixed-menu d-center d-bg-white">
             <a url='./add-highseas' class='d-cell d-center'>
@@ -18,6 +24,11 @@ export default {
 	data () {
 		return {
 
+		}
+	},
+	computed: {
+		list () {
+			return this.$store.state.highseas.list
 		}
 	},
 	methods: {
