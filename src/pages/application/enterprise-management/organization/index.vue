@@ -25,7 +25,7 @@
                         <image class="ba" style="height: 51px;width: 51px;" src="/static/img/index.png"></image>
                     </view>
                     <view class="fl width20 pl10 mt15">{{item.employeeName}}</view>
-                    <view class="fl ac ml10 pl5 pr5 mt15" style="color:#457FF5;border: 1px solid #457FF5;border-radius: 5px;">
+                    <view v-if="item.roleNames" class="fl ac ml10 pl5 pr5 mt15" style="color:#457FF5;border: 1px solid #457FF5;border-radius: 5px;">
                         {{item.roleNames.split(',')[0]}}
                     </view>
                 </view>
