@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-      <chanceIndex isSelect />
+      <chanceIndex isSelect  :busId="busId"/>
     </div>
 </template>
 
@@ -20,8 +20,11 @@ export default {
 	},
 	data () {
 		return {
-
+			busId: ''
 		}
+	},
+	onLoad (option) {
+		this.busId = option.id
 	},
 	methods: {
 

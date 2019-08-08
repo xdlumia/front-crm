@@ -52,7 +52,7 @@
 			</i-row>
 		</div>
 		<div class="flex-item d-flex" style="width:50px;align-items: center;" v-if="isSelect">
-			<m-radio v-model="chooseRowIndex" :label='index'></m-radio>
+			<m-radio v-model="busId" :label='item.id'></m-radio>
 		</div>
 	</div>
     </scroll-list>
@@ -100,6 +100,7 @@ let sortType = [
 ]
 export default {
 	props: {
+		busId: {},
 		// 是否为 选择 客户
 		isSelect: {
 			type: Boolean,
@@ -113,9 +114,11 @@ export default {
 	},
 	data () {
 		return {
+
 			// 销售机会列表
 			list: [],
 			chooseRowIndex: '', // radio选中的下标
+			// busId: '', // 当为选择页面的时候选中的id
 			filterData: [
 				{
 					prop: 'queryType',
@@ -150,6 +153,7 @@ export default {
 		// console.log(option)
 	},
 	created () {
+		// this.busId = this.id
 		// 获取销售阶段
 		this.salesstageQueryList()
 		// 获取销售机会阶段统计
@@ -171,11 +175,12 @@ export default {
 				this.$routing.navigateTo('/pages/chance/detail?id=' + item.id)
 			} else {
 				this.chooseRowIndex = index
+				this.busId = row.id
 			}
 		},
 		// 确定选中
 		submitChooseData () {
-			if (this.chooseRowIndex === '') {
+			if (!this.busId) {
 				this.$utils.toast.text('请选择客户')
 				return
 			}

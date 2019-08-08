@@ -24,7 +24,7 @@
           </div>
           <div class="flex-item item-progress">
             <span v-if="select==1">
-                  <m-radio v-model="chooseRowIndex" :label='index'></m-radio>
+                  <m-radio v-model="busId" :label='item.id'></m-radio>
             </span>
             <i v-else @click="callPhone(item.mobile)" class="iconfont f20 d-text-blue iconcall"></i>
           </div>
@@ -60,6 +60,7 @@ export default {
 	data () {
 		return {
 			chooseRowIndex: '', // 选中行数据的下标
+			busId: '', // 当为选择页面的时候选中的id
 			filterData: [
 				{
 					prop: 'a',
@@ -99,6 +100,7 @@ export default {
 		}
 	},
 	onLoad (option) {
+		this.busId = option.id
 		this.select = option.select
 	},
 	methods: {
@@ -116,7 +118,7 @@ export default {
 		},
 		// 确定选中
 		submitChooseData () {
-			if (this.chooseRowIndex === '') {
+			if (!this.busId) {
 				this.$utils.toast.text('请选择客户')
 				return
 			}
