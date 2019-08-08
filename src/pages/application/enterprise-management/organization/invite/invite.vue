@@ -43,7 +43,7 @@
     <!-- 提交按钮 -->
     <i-row class="m10">
         <i-col span="24" i-class="col-class">
-            <i-button @click="submitApply" type="primary" >提交申请</i-button>
+            <auth-button class="wfull ac h30 d-bg-blue">提交申请</auth-button>
         </i-col>
     </i-row>
   </view>
