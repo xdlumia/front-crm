@@ -35,28 +35,29 @@
       class="d-absolute wfull"
       :style="{top:`calc(64px + 39px + 65px + 35px)`}"
       height="`calc(100vh - 64px - 39px - 65px + 35px)`"
-      api="seeCrmService.saleschanceQueryPageList"
+      :api="api"
       :params="queryForm"
       @getList='getList'
       ref='list'>
-      <a v-for="item of list" :key="item.id" :url="`./detail/index?id=${item.id}`">
-        <div class="chance-item uni-flex uni-row">
-          <div class="flex-item item-progress">
-            <circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" />
-          </div>
-          <div class="flex-item item-info d-elip wfull">
-            <h4 class="d-elip">{{item.chanceName || '-'}}</h4>
-            <p class="d-text-gray d-elip">{{item.clientName || '-'}}</p>
-            <i-row>
-              <i-col :span="12" class="d-text-gray f12">{{item.createTime}}</i-col>
-              <i-col :span="12" class="f14 ar">¥{{item.salesMoney}}</i-col>
-            </i-row>
-          </div>
-        </div>
-      </a>
+	<div @click='handlerClient(item, index)' v-for="(item,index) of list" :key="item.id" class="chance-item uni-flex uni-row">
+		<div class="flex-item item-progress">
+		<circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" />
+		</div>
+		<div class="flex-item item-info d-elip wfull">
+			<h4 class="d-elip">{{item.chanceName || '-'}}</h4>
+			<p class="d-text-gray d-elip">{{item.clientName || '-'}}</p>
+			<i-row>
+				<i-col :span="12" class="d-text-gray f12">{{item.createTime | timeToStr}}</i-col>
+				<i-col  v-if='!isSelect' :span="12" class="f14 ar">¥{{item.salesMoney}}</i-col>
+			</i-row>
+		</div>
+		<div class="flex-item d-flex" style="width:50px;align-items: center;" v-if="isSelect">
+			<m-radio v-model="busId" :label='item.id'></m-radio>
+		</div>
+	</div>
     </scroll-list>
     <!-- 客户 -->
-    <div class="footer-fixed-menu d-center d-bg-white bt">
+    <div class="footer-fixed-menu d-center d-bg-white bt" v-if='!isSelect'>
       <a class="d-cell al" url='/pages/chance/add-chance'>
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建机会</span>
@@ -66,6 +67,9 @@
         <span class="ml5 f13 d-text-gray">管理机会</span>
       </a>
     </div>
+	<div class="footer-fixed-menu" v-if='isSelect'>
+		<i-button type="primary" i-class="f16" @click='submitChooseData'>确定</i-button>
+	</div>
   </div>
 </template>
 
@@ -95,6 +99,14 @@ let sortType = [
 	{ id: 'c.equityedge', name: '盈率(从高到底)' }
 ]
 export default {
+	props: {
+		busId: {},
+		// 是否为 选择 客户
+		isSelect: {
+			type: Boolean,
+			default: true
+		}
+	},
 	mixins: [],
 	components: {
 		Filter,
@@ -102,8 +114,11 @@ export default {
 	},
 	data () {
 		return {
+
 			// 销售机会列表
 			list: [],
+			chooseRowIndex: '', // radio选中的下标
+			// busId: '', // 当为选择页面的时候选中的id
 			filterData: [
 				{
 					prop: 'queryType',
@@ -138,17 +153,42 @@ export default {
 		// console.log(option)
 	},
 	created () {
+		// this.busId = this.id
 		// 获取销售阶段
 		this.salesstageQueryList()
 		// 获取销售机会阶段统计
 		this.saleschanceSalesChanceStatistics()
+	},
+	computed: {
+		api () {
+			return !this.isSelect ? 'seeCrmService.saleschanceQueryPageList' : 'seeCrmService.saleschanceQueryList'
+		}
 	},
 	methods: {
 		// 获取列表数据
 		getList (list) {
 			this.list = list
 		},
+		// 当前行点击
+		handlerClient (row, index) {
+			if (!this.isSelect) {
+				this.$routing.navigateTo('/pages/chance/detail?id=' + item.id)
+			} else {
+				this.chooseRowIndex = index
+				this.busId = row.id
+			}
+		},
+		// 确定选中
+		submitChooseData () {
+			if (!this.busId) {
+				this.$utils.toast.text('请选择客户')
+				return
+			}
+			let row = this.list[this.chooseRowIndex]
+			uni.$emit('chooseChance', row)
 
+			this.$routing.navigateBack()
+		},
 		// 列表筛选方法
 		filterSubmit (item) {
 			let arrayType = ['sourceCode', 'stageIds']

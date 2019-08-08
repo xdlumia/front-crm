@@ -14,7 +14,7 @@
             </filter-plane>
             <filter-plane title='销售阶段' v-model='filterData.stageIds' :dataList='stageList'/>
             <filter-plane title='预计成交日期' v-model='filterData.transationTime' isSingle :dataList='dateList'/>
-            <filter-plane title='机会来源' v-model='filterData.sourceCode' :dataList='sourceCode'/>
+            <filter-plane title='机会来源' v-model='filterData.sourceCode' :dataList="dictionaryOptions('CRM_LY')"/>
         </scroll-view>
         <div class='filter-btn d-center f18 d-text-blue'>
             <div class='btn-item hfull d-cell ac' @click='clear'>清空</div>
@@ -34,11 +34,6 @@ let dateList = [
 	{ code: '6', content: '今天' },
 	{ code: '7', content: '下周' }
 ]
-let sourceCode = [
-	{ code: '0', content: '广告' },
-	{ code: '1', content: '研讨会' },
-	{ code: '2', content: '搜索引擎' }
-]
 export default {
 	props: ['stageList', 'form'],
 	components: {
@@ -48,7 +43,6 @@ export default {
 		return {
 			principal: [],
 			dateList: dateList,
-			sourceCode: sourceCode,
 			filterData: {
 				stageIds: [], // 销售阶段
 				transationTime: '', // 预计成交日期

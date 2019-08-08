@@ -89,8 +89,9 @@ export default {
 		this.form.busType = option.busType
 	},
 	methods: {
-		followupSave () {
-			this.$api.seeCrmService.followupSave()
+		async followupSave () {
+			await this.$refs.mform.validate()
+			this.$api.seeCrmService.followupSave(this.form)
 				.then(res => {
 					// 返回上一页
 					this.$routing.navigateBack()
