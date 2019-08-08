@@ -12,10 +12,10 @@
                 <view :id="item.tag" class="wxaSortPickerTag">{{item.tag}}</view>
                 <view class='wxaSortPickerItem-box'>
                     <block v-for="(child,inde) in item.textArray" :key="inde">
-                            <view class="wxaSortPickerItem" :data-text="child.name" :data-value="child.value"  @click="wxaSortPickerItemTap(child)">
-                                <uni-icon type='checkbox-filled' :color="childEchodata.includes(child.value) ? '#1890FF' : '#999'" size='26' />
+                            <view class="wxaSortPickerItem" :data-text="child.employeeName" :data-value="child.id"  @click="wxaSortPickerItemTap(child)">
+                                <uni-icon type='checkbox-filled' :color="childEchodata.includes(child.id) ? '#1890FF' : '#999'" size='26' />
                                 <!-- <uni-icon v-else type='checkbox-filled' color="'#999'" size='26' /> -->
-                                <span class="ml5">{{child.name}}</span>
+                                <span class="ml5">{{child.employeeName}}</span>
                             </view>
                     </block>
                 </view>
@@ -101,16 +101,16 @@ export default {
 		wxaSortPickerItemTap: function (child) {
 			this.child = child
 			if (this.isRadio) {
-				this.childEchodata.includes(child.value) ? (this.childEchodata = []) : (this.childEchodata = [child.value])
+				this.childEchodata.includes(child.id) ? (this.childEchodata = []) : (this.childEchodata = [child.id])
 				this.isCheckedData.length>0 ? (this.isCheckedData = []) :( this.isCheckedData.push(child))
 				this.$emit('clickData', this.isCheckedData)
 			} else {
-				if(this.childEchodata.includes(child.value)){
-					let i = this.childEchodata.indexOf(child.value)
+				if(this.childEchodata.includes(child.id)){
+					let i = this.childEchodata.indexOf(child.id)
 					this.childEchodata.splice(i,1)
 					this.isCheckedData.splice(i,1)
 				}else{
-					this.childEchodata.push(child.value)
+					this.childEchodata.push(child.id)
 					this.isCheckedData.push(child)
 				}
 				this.$emit('clickData', this.isCheckedData)
@@ -229,7 +229,7 @@ export default {
 			if (that.dataType == 'object') {
 				for (var i = 0; i < arr.length; i++) {
 					var text = arr[i]
-					var firstChar = text.name.substr(0, 1)
+					var firstChar = text.employeeName.substr(0, 1)
 					firstChar = firstChar.toUpperCase()
 					var reg = that.query(firstChar)[0]
 					var temIndex = temABC.indexOf(reg)
@@ -247,16 +247,14 @@ export default {
 					textData[temIndex].textArray.push(text)
 				}
 			}
-
-			var temData = that.wxaSortPickerData
-			// var newarr = textData.filter(function(element,index){ return element['textArray'].length != 0; })
-			// temData.textData = newarr;
-			// that.wxaSortPickerData = temData;
+		
+			var temData = {...that.wxaSortPickerData}
+			var newarr = textData.filter(function(element,index){ return element['textArray'].length != 0; })
+			temData.textData = newarr;
+			that.wxaSortPickerData = temData;
 			if (typeof temData === 'undefined') {
 				temData = {}
 			}
-			temData.textData = textData
-			that.wxaSortPickerData = temData
 		},
 		wxaSortPickerUpper: function (e) {
 			// console.dir(e);

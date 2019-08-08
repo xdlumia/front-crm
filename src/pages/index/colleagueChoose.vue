@@ -13,7 +13,7 @@
 
         </div>
         <div style="height:50px;justify-content: space-between;align-items: center;position:fixed;bottom:0;z-index:30;background:#FFF;border-top:1px solid #F2F2F2" class="d-flex wfull">
-                <div class="d-text-blue ml15 d-elip">已选择：<span v-for="(item,index) in isCheckedAllData" :key="index" class="ml5">{{item.name}}</span></div>
+                <div class="d-text-blue ml15 d-elip">已选择：<span v-for="(item,index) in isCheckedAllData" :key="index" class="ml5">{{item.employeeName}}</span></div>
                 <i-button class="mr15" @click="handleClick" type="primary" size='small'>确定</i-button>
         </div>
 
@@ -29,22 +29,29 @@ export default {
 	data () {
 		return {
 			dataArr: [
-				{ name: '中国', value: 'China' },
-				{ name: '俄罗斯', value: 'Russia' },
-				{ name: '美国', value: 'America' },
-				{ name: '澳大利亚', value: 'Australia' },
-				{ name: '巴西', value: 'Brazil' },
-				{ name: '韩国', value: 'Korea' },
-				{ name: '朝鲜', value: 'North Korea' },
-				{ name: '英国', value: 'Britain' },
-				{ name: '德国', value: 'Germany' },
-				{ name: '加拿大', value: 'Canada' },
-				{ name: '非洲', value: 'New Zealand' }
+				{ employeeName: '中国', id: 'China' },
+				{ employeeName: '俄罗斯', id: 'Russia' },
+				{ employeeName: '美国', id: 'America' },
+				{ employeeName: '澳大利亚', id: 'Australia' },
+				{ employeeName: '巴西', id: 'Brazil' },
+				{ employeeName: '韩国', id: 'Korea' },
+				{ employeeName: '朝鲜', id: 'North Korea' },
+				{ employeeName: '英国', id: 'Britain' },
+				{ employeeName: '德国', id: 'Germany' },
+				{ employeeName: '加拿大', id: 'Canada' },
+				{ employeeName: '非洲', id: 'New Zealand' }
 			],
 			clickDatas: {},
-			isRadio: false,
-			isCheckedAllData: [{ name: '', value: '' }],
-			echodata: ['Australia']// 用来做回显的数据
+			isRadio: true,
+			queryform: {
+				page: 1,
+				limit: 5000,
+				condition: ''// 姓名或者手机号
+			},
+			option: {},
+			isCheckedAllData: [{ employeeName: '', id: '' }],
+			echodata: [], // 用来做回显的数据
+			query: {}
 		}
 	},
 	components: {
@@ -54,18 +61,29 @@ export default {
 
 	},
 	created () {
-		this.init()
+		this.getAlllist()
 	},
 	mounted () {
-		this.$refs.sortPickerList.initPage(this.dataArr)
-	},
-	onLoad (option) {
 
 	},
+	onLoad (option) {
+		this.isRadio = option.isRadio || true
+		this.query = option
+		this.echodata = option.ids ? option.ids.split(',') : []
+	},
 	methods: {
+		// 同事列表(公司内部的所有员工)
+		getAlllist () {
+			this.$api.seeCrmService.organizationalStructureColleagues(this.queryform)
+				.then(res => {
+					this.dataArr = res.data
+					this.$refs.sortPickerList.initPage(this.dataArr)
+					this.init()
+				})
+		},
 		init () {
 			this.isCheckedAllData = this.dataArr.filter((item) => {
-				return this.echodata.includes(item.value)
+				return this.echodata.includes(item.id)
 			})
 		},
 		clickData (data) {
@@ -73,8 +91,8 @@ export default {
 		},
 		// 点击确定
 		handleClick () {
-			uni.$emit('updatedate', { data: this.isCheckedAllData, partiType: this.partiType })
-			// this.$emit('clickAllData', this.isCheckedAllData)
+			this.$routing.navigateBack()
+			uni.$emit('colleagueChoose', { data: this.isCheckedAllData, query: this.query })
 		}
 	},
 	onReady () {

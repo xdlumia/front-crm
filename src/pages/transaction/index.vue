@@ -239,11 +239,13 @@ export default {
 		},
 		// 被选中的确定
 		fsubmit () {
+			// console.log(this.chooseData)
+
 			if (!this.chooseData) {
 				this.$utils.toast.text('请选择成交记录')
 			} else {
 				let form = this.transactionList.filter((item) => {
-					return item.id === this.chooseData
+					return item.id == this.chooseData // eslint-disable-line
 				})
 				uni.$emit('chooseTransaction', { id: form[0].id, name: form[0].name })
 				this.$routing.navigateBack()
