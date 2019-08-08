@@ -21,12 +21,12 @@
                     placeholder="请选择跟进类型"
                     :options="dictionaryOptions('CRM_GJLX')">
                 </i-select>
-				<a url="/pages/client/choose-client" openType="switchTab" v-if="form.busType != 2">
+				<a url="/pages/client/choose-client" v-if="form.busType != 2">
 					<i-input disabled v-model="clientName" label="客户名称" placeholder="请选择客户名称">
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>
 				</a>
-				<a url="/pages/chance/choose-chance" openType="switchTab" v-if="form.busType == 0 || form.busType == 3">
+				<a url="/pages/chance/choose-chance" v-if="form.busType == 0 || form.busType == 3">
 					<i-input disabled v-model="chanceName" label="销售机会" placeholder="请选择客户名称">
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>
@@ -93,7 +93,7 @@ export default {
 			this.form.clientId = data.id
 		})
 		// 机会回调
-		uni.$once('chooseClient', data => {
+		uni.$once('chooseChance', data => {
 			this.chanceName = data.chanceName
 			this.form.salesFunnelId = data.id
 		})
