@@ -10,29 +10,28 @@
       class="d-absolute wfull"
       :style="{top:`calc(39px + ${navH})`}"
       height="`calc(100vh - ${navH} - 39px)`"
-      api="bizSystemService.getUserAuth"
+      api="seeCrmService.linkmanQueryPageList"
       :params="queryForm"
-      :select="select"
-      v-slot="{ row, index, select }">
-
-        <div class="chance-item uni-flex uni-row">
+      @getList='getList'
+      ref='list'>
+        <div @click='handlerClient(item, index)' class="chance-item uni-flex uni-row" v-for="(item,index) of list" :key="item.id">
           <div class="wfull flex-item item-info d-elip">
             <a url="./detail/index">
-              <h4 class="d-elip">{{row}}王东亮</h4>
-              <p class="d-text-qgray d-elip f12 ">华为技术有限公司</p>
-              <time class="d-text-qgray f12 fl">创建日期: 2019-04-4 17:23</time>
+              <h4 class="d-elip">{{item.linkkanName}}</h4>
+              <p class="d-text-qgray d-elip f12 ">{{item.clientName}}</p>
+              <time class="d-text-qgray f12 fl">创建日期: {{item.createTime}}</time>
             </a>
           </div>
           <div class="flex-item item-progress">
             <span v-if="select==1">
-                  <m-radio v-model="current" :label='1'>12</m-radio>
+                  <m-radio v-model="chooseRowIndex" :label='index'></m-radio>
             </span>
-            <i v-else @click="callPhone(18210286644)" class="iconfont f20 d-text-blue iconcall"></i>
+            <i v-else @click="callPhone(item.mobile)" class="iconfont f20 d-text-blue iconcall"></i>
           </div>
         </div>
     </scroll-list>
     <!-- 客户 -->
-    <div class="footer-fixed-menu d-center d-bg-white bt">
+    <div class="footer-fixed-menu d-center d-bg-white bt" v-if='!select'>
       <a class="d-cell al" url='/pages/contact/add-contact'>
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建联系人</span>
@@ -41,6 +40,9 @@
         <i-icon type="setup" size="18" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">管理联系人</span>
       </a>
+    </div>
+    <div class="footer-fixed-menu" v-if='select'>
+      <i-button type="primary" i-class="f16" @click='submitChooseData'>确定</i-button>
     </div>
   </div>
 </template>
@@ -57,7 +59,7 @@ export default {
 	},
 	data () {
 		return {
-			select: 0,
+			chooseRowIndex: '', // 选中行数据的下标
 			filterData: [
 				{
 					prop: 'a',
@@ -100,15 +102,36 @@ export default {
 		this.select = option.select
 	},
 	methods: {
-		setpHandle (row, index) {
-			this.current = index
+		// 获取列表数据
+		getList (list) {
+			this.list = list
 		},
-		radioChange () {
-			// console.log(111)
+		// 当前行点击
+		handlerClient (row, index) {
+			if (!this.select) {
+				this.$routing.navigateTo('/pages/contact/detail?id=' + item.id)
+			} else {
+				this.chooseRowIndex = index
+			}
+		},
+		// 确定选中
+		submitChooseData () {
+			if (this.chooseRowIndex === '') {
+				this.$utils.toast.text('请选择客户')
+				return
+			}
+			let row = this.list[this.chooseRowIndex]
+			uni.$emit('chooseContact', row)
+			this.$routing.navigateBack()
 		}
 	},
 	created () {
 		// console.log()
+	},
+	computed: {
+		api () {
+			return !this.isSelect ? 'seeCrmService.linkmanQueryList' : 'seeCrmService.linkmanQueryPageList'
+		}
 	}
 }
 </script>

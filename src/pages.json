@@ -39,6 +39,12 @@
 			}
 		},
 		{
+			"path": "pages/client/choose-chance",
+			"style": {
+				"navigationBarTitleText": "选择机会"
+			}
+		},
+		{
 			"path": "pages/client/manage/index",
 			"style": {
 				"navigationBarTitleText": "管理信息设置"
