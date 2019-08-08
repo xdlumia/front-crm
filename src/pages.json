@@ -329,12 +329,6 @@
 			}
 		},
 		{
-			"path":"pages/highseas/add-client",
-			"style":{
-				"navigationBarTitleText":"新建客户"
-			}
-		},
-		{
 			"path":"pages/highseas/setting",
 			"style":{
 				"navigationBarTitleText":"管理公海池"

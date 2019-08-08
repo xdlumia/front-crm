@@ -8,11 +8,11 @@
                     <span class='d-text-red'>*</span>公海池名称
                 </div>
                 <div class="d-cell mr10 form-row-item">
-                    <input type="text" class='f12 d-text-gray' placeholder="公海池名称">
+                    <input type="text" v-model='name' maxlength='32' class='f12 d-text-gray' placeholder="公海池名称">
                 </div>
             </div>
 
-            <div class="footer-fixed-menu">
+            <div class="footer-fixed-menu" @click='save'>
                 <i-button type="primary" i-class="f16">完成</i-button>
             </div>
         </div>
@@ -22,17 +22,23 @@
 export default {
 	data () {
 		return {
+			name: ''
 		}
 	},
 	methods: {
-		change ({ mp: { detail } }, filed) {
-			let index = detail.value
-			this[filed] = index
-		},
+		save () {
+			if (!this.name.trim()) {
+				return this.$utils.toast.text('请输入公海池名称')
+			}
 
-		handleChange ({ value }) {
-			this.switch1 = value
+			this.$api.seeCrmService.clientpublicpoolSave({
+				name: this.name
+			}).then(res => {
+				this.$store.dispatch('highseas/getList')
+				this.$routing.navigateBack()
+			})
 		}
+
 	}
 }
 </script>

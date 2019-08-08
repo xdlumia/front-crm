@@ -25,12 +25,14 @@ export default {
 	data () {
 		return {
 			clientId: 0,
+			leaderId: 0,
 			id: 0,
 			pool: {}
 		}
 	},
 	onLoad (option) {
 		this.clientId = option.clientId
+		this.leaderId = option.leaderId
 	},
 	computed: {
 		list () {

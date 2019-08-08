@@ -161,6 +161,7 @@ export default {
 		return {
 			loading: true,
 			id: 0, // 业务id
+			poolId: 0, // 公海池id
 			detailInfo: {},
 			moreShow: false, // 更多按钮 选项
 			phoneShow: false, // 打电话选项
@@ -191,7 +192,7 @@ export default {
 	onLoad (data) {
 		this.id = data.id
 		this.source = data.source || 0
-
+		this.poolId = data.poolId || 0
 		// 区分 更多按钮选项
 		this.moreActions = data.source ? moreActionsPool : moreActions
 	},
@@ -300,11 +301,14 @@ export default {
 				},
 				2: () => {
 					// 退回公海
-					this.$routing.navigateTo('/pages/highseas/return-client?clientId=' + this.id + '&leaderId=' + detailInfo.leaderId)
+					this.$routing.navigateTo('/pages/highseas/return-client?clientId=' + this.id + '&leaderId=' + this.detailInfo.leaderId)
 				},
 				3: () => {
 					// 变更负责人
-					this.$routing.navigateTo('/pages/index/colleagueChoose')
+					uni.$once('colleagueChoose', data => {
+						this.updateLeader(data.data.map(item => item.id)[0])
+					})
+					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
 				},
 				4: () => {
 					// 删除
@@ -316,14 +320,52 @@ export default {
 				},
 				6: () => {
 					// 分配
-					this.$routing.navigateTo('/pages/index/scheduleAdd')
+					uni.$once('colleagueChoose', data => {
+						this.allocation(data.data.map(item => item.id)[0])
+					})
+					// 设置当前选中的 客户项
+					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
 				},
 				7: () => {
 					// 领取
-					this.$routing.navigateTo('/pages/index/scheduleAdd')
+					this.$api.seeCrmService.clientinfoClaimClient({
+						clientId: this.id,
+						poolId: this.poolId,
+						sendBackType: this.detailInfo.sendBackType,
+						leaderId: this.detailInfo.leaderId
+					}).then(res => {
+						if (res.code === 200) {
+							this.moreShow = false
+							this.getDetailInfo()
+						}
+					})
 				}
 			}
 			fnType[itemIndex]()
+		},
+
+		// 更新负责人
+		updateLeader (leaderId) {
+			this.$api.seeCrmService.teammemberinfoUpdate({
+				busId: this.id,
+				busType: 0,
+				leaderId: leaderId,
+				partiType: 0
+			}).then(res => {
+				if (res.code === 200) {
+					// 完成
+				}
+			})
+		},
+
+		// 分配公海池客户
+		allocation (leaderId) {
+			this.$api.seeCrmService.clientinfoAllocation({
+				clientId: this.id,
+				poolId: this.poolId,
+				sendBackType: this.detailInfo.sendBackType,
+				leaderId: leaderId
+			})
 		}
 	},
 	onHide () {
