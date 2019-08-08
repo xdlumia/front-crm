@@ -5,82 +5,83 @@
 <template>
     <div>
         <NavBar title="新建日程" />
+        <scroll-view scroll-y style="height:calc(100vh - 115px)">
+            <m-form ref="acheduleForm" class="uni-pb100" :model="acheduleForm" :rules="rules">
+                <div class="d-bg-schedule"></div>
+                    <i-input maxlength='32' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
+                <div class="d-bg-schedule"></div>
 
-        <m-form ref="acheduleForm" class="uni-pb100" :model="acheduleForm" :rules="rules">
-            <div class="d-bg-schedule"></div>
-                <i-input maxlength='32' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
-            <div class="d-bg-schedule"></div>
-
-            <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
-                <i-input label="位置" maxlength='32' v-model="acheduleForm.address" placeholder="点击输入" class='wfull'/>
-                <div @click="chooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
-                    <i-icon type="coordinates" size="22" color="#999" />
+                <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
+                    <i-input label="位置" maxlength='32' v-model="acheduleForm.address" placeholder="点击输入" class='wfull'/>
+                    <div @click="chooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
+                        <i-icon type="coordinates" size="22" color="#999" />
+                    </div>
                 </div>
-            </div>
-            <div class="d-bg-schedule"></div>
+                <div class="d-bg-schedule"></div>
 
-            <ruiDatePicker
-                fields="minute"
-                start="2010-00-00 00:00"
-                end="2030-12-30 23:59"
-                :value="value"
-                @change="startTimeChange"
-            >
-                <i-input disabled label="开始" v-model="acheduleForm.startTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
-            </ruiDatePicker>
+                <ruiDatePicker
+                    fields="minute"
+                    start="2010-00-00 00:00"
+                    end="2030-12-30 23:59"
+                    :value="value"
+                    @change="startTimeChange"
+                >
+                    <i-input disabled label="开始" v-model="acheduleForm.startTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
+                </ruiDatePicker>
 
-            <ruiDatePicker
-                fields="minute"
-                start="2010-00-00 00:00"
-                end="2030-12-30 23:59"
-                :value="value"
-                @change="endTimeChange"
-            >
-                <i-input disabled label="结束" v-model="acheduleForm.endTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
-            </ruiDatePicker>
+                <ruiDatePicker
+                    fields="minute"
+                    start="2010-00-00 00:00"
+                    end="2030-12-30 23:59"
+                    :value="value"
+                    @change="endTimeChange"
+                >
+                    <i-input disabled label="结束" v-model="acheduleForm.endTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
+                </ruiDatePicker>
 
-            <i-select
-                v-model="acheduleForm.remindSecond"
-                :props="{label:'name',value:'id'}"
-                label="提醒"
-                placeholder="请选择"
-                required
-                :options="tixData">
-            </i-select>
-
-            <a :url="`/pages/index/colleagueChoose?isRadio=0`">
-                <i-input disabled label="参与人" v-model="acheduleForm.particiNames" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
-            </a>
-            <div class="d-bg-schedule"></div>
-            <!-- <a url='/pages/index/affiliated'>
                 <i-select
-                    v-model="tixIndex"
-                    disabled
+                    v-model="acheduleForm.remindSecond"
                     :props="{label:'name',value:'id'}"
-                    label="关联业务"
+                    label="提醒"
                     placeholder="请选择"
                     required
                     :options="tixData">
                 </i-select>
-            </a> -->
-            <i-cell-group>
-                <a :url='`/pages/client/choose-client?id=${clientData.id}`'>
-                    <i-input disabled label="客户" v-model="clientData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+
+                <a :url="`/pages/index/colleagueChoose?isRadio=0`">
+                    <i-input disabled label="参与人" v-model="acheduleForm.particiNames" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
                 </a>
-                <a :url='`/pages/contact/index?select=1&id=${contactData.id}`'>
-                    <i-input disabled label="联系人" v-model="contactData.linkkanName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
-                </a>
-                <a :url='`/pages/chance/choose-chance?&id=${chanceData.id}`'>
-                    <i-input disabled label="销售机会" v-model="chanceData.chanceName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
-                </a>
-                <a :url='`/pages/transaction/index?select=1&id=${transactionData.id}`'>
-                    <i-input disabled label="成交记录" v-model="transactionData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
-                </a>
-                <a :url='`/pages/highseas/index?select=1&id=${highseasData.id}`'>
-                    <i-input disabled label="客户公海池" v-model="highseasData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
-                </a>
-            </i-cell-group>
-        </m-form>
+                <div class="d-bg-schedule"></div>
+                <!-- <a url='/pages/index/affiliated'>
+                    <i-select
+                        v-model="tixIndex"
+                        disabled
+                        :props="{label:'name',value:'id'}"
+                        label="关联业务"
+                        placeholder="请选择"
+                        required
+                        :options="tixData">
+                    </i-select>
+                </a> -->
+                <i-cell-group>
+                    <a :url='`/pages/client/choose-client?id=${clientData.id}`'>
+                        <i-input disabled label="客户" v-model="clientData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    </a>
+                    <a :url='`/pages/contact/index?select=1&id=${contactData.id}`'>
+                        <i-input disabled label="联系人" v-model="contactData.linkkanName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    </a>
+                    <a :url='`/pages/chance/choose-chance?&id=${chanceData.id}`'>
+                        <i-input disabled label="销售机会" v-model="chanceData.chanceName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    </a>
+                    <a :url='`/pages/transaction/index?select=1&id=${transactionData.id}`'>
+                        <i-input disabled label="成交记录" v-model="transactionData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    </a>
+                    <a :url='`/pages/highseas/index?select=1&id=${highseasData.id}`'>
+                        <i-input disabled label="客户公海池" v-model="highseasData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    </a>
+                </i-cell-group>
+            </m-form>
+        </scroll-view>
         <div class="footer-fixed-menu">
             <i-button @click="fsubmit" type="primary" i-class="f16">确 定</i-button>
         </div>
