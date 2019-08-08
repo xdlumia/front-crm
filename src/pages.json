@@ -363,6 +363,12 @@
 			"style":{
 				"navigationBarTitleText":"选择客户公海池"
 			}
+		},
+		{
+			"path":"pages/application/enterprise-management/organization/invite/ok",
+			"style":{
+				"navigationBarTitleText":"申请结果"
+			}
 		}
 	],
 	"globalStyle": {

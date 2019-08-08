@@ -59,6 +59,7 @@
     </view>
 </template>
 <script>
+import local from '@/utils/localStorage'
 export default {
 	components: {
 
@@ -88,7 +89,7 @@ export default {
 			this.companyName = option.companyName + '>' + option.deptName
 			this.deptName = option.deptName
 		} else {
-			this.companyName = '北京凡特仁有限公司'
+			this.companyName = JSON.parse(local.getItem('companyInfo')).companyName
 			this.deptName = this.companyName
 		}
 	},
@@ -113,7 +114,7 @@ export default {
 				if (response.code === 200) {
 					this.depts = response.data[0].children
 				} else {
-					this.$utils.toast.text('数据获取失败，请联系客服人员')
+					this.$utils.toast.text(response.msg)
 				}
 			})
 			// 获取用户数据
@@ -121,7 +122,7 @@ export default {
 				if (response.code === 200) {
 					this.users = response.data
 				} else {
-					this.$utils.toast.text('数据获取失败，请联系客服人员')
+					this.$utils.toast.text(response.msg)
 				}
 			})
 		},

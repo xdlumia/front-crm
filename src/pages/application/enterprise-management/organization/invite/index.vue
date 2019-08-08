@@ -33,23 +33,26 @@
     </view>
 </template>
 <script>
+import local from '@/utils/localStorage'
+let company = JSON.parse(local.getItem('companyInfo'))
+let user = JSON.parse(local.getItem('userInfo'))
 export default {
 	data () {
 		return {
-			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html?inviter=wyl&companyName=北京凡特仁科技有限公司&companyCode=1016'
+			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode
 		}
 	},
 	onShareAppMessage () {
 		return {
 			title: this.shareText ? this.shareText : '欢迎体验',
-			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=wyl&companyName=北京凡特仁科技有限公司&companyCode=1016',
+			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode,
 			imageUrl: this.image ? this.image : 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/app/share-logo@3.png'
 		}
 	},
 	methods: {
 		share () {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/organization/invite/invite?inviter=wyl&companyName=北京凡特仁科技有限公司&companyCode=1016'
+				url: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode
 			})
 		},
 		copyToClip () {
