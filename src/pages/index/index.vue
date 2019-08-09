@@ -73,8 +73,8 @@
             <div class="h40 d-flex-level mt10" style="background:#F9F9F9;">
                 <div class="d-flex ml15" style="height: 26px;align-items: center;">
                     <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar>
-                    <a url="/pages/index/colleagueChoose">
-                        <span class="d-text-qgray f13 ml5">小家伙</span>
+                    <a :url="`/pages/index/colleagueChoose?subordinate=1&userId=${userInfo.id}&ids=${userId}`">
+                        <span class="d-text-qgray f13 ml5">{{userInfo.name}}</span>
                     </a>
                     <uni-icon type="arrowdown" class="pl5 d-text-qgray" size="16"/>
                 </div>
@@ -224,6 +224,7 @@ export default {
 			current: 0,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
+			userInfo: {},
 			timelong: 7,
 			clickDay: '',
 			TabList: [{ name: '今天' }, { name: '仪表盘' }],
@@ -275,22 +276,29 @@ export default {
 		}
 	},
 	created () {
+
+	},
+	onShow () {
+		this.getIndexList()
+		this.changeTime()
 		this.getDates()
 		this.getTodayDate()
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
 		this.scheduleSelectSalesFunnel()
-	},
-	onShow () {
-		this.getIndexList()
-		this.changeTime()
+		this.userInfo = this.$local.fetch('userInfo') || {}
+		this.userId = this.userInfo.id
 	},
 	onLoad (option) {
+		// 选择的当前人
+		uni.$on('colleagueChoose', data => {
+			this.userId = data.data[0].id
+		})
 	},
 	methods: {
 		// 获取日程列表
 		getIndexList () {
-			this.$api.seeCrmService.scheduleList(null, this.userId)
+			this.$api.seeCrmService.scheduleList(null, this.userInfo.id)
 				.then(res => {
 					this.indexList = res.data
 					this.indexList = [
@@ -313,9 +321,9 @@ export default {
 					this.salesKitForm = res.data
 				})
 		},
-		// 查询本月当前人的销售简报
+		// 查询本月当前人的排行榜
 		scheduleSelectCompanyRanking () {
-			this.$api.seeCrmService.scheduleSelectCompanyRanking()
+			this.$api.seeCrmService.scheduleSelectCompanyRanking(null, this.userId)
 				.then(res => {
 					this.rankingList = res.data
 				})

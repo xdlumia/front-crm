@@ -61,7 +61,7 @@ export default {
 
 	},
 	created () {
-		this.getAlllist()
+
 	},
 	mounted () {
 
@@ -70,11 +70,26 @@ export default {
 		this.isRadio = option.isRadio == 0 ? false : true// eslint-disable-line
 		this.query = option
 		this.echodata = option.ids ? option.ids.split(',') : []
+		if (option.subordinate) { // 首页请求下属的数据
+			this.userId = option.userId
+			this.getChildrenEmployee()
+		} else {
+			this.getAlllist()
+		}
 	},
 	methods: {
 		// 同事列表(公司内部的所有员工)
 		getAlllist () {
 			this.$api.seeCrmService.organizationalStructureColleagues(this.queryform)
+				.then(res => {
+					this.dataArr = res.data
+					this.$refs.sortPickerList.initPage(this.dataArr)
+					this.init()
+				})
+		},
+		// 获取下属人员列表（包括自己）)
+		getChildrenEmployee () {
+			this.$api.seeCrmService.organizationalStructureGetChildrenEmployee({ employeeId: this.userId })
 				.then(res => {
 					this.dataArr = res.data
 					this.$refs.sortPickerList.initPage(this.dataArr)

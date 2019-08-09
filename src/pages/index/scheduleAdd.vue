@@ -198,7 +198,7 @@ export default {
 			this.$api.seeCrmService.scheduleInfo(null, id)
 				.then(res => {
 					this.acheduleForm = res.data
-					this.acheduleForm.particiNames = this.acheduleForm.participantNames.join(',') || ''
+					this.acheduleForm.particiNames = this.acheduleForm.participantNames ? this.acheduleForm.participantNames.join(',') : ''
 
 					this.clientData = { name: this.acheduleForm.clientName || '', id: this.acheduleForm.clientId || '' }// 客户，
 					this.contactData = { linkkanName: this.acheduleForm.linkName || '', id: this.acheduleForm.linkId || '' }// 联系人
