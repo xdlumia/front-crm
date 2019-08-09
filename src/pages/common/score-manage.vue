@@ -20,7 +20,7 @@
 				<!-- filedType == 0 是填写数字 -->
 				<i-input labelWidth='100' :label=" item.fieldName + '一'" disabled v-if="item.filedType == 0">
 					<div class='d-center' style='width:200px;'>
-						<input type="number" v-model='subItem.minValue' class='input-box f13 d-text-black d-cell' /><span class="ml5 mr5 d-text-qgray">-</span><input type="number" v-model='subItem.minValue' class='input-box d-text-black f13 d-cell'  />
+						<input type="number" v-model='subItem.minValue' class='input-box f13 d-text-black d-cell' /><span class="ml5 mr5 d-text-qgray">-</span><input type="number" v-model='subItem.maxValue' class='input-box d-text-black f13 d-cell'  />
 					</div>
 				</i-input>
 				<!-- filedType == 1 是选择标签 -->
