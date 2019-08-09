@@ -24,9 +24,9 @@ export default {
 		mock: IS_MOCK,
 		methods: 'post'
 	},
-	// 短息验证码登录
-	businessSmsLogin: {
-		url: '/login/businessSmsLogin',
+	// 获取用户详细信息
+	getUserDetail: {
+		url: '/rmuserrole/getUserDetail',
 		mock: IS_MOCK,
 		methods: 'post'
 	}
