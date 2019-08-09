@@ -51,15 +51,10 @@ export default {
 		}
 	},
 	created () {
-		console.log(this.stageList)
 	},
 	watch: {
 	},
 	computed: {
-		b () {
-			console.log(this.stageList)
-			return this.stageList
-		}
 	},
 	methods: {
 		addPrincipal () {

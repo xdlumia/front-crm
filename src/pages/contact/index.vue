@@ -2,8 +2,8 @@
   <div class="chance-bg">
     <NavBar title="机会" :isSearch="true" placeholder="输入联系人姓名,手机号" searchType='3' />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
-    <Filter :filterData='filterData' @filterSubmit='submit' ref='filter'>
-			<filter-diy @submit='submit' @clear='clear' />
+    <Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
+			<filter-diy @submit='diyFilterSubmit'/>
 		</Filter>
     <!-- 列表内容 -->
     <scroll-list
@@ -118,6 +118,22 @@ export default {
 				this.busId = row.id
 			}
 		},
+		// 列表筛选方法
+		filterSubmit (item) {
+			let arrayType = ['sourceCode', 'stageIds']
+			if (arrayType.includes(item.prop)) {
+				this.queryForm[item.prop].push(item.id)
+			}
+			this.queryForm[item.prop] = item.id
+			this.$refs.list.reload()
+			this.$refs.filter.hide()
+		},
+		diyFilterSubmit (filterData) {
+			this.queryForm = Object.assign({}, this.queryForm, filterData)
+			this.$refs.list.reload()
+			this.$refs.filter.hide()
+		},
+
 		// 确定选中
 		submitChooseData () {
 			if (!this.busId) {

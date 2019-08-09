@@ -3,7 +3,7 @@
     <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称" searchType='1' />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
-			<filter-diy :stageList="stageList"  @submit='diyFilterSubmit' @clear='clear' />
+			<filter-diy :stageList="stageList"  @submit='diyFilterSubmit' />
 		</Filter>
     <!-- 步骤 -->
     <i-steps
@@ -166,7 +166,7 @@ export default {
 		// 当前行点击
 		handlerClient (row, index) {
 			if (!this.isSelect) {
-				this.$routing.navigateTo('/pages/chance/detail/index?id=' + item.id)
+				this.$routing.navigateTo('/pages/chance/detail/index?id=' + row.id)
 			} else {
 				this.chooseRowIndex = index
 				this.id = row.id
