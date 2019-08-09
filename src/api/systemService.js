@@ -10,7 +10,6 @@ export default {
 	// 短息验证码登录
 	businessSmsLogin: {
 		url: '/login/businessSmsLogin',
-		mock: IS_MOCK,
 		methods: 'post'
 	}
 }
