@@ -59,7 +59,7 @@ export default {
 		// 获取上级部门
 		getSuperDept () {
 			try {
-				this.$api.enterpriseManagementService.getSuperDept({
+				this.$api.seeCrmService.organizationalStructureGetSuperDept({
 					'id': this.deptId
 				}).then((response) => {
 					if (response.code === 200) {
@@ -77,7 +77,7 @@ export default {
 			if (parseInt(this.isEditor) === 0) {
 				// 保存
 				try {
-					this.$api.enterpriseManagementService.saveDept({
+					this.$api.seeCrmService.organizationalStructureSaveDept({
 						'deptName': this.deptName,
 						'parentId': this.superDeptId
 					}).then((response) => {
@@ -96,7 +96,7 @@ export default {
 			} else {
 				// 修改
 				try {
-					this.$api.enterpriseManagementService.updateDept({
+					this.$api.seeCrmService.organizationalStructureUpdateDept({
 						'deptName': this.deptName,
 						'id': this.deptId
 					}).then((response) => {
@@ -129,7 +129,7 @@ export default {
 		// 删除
 		deleteDept () {
 			try {
-				this.$api.enterpriseManagementService.deleteDept({
+				this.$api.seeCrmService.organizationalStructureDeleteDept({
 					'id': this.deptId
 				}).then((response) => {
 					if (response.code === 200) {

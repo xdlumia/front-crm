@@ -9,7 +9,7 @@
     <view>
         <NavBar title="团队申请" />
 		<scroll-list
-				api="enterpriseManagementService.getUserapplicationinformationList"
+				api="seeCrmService.userapplicationinformationList"
 				:params="queryForm"
 				@getList='getList'
 				ref='teamDatas'>
@@ -77,7 +77,7 @@ export default {
 		deleteApply (id) {
 			try {
 				this.$utils.showModal('确定要删除此申请记录？').then(async () => {
-					let resulte = await this.$api.enterpriseManagementService.deleteUserApply({ 'id': id })
+					let resulte = await this.$api.seeCrmService.userapplicationinformationLogicDelete({ 'id': id })
 					this.$utils.toast.text(resulte.msg)
 					this.$refs.teamDatas.reload(1)
 				})

@@ -109,7 +109,7 @@ export default {
 		// 初始化数据
 		init () {
 			// 获取部门数据
-			this.$api.enterpriseManagementService.getChildrenDepts({ 'deptId': this.deptId }).then((response) => {
+			this.$api.seeCrmService.organizationalStructureChildrenDepts({ 'deptId': this.deptId }).then((response) => {
 				if (response.code === 200) {
 					this.depts = response.data[0].children
 				} else {
@@ -117,7 +117,7 @@ export default {
 				}
 			})
 			// 获取用户数据
-			this.$api.enterpriseManagementService.getChildrenEmployees({ 'deptId': this.deptId }).then((response) => {
+			this.$api.seeCrmService.organizationalStructureChildrenEmployees({ 'deptId': this.deptId }).then((response) => {
 				if (response.code === 200) {
 					this.users = response.data
 				} else {

@@ -179,7 +179,7 @@ export default {
 		},
 		// 获取部门列表
 		getDepts () {
-			this.$api.enterpriseManagementService.getDepts({ limit: 100, paeg: 1 })
+			this.$api.seeCrmService.organizationalStructureDepts({ limit: 100, paeg: 1 })
 				.then(res => {
 					this.deptList = res.data || []
 				})

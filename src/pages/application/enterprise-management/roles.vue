@@ -9,7 +9,7 @@
 	<view>
 		<NavBar title="选择角色" />
 		<scroll-list
-				api="enterpriseManagementService.getRoles"
+				api="seeCrmService.organizationalStructureRoles"
 				:params="queryForm"
 				@getList='getRoles'
 				ref='roles'>

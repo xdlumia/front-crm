@@ -92,7 +92,7 @@ export default {
 		}
 		// 回显员工信息
 		if (parseInt(this.isEditor) === 1 && option.employeeId) {
-			this.$api.enterpriseManagementService.getEmployeeDetail({}, option.employeeId).then((response) => {
+			this.$api.seeCrmService.organizationalStructureGetEmployeeDetail({}, option.employeeId).then((response) => {
 				if (response.code === 200) {
 					this.formData = response.data
 					// 处理roleIds和roleNames
@@ -139,7 +139,7 @@ export default {
 		deleteEmployee () {
 			try {
 				this.$utils.showModal('确定要删除此员工？').then(async () => {
-					let resulte = await this.$api.enterpriseManagementService.deleteEmployee({ id: this.formData.id })
+					let resulte = await this.$api.seeCrmService.organizationalStructureDeleteEmployee({ id: this.formData.id })
 					if (resulte.code === 200) {
 						this.$utils.toast.text('删除成功')
 						setTimeout(() => {
@@ -157,7 +157,7 @@ export default {
 		async update () {
 			await this.$refs.mform.validate()
 			try {
-				this.$api.enterpriseManagementService.updateEmployee(this.formData).then((response) => {
+				this.$api.seeCrmService.organizationalStructureUpdateEmployee(this.formData).then((response) => {
 					if (response.code === 200) {
 						this.$utils.toast.text('修改成功')
 						setTimeout(() => {
@@ -173,7 +173,7 @@ export default {
 		async save () {
 			await this.$refs.mform.validate()
 			try {
-				this.$api.enterpriseManagementService.saveEmployee(this.formData).then((response) => {
+				this.$api.seeCrmService.organizationalStructureSaveEmployee(this.formData).then((response) => {
 					if (response.code === 200) {
 						this.$utils.toast.text('保存成功')
 						setTimeout(() => {

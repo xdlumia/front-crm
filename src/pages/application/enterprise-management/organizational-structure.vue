@@ -10,7 +10,7 @@
 		<NavBar title="选择部门" />
 		<view class="p10 d-bg-gray d-text-blue">{{companyName}}</view>
 		<scroll-list
-				api="enterpriseManagementService.getDepts"
+				api="seeCrmService.organizationalStructureDepts"
 				:params="queryForm"
 				@getList='getDepts'
 				ref='depts'>
