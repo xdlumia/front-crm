@@ -12,8 +12,8 @@
                 <view :id="item.tag" class="wxaSortPickerTag">{{item.tag}}</view>
                 <view class='wxaSortPickerItem-box'>
                     <block v-for="(child,inde) in item.textArray" :key="inde">
-                            <view class="wxaSortPickerItem" :data-text="child.employeeName" :data-value="child.id"  @click="wxaSortPickerItemTap(child)">
-                                <uni-icon type='checkbox-filled' :color="childEchodata.includes(child.id) ? '#1890FF' : '#999'" size='26' />
+                            <view class="wxaSortPickerItem" :data-text="child.employeeName" :data-value="child.userId"  @click="wxaSortPickerItemTap(child)">
+                                <uni-icon type='checkbox-filled' :color="childEchodata.includes(child.userId) ? '#1890FF' : '#999'" size='26' />
                                 <!-- <uni-icon v-else type='checkbox-filled' color="'#999'" size='26' /> -->
                                 <span class="ml5">{{child.employeeName}}</span>
                             </view>
@@ -101,16 +101,16 @@ export default {
 		wxaSortPickerItemTap: function (child) {
 			this.child = child
 			if (this.isRadio) {
-				this.childEchodata.includes(child.id) ? (this.childEchodata = []) : (this.childEchodata = [child.id])
+				this.childEchodata.includes(child.userId) ? (this.childEchodata = []) : (this.childEchodata = [child.userId])
 				this.isCheckedData.length>0 ? (this.isCheckedData = []) :( this.isCheckedData.push(child))
 				this.$emit('clickData', this.isCheckedData)
 			} else {
-				if(this.childEchodata.includes(child.id)){
-					let i = this.childEchodata.indexOf(child.id)
+				if(this.childEchodata.includes(child.userId)){
+					let i = this.childEchodata.indexOf(child.userId)
 					this.childEchodata.splice(i,1)
 					this.isCheckedData.splice(i,1)
 				}else{
-					this.childEchodata.push(child.id)
+					this.childEchodata.push(child.userId)
 					this.isCheckedData.push(child)
 				}
 				this.$emit('clickData', this.isCheckedData)

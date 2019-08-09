@@ -29,17 +29,17 @@ export default {
 	data () {
 		return {
 			dataArr: [
-				{ employeeName: '中国', id: 'China' },
-				{ employeeName: '俄罗斯', id: 'Russia' },
-				{ employeeName: '美国', id: 'America' },
-				{ employeeName: '澳大利亚', id: 'Australia' },
-				{ employeeName: '巴西', id: 'Brazil' },
-				{ employeeName: '韩国', id: 'Korea' },
-				{ employeeName: '朝鲜', id: 'North Korea' },
-				{ employeeName: '英国', id: 'Britain' },
-				{ employeeName: '德国', id: 'Germany' },
-				{ employeeName: '加拿大', id: 'Canada' },
-				{ employeeName: '非洲', id: 'New Zealand' }
+				{ employeeName: '中国', userId: 'China' },
+				{ employeeName: '俄罗斯', userId: 'Russia' },
+				{ employeeName: '美国', userId: 'America' },
+				{ employeeName: '澳大利亚', userId: 'Australia' },
+				{ employeeName: '巴西', userId: 'Brazil' },
+				{ employeeName: '韩国', userId: 'Korea' },
+				{ employeeName: '朝鲜', userId: 'North Korea' },
+				{ employeeName: '英国', userId: 'Britain' },
+				{ employeeName: '德国', userId: 'Germany' },
+				{ employeeName: '加拿大', userId: 'Canada' },
+				{ employeeName: '非洲', userId: 'New Zealand' }
 			],
 			clickDatas: {},
 			isRadio: true,
@@ -83,9 +83,9 @@ export default {
 		},
 		init () {
 			this.isCheckedAllData = this.dataArr.filter((item) => {
-				return this.echodata.includes(item.id)
+				return this.echodata.includes(item.userId)
 			})
-			console.log(this.isCheckedAllData)
+			// console.log(this.isCheckedAllData)
 		},
 		clickData (data) {
 			this.isCheckedAllData = data

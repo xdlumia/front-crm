@@ -23,7 +23,6 @@
                     fields="minute"
                     start="2010-00-00 00:00"
                     end="2030-12-30 23:59"
-                    :value="value"
                     @change="startTimeChange"
                 >
                     <i-input disabled label="开始" v-model="acheduleForm.startTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
@@ -33,7 +32,6 @@
                     fields="minute"
                     start="2010-00-00 00:00"
                     end="2030-12-30 23:59"
-                    :value="value"
                     @change="endTimeChange"
                 >
                     <i-input disabled label="结束" v-model="acheduleForm.endTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
@@ -139,6 +137,7 @@ export default {
 			},
 			value1: '',
 			date: '',
+			scheId: '',
 			timeIndex: '',
 			tixIndex: '',
 			tixData: [{ name: '提前十分钟', id: 600 }, { name: '提前30分钟', id: 1800 }, { name: '提前一小时', id: 3600 }, { name: '提前三小时', id: 10800 }],
@@ -189,8 +188,25 @@ export default {
 			this.acheduleForm.participants = idsArr.join(',')
 			this.acheduleForm.particiNames = namesArr.join(',')
 		})
+		if (option.scheId) {
+			this.scheId = option.scheId
+			this.getScheduleInfo(option.scheId)
+		}
 	},
 	methods: {
+		getScheduleInfo (id) {
+			this.$api.seeCrmService.scheduleInfo(null, id)
+				.then(res => {
+					this.acheduleForm = res.data
+					this.acheduleForm.particiNames = this.acheduleForm.participantNames.join(',') || ''
+
+					this.clientData = { name: this.acheduleForm.clientName || '', id: this.acheduleForm.clientId || '' }// 客户，
+					this.contactData = { linkkanName: this.acheduleForm.linkName || '', id: this.acheduleForm.linkId || '' }// 联系人
+					this.transactionData = { name: this.acheduleForm.transactionRecordName || '', id: this.acheduleForm.transactionRecordId || '' }// 成交记录
+					this.chanceData = { chanceName: this.acheduleForm.salesFunnelName || '', id: this.acheduleForm.salesFunnelId || '' }// 销售机会
+					this.highseasData = { name: this.acheduleForm.seaPoolName || '', id: this.acheduleForm.seaPoolId || '' }// 公海池
+				})
+		},
 		bindDateChange () {
 
 		},
@@ -198,6 +214,14 @@ export default {
 			this.acheduleForm.startTime = val
 		},
 		endTimeChange (val) {
+			if (val.split(' ')[0] !== this.acheduleForm.startTime.split(' ')[0]) {
+				this.$utils.toast.text('结束时间与开始时间只能是同一天！')
+				return
+			}
+			if (Date.parse(this.acheduleForm.startTime) > Date.parse(val)) {
+				this.$utils.toast.text('结束时间必须大于开始时间！')
+				return
+			}
 			this.acheduleForm.endTime = val
 		},
 		tixChange ({ mp: { detail } }, filed) {
@@ -212,13 +236,14 @@ export default {
 			this.acheduleForm.linkId = this.contactData.id || ''
 			this.acheduleForm.salesFunnelId = this.chanceData.id || ''
 			this.acheduleForm.transactionRecordId = this.transactionData.id || ''
+			this.acheduleForm.seaPoolId = this.highseasData.id || ''
+
 			this.acheduleForm.startTime = Date.parse(this.acheduleForm.startTime)
 			this.acheduleForm.endTime = Date.parse(this.acheduleForm.endTime)
 			this.$api.seeCrmService.transactionrecordSave(this.acheduleForm)
 				.then(res => {
-					console.log(res)
 					this.$routing.navigateBack()
-					uni.$emit('updatetransList', { params: '' })
+					uni.$emit('updateIndexList', { params: '' })
 				})
 		},
 		// 选择地图
