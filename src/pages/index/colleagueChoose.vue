@@ -29,17 +29,17 @@ export default {
 	data () {
 		return {
 			dataArr: [
-				{ employeeName: '中国', id: 'China' },
-				{ employeeName: '俄罗斯', id: 'Russia' },
-				{ employeeName: '美国', id: 'America' },
-				{ employeeName: '澳大利亚', id: 'Australia' },
-				{ employeeName: '巴西', id: 'Brazil' },
-				{ employeeName: '韩国', id: 'Korea' },
-				{ employeeName: '朝鲜', id: 'North Korea' },
-				{ employeeName: '英国', id: 'Britain' },
-				{ employeeName: '德国', id: 'Germany' },
-				{ employeeName: '加拿大', id: 'Canada' },
-				{ employeeName: '非洲', id: 'New Zealand' }
+				{ employeeName: '中国', userId: 'China' },
+				{ employeeName: '俄罗斯', userId: 'Russia' },
+				{ employeeName: '美国', userId: 'America' },
+				{ employeeName: '澳大利亚', userId: 'Australia' },
+				{ employeeName: '巴西', userId: 'Brazil' },
+				{ employeeName: '韩国', userId: 'Korea' },
+				{ employeeName: '朝鲜', userId: 'North Korea' },
+				{ employeeName: '英国', userId: 'Britain' },
+				{ employeeName: '德国', userId: 'Germany' },
+				{ employeeName: '加拿大', userId: 'Canada' },
+				{ employeeName: '非洲', userId: 'New Zealand' }
 			],
 			clickDatas: {},
 			isRadio: true,
@@ -61,7 +61,7 @@ export default {
 
 	},
 	created () {
-		this.getAlllist()
+
 	},
 	mounted () {
 
@@ -70,6 +70,12 @@ export default {
 		this.isRadio = option.isRadio == 0 ? false : true// eslint-disable-line
 		this.query = option
 		this.echodata = option.ids ? option.ids.split(',') : []
+		if (option.subordinate) { // 首页请求下属的数据
+			this.userId = option.userId
+			this.getChildrenEmployee()
+		} else {
+			this.getAlllist()
+		}
 	},
 	methods: {
 		// 同事列表(公司内部的所有员工)
@@ -81,11 +87,20 @@ export default {
 					this.init()
 				})
 		},
+		// 获取下属人员列表（包括自己）)
+		getChildrenEmployee () {
+			this.$api.seeCrmService.organizationalStructureGetChildrenEmployee({ employeeId: this.userId })
+				.then(res => {
+					this.dataArr = res.data
+					this.$refs.sortPickerList.initPage(this.dataArr)
+					this.init()
+				})
+		},
 		init () {
 			this.isCheckedAllData = this.dataArr.filter((item) => {
-				return this.echodata.includes(item.id)
+				return this.echodata.includes(item.userId)
 			})
-			console.log(this.isCheckedAllData)
+			// console.log(this.isCheckedAllData)
 		},
 		clickData (data) {
 			this.isCheckedAllData = data

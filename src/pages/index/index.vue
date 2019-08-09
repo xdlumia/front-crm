@@ -2,8 +2,8 @@
     <div>
         <NavBar title="首页" />
         <div class="d-flex mt5">
-            <div @click="current = 0" class="f16 d-text-gray b ml10 ac w50" :class="current == 0 ? 'brblur' : ''">今天</div>
-            <div @click="current = 1" class="f16 d-text-gray b ml10 ac w50" :class="current == 1 ? 'brblur' : ''">仪表盘 </div>
+            <div @click="current = 0,clickDay = todayDate" class="f16 d-text-gray b ml10 ac w50" :class="current == 0 ? 'brblur' : ''">今天</div>
+            <div @click="current = 1,clickDay = todayDate" class="f16 d-text-gray b ml10 ac w50" :class="current == 1 ? 'brblur' : ''">仪表盘 </div>
         </div>
 
         <!-- 今天 -->
@@ -18,45 +18,48 @@
                     <div v-for="item in aweek" :key='item' style="flex:1;color:#CCCCCC" class="d-text-qgray ac b">{{item}}</div>
                 </div>
                 <div class="d-flex" style="flex-wrap:wrap;">
-                    <div v-for="item in allTime" :key='item' style="" @click="fclickThisDay(item)" class="d-text-qgray ac b d-flex cirle-all">
-                        <div class="ac mb5" style="font-weight: normal;color: #666;min-height: 32px;line-height: 32px;" :class="item == clickDay ? 'haveClick' : ''">
-                            {{item}}
+                    <div v-for="(item,index) in allTime" :key='index' style="" @click="fclickThisDay(item)" class="d-text-qgray ac b d-flex cirle-all">
+                        <div class="ac mb5" style="font-weight: normal;color: #666;min-height: 32px;line-height: 32px;" :class="item.otherTime == clickDay ? 'haveClick' : ''">
+                            {{item.dayTime}}
                         </div>
-                        <i style="height: 5px;" :class="item == 9 ? 'cirle-blue' : ''"></i>
+                            <i style="height: 5px;" v-if="allcolleagues.includes(item.otherTime)" class="cirle-blue"></i>
+                            <i style="height: 5px;" v-else></i>
                     </div>
                 </div>
             </div>
             <!--日历插件-->
             <div style="position: relative;" v-if="timelong == 30">
-                <uni-calendar ref="calendar" :insert="false" :selected='selected' @confirm="confirm" />
+                <uni-calendar ref="calendar" insert="true" :selected='selected' @haveClick='confirm'/>
                 <uni-icon @click='timelong = 7' type="arrowup" class="pl5 d-pointer" size="18" style='position: absolute;top: 8px;left: 85px;'/>
             </div>
 
             <!--暂无日程-->
-            <div v-if="clickDay != 9" style="justify-content: center;align-items: center;flex-direction: column;" class="d-flex p10 mt15">
-                <img src="../../assets/img/schedule.png" style="width: 132px;height: 111px;"/>
+            <div v-if="!allcolleagues.includes(clickDay)" style="justify-content: center;align-items: center;flex-direction: column;" class="d-flex p10 mt15">
+                <img src="../../assets/img/nothing.png" style="width: 132px;height: 111px;"/>
                 <span class="d-text-qgray">今天还没有安排日程哦</span>
             </div>
 
             <!--日程列表-->
-            <a url="/pages/index/scheduleAdd" v-if="clickDay == 9" style="border: 1px solid #e4e4e4;border-left: none;border-right: none;">
-                <div class="p10 wfull">
-                    <div class="wfull d-flex">
-                        <div class="d-flex cirle-blue" style="margin-top: 7px;">
+            <div v-for="(item,index) in indexList" :key="index">
+                <a :url="`/pages/index/scheduleAdd?scheId=${item.id}`" v-if="changeTime(item.startTime) == clickDay" style="border: 1px solid #e4e4e4;border-left: none;border-right: none;">
+                    <div class="p10 wfull">
+                        <div class="wfull d-flex">
+                            <div class="d-flex cirle-blue" style="margin-top: 7px;">
+                            </div>
+                            <span class="d-text-gray ml10">{{item.content}}</span>
+                            <div class="ac ml10 pl5 pr5 f12" style="height: 18px;line-height: 18px;color:#457FF5;border: 1px solid #457FF5;border-radius: 5px;">
+                                <span>{{ item.remindSecond&lt;3600 ? ((item.remindSecond/60) + '分钟') : (item.remindSecond/3600 + '小时') }}</span>
+                            </div>
                         </div>
-                        <span class="d-text-gray ml10">明天去西直门拜访王总</span>
-                        <div class="ac ml10 pl5 pr5 f12" style="height: 18px;line-height: 18px;color:#457FF5;border: 1px solid #457FF5;border-radius: 5px;">
-                            10分钟
+                        <div class="d-text-gray ml15">
+                            {{item.startTime | timeToStr('y-m-d hh:ii')}} - {{item.endTime | timeToStr('y-m-d hh:ii')}}
                         </div>
                     </div>
-                    <div class="d-text-gray ml15">
-                        10:00 - 11:00
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
 
             <!--新建日程-->
-            <div class="d-flex mt10" style="justify-content: center;">
+            <div class="d-flex mt10 mb15" style="justify-content: center;">
                 <a url="/pages/index/scheduleAdd">
                     <div class="ac" style="width: 131px;height: 37px;border: 1px solid #457FF5;line-height: 37px;border-radius: 50px;color: #457FF5;">
                         <span>新建日程</span>
@@ -70,8 +73,8 @@
             <div class="h40 d-flex-level mt10" style="background:#F9F9F9;">
                 <div class="d-flex ml15" style="height: 26px;align-items: center;">
                     <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar>
-                    <a url="/pages/index/colleagueChoose">
-                        <span class="d-text-qgray f13 ml5">小家伙</span>
+                    <a :url="`/pages/index/colleagueChoose?subordinate=1&userId=${userInfo.id}&ids=${userId}`">
+                        <span class="d-text-qgray f13 ml5">{{userInfo.name}}</span>
                     </a>
                     <uni-icon type="arrowdown" class="pl5 d-text-qgray" size="16"/>
                 </div>
@@ -218,14 +221,14 @@
 export default {
 	data () {
 		return {
-			current: 1,
+			current: 0,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
+			userInfo: {},
 			timelong: 7,
 			clickDay: '',
 			TabList: [{ name: '今天' }, { name: '仪表盘' }],
-			selected: [{ date: '2019-07-24', info: '签到', data: { custom: '自定义信息', name: '自定义消息头' } }],
-			// fn1OnInit: fn1,
+			selected: [],
 			ec: {
 				option: {
 					color: ['#FF9900', '#ffe06c', '#b1e289', '#72daa3', '#53d1c6', '#5CBFF8', '#5cA1ff'],
@@ -254,10 +257,14 @@ export default {
 					]
 				}
 			},
+			hour: 3600, // 区分小时还是分钟
+			mint: 60,
 			userId: 1,
+			allcolleagues: [], // 有日程的所有时间
 			salesKitForm: {}, // 销售简报
 			rankingList: [], // 排行榜
-			funnelList: []// 漏斗数据
+			funnelList: [], // 漏斗数据
+			indexList: []// 首页所有日程列表
 		}
 	},
 	components: {
@@ -269,15 +276,44 @@ export default {
 		}
 	},
 	created () {
-		this.getDates(7)
+
+	},
+	onShow () {
+		this.getIndexList()
+		this.changeTime()
+		this.getDates()
 		this.getTodayDate()
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
 		this.scheduleSelectSalesFunnel()
+		this.userInfo = this.$local.fetch('userInfo') || {}
+		this.userId = this.userInfo.id
 	},
 	onLoad (option) {
+		// 选择的当前人
+		uni.$on('colleagueChoose', data => {
+			this.userId = data.data[0].id
+		})
 	},
 	methods: {
+		// 获取日程列表
+		getIndexList () {
+			this.$api.seeCrmService.scheduleList(null, this.userInfo.id)
+				.then(res => {
+					this.indexList = res.data
+					this.indexList = [
+						{ address: '示例：详细地址', content: '示例：日程内容', endTime: 1565334107725, startTime: 1565330507000, remindSecond: 3600, id: 1 },
+						{ address: '示例：详细地址111', content: '示例：日程内容111', endTime: 1565420507000, startTime: 1565416907000, remindSecond: 360, id: 2 },
+						{ address: '示例：详细地址22222', content: '示例：日程内容2222', endTime: 1565334107725, startTime: 1565330507000, remindSecond: 3600, id: 3 },
+						{ address: '示例：详细地址3333', content: '示例：日程内容3333', endTime: 1566459603000, startTime: 1566463203000, remindSecond: 3600, id: 4 }
+					]
+					this.indexList.forEach((item) => {
+						this.allcolleagues.push(this.changeTime(item.startTime))
+						// console.log(this.changeTime(item.startTime))
+						this.selected.push({ date: this.changeTime(item.startTime) })
+					})
+				})
+		},
 		// 查询本月当前人的销售简报
 		scheduleSelectSalesKit () {
 			this.$api.seeCrmService.scheduleSelectSalesKit(null, this.userId)
@@ -285,9 +321,9 @@ export default {
 					this.salesKitForm = res.data
 				})
 		},
-		// 查询本月当前人的销售简报
+		// 查询本月当前人的排行榜
 		scheduleSelectCompanyRanking () {
-			this.$api.seeCrmService.scheduleSelectCompanyRanking()
+			this.$api.seeCrmService.scheduleSelectCompanyRanking(null, this.userId)
 				.then(res => {
 					this.rankingList = res.data
 				})
@@ -304,15 +340,20 @@ export default {
 					this.$refs.echart.init()
 				})
 		},
-		confirm () {
-
+		// 日历的点击
+		confirm (value) {
+			this.clickDay = value.fulldate
 		},
 		// 进来默认获取今天日期
 		getTodayDate () {
-			this.clickDay = new Date().toLocaleDateString().split('/').pop()
+			this.clickDay = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
 		},
 		handleChange () {
 
+		},
+		// 将时间戳转换成年月日
+		changeTime (time) {
+			return new Date(time).getFullYear() + '-' + (new Date(time).getMonth() + 1) + '-' + new Date(time).getDate()
 		},
 		getDates () {
 			var indexDate = new Date()
@@ -320,18 +361,17 @@ export default {
 			var currenDay = indexDate.getDay()
 			var dates = []
 			for (var i = 0; i < 7; i++) {
-				dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 7) % 7)).getDate())
+				let param = new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 7) % 7))
+				dates.push({ dayTime: param.getDate(), otherTime: param.getFullYear() + '-' + (param.getMonth() + 1) + '-' + param.getDate() })
 			}
 			this.allTime = [...dates]
 		},
 		// 点击某天
 		fclickThisDay (item) {
-			this.clickDay = item
+			this.clickDay = item.otherTime
 		}
-	},
-	onReady () {
-		// console.log(this.$store.state)
 	}
+
 }
 </script>
 
@@ -351,25 +391,6 @@ export default {
 .d-hui{color: #999;}
 .h200{height: 200px;}
 .iconbox{height: 30px;width: 108px;box-sizing: border-box;}
-// .content {
-//         text-align: center;
-//         height: 400upx;
-//     }
-
-    // .logo {
-    //     height: 200upx;
-    //     width: 200upx;
-    //     margin-top: 200upx;
-    // }
-
-    // .title {
-    //     font-size: 36upx;
-    //     color: #8f8f94;
-    // }
-
-    .echartsBox {
-        width: 100%;
-        height: 100%;
-    }
-    .ec-canvas{width: 100%;height: 200px;}
+.echartsBox {width: 100%;height: 100%;}
+.ec-canvas{width: 100%;height: 200px;}
 </style>

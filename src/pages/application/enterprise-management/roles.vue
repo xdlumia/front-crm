@@ -9,7 +9,7 @@
 	<view>
 		<NavBar title="选择角色" />
 		<scroll-list
-				api="enterpriseManagementService.getRoles"
+				api="seeCrmService.organizationalStructureRoles"
 				:params="queryForm"
 				@getList='getRoles'
 				ref='roles'>
@@ -34,6 +34,10 @@
 export default {
 	data () {
 		return {
+			queryForm: {
+				page: 1,
+				limit: 100
+			},
 			roles: [],
 			roleId: 0,
 			ckeckedRoleIds: [],
@@ -62,16 +66,19 @@ export default {
 		},
 		// 确定
 		makeSure () {
+			uni.$emit('backFromRole', JSON.stringify(this.roles[this.current]))
+			this.$routing.navigateBack()
+
 			// 返回参数给上一级页面
-			let pages = getCurrentPages()
-			let prevPage = pages[ pages.length - 2 ]
-			prevPage.setData({
-				ckeckedRoles: this.roles[this.current],
-				backFromRole: true
-			})
-			uni.navigateBack({
-				delta: 1
-			})
+			// let pages = getCurrentPages()
+			// let prevPage = pages[ pages.length - 2 ]
+			// prevPage.setData({
+			// 	ckeckedRoles: this.roles[this.current],
+			// 	backFromRole: true
+			// })
+			// uni.navigateBack({
+			// 	delta: 1
+			// })
 		}
 	}
 }

@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 公海池设置列表
+* @date 2019年8月09日
+**/
+-->
 <template>
     <div class='setting-page'>
         <NavBar title='管理客户公海' />
@@ -7,7 +14,6 @@
                 :label='"领取客户上限：" + item.getClientNumMax'
                 v-for="item in list"
                 :key="item.id"
-                @click='choosePool(item)'
                 is-link
                 :url="'./setting-detail?poolId=' + item.id"
             />

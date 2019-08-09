@@ -200,6 +200,7 @@
 				// 可以执行函数，返回给用户值
 				this.isSilde = true
 				this.getQueryDom(index)
+
 			},
 			/**
 			 * 获取全部月份
@@ -447,6 +448,15 @@
 				this.isSilde = true
 				this.isClick = true
 				this.getMonthAll(indexNum, canlender.year + '-' + month + '-' + date)
+				// this.setEmit(this.canlender)
+				this.$emit('haveClick', {
+						year: this.canlender.year,
+						month: this.canlender.month,
+						date: this.canlender.date,
+						lunar: this.canlender.lunar,
+						clockinfo: this.canlender.clockinfo || {},
+						fulldate: this.canlender.year + '-' + this.canlender.month + '-' + this.canlender.date
+					})
 			},
 			// 获取日历内容
 			getWeek(dateData) {

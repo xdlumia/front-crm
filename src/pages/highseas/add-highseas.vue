@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 新建公海池
+* @date 2019年8月09日
+**/
+-->
 <template>
     <div class="add-highseas-page">
         <NavBar title='新建公海池' />

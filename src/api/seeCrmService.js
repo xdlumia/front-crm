@@ -1,4 +1,5 @@
-const MOCK_ADDRESS = '/mock/5d42880818ed947b04cebc75/crm'
+// const MOCK_ADDRESS = '/mock/5d42880818ed947b04cebc75/crm'
+const MOCK_ADDRESS = 'http://localhost:9128/'
 let _isMock = false
 export default {
 	__mockAddress: MOCK_ADDRESS,

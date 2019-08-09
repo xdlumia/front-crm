@@ -28,6 +28,6 @@ export default {
 	getUserDetail: {
 		url: '/rmuserrole/getUserDetail',
 		mock: IS_MOCK,
-		methods: 'post'
+		methods: 'get'
 	}
 }

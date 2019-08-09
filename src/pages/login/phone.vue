@@ -70,16 +70,19 @@ export default {
 						// 保存数据到本地
 						this.setUserDataToLocal(response.data)
 						this.getUserDetail(response.data.sysCode)
-						// 跳转到首页
-						this.$routing.switchTab('/pages/index/index')
 					}
 				})
 			}
 		},
 		// 初始化用户详细数据
 		getUserDetail (syscode) {
-			this.$api.bizSystemService.getUserDetail({ 'syscode': syscode }).then((response) => {
-				console.log(response)
+			this.$api.bizSystemService.getUserDetail({}, { 'syscode': syscode }).then((response) => {
+				this.$utils.toast.text(response.msg)
+				if (response.code === 200) {
+					this.setUserDataToLocal(response.data)
+					// 跳转到首页
+					this.$routing.switchTab('/pages/index/index')
+				}
 			})
 		},
 		// 保存数据到本地

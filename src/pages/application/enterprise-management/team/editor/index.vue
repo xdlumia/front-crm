@@ -83,8 +83,17 @@ export default {
 		}
 	},
 	onLoad: function (option) {
+		let that = this
 		uni.$on('backFromOrg', function (data) {
-			console.log('监听到事件来自 backFromOrg ，携带参数 msg 为：' + JSON.parse(data).id)
+			that.formData.deptId = JSON.parse(data).id
+			that.formData.deptName = JSON.parse(data).deptName
+		})
+		uni.$on('backFromRole', function (data) {
+			that.formData.roleList = []
+			that.formData.roleList.push(JSON.parse(data))
+			that.formData.roleNames = JSON.parse(data).roleName
+			that.formData.roleIds = []
+			that.formData.roleIds.push(JSON.parse(data).id)
 		})
 		// 是否是编辑页面
 		if (option.isEditor) {
@@ -92,7 +101,7 @@ export default {
 		}
 		// 回显员工信息
 		if (parseInt(this.isEditor) === 1 && option.employeeId) {
-			this.$api.enterpriseManagementService.getEmployeeDetail({}, option.employeeId).then((response) => {
+			this.$api.seeCrmService.organizationalStructureGetEmployeeDetail({}, option.employeeId).then((response) => {
 				if (response.code === 200) {
 					this.formData = response.data
 					// 处理roleIds和roleNames
@@ -116,30 +125,12 @@ export default {
 			this.formData.id = JSON.parse(option.apply).id
 		}
 	},
-	// onShow () {
-	// 	let pages = getCurrentPages()
-	// 	let currPage = pages[pages.length - 1]
-	// 	// 从“选择部门”页面返回的数据
-	// 	if (currPage.data.backFromOrg) {
-	// 		this.formData.deptId = currPage.data.deptId
-	// 		this.formData.deptName = currPage.data.deptName
-	// 	}
-	// 	// 从“选择角色”页面返回的数据
-	// 	if (currPage.data.backFromRole) {
-	// 		let items = currPage.data.ckeckedRoles
-	// 		this.formData.roleList = []
-	// 		this.formData.roleList.push(items)
-	// 		this.formData.roleNames = items.roleName
-	// 		this.formData.roleIds = []
-	// 		this.formData.roleIds.push(items.id)
-	// 	}
-	// },
 	methods: {
 		// 删除员工 deleteEmployee
 		deleteEmployee () {
 			try {
 				this.$utils.showModal('确定要删除此员工？').then(async () => {
-					let resulte = await this.$api.enterpriseManagementService.deleteEmployee({ id: this.formData.id })
+					let resulte = await this.$api.seeCrmService.organizationalStructureDeleteEmployee({ id: this.formData.id })
 					if (resulte.code === 200) {
 						this.$utils.toast.text('删除成功')
 						setTimeout(() => {
@@ -157,7 +148,7 @@ export default {
 		async update () {
 			await this.$refs.mform.validate()
 			try {
-				this.$api.enterpriseManagementService.updateEmployee(this.formData).then((response) => {
+				this.$api.seeCrmService.organizationalStructureUpdateEmployee(this.formData).then((response) => {
 					if (response.code === 200) {
 						this.$utils.toast.text('修改成功')
 						setTimeout(() => {
@@ -173,7 +164,7 @@ export default {
 		async save () {
 			await this.$refs.mform.validate()
 			try {
-				this.$api.enterpriseManagementService.saveEmployee(this.formData).then((response) => {
+				this.$api.seeCrmService.organizationalStructureSaveEmployee(this.formData).then((response) => {
 					if (response.code === 200) {
 						this.$utils.toast.text('保存成功')
 						setTimeout(() => {

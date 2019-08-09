@@ -44,7 +44,7 @@
 					:params="queryForm"
 					ref='list'
 				>
-				<a v-for="(item,index) in transactionList" :key='index' :url="chooseType == 0 ? '/pages/transaction/detail' : ''" class='d-relative'>
+				<div @click="handlerTransation(item, index)" v-for="(item,index) in transactionList" :key='index' :url="chooseType == 0 ? '/pages/transaction/detail' : ''" class='d-relative'>
 					<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
 						<div class="d-cell">
 							<div class="f13 d-text-black">{{item.name}}</div>
@@ -56,7 +56,7 @@
 							<m-radio v-else :label='item.id' v-model="chooseData" />
 						</div>
 					</div>
-				</a>
+				</div>
 				</scroll-list>
 		</div>
 
@@ -236,6 +236,13 @@ export default {
 			}
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
+		},
+		handlerTransation (item, index) {
+			if (!this.chooseType) {
+				this.$routing.navigateTo('/pages/transaction/detail')
+				return
+			}
+			this.chooseData = item.id
 		},
 		// 被选中的确定
 		fsubmit () {

@@ -79,7 +79,7 @@ export default {
 		// 提交申请
 		submitApply () {
 			if (this.validateOk) {
-				this.$api.enterpriseManagementService.saveUserapplicationinformation({
+				this.$api.seeCrmService.userapplicationinformationSave({
 					'name': this.name,
 					'phone': this.phone,
 					'applyReason': this.applyReason,
@@ -101,7 +101,7 @@ export default {
 		// 校验验证码validateSmsCode
 		checkValidateCode () {
 			if (this.phone !== '' && this.code !== '') {
-				this.$api.enterpriseManagementService.validateSmsCode({ 'phone': this.phone, 'verificationCode': this.validateCode }).then((response) => {
+				this.$api.seeCrmService.userapplicationinformationValidateSmsCode({ 'phone': this.phone, 'verificationCode': this.validateCode }).then((response) => {
 					this.$utils.toast.text(response.msg)
 					if (response.code === 200) {
 						this.validateOk = true
@@ -131,7 +131,7 @@ export default {
 		// 获取验证码
 		getValidateCode () {
 			if (this.phone) {
-				this.$api.enterpriseManagementService.getSmsCode({}, this.phone).then((response) => {
+				this.$api.seeCrmService.userapplicationinformationGetSmsCode({}, this.phone).then((response) => {
 					if (response.code === 200) {
 						this.$utils.toast.text('验证码发送成功')
 						this.timeGo()
