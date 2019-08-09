@@ -1,6 +1,6 @@
-import {
-	$message
-} from '@/utils/message'
+// import {
+// 	$message
+// } from '@/utils/message'
 import local from '@/utils/localStorage'
 import sha512 from 'js-sha512'
 import uuid from 'uuid'
@@ -59,10 +59,7 @@ Api.interceptors.response.use(
 	},
 	(err, promise) => {
 		if (err) {
-			$message({
-				content: err.message,
-				type: 'error'
-			})
+			uni.hideLoading()
 			return promise.reject(err.response)
 		}
 		return promise.resolve()
