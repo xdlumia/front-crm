@@ -37,40 +37,43 @@ Api.interceptors.request.use(async (config, promise) => {
 	return config
 })
 
-Api.interceptors.response.use(
-	(response, promise) => {
-		if (response.data && response.request.method === 'POST') {
-			uni.showToast({ title: response.data.msg, icon: 'none' })
-		} else {
-			uni.hideLoading()
+Api.interceptors.response.use((response, promise) => {
+	let res = response.data
+	uni.hideLoading()
+	if (+response.data.code === 402) {
+		local.remove('finger')
+		local.remove('token')
+		local.remove('userInfo')
+		if (global.g.redirectUrl) {
+			console.warn('未登录')
+			uni.redirectTo({
+				url: global.g.redirectUrl
+			})
 		}
-		if (+response.data.code === 402) {
-			local.remove('finger')
-			local.remove('token')
-			local.remove('userInfo')
-			if (global.g.redirectUrl) {
-				console.warn('未登录')
-				uni.redirectTo({
-					url: global.g.redirectUrl
-				})
-			}
-			return promise.resolve(
-				Object.assign({
-					data: []
-				},
-				response.data
-				)
+		return promise.resolve(
+			Object.assign({
+				data: []
+			},
+			response.data
 			)
-		}
-		return promise.resolve(response.data)
-	},
-	(err, promise) => {
-		if (err) {
-			uni.hideLoading()
-			return promise.reject(err.response)
-		}
-		return promise.resolve()
+		)
 	}
+	if (res.code !== 200) {
+		uni.showToast({ title: res.msg, icon: 'none' })
+		return Promise.reject(res.msg)
+	}
+	if (res.code === 200 && response.request.method !== 'get') {
+		uni.showToast({ title: res.msg, icon: 'none' })
+	}
+	return promise.resolve(res)
+},
+(err, promise) => {
+	if (err) {
+		uni.hideLoading()
+		return promise.reject(err.response)
+	}
+	return Promise.reject(error)
+}
 )
 
 export default Api

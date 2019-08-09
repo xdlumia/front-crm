@@ -116,7 +116,7 @@ export default {
 			filterData: [
 				{
 					prop: 'queryType',
-					current: queryType[0],
+					current: queryType[1],
 					list: queryType
 				},
 				{
@@ -138,8 +138,8 @@ export default {
 				clientOrChanceName: '', // 客户名称或机会名称（模糊查询）
 				sourceCode: [], // 来源
 				transationTime: '', // 成交时间（0-本周，1-本季，2-本年，3-上周，4-上月,5-本月，6-今天，7-下周）
-				queryType: '', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
-				orderByStr: '' // 排序字段（a.follow_up_time跟进日期，a.stage_propel_time阶段更新日期，a.sales_money销售金额，c.equityedge赢率）
+				queryType: '0', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
+				orderByStr: 'a.follow_up_time' // 排序字段（a.follow_up_time跟进日期，a.stage_propel_time阶段更新日期，a.sales_money销售金额，c.equityedge赢率）
 			}
 		}
 	},
@@ -206,7 +206,7 @@ export default {
 				this.stageSts.equityedge = row.equityedge
 			}
 			// 获取销售机会阶段统计
-			this.saleschanceSalesChanceStatistics({ stageId: [row.id] })
+			this.saleschanceSalesChanceStatistics(this.queryForm)
 			// 刷新列表
 			this.$refs.list.reload()
 		},

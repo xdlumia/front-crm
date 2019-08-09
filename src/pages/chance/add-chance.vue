@@ -11,14 +11,7 @@
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
-            <i-select
-                v-model="form.phone"
-                :props="{label:'name',value:'id'}"
-                label="所属部门"
-                placeholder="请选择所属部门"
-                required
-                :options="deptList">
-            </i-select>
+            <i-input v-model="deptName" label="所属部门" placeholder="请选择所属部门" required />
             <i-input v-model="form.salesMoney" label="销售金额" placeholder="请填写销售金额" required />
             <i-select
                 v-model="form.stageId"
@@ -60,6 +53,7 @@ export default {
 			fieldList: [], // 自定义字段列表
 			clientName: '', // 客户名称
 			labelNames: '', // 标签名称组合
+			deptName: 'deptInfo',
 			form: {
 				id: '', // 主键id
 				chanceName: '', // '示例：机会名称',
@@ -142,7 +136,7 @@ export default {
 		// 获取销售阶段
 		this.salesstageQueryList()
 		// 获取部门列表
-		this.getDepts()
+		// this.getDepts()
 	},
 	methods: {
 		// 保存
@@ -178,12 +172,12 @@ export default {
 				})
 		},
 		// 获取部门列表
-		getDepts () {
-			this.$api.enterpriseManagementService.getDepts({ limit: 100, paeg: 1 })
-				.then(res => {
-					this.deptList = res.data || []
-				})
-		},
+		// getDepts () {
+		// 	this.$api.enterpriseManagementService.getDepts({ limit: 100, paeg: 1 })
+		// 		.then(res => {
+		// 			this.deptList = res.data || []
+		// 		})
+		// },
 		// 查询机会详情
 		saleschanceInfo (id) {
 			this.$api.seeCrmService.saleschanceInfo(null, id)
