@@ -20,14 +20,7 @@
                         <div class="check-repeat" @click='checkRepeat'>{{ isRepeat ? '已查重' : '查重' }}</div>
                     </i-input>
 
-                    <i-select
-                        v-model="form.phone"
-                        :props="{label:'name',value:'id'}"
-                        label="所属部门"
-                        placeholder="请选择所属部门"
-                        required
-                        :options="upData">
-                    </i-select>
+					<i-input label="所属部门" v-model="deptInfo.deptName" required />
 
                     <i-input v-model="form.address" label="详细地址" maxlength='32' placeholder="请填写详细地址"  type="number">
                         <div @click="chooseMap" class="ml15 ac hfull pl15 d-center" style="border-left: 1px solid #F2F2F2;">
@@ -140,6 +133,7 @@ export default {
 					message: '手机号格式不正确'
 				}]
 			},
+			deptInfo: {},
 			fieldList: [] // 更多条目字段
 		}
 	},
@@ -162,6 +156,7 @@ export default {
 		// 公海池 id
 		this.form.poolId = params.poolId || ''
 		this.getDetailInfo()
+		this.deptInfo = this.$local.fetch('deptInfo') || {}
 	},
 	onShow () {
 		this.getMoreField()
@@ -213,7 +208,8 @@ export default {
 			await this.$refs.mform.validate()
 			try {
 				let resulte = await this.$api.seeCrmService.clientinfoList({
-					phone: this.form.phone
+					phone: this.form.phone,
+					precisionName: this.form.name
 				})
 				if (resulte.code === 200 && !resulte.data.length) {
 					this.isRepeat = true

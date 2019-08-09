@@ -7,7 +7,6 @@
                 :label='"领取客户上限：" + item.getClientNumMax'
                 v-for="item in list"
                 :key="item.id"
-                @click='choosePool(item)'
                 is-link
                 :url="'./setting-detail?poolId=' + item.id"
             />
