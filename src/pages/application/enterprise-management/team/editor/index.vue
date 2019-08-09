@@ -83,8 +83,17 @@ export default {
 		}
 	},
 	onLoad: function (option) {
+		let that = this
 		uni.$on('backFromOrg', function (data) {
-			console.log('监听到事件来自 backFromOrg ，携带参数 msg 为：' + JSON.parse(data).id)
+			that.formData.deptId = JSON.parse(data).id
+			that.formData.deptName = JSON.parse(data).deptName
+		})
+		uni.$on('backFromRole', function (data) {
+			that.formData.roleList = []
+			that.formData.roleList.push(JSON.parse(data))
+			that.formData.roleNames = JSON.parse(data).roleName
+			that.formData.roleIds = []
+			that.formData.roleIds.push(JSON.parse(data).id)
 		})
 		// 是否是编辑页面
 		if (option.isEditor) {
@@ -116,24 +125,6 @@ export default {
 			this.formData.id = JSON.parse(option.apply).id
 		}
 	},
-	// onShow () {
-	// 	let pages = getCurrentPages()
-	// 	let currPage = pages[pages.length - 1]
-	// 	// 从“选择部门”页面返回的数据
-	// 	if (currPage.data.backFromOrg) {
-	// 		this.formData.deptId = currPage.data.deptId
-	// 		this.formData.deptName = currPage.data.deptName
-	// 	}
-	// 	// 从“选择角色”页面返回的数据
-	// 	if (currPage.data.backFromRole) {
-	// 		let items = currPage.data.ckeckedRoles
-	// 		this.formData.roleList = []
-	// 		this.formData.roleList.push(items)
-	// 		this.formData.roleNames = items.roleName
-	// 		this.formData.roleIds = []
-	// 		this.formData.roleIds.push(items.id)
-	// 	}
-	// },
 	methods: {
 		// 删除员工 deleteEmployee
 		deleteEmployee () {
