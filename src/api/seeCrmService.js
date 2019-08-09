@@ -563,6 +563,12 @@ export default {
 		'mock': _isMock
 	},
 
+	// 获取下属人员列表（包括自己）)
+	organizationalStructureGetChildrenEmployee: {
+		'url': '/organizationalStructure/getChildrenEmployee',
+		'mock': _isMock
+	},
+
 	// 根据id[]返回用户对象列表)
 	organizationalStructureGetEmployeeByIds: {
 		'url': '/organizationalStructure/getEmployeeByIds',
@@ -1080,6 +1086,14 @@ export default {
 		'methods': 'post'
 	},
 	/* =============我关注的数据end=========== */
+
+	/* =============服务健康检查start=========== */
+	// 检查服务健康状况
+	healthCheck: {
+		'url': '/ws/health/check',
+		'mock': _isMock
+	},
+	/* =============服务健康检查end=========== */
 
 	/* =============文件压缩下载（日志和配置文件）start=========== */
 	// 根据端口号压缩并下载指定类型文件
