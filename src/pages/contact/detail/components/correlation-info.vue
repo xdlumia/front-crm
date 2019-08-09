@@ -27,7 +27,7 @@ import infoSchedule from '@/pages/common/info-schedule' //  日程
 import infoFile from '@/pages/common/info-file' //  附件
 import infoEmployee from '@/pages/common/info-employee' //  团队成员
 export default {
-	props: ['height'],
+	props: ['height', 'query'],
 	components: {
 		infoChance,
 		infoTransaction,

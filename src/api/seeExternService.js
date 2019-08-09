@@ -15,7 +15,7 @@ export default {
 	ossBatchDeleteOssResources: {
 		url: '/oss/batchDeleteOssResources',
 		methods: 'delete',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag oss接口
@@ -24,7 +24,7 @@ export default {
 	ossDeleteOssResources: {
 		url: '/oss/deleteOssResources',
 		methods: 'delete',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag oss接口
@@ -33,7 +33,7 @@ export default {
 	ossGetOssTicket: {
 		url: '/oss/getOssTicket',
 		methods: 'get',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag osshy接口
@@ -42,7 +42,7 @@ export default {
 	osshyBatchDeleteOssResources: {
 		url: '/osshy/batchDeleteOssResources',
 		methods: 'delete',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag osshy接口
@@ -51,7 +51,7 @@ export default {
 	osshyDeleteOssResources: {
 		url: '/osshy/deleteOssResources',
 		methods: 'delete',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag osshy接口
@@ -60,7 +60,7 @@ export default {
 	osshyGetOssTicketV: {
 		url: '/osshy/getOssTicketV',
 		methods: 'get',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag ossv接口
@@ -69,7 +69,7 @@ export default {
 	ossvBatchDeleteOssResources: {
 		url: '/ossv/batchDeleteOssResources',
 		methods: 'delete',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag ossv接口
@@ -78,7 +78,7 @@ export default {
 	ossvDeleteOssResources: {
 		url: '/ossv/deleteOssResources',
 		methods: 'delete',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag ossv接口
@@ -87,7 +87,7 @@ export default {
 	ossvGetOssTicketV: {
 		url: '/ossv/getOssTicketV',
 		methods: 'get',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag 短信业务
@@ -96,7 +96,7 @@ export default {
 	smsChecVerifyCodek: {
 		url: '/sms/checVerifyCodek',
 		methods: 'get',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag 短信业务
@@ -105,7 +105,7 @@ export default {
 	smsSendVerifyCode: {
 		url: '/sms/sendVerifyCode',
 		methods: 'get',
-		mock: true
+		mock: false
 	},
 	/**
      * @tag 文件压缩下载（日志和配置文件）
@@ -114,6 +114,6 @@ export default {
 	runlogCompressAndDownload: {
 		url: '/ws/runlog/compressAndDownload',
 		methods: 'get',
-		mock: true
+		mock: false
 	}
 }

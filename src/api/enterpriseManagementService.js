@@ -1,5 +1,5 @@
-const MOCK_ADDRESS = 'http://localhost:9128'
-const IS_MOCK = true
+const MOCK_ADDRESS = 'http://10.167.2.105:9128'
+const IS_MOCK = false
 export default {
 	__mockAddress: MOCK_ADDRESS,
 	// 发送验证码

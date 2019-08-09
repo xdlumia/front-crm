@@ -1,6 +1,5 @@
-const MOCK_ADDRESS = 'http://10.168.1.145:7300/mock/5d42880818ed947b04cebc75/crm'
-let _isMock = true
-
+const MOCK_ADDRESS = '/mock/5d42880818ed947b04cebc75/crm'
+let _isMock = false
 export default {
 	__mockAddress: MOCK_ADDRESS,
 	/* =============客户基本信息表start=========== */
@@ -93,13 +92,6 @@ export default {
 	// 变更责任人
 	clientinfoUpdateClientLeader: {
 		'url': '/clientinfo/updateClientLeader',
-		'mock': _isMock,
-		'methods': 'post'
-	},
-
-	// 修改客户业务属性
-	clientinfoUpdateClientbusiness: {
-		'url': '/clientinfo/updateClientbusiness',
 		'mock': _isMock,
 		'methods': 'post'
 	},
@@ -219,13 +211,6 @@ export default {
 	/* =============附件表end=========== */
 
 	/* =============跟进表start=========== */
-	// 删除
-	followupDelete: {
-		'url': '/followup/delete',
-		'mock': _isMock,
-		'methods': 'delete'
-	},
-
 	// 查看详细信息
 	followupInfo: {
 		'url': '/followup/info/{id}',
@@ -248,13 +233,6 @@ export default {
 	// 保存
 	followupSave: {
 		'url': '/followup/save',
-		'mock': _isMock,
-		'methods': 'post'
-	},
-
-	// 修改
-	followupUpdate: {
-		'url': '/followup/update',
 		'mock': _isMock,
 		'methods': 'post'
 	},
@@ -513,12 +491,6 @@ export default {
 	/* =============业务与联系人关系表end=========== */
 
 	/* =============组织架构start=========== */
-	// 获取下属人员列表
-	organizationalStructureChildren: {
-		'url': '/organizationalStructure/children',
-		'mock': _isMock
-	},
-
 	// 获取子级部门列表
 	organizationalStructureChildrenDepts: {
 		'url': '/organizationalStructure/childrenDepts',
@@ -554,12 +526,6 @@ export default {
 	// 获取部门列表
 	organizationalStructureDepts: {
 		'url': '/organizationalStructure/depts',
-		'mock': _isMock
-	},
-
-	// 获取子树（子部门及直属人员）
-	organizationalStructureDeptsAndUsers: {
-		'url': '/organizationalStructure/deptsAndUsers',
 		'mock': _isMock
 	},
 
@@ -607,13 +573,6 @@ export default {
 		'methods': 'post'
 	},
 
-	// 保存员工信息
-	organizationalStructureSaveUser: {
-		'url': '/organizationalStructure/saveUser',
-		'mock': _isMock,
-		'methods': 'post'
-	},
-
 	// 修改部门信息
 	organizationalStructureUpdateDept: {
 		'url': '/organizationalStructure/updateDept',
@@ -624,13 +583,6 @@ export default {
 	// 修改员工信息
 	organizationalStructureUpdateEmployee: {
 		'url': '/organizationalStructure/updateEmployee',
-		'mock': _isMock,
-		'methods': 'post'
-	},
-
-	// 修改员工信息
-	organizationalStructureUpdateUser: {
-		'url': '/organizationalStructure/updateUser',
 		'mock': _isMock,
 		'methods': 'post'
 	},
@@ -661,12 +613,6 @@ export default {
 	/* =============RocketMQ失败重试end=========== */
 
 	/* =============销售机会基本信息表start=========== */
-	// 客户销售机会的统计数据
-	saleschanceAlesChanceStatistics: {
-		'url': '/saleschance/alesChanceStatistics',
-		'mock': _isMock
-	},
-
 	// 客户销售机会的统计数据
 	saleschanceClientSalesChanceStatistics: {
 		'url': '/saleschance/clientSalesChanceStatistics',
@@ -829,13 +775,6 @@ export default {
 	/* =============销售阶段变更消息提示end=========== */
 
 	/* =============首页日程表start=========== */
-	// 删除
-	scheduleDelete: {
-		'url': '/schedule/delete',
-		'mock': _isMock,
-		'methods': 'delete'
-	},
-
 	// 查看详细信息
 	scheduleInfo: {
 		'url': '/schedule/info/{id}',
@@ -902,13 +841,6 @@ export default {
 		'methods': 'post'
 	},
 
-	// 删除
-	teammemberinfoDelete: {
-		'url': '/teammemberinfo/delete',
-		'mock': _isMock,
-		'methods': 'delete'
-	},
-
 	// 查看详细信息
 	teammemberinfoInfo: {
 		'url': '/teammemberinfo/info/{id}',
@@ -950,13 +882,6 @@ export default {
 	/* =============业务与所属团队成员信息表end=========== */
 
 	/* =============成交记录表start=========== */
-	// 删除
-	transactionrecordDelete: {
-		'url': '/transactionrecord/delete',
-		'mock': _isMock,
-		'methods': 'delete'
-	},
-
 	// 查看详细信息
 	transactionrecordInfo: {
 		'url': '/transactionrecord/info/{id}',
@@ -1004,13 +929,6 @@ export default {
 	/* =============成交记录表end=========== */
 
 	/* =============用户申请信息表start=========== */
-	// 删除
-	userapplicationinformationDelete: {
-		'url': '/userapplicationinformation/delete',
-		'mock': _isMock,
-		'methods': 'delete'
-	},
-
 	// 获取短信验证码
 	userapplicationinformationGetSmsCode: {
 		'url': '/userapplicationinformation/getSmsCode/{phone}',
@@ -1043,13 +961,6 @@ export default {
 		'methods': 'post'
 	},
 
-	// 修改
-	userapplicationinformationUpdate: {
-		'url': '/userapplicationinformation/update',
-		'mock': _isMock,
-		'methods': 'post'
-	},
-
 	// 更新
 	userapplicationinformationUpdateUserApply: {
 		'url': '/userapplicationinformation/updateUserApply',
@@ -1061,13 +972,6 @@ export default {
 	userapplicationinformationValidateSmsCode: {
 		'url': '/userapplicationinformation/validateSmsCode',
 		'mock': _isMock
-	},
-
-	// 保存
-	userapplicationinformationVerificationAndSave: {
-		'url': '/userapplicationinformation/verificationAndSave',
-		'mock': _isMock,
-		'methods': 'post'
 	},
 	/* =============用户申请信息表end=========== */
 

@@ -1,6 +1,6 @@
-import {
-	$message
-} from '@/utils/message'
+// import {
+// 	$message
+// } from '@/utils/message'
 import local from '@/utils/localStorage'
 import sha512 from 'js-sha512'
 import uuid from 'uuid'
@@ -15,13 +15,20 @@ let Flyio = require('flyio/dist/npm/wx')
 Api = new Flyio()
 // #endif
 
-Api.interceptors.request.use((config, promise) => {
+Api.interceptors.request.use(async (config, promise) => {
+	let token = local.getItem('token')
+	let finger = local.getItem('finger')
+	if ((!token || !finger) && !config.url.match('wxLogin/temporaryAuthorization')) {
+		try {
+			await getApp().$vm.temporaryAuthorization(true)
+		} catch (error) { }
+	}
 	uni.showLoading({
 		title: '加载中...',
 		mask: true
 	})
-	config.headers['token'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmaW5nZXIiOiJmZDE1N2Y4NzUwOGZlY2FmNWE3NzAyZGEyNDU3M2NkMCIsImNsaWVudElwIjoiMTIwLjI0NC4yMzIuOTAiLCJleHAiOjE1NjUzNzYxMDYsInVzZXJuYW1lIjoidXNlcjo0NDEifQ.zOdjw0bvPUvwLtgH9KCe8Fyal5SEhXDMKgxYig5TUJY' || local.getItem('token') || ''
-	config.headers['finger'] = 'fd157f87508fecaf5a7702da24573cd0' || local.getItem('finger') || ''
+	config.headers['token'] = local.getItem('token') || ''
+	config.headers['finger'] = local.getItem('finger') || ''
 	config.headers['uid'] = uuid()
 	config.headers['verifycode'] = sha512(
 		config.headers['__'] + config.headers['token'] + config.headers['finger']
@@ -43,9 +50,9 @@ Api.interceptors.response.use(
 			local.remove('userInfo')
 			if (global.g.redirectUrl) {
 				console.warn('未登录')
-				// uni.redirectTo({
-				// 	url: global.g.redirectUrl
-				// })
+				uni.redirectTo({
+					url: global.g.redirectUrl
+				})
 			}
 			return promise.resolve(
 				Object.assign({
@@ -59,10 +66,7 @@ Api.interceptors.response.use(
 	},
 	(err, promise) => {
 		if (err) {
-			$message({
-				content: err.message,
-				type: 'error'
-			})
+			uni.hideLoading()
 			return promise.reject(err.response)
 		}
 		return promise.resolve()
