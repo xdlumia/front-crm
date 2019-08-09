@@ -59,7 +59,7 @@ export default {
 			if (!this.form.phone || !this.form.code) {
 				this.$utils.toast.text('请填写完整数据')
 			} else {
-				this.$api.bizSystemService.businessSmsLogin({
+				this.$api.systemService.businessSmsLogin({
 					'account': this.form.phone,
 					'finger': uuid(),
 					'sysCode': 'crm',
@@ -68,13 +68,19 @@ export default {
 					this.$utils.toast.text(response.msg)
 					if (response.code === 200) {
 						// 保存数据到本地
-						this.setUserDataToLocal(response.data)
+						this.getUserDetail(response.data.sysCode)
 						// 跳转到首页
 						this.$routing.switchTab('/pages/index/index')
 						// this.$routing.switchTab('/pages/application/enterprise-management/index')
 					}
 				})
 			}
+		},
+		// 初始化用户详细数据
+		getUserDetail (syscode) {
+			this.$api.bizSystemService.getUserDetail({ 'syscode': syscode }).then((response) => {
+				console.log(response)
+			})
 		},
 		// 保存数据到本地
 		setUserDataToLocal (data) {

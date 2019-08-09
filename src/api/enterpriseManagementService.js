@@ -1,4 +1,4 @@
-const MOCK_ADDRESS = 'http://10.167.2.105:9128'
+const MOCK_ADDRESS = 'http://localhost:9128'
 const IS_MOCK = true
 export default {
 	__mockAddress: MOCK_ADDRESS,

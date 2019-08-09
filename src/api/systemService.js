@@ -6,5 +6,11 @@ export default {
 	login: {
 		url: '/login/businessLogin',
 		methods: 'post'
+	},
+	// 短息验证码登录
+	businessSmsLogin: {
+		url: '/login/businessSmsLogin',
+		mock: IS_MOCK,
+		methods: 'post'
 	}
 }
