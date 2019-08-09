@@ -26,13 +26,8 @@
 import FilterPlane from '@/components/filter-plane'
 let dateList = [
 	{ code: '0', content: '本周' },
-	{ code: '1', content: '本季' },
-	{ code: '2', content: '本年' },
-	{ code: '3', content: '上周' },
-	{ code: '4', content: '上月' },
 	{ code: '5', content: '本月' },
-	{ code: '6', content: '今天' },
-	{ code: '7', content: '下周' }
+	{ code: '1', content: '本季' }
 ]
 export default {
 	props: ['stageList', 'form'],

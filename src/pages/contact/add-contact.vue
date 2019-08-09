@@ -5,23 +5,23 @@
     <NavBar title="新建联系人"/>
     <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
-            <i-input v-model="form.userName" label="姓名" placeholder="请填写" required />
-            <a url="/pages/client/choose-client" openType="switchTab">
+            <i-input v-model="form.linkkanName" label="姓名" placeholder="请填写" required />
+            <a url="/pages/client/choose-client">
 				<i-input disabled v-model="clientName" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
-            <i-input v-model="form.userPosition" label="职位" placeholder="请填写"/>
-            <i-input v-model="form.userPosition" label="电话" placeholder="请填写"/>
-            <i-input v-model="form.userPosition" label="手机" placeholder="请填写"/>
-            <i-input v-model="form.userPosition" label="电子邮件" placeholder="请填写"/>
-            <i-input v-model="form.userPosition" label="地址" placeholder="请填写"/>
+            <i-input v-model="form.position" label="职位" placeholder="请填写"/>
+            <i-input v-model="form.phone" label="电话" placeholder="请填写"/>
+            <i-input v-model="form.mobile" label="手机" placeholder="请填写"/>
+            <i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
+            <i-input v-model="form.address" label="地址" placeholder="请填写"/>
             <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="所属部门" :options="upData"/>
-            <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="联系人角色" :options="upData"/>
-            <i-input v-model="form.personalProfile" label="备注" placeholder="备注" type="textarea" />
-
+            <i-select v-model="form.roleCode" :props="{label:'name',value:'id'}" label="联系人角色" :options="upData"/>
+            <i-input v-model="form.note" label="备注" placeholder="备注" type="textarea" />
+            <i-input v-for="(item,index) of fieldList" :key="index" v-model="form.note" :label="item.fieldName" placeholder="点击填写" />
         </m-form>
-        <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
+        <a url="/pages/common/more-list?busType=2&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
 	<!-- 保存 -->
     <div class="footer-fixed-menu">
@@ -71,28 +71,17 @@ export default {
 				roleCode: '' // 联系人角色code'
 			},
 			rules: {
-				chanceName: [{
-					required: true,
-					message: '请输入机会名称'
-				}],
-				clientId: [{
-					required: true,
-					message: '请选择客户名称'
-				}],
-				salesMoney: [{
-					required: true,
-					message: '请输入金额'
+				email: [{
+					required: false
 				}, {
-					type: 'price',
+					type: 'email',
 					message: '金额格式不正确'
 				}],
-				stageId: [{
-					required: true,
-					message: '请选择阶段'
-				}],
-				reckonFinishTime: [{
-					required: true,
-					message: '请选择日期'
+				mobile: [{
+					required: false
+				}, {
+					type: 'phone',
+					message: '手机号格式不正确'
 				}]
 			}
 		}

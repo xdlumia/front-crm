@@ -2,16 +2,12 @@
   <div>
     <scroll-view class="diy-filter" :style='"height: calc(100vh - "+ navH + " - 40px)"' scroll-y>
       <filter-plane title="姓名">
-        <div class="pb10 wfull">
-          <input class="filter-input" name="name" v-model="name" placeholder="请输入关键字" type="text" />
+        <div class="pb10 wfull" style="box-sizing:border-box">
+          <input class="filter-input" name="linkkanName" v-model="filterData.linkkanName" placeholder="请输入关键字" type="text" />
         </div>
       </filter-plane>
-      <filter-plane
-        :title="item.title"
-        :dataList="item.datalist"
-        v-for="(item, index) in filterList"
-        :key="index"
-      />
+      <filter-plane title='创建日期' v-model='filterData.createTimeType' isSingle :dataList='dateList'/>
+
     </scroll-view>
     <div class="filter-btn d-center f18 d-text-blue">
       <div class="btn-item hfull d-cell ac" @click="clear">清空</div>
@@ -25,41 +21,36 @@
 </template>
 <script>
 import FilterPlane from '@/components/filter-plane'
-let filterList = [];
-['创建日期'].forEach(item => {
-	filterList.push({
-		title: item,
-		datalist: [
-			{
-				id: 1,
-				name: '数据测试'
-			}
-		]
-	})
-})
-
+let dateList = [
+	{ code: '0', content: '本周' },
+	{ code: '1', content: '本季' },
+	{ code: '2', content: '本年' },
+	{ code: '3', content: '上周' },
+	{ code: '4', content: '上月' },
+	{ code: '5', content: '本月' },
+	{ code: '6', content: '今天' },
+	{ code: '7', content: '下周' }
+]
 export default {
 	components: {
 		FilterPlane
 	},
 	data () {
 		return {
-			name: '',
-			filterList: filterList,
-			principal: []
+			dateList: dateList,
+			filterData: {
+				linkkanName: '', // 联系人名称
+				createTimeType: '', // 创建日期
+				sourceCode: []
+			}
 		}
 	},
 	methods: {
-		addPrincipal () {
-			this.principal.push({
-				name: '荒寂'
-			})
-		},
 		clear () {
-			this.$emit('clear')
+			Object.assign(this.filterData, this.$options.data().filterData)
 		},
-		submit () {
-			this.$emit('submit')
+		submit (item) {
+			this.$emit('submit', this.filterData)
 		}
 	}
 }

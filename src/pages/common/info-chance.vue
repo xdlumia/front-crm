@@ -8,17 +8,16 @@
 <template>
     <div>
         <mPanel title="销售机会" color="#7765cc">
-            <div class="detail-list uni-flex uni-row pb10">
+            <div class="detail-list uni-flex uni-row pb10" v-for="(item,index) of list" :key="index">
                 <div class="flex-item item-progress mr10">
-                    <circleProgress width="45px" :max="5" :progress="2" />
+                    <circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" />
                 </div>
                 <div class="flex-item d-elip">
-                    <div class="d-elip">购买房源6603A/500W</div>
+                    <div class="d-elip">{{item.chanceName}}</div>
                     <div class="d-elip d-text-qgray f12">销售阶段2 /需求确定</div>
                 </div>
                 <div class="flex-item item-progress">
-                    <div class="d-elip f12">2019年06月04日</div>
-                    <div class="d-elip d-text-qgray f14">2,222.00 元</div>
+                    <div class="d-elip f12">{{createTime | timeToStr}}</div> <div class="d-elip d-text-qgray f14">{{item.salesMoney}} 元</div>
                 </div>
             </div>
         </mPanel>
@@ -33,22 +32,36 @@ export default {
 	},
 	data () {
 		return {
-			contactList: []
+			list: [],
+			stageList: []
 		}
 	},
 	onLoad (option) {
 	},
 	created () {
-		this.linkmanQueryList(this.query)
+		this.saleschanceQueryListt(this.query)
+		this.salesstageQueryList()
 	},
 	methods: {
 		// 获取联系人列表
-		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params)
+		saleschanceQueryListt (params) {
+			this.$api.seeCrmService.saleschanceQueryListt(params)
 				.then(res => {
-					this.contactList = res.data || []
+					this.list = res.data || []
+				})
+		},
+		// 获取销售阶段
+		salesstageQueryList () {
+			this.$api.seeCrmService.salesstageQueryList()
+				.then(res => {
+					let data = res.data || []
+					data.forEach(item => {
+						item.name = item.stageName
+					})
+					this.stageList = data
 				})
 		}
+
 	}
 
 }

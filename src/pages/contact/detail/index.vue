@@ -89,7 +89,7 @@ export default {
 		this.id = option.id
 		// 获取详情
 		this.linkmanInfo(option.id)
-		// 获取联系人列表
+		// 获取联系人列表 bus_type 0客户，1联系人，2机会，3成交
 		this.linkmanQueryList({ id: option.id, busType: 1 })
 	},
 	methods: {
