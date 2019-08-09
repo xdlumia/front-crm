@@ -70,6 +70,7 @@ export default {
 						// 保存数据到本地
 						this.setUserDataToLocal(response.data)
 						this.getUserDetail(response.data.sysCode)
+						this.setUserDataToLocal(response.data)
 						// 跳转到首页
 						this.$routing.switchTab('/pages/index/index')
 					}
@@ -78,7 +79,7 @@ export default {
 		},
 		// 初始化用户详细数据
 		getUserDetail (syscode) {
-			this.$api.bizSystemService.getUserDetail({ 'syscode': syscode }).then((response) => {
+			this.$api.bizSystemService.getUserDetail({}, { 'syscode': syscode }).then((response) => {
 				console.log(response)
 			})
 		},
