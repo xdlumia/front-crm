@@ -15,7 +15,14 @@ let Flyio = require('flyio/dist/npm/wx')
 Api = new Flyio()
 // #endif
 
-Api.interceptors.request.use((config, promise) => {
+Api.interceptors.request.use(async (config, promise) => {
+	let token = local.getItem('token')
+	let finger = local.getItem('finger')
+	if ((!token || !finger) && !config.url.match('wxLogin/temporaryAuthorization')) {
+		try {
+			await getApp().$vm.temporaryAuthorization(true)
+		} catch (error) { }
+	}
 	uni.showLoading({
 		title: '加载中...',
 		mask: true
@@ -43,9 +50,9 @@ Api.interceptors.response.use(
 			local.remove('userInfo')
 			if (global.g.redirectUrl) {
 				console.warn('未登录')
-				// uni.redirectTo({
-				// 	url: global.g.redirectUrl
-				// })
+				uni.redirectTo({
+					url: global.g.redirectUrl
+				})
 			}
 			return promise.resolve(
 				Object.assign({

@@ -108,7 +108,7 @@ export default {
 		// 获取验证码
 		getValidateCode () {
 			if (this.form.phone) {
-				this.$api.enterpriseManagementService.getSmsCode({}, this.form.phone).then((response) => {
+				this.$api.enterpriseManagementService.getSmsCode(null, this.form.phone).then((response) => {
 					if (response.code === 200) {
 						this.$utils.toast.text('验证码发送成功')
 						this.timeGo()
@@ -122,7 +122,6 @@ export default {
 		}
 	},
 	onReady () {
-		console.log(this.$store.state)
 	}
 }
 </script>
