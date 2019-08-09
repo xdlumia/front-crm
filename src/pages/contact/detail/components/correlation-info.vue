@@ -7,8 +7,8 @@
 -->
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
-        <!-- 联系人 -->
-        <infoContact :query="query"/>
+        <!-- 销售机会 -->
+        <infoChance :query="query"/>
         <!-- 成交记录 -->
         <infoTransaction :query="query"/>
         <!-- 日程 -->
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import infoContact from '@/pages/common/info-contact' // 联系人
+import infoChance from '@/pages/common/info-chance' // 销售机会
 import infoTransaction from '@/pages/common/info-transaction' // 成交记录
 import infoSchedule from '@/pages/common/info-schedule' //  日程
 import infoFile from '@/pages/common/info-file' //  附件
@@ -29,7 +29,7 @@ import infoEmployee from '@/pages/common/info-employee' //  团队成员
 export default {
 	props: ['height'],
 	components: {
-		infoContact,
+		infoChance,
 		infoTransaction,
 		infoSchedule,
 		infoFile,

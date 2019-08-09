@@ -88,7 +88,7 @@ export default {
 			id: 0,
 			form: {
 				busId: 0,
-				busType: 0,
+				busType: 0, // 0客户，1联系人，2机会，3成交,4业务属性
 				img: '',
 				video: '',
 				headline: '',

@@ -21,12 +21,12 @@
                     placeholder="请选择跟进类型"
                     :options="dictionaryOptions('CRM_GJLX')">
                 </i-select>
-				<a url="/pages/client/choose-client" v-if="form.busType != 2">
+				<a url="/pages/client/choose-client" v-if="form.busType != 1">
 					<i-input disabled v-model="clientName" label="客户名称" placeholder="请选择客户名称">
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>
 				</a>
-				<a url="/pages/chance/choose-chance" v-if="form.busType == 0 || form.busType == 3">
+				<a url="/pages/chance/choose-chance" v-if="form.busType == 0">
 					<i-input disabled v-model="chanceName" label="销售机会" placeholder="请选择客户名称">
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>
@@ -34,7 +34,7 @@
                 <picker-date :required='false' v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期">
 				</picker-date>
 				<i-select
-					v-if="form.busType == 0 || form.busType == 3"
+					v-if="form.busType == 0"
                     v-model="form.intention"
                     :props="{label:'content',value:'code'}"
                     label="意向程度"
@@ -65,7 +65,7 @@ export default {
 			chanceName: '', // 销售机会名称
 			form: {
 				busId: '', // 业务id,
-				busType: '', // 业务类型(0=>跟进公海池,1=>跟进销售机会,2=>跟进联系人,3=>客户)
+				busType: '', // 业务类型(0客户，1联系人，2机会，3成交)
 				clientId: '', // 客户id
 				content: '', // 示例：跟进内容,
 				fileAddress: '', // 附件地址,

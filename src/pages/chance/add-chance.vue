@@ -74,7 +74,7 @@ export default {
 				],
 				lableBusinessSaveVo: {
 					busId: this.busId, // 100000,
-					busType: 2, // 业务类型(0客户，1联系人，2机会，3成交)
+					busType: 2, // 业务类型(0客户，1联系人，2机会，3成交,4业务属性)
 					labelIdArray: []
 				},
 				leaderId: '', // 100000,

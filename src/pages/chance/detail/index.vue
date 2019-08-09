@@ -52,7 +52,7 @@
         </i-tab>
         <i-tab index="2">
 			<!-- 相关信息 -->
-            <correlationInfo :query="{busId:id,busType:1}" height="calc(100vh - 380px)"/>
+            <correlationInfo :query="{busId:id,busType:2}" height="calc(100vh - 380px)"/>
         </i-tab>
     </i-tabs>
       <!-- 底部操作按钮 -->
@@ -115,7 +115,7 @@ export default {
 		// 获取详情
 		this.saleschanceInfo(option.id)
 		// 获取联系人列表
-		this.linkmanQueryList({ id: option.id, busType: 1 })
+		this.linkmanQueryList({ id: option.id, busType: 2 })
 	},
 	created () {
 

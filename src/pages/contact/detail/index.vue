@@ -10,12 +10,14 @@
             class="flex-item d-elip wfull f16"
             style="color:#333">{{detailInfo.linkkanName || '-'}}</div>
           <div class="flex-item datail-handle">
-            <a class="d-inline" url="/pages/contact/add-contact"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
-            <i-icon type="like" size="20" class="ml15" color="#1890FF" />
-          </div>
+            <a class="d-inline" :url="`/pages/contact/add-contact?id=${detailsInfo.id}&editType=1`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
+			<span @click="updateAttention(detailsInfo.isWatchful)">
+				<i-icon :type="detailsInfo.isWatchful?'like_fill':'like'" size="20" class="ml15" :color="detailsInfo.isWatchful?'#FF5533':'#999'" />
+			</span>
+			</div>
         </div>
         <div class="f12">负责人: {{detailInfo.leaderName || '-'}}</div>
-        <div class="f12"><a url="`/pages/client/detail/index?id=${detailInfo.clientId}`" class="d-elip d-text-blue" style="display:inline">{{detailInfo.clientName}}</a></div>
+        <div class="f12"><a :url="`/pages/client/detail/index?id=${detailInfo.clientId}`" class="d-elip d-text-blue" style="display:inline">{{detailInfo.clientName}}</a></div>
         <div class="f12">{{detailInfo.address || '-'}}</div>
       </div>
       <!-- tabs切换组件 -->
@@ -119,7 +121,15 @@ export default {
 					this.phoneActions.unshift({ name: '联系人电话' })
 				})
 		},
-
+		// 关注状态切换
+		updateAttention (val) {
+			// 是否关注（0-未关注，1-已关注）
+			if (val) {
+				this.detailsInfo.isWatchful = 1
+			} else {
+				this.detailsInfo.isWatchful = 0
+			}
+		},
 		handleMore ({ target: { index } }) {
 			if (index === 0) return
 			let fnType = {
