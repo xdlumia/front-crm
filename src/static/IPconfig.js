@@ -20,7 +20,6 @@ var baseURL = {
     bizSystemService: api + 'biz-system-service',
     seeCrmService: api + 'see-crm-service',
     seeDataDictionaryService: api + 'see-data-dictionary-service',
-    enterpriseManagementService: api + 'enterprise-management-service',
     // ossUrl
     ossUrl: ossUrl
 }
