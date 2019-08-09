@@ -153,6 +153,9 @@ Vue.mixin({
 	computed: {
 		navH () {
 			return local.fetch('navH') + 'rpx'
+		},
+		deptInfo () {
+			return this.$local.fetch('deptInfo') || {}
 		}
 	},
 	methods: {
