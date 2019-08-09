@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 公海池列表
+* @date 2019年8月09日
+**/
+-->
 <template>
     <div class="highseas-page">
         <NavBar :title='select ? "公海池" : ""'>

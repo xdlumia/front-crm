@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 自定义筛选
+* @date 2019年8月09日
+**/
+-->
 <template>
     <div>
         <scroll-view class='diy-filter' :style='"height: calc(100vh - "+ navH + " - 49px - 40px)"' scroll-y>

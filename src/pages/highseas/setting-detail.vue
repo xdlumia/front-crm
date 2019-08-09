@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 公海池详情
+* @date 2019年8月09日
+**/
+-->
 <template>
     <div class='setting-page'>
         <NavBar title='公海池设置' />

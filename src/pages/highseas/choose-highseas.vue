@@ -1,3 +1,10 @@
+<!--
+/**
+* @author 冀猛超
+* @name 选择客户公海池
+* @date 2019年8月09日
+**/
+-->
 <template>
     <div class='setting-page'>
         <NavBar title='选择客户公海池' />
