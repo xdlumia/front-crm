@@ -68,10 +68,10 @@ export default {
 					this.$utils.toast.text(response.msg)
 					if (response.code === 200) {
 						// 保存数据到本地
+						this.setUserDataToLocal(response.data)
 						this.getUserDetail(response.data.sysCode)
 						// 跳转到首页
 						this.$routing.switchTab('/pages/index/index')
-						// this.$routing.switchTab('/pages/application/enterprise-management/index')
 					}
 				})
 			}

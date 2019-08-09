@@ -1,5 +1,5 @@
 // const MOCK_ADDRESS = 'http://39.105.103.188:7011/biz-system-service'
-const MOCK_ADDRESS = 'http://39.105.103.188:9011'
+const MOCK_ADDRESS = 'http://39.105.103.188:8011'
 const IS_MOCK = true
 
 export default {
