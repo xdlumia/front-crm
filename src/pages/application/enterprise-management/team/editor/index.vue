@@ -9,55 +9,25 @@
     <view>
 		<NavBar v-if="isEditor == 1 || formData.isApply == 1 " title="编辑员工" />
         <NavBar v-if="isEditor == 0 && formData.isApply == 0" title="添加员工" />
-        <view class="uni-common-mt wfull">
+        <!-- <view class="uni-common-mt wfull"> -->
             <m-form ref="mform" :model="formData" :rules="rules">
-                <view class="bb">
-                    <view class="uni-form-item m10 pl5">
-                        <label class="fl width30"><span style="color:#FF0000;">*</span>姓名</label>
-                        <input class="fl width70"  v-model="formData.employeeName" placeholder="姓名" />
-                    </view>
-                </view>
-                <view class="bb">
-                    <view class="uni-form-item m10 pl5">
-                        <view class="fl  width30"><span style="color:#FF0000;">*</span>手机号</view>
-                        <input class="fl width70"  v-model="formData.phone" placeholder="手机号" />
-                    </view>
-                </view>
-                <view class="uni-form-item wfull">
-                    <view class="wfull" @click="selectDept(formData.deptId)">
-                        <i-cell is-link  v-model='formData.deptName'><span style="color:#FF0000;">*</span>所属部门</i-cell>
-                    </view>
-                </view>
-                <view class="uni-form-item wfull">
-                    <view  class="wfull" @click="selectRole(formData.roleIds)">
-                        <i-cell is-link  v-model="formData.roleNames"><span style="color:#FF0000;">*</span>角色权限</i-cell>
-                    </view>
-                </view>
+				<i-input v-model="formData.employeeName" label="姓名" placeholder="姓名" required />
+				<i-input v-model="formData.phone" label="手机号" type="number" maxlength="11" placeholder="手机号" required />
+				<view @click="selectDept(formData.deptId)">
+					<i-input disabled v-model="formData.deptName" labelWidth="100" label="所属部门" placeholder="请选择所属部门" required>
+						<i-icon type="enter" size="16" color="#999" />
+					</i-input>
+				</view>
+				<view @click="selectRole(formData.roleIds)">
+					<i-input disabled v-model="formData.roleNames" labelWidth="100" label="角色权限" placeholder="请选择角色权限" required>
+						<i-icon type="enter" size="16" color="#999" />
+					</i-input>
+				</view>
                 <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view>
-                <view class="bb">
-                    <view class="uni-form-item m10 pl5">
-                        <view class="fl  width30">职位</view>
-                        <input class="fl width70"  v-model="formData.positionName" placeholder="职位" />
-                    </view>
-                </view>
-                <view class="bb">
-                    <view class="uni-form-item m10 pl5">
-                        <view class="fl  width30">企业邮箱</view>
-                        <input class="fl width70"  v-model="formData.email" placeholder="企业邮箱" />
-                    </view>
-                </view>
-                <view class="bb">
-                    <view class="uni-form-item m10 pl5">
-                        <view class="fl  width30">工号</view>
-                        <input class="fl width70"  v-model="formData.employeeNo" placeholder="工号" />
-                    </view>
-                </view>
-                <view class="bb">
-                    <view class="uni-form-item m10 pl5">
-                        <view class="fl width30">备注</view>
-                        <textarea class="fl"  v-model="formData.remark" placeholder="备注" ></textarea>
-                    </view>
-                </view>
+				<i-input v-model="formData.positionName" label="职位" placeholder="职位"/>
+				<i-input v-model="formData.email" label="企业邮箱" placeholder="企业邮箱"/>
+				<i-input v-model="formData.employeeNo" label="工号" placeholder="工号"/>
+				<i-input type="textarea" v-model="formData.remark" label="备注" maxlength="300" placeholder="点击填写"/>
                 <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view>
                 <view class="d-absolute wfull d-fixed" style="bottom:0">
                     <!-- <i-button class="fl width50" v-if="isEditor == 1" type="warn" @click="deleteEmployee">刪除</i-button> -->
@@ -65,7 +35,7 @@
                     <i-button v-if="isEditor == 0" type="primary" @click="save">保存</i-button>
                 </view>
             </m-form>
-        </view>
+        <!-- </view> -->
     </view>
 </template>
 
