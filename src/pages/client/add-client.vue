@@ -192,7 +192,7 @@ export default {
 		// 选择地图
 		chooseMap () {
 			uni.chooseLocation({
-				success (data) {
+				success: (data) => {
 					this.form.address = data.address
 					this.form.lon = data.longitude
 					this.form.lat = data.latitude
