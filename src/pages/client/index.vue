@@ -23,13 +23,13 @@
 					<div class="d-cell">
 						<div class="d-flex f14 mb5">
 							<div class="d-text-black d-cell d-elip">{{item.name}}</div>
-							<div class='d-text-cgray' v-if='!isSelect'>{{item.makeBargainCode}}</div>
+							<div class='d-text-cgray' v-if='!isSelect'>{{item.makeBargainCode || ''}}</div>
 						</div>
 						<div class="d-flex client-tags">
 							<div class="iconfont iconqian f16 d-text-blue mr10" v-if='salesType === 1'></div>
-							<div class="c-tag f12 mr10">{{item.gradeCode}}</div>
+							<div class="c-tag f12 mr10">{{item.gradeCode | dictionary('CRM_KHJB')}}</div>
 							<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
-							<div class="c-tag f12 mr10">{{item.finallyFollowTime|timeToStr('yyyy-mm-dd')}}</div>
+							<div class="c-tag f12 mr10">{{item.createTime|timeToStr('yyyy-mm-dd')}}</div>
 						</div>
 					</div>
 					<div v-if='isSelect'>
@@ -119,10 +119,11 @@ export default {
 			return !this.isSelect ? 'seeCrmService.clientinfoPagelist' : 'seeCrmService.clientinfoList'
 		}
 	},
-	onReady () {
+	onLoad () {
 		let selects = {}
 		this.filterData.forEach(item => {
 			selects[item.prop] = item.current || item.list[0]
+			this.queryForm[item.prop] = selects[item.prop].id
 		})
 		this.filterSelect = selects
 	},
