@@ -33,7 +33,7 @@
                         :props="{label:'content',value:'code'}"
                         label="客户级别"
                         placeholder="请选择客户级别"
-                        :options="CRM_KHJB"
+                        :options="dictionaryOptions('CRM_KHJB')"
                     />
 
                     <i-select
@@ -41,7 +41,7 @@
                         :props="{label:'content',value:'code'}"
                         label="行业"
                         placeholder="请选择行业"
-                        :options="CRM_KH_HY"
+                        :options="dictionaryOptions('CRM_KH_HY')"
                     />
 
                     <i-select
@@ -49,23 +49,37 @@
                         :props="{label:'content',value:'code'}"
                         label="来源"
                         placeholder="请选择来源"
-                        :options="CRM_LY"
+                        :options="dictionaryOptions('CRM_LY')"
                     />
 
                     <a url="/pages/common/more-tags?busType=0">
-                        <i-input disabled v-model="form.userPosition" label="标签" placeholder="请选择">
+                        <i-input disabled v-model="labelNames" label="标签" placeholder="请选择">
                             <i-icon type="enter" size="16" color="#999" />
                         </i-input>
                     </a>
 
-					<i-input v-for="(item,index) of fieldList" :key="index" v-model="form.note" :label="item.fieldName" placeholder="点击填写" />
-
                 </div>
 
-                <div class="pt10 pb10 pl15 pr15 d-bg-white">
+                <div class="pt10 pl15 pr15 d-bg-white bb">
                     <div class='f13 mb10 d-text-black'>备注</div>
                     <textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
                 </div>
+
+				<div class='d-bg-white pb10'>
+					<div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
+						<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+						<i-input v-if='item.fieldType == 1' type='number' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+						<picker-date v-if='item.fieldType == 2' v-model="item.fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+						<i-select
+							v-if='item.fieldType === 3'
+							v-model="form.fieldValue"
+							:props="{label:'content',value:'code'}"
+							:label="item.fieldName"
+							placeholder="请选择"
+							:options="dictionaryOptions(item.groupCode || '')"
+						/>
+					</div>
+				</div>
 
             </m-form>
 
@@ -100,6 +114,7 @@ export default {
 			id: 0,
 			isRepeat: false,
 			isSkipContact: false, // 是否新建联系人
+			labelNames: '', // 标签名称组合
 			form: {
 				name: '', // 姓名
 				phone: '', // 手机
@@ -108,15 +123,13 @@ export default {
 				lon: '', // 经度
 				note: '', // 备注
 				poolId: '', // 公海池id
-				score: '', // 评分
+				// score: '', // 评分
 				sourceCode: '', // 来源
 				tradeCode: '', // 行业
 				gradeCode: '', // 客户级别
 				clientStatus: '', // 客户状态
-				formsFieldValueSaveVoList: [],
+				formsFieldValueSaveVos: [],
 				lableBusinessSaveVo: {
-					busId: '', // 100000,
-					busType: '', // 0,
 					labelIdArray: []
 				}
 			},
@@ -132,19 +145,7 @@ export default {
 					type: 'phone',
 					message: '手机号格式不正确'
 				}]
-			},
-			fieldList: [] // 更多条目字段
-		}
-	},
-	computed: {
-		CRM_KH_HY () {
-			return this.dictionaryOptions('CRM_KH_HY')
-		},
-		CRM_KHJB () {
-			return this.dictionaryOptions('CRM_KHJB')
-		},
-		CRM_LY () {
-			return this.dictionaryOptions('CRM_LY')
+			}
 		}
 	},
 	onLoad (params) {
@@ -154,10 +155,14 @@ export default {
 		}
 		// 公海池 id
 		this.form.poolId = params.poolId || ''
-		this.getDetailInfo()
+
+		uni.$once('moreTags', data => {
+			this.labelNames = data.map(item => item.labelName).join(',')
+			this.form.lableBusinessSaveVo.labelIdArray = data.map(item => item.id)
+		})
 	},
 	onShow () {
-		this.getMoreField()
+		this.id ? this.getDetailInfo() : this.getMoreField()
 	},
 	onUnload () {
 		this.id = 0
@@ -184,7 +189,7 @@ export default {
 				isEnabled: 0
 			}).then(res => {
 				if (res.code === 200) {
-					this.fieldList = res.data || []
+					this.form.formsFieldValueSaveVos = res.data || []
 				}
 			})
 		},

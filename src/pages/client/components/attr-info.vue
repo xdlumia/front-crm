@@ -9,7 +9,7 @@
     <div class="d-relative">
         <scroll-view scroll-y :style="{height:height}" @scrolltolower='getListClientbusiness()'>
             <a
-                :url='"/pages/client/attr-detail?id=" + item.id'
+                :url='"/pages/client/attr-detail?client=" + item.id'
                 class="attr-item pl15 pr15 d-bg-white mb10 pt10 pb10"
                 v-for='(item, index) in list'
                 :key='item.id'
@@ -25,12 +25,12 @@
                 </div>
             </a>
             <i-load-more
-                :tip=" !loading ?'没有更多了':'加载中'"
+                :tip=" !loading && !list.length ? '暂无数据' : !loading ? '没有更多了' : '加载中'"
                 :loading="loading"
             />
         </scroll-view>
         <div class="pl15 pr15">
-           <a url='/pages/client/add-attr-info' class="add-attr-btn f14 d-text-black d-bg-white ac">+ 添加</a>
+           <a :url="'/pages/client/add-attr-info?id=' + query.clientId" class="add-attr-btn f14 d-text-black d-bg-white ac">+ 添加</a>
         </div>
     </div>
 </template>
@@ -77,9 +77,12 @@ export default {
 				let resulte = await this.$api.seeCrmService.clientinfoListClientbusiness(params)
 				if (resulte.code === 200) {
 					// 如果传入了page 则重新赋值
+					resulte.data.forEach(item => {
+						item.text && (item.text = item.text.replace(/<[^>]+>/g, ''))
+					})
 					this.list = page ? resulte.data : [].concat(this.list, resulte.data)
 					this.params.page++
-					if (resulte.count <= this.list) {
+					if (resulte.count <= this.list.length) {
 						this.loading = false
 					}
 				}
