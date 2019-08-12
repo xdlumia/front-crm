@@ -37,27 +37,27 @@
         </div>
 
 		<div class='highseas-list-view'>
-				<scroll-list
-					:height="'calc(100vh - ' + navH +' - 90px)'"
-					api="seeCrmService.transactionrecordList"
-					@getList='getTransactionList'
-					:params="queryForm"
-					ref='list'
-				>
-				<div @click="handlerTransation(item, index)" v-for="(item,index) in transactionList" :key='index' :url="chooseType == 0 ? '/pages/transaction/detail' : ''" class='d-relative'>
-					<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
-						<div class="d-cell">
-							<div class="f13 d-text-black">{{item.name}}</div>
-							<div class="f12 d-text-qgray">客户：{{item.clientName}}</div>
-							<div class="f12 d-text-qgray">成交金额：{{item.totalAmount}}</div>
-						</div>
-						<div class="d-center">
-							<div v-if="chooseType == 0" class="f13 d-text-qgray">{{item.transactionStatus}}</div>
-							<m-radio v-else :label='item.id' v-model="chooseData" />
-						</div>
+			<scroll-list
+				:height="'calc(100vh - ' + navH +' - 150px)'"
+				api="seeCrmService.transactionrecordList"
+				@getList='getTransactionList'
+				:params="queryForm"
+				ref='list'
+			>
+			<div @click="handlerTransation(item, index)" v-for="(item,index) in transactionList" :key='index' class='d-relative'>
+				<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
+					<div class="d-cell">
+						<div class="f13 d-text-black">{{item.name}}</div>
+						<div class="f12 d-text-qgray">客户：{{item.clientName || ''}}</div>
+						<div class="f12 d-text-qgray">成交金额：{{item.totalAmount}}</div>
+					</div>
+					<div class="d-center">
+						<div v-if="chooseType == 0" class="f13 d-text-qgray">{{item.transactionStatus | dictionary('CRM_CJZT')}}</div>
+						<m-radio v-else :label='item.id' v-model="chooseData" />
 					</div>
 				</div>
-				</scroll-list>
+			</div>
+			</scroll-list>
 		</div>
 
 		<div v-if="chooseType == 0" class="footer-fixed-menu d-center d-bg-white">
@@ -239,7 +239,7 @@ export default {
 		},
 		handlerTransation (item, index) {
 			if (!this.chooseType) {
-				this.$routing.navigateTo('/pages/transaction/detail')
+				this.$routing.navigateTo('/pages/transaction/detail?id=' + item.id)
 				return
 			}
 			this.chooseData = item.id

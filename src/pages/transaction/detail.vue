@@ -5,7 +5,7 @@
 
         <div class="chance-datail-title pl15 pr15 pb10 f13 d-bg-white bb mb15">
             <div class="uni-flex uni-row pt10 mb5">
-                <div class="flex-item d-elip wfull f16 d-text-black">房屋买卖</div>
+                <div class="flex-item d-elip wfull f16 d-text-black">{{detailInfo.name || ''}}</div>
                 <div class="flex-item datail-handle">
                     <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
                     <i-icon type="like_fill" size="20" class="ml15" color="#ff5533" />
@@ -13,24 +13,32 @@
             </div>
 
             <div class='d-text-gray f13 mb5'>
-                总金额： <span class='d-text-blue'>778,997</span>
+                总金额： <span class='d-text-blue'>{{detailInfo.totalAmount || ''}}</span>
             </div>
             <div class="d-text-gray mb5 transaction">
 				<i-select
-					v-model="value"
-					:props="{label:'name',value:'id'}"
+					@input="transactionrecordUpdate"
+					v-model="detailInfo.transactionStatus"
+					:props="{label:'content',value:'code'}"
 					label="状态"
 					placeholder="请选择"
-					:options="upData">
-				</i-select>
+					:options="CRM_CJZT"
+				/>
             </div>
             <div class='d-text-gray f13 mb5'>
-                客户名称： <span>北京奥运会有限责任公司</span>
+                客户名称： <span>{{detailInfo.clientName || ''}}</span>
             </div>
         </div>
 
         <div class="">
-            <detailSwiper />
+            <i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
+				<i-tab index="0">
+					<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+				</i-tab>
+				<i-tab index="1">
+					<correlationInfo :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
+				</i-tab>
+			</i-tabs>
         </div>
 
         <div class="footer-fixed-menu d-center d-bg-white" style="border-top:1px solid #E4E4E4">
@@ -51,16 +59,19 @@
 </template>
 
 <script>
-import detailSwiper from './components/detail-swiper'
+import detailInfo from './components/detail-info'
+import correlationInfo from './components/correlation-info'
 
 let moreActionsTitle = ['更多操作', '转移', '删除', '日程']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
 	components: {
-		detailSwiper
+		detailInfo,
+		correlationInfo
 	},
 	data () {
 		return {
+			detailId: '',
 			moreShow: false,
 			phoneShow: false,
 			moreActions: moreActions,
@@ -78,22 +89,41 @@ export default {
 			upData: [{ name: '已成交', id: '1' }, { name: '未成交', id: '2' }],
 			tabBars: [
 				{
-					name: '跟进记录',
-					id: '1'
+					title: '详细信息'
 				},
 				{
-					name: '详细信息',
-					id: '2'
-				},
-				{
-					name: '相关信息',
-					id: '3'
+					title: '相关信息'
 				}
 			],
-			currIndex: 2
+			currIndex: 0
 		}
 	},
+	onLoad (option) {
+		this.detailId = option.id || ''
+	},
+	onShow () {
+		this.getTransactionDetail()
+	},
 	methods: {
+		// 请求成交记录详情
+		getTransactionDetail () {
+			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
+				.then(res => {
+					console.log(res)
+					this.detailInfo = res.data || {}
+				})
+		},
+		// 成交状态编辑
+		transactionrecordUpdate () {
+			this.$api.seeCrmService.transactionrecordUpdate({ id: this.detailId, transactionStatus: this.detailInfo.transactionStatus })
+				.then(res => {
+					this.getTransactionDetail()
+				})
+		},
+		// 切换 tab
+		handleChange ({ index }) {
+			this.currIndex = index
+		},
 		handlerAction (item) {
 			this[item] = !this[item]
 		},
@@ -103,22 +133,28 @@ export default {
 		},
 
 		handleMore ({ target: { index } }) {
+			console.log(index)
 			let fnType = {
 				1: () => {
-					// 复制
-					this.$routing.navigateTo('./add-client')
-				},
-				3: () => {
+					// 转移
 					this.$routing.navigateTo('/pages/index/colleagueChoose')
 				},
-				4: () => {
-					this.$utils.showModal().then(() => {
-						console.log('111')
-					})
+				2: () => {
+					// 删除
+					this.$utils.showModal('确定删除当前成交记录？')
+						.then(() => {
+							this.$api.seeCrmService.transactionrecordLogicDelete({ id: this.detailId })
+								.then(res => {
+									this.$utils.toast.text('删除成功')
+									setTimeout(() => {
+										this.$routing.navigateBack()
+									}, 800)
+								})
+						})
 				},
-				5: () => {
-					// 更多日程
+				3: () => {
 					this.$routing.navigateTo('/pages/index/scheduleAdd')
+					uni.$emit('chooseTransaction', { id: this.detailId, name: this.detailInfo.name })
 				}
 			}
 			fnType[index]()
@@ -126,6 +162,11 @@ export default {
 	},
 	onUnload () {
 		this.moreShow && (this.moreShow = false)
+	},
+	computed: {
+		CRM_CJZT () {
+			return this.dictionaryOptions('CRM_CJZT')
+		}
 	}
 }
 </script>

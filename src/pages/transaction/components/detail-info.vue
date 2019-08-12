@@ -1,30 +1,28 @@
 <template>
     <div class="d-auto-y" style="height:calc( 100vh - 350px )">
         <mPanel title="基本信息" bg="#f8f9fc">
-            <m-list label="主题">{{detailInfo.aaa}}</m-list>
-            <m-list label="客户">{{detailInfo.aaa}}</m-list>
-            <m-list label="总金额（元）">{{detailInfo.aaa}}</m-list>
-            <m-list label="成交状态">{{detailInfo.aaa}}</m-list>
+            <m-list label="主题">{{detailInfo.name || ''}}</m-list>
+            <m-list label="客户">{{detailInfo.clientName || ''}}</m-list>
+            <m-list label="总金额（元）">{{detailInfo.totalAmount || ''}}</m-list>
+            <m-list label="成交状态">{{detailInfo.transactionStatus | dictionary('CRM_CJZT')}}</m-list>
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc">
-			<m-list label="负责人">{{detailInfo.aaa}}</m-list>
-            <m-list label="创建日期">{{detailInfo.aaa}}</m-list>
-            <m-list label="创建人">{{detailInfo.aaa}}</m-list>
-            <m-list label="最后修改日">{{detailInfo.aaa}}</m-list>
+			<m-list label="负责人">{{detailInfo.leaderName || ''}}</m-list>
+            <m-list label="创建日期">{{detailInfo.createTime | timeToStr('yyyy-mm-dd')}}</m-list>
+            <m-list label="创建人">{{detailInfo.creatorName || ''}}</m-list>
+            <m-list label="最后修改日">{{detailInfo.modifyTime | timeToStr('yyyy-mm-dd')}}</m-list>
         </mPanel>
     </div>
 </template>
 
 <script>
 export default {
+	props: ['detailInfo'],
 	components: {
 		// mPager
 	},
 	data () {
 		return {
-			detailInfo: {
-				aaa: '王晓冬1'
-			}
 		}
 	},
 	onLoad (option) {

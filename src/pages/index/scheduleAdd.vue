@@ -163,6 +163,15 @@ export default {
 	created () {
 	},
 	onLoad (option) {
+		if (option.scheId) {
+			this.scheId = option.scheId
+			// this.getScheduleInfo(option.scheId)
+			this.ishandel = false
+			this.isadd = false
+		}
+	},
+	onShow () {
+		console.log('12341')
 		// 客户回调
 		uni.$on('chooseClient', data => {
 			this.clientData = data
@@ -170,6 +179,7 @@ export default {
 		// 成交记录回调
 		uni.$on('chooseTransaction', data => {
 			this.transactionData = data
+			console.log(data)
 		})
 		// 销售机会回调
 		uni.$on('chooseChance', data => {
@@ -198,12 +208,6 @@ export default {
 			this.acheduleForm.participants = idsArr.join(',')
 			this.acheduleForm.particiNames = namesArr.join(',')
 		})
-		if (option.scheId) {
-			this.scheId = option.scheId
-			// this.getScheduleInfo(option.scheId)
-			this.ishandel = false
-			this.isadd = false
-		}
 	},
 	methods: {
 		getScheduleInfo (id) {
@@ -226,7 +230,7 @@ export default {
 					this.$api.seeCrmService.scheduleLogicDelete({ id: this.scheId })
 						.then(res => {
 							this.$routing.navigateBack()
-							uni.$emit('updateIndexList', { params: '' })
+							// uni.$emit('updateIndexList', { params: '' })
 						})
 				})
 		},
