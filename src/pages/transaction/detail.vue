@@ -1,13 +1,15 @@
 <template>
     <div class="client-detail-page">
         <NavBar title='成交详情' />
-		<!-- 顶部信息 -->
+        <!-- 顶部信息 -->
 
         <div class="chance-datail-title pl15 pr15 pb10 f13 d-bg-white bb mb15">
             <div class="uni-flex uni-row pt10 mb5">
                 <div class="flex-item d-elip wfull f16 d-text-black">{{detailInfo.name || ''}}</div>
-                <div class="flex-item datail-handle">
-                    <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
+                <div class="flex-item datail-handle d-flex">
+                    <a :url="`/pages/transaction/transaction-add?type=edit&id=${detailId}`">
+                        <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
+                    </a>
                     <i-icon type="like_fill" size="20" class="ml15" color="#ff5533" />
                 </div>
             </div>
@@ -16,14 +18,14 @@
                 总金额： <span class='d-text-blue'>{{detailInfo.totalAmount || ''}}</span>
             </div>
             <div class="d-text-gray mb5 transaction">
-				<i-select
-					@input="transactionrecordUpdate"
-					v-model="detailInfo.transactionStatus"
-					:props="{label:'content',value:'code'}"
-					label="状态"
-					placeholder="请选择"
-					:options="CRM_CJZT"
-				/>
+                <i-select
+                    @input="transactionrecordUpdate"
+                    v-model="detailInfo.transactionStatus"
+                    :props="{label:'content',value:'code'}"
+                    label="状态"
+                    placeholder="请选择"
+                    :options="CRM_CJZT"
+                />
             </div>
             <div class='d-text-gray f13 mb5'>
                 客户名称： <span>{{detailInfo.clientName || ''}}</span>
@@ -32,13 +34,13 @@
 
         <div class="">
             <i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
-				<i-tab index="0">
-					<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
-				</i-tab>
-				<i-tab index="1">
-					<correlationInfo :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
-				</i-tab>
-			</i-tabs>
+                <i-tab index="0">
+                    <detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+                </i-tab>
+                <i-tab index="1">
+                    <correlationInfo :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
+                </i-tab>
+            </i-tabs>
         </div>
 
         <div class="footer-fixed-menu d-center d-bg-white" style="border-top:1px solid #E4E4E4">
@@ -109,7 +111,6 @@ export default {
 		getTransactionDetail () {
 			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
 				.then(res => {
-					console.log(res)
 					this.detailInfo = res.data || {}
 				})
 		},
@@ -133,7 +134,6 @@ export default {
 		},
 
 		handleMore ({ target: { index } }) {
-			console.log(index)
 			let fnType = {
 				1: () => {
 					// 转移
@@ -176,7 +176,7 @@ export default {
         height: 100vh;
         background: #f2f2f2;
     }
-	.chance-datail-title {
+    .chance-datail-title {
         background-color: #fff;
         color: #666;
         .datail-handle {
