@@ -2,11 +2,11 @@
     <div class="user-info-page hfull">
         <NavBar title="帮助中心" />
         <div class="d-bg-white">
-            <i-cell-group>
-                <i-cell title="客户管理 v1904"  is-link></i-cell>
-                <i-cell title="注册登录类"  is-link></i-cell>
-                <i-cell title="应用类"  is-link></i-cell>
-                <i-cell title="企业管理"  is-link></i-cell>
+            <i-cell-group v-for="(item) in helps" :key="item.id">
+                <!-- <a :url='"helpDetail" + item.entity'> -->
+                <a>
+                    <i-cell :title='item.title'  is-link></i-cell>
+                </a>
             </i-cell-group>
         </div>
 
@@ -24,8 +24,20 @@ export default {
 	},
 	data () {
 		return {
-			phone: '4001869000'
+			phone: '4001869000',
+			helps: []
 		}
+	},
+	onLoad () {
+		// 获取意见反馈列表
+		let sysCode = this.$local.getItem('sysCode')
+		this.$api.systemService.getHandbookMenuListPublish({ 'sysCode': sysCode }).then((response) => {
+			if (response.code === 200) {
+				this.helps = response.data
+			} else {
+				this.$utils.toast.text(response.msg)
+			}
+		})
 	},
 	methods: {
 		loginOut () {

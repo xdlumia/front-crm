@@ -9,15 +9,15 @@
     <div class="d-relative">
         <scroll-view scroll-y :style="{height:height}" @scrolltolower='getListClientbusiness()'>
             <a
-                :url='"/pages/client/attr-detail?client=" + item.id'
+                :url='"/pages/client/attr-detail?id=" + item.id'
                 class="attr-item pl15 pr15 d-bg-white mb10 pt10 pb10"
                 v-for='(item, index) in list'
                 :key='item.id'
             >
                 <div class="f13 d-text-black b d-elip">{{item.headline}}</div>
-                <div class="d-text-qgray f13 twowrap">{{item.text}}</div>
+                <div class="d-text-qgray f13 twowrap h50">{{item.text}}</div>
                 <div class="mt10" v-if='item.masterPicArray && item.masterPicArray.length'>
-                    <img class="attr-img" v-for='(imgItem, imgIndex) in item.masterPicArray' :key='imgIndex' :src="imgItem.fileUrl" alt="">
+                    <img class="attr-img" mode='aspectFit' v-for='(imgItem, imgIndex) in item.masterPicArray' :key='imgIndex' :src="imgItem.fileUrl" alt="">
                 </div>
                 <div class='d-center'>
                     <span class="f12 d-text-qgray d-cell">{{item.createTime | timeToStr('hh:ii')}}</span>

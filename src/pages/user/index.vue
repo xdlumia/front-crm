@@ -5,18 +5,19 @@
             <div class="user-info d-bg-white p20 pb0">
                 <div class="d-center">
                     <div class="d-cell">
-                        <div class='f18 b d-text-black mb5'>189****1456</div>
+                        <div class='f18 b d-text-black mb5'>{{phone}}</div>
                         <a url='/pages/user/user-info' class="f12 d-text-gray">点击查看个人信息 ></a>
                     </div>
-                    <img class="avatar-img" src="https://i.loli.net/2017/08/21/599a521472424.jpg" alt="">
+                    <img class="avatar-img" :src='avatarUrl' alt="">
                 </div>
                 <div class="d-center lh35 bt mt15">
                     <a class='d-cell d-flex'>
                         <span class='d-cell d-text-gray'>我的微信名片</span>
-                        <span>黄玉莉</span>
+                        <span>{{name}}</span>
+                        <span class="ml5 mr5 d-text-cgray">|</span>
                     </a>
                     <a class='d-cell d-flex'>
-                        <span class='d-cell d-text-gray'>总经理</span>
+                        <span class='d-cell d-text-gray'>{{positionName}}</span>
                     </a>
                 </div>
             </div>
@@ -88,18 +89,24 @@
 </template>
 
 <script>
-
 export default {
 	components: {
 
 	},
 	data () {
 		return {
-
+			phone: '',
+			avatarUrl: '',
+			name: '',
+			positionName: ''
 		}
 	},
 	onLoad (option) {
-
+		let userInfo = this.$local.fetch('userInfo') || {}
+		this.phone = userInfo.phone
+		this.avatarUrl = userInfo.avatarUrl || 'https://i.loli.net/2017/08/21/599a521472424.jpg'
+		this.name = userInfo.name
+		this.positionName = userInfo.positionName
 	},
 	methods: {
 		openPop () {

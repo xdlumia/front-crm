@@ -36,7 +36,7 @@
             </Filter>
         </div>
 
-		<div class='highseas-list-view'>
+		<div class='highseas-list-view d-relative'>
 			<scroll-list
 				:height="'calc(100vh - ' + navH +' - 150px)'"
 				api="seeCrmService.transactionrecordList"
@@ -273,9 +273,6 @@ export default {
 	}
 	.highseas-item{
 		border-bottom:1px solid #d7d7d7;
-	}
-	.highseas-tags{
-		align-items: center;
 	}
 
     .page-search-box{

@@ -11,5 +11,20 @@ export default {
 	businessSmsLogin: {
 		url: '/login/businessSmsLogin',
 		methods: 'post'
+	},
+	// 保存意见反馈
+	suggestfeedbackrecordSave: {
+		url: '/rmsuggestfeedbackrecord/save',
+		methods: 'post'
+	},
+	// 业务系统获取帮助手册发布版
+	getHandbookMenuListPublish: {
+		url: '/rmhandbook/getHandbookMenuListPublish',
+		methods: 'get'
+	},
+	// 保存客户管理反馈记录
+	saveCustomerFeedback: {
+		url: '/rmsuggestfeedbackrecord/saveCustomerFeedback',
+		methods: 'post'
 	}
 }

@@ -68,7 +68,7 @@ export default {
 					this.$utils.toast.text(response.msg)
 					if (response.code === 200) {
 						// 保存数据到本地
-						this.setUserDataToLocal(response.data)
+						this.setTokenFingerSyscode(response.data)
 						this.getUserDetail(response.data.sysCode)
 					}
 				})
@@ -85,6 +85,12 @@ export default {
 				}
 			})
 		},
+		// 保存token finger syscode
+		setTokenFingerSyscode (data) {
+			local.setItem('token', data.token)
+			local.setItem('finger', data.finger)
+			local.setItem('sysCode', data.sysCode)
+		},
 		// 保存数据到本地
 		setUserDataToLocal (data) {
 			local.save('userInfo', data)
@@ -94,7 +100,6 @@ export default {
 			local.save('sourceList', data.sourceList)
 			local.setItem('token', data.token)
 			local.setItem('finger', data.finger)
-			local.setItem('sysCode', data.sysCode)
 			this.$store.commit('setUserInfo', data)
 		},
 		// 验证码发送后的倒计时

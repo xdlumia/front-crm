@@ -8,15 +8,6 @@
                 <p class="f12 d-elip d-text-qgray">华为技术有限公司</p>
             </div>
         </mPanel>
-		<mPanel top="10" title="成交记录" color="#3cc695" add url="/pages/transaction/index">
-            <div class="detail-list">
-                <p class="f12 d-elip d-text-gray">购买房源6603A/500W</p>
-                <p class="f12 d-elip d-text-gray">
-                    成交金额（元）5,000.00
-                    <span class="f14">成交</span>
-                </p>
-            </div>
-        </mPanel>
         <mPanel top="10" title="日程" color="#4889f4" add url="/pages/index/scheduleAdd">
             <div class="detail-list">
                 <p class="f13 d-elip d-text-gray">明天粉色扥发东风东</p>
@@ -63,30 +54,12 @@ export default {
 			e.setAttribute('data-name', '改变')
 			// let title = e.target.dataset.title
 		},
-		// // 滚动到顶部刷新
-		// scrolltoupper (e) {
-		// 	console.log(e)
-		// },
-		// // 滚动到底部加载
-		// scrolltolower (e) {
-		// 	console.log(e)
-		// },
 		// 打开列表详情
 		openDetail (index) {
 			this.$routing.navigateTo('./detail/index')
 		}
 
 	},
-	// // 监听用户下拉动作，一般用于下拉刷新
-	// onPullDownRefresh  () {
-	// 	this.$refs.list.reload()
-	// 	wx.vibrateShort()
-	// 	wx.stopPullDownRefresh()
-	// },
-	// // 页面上拉触底事件的处理函数
-	// onReachBottom () {
-	// 	this.$refs.list.getNextPage()
-	// },
 	created () {}
 }
 </script>

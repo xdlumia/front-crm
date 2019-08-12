@@ -3,10 +3,10 @@
         <NavBar title="我的个人信息" />
         <div class="d-bg-white">
             <i-cell-group>
-                <i-cell title="手机号"  value='180****7962'></i-cell>
-                <i-cell title="姓名"  value='黄玉莉'></i-cell>
-                <i-cell title="公司名称"  value='华为技术有限公司'></i-cell>
-                <i-cell title="职位"  value='总经理'></i-cell>
+                <i-cell title="手机号"  :value='phone'></i-cell>
+                <i-cell title="姓名"  :value='name'></i-cell>
+                <i-cell title="公司名称"  :value='companyName'></i-cell>
+                <i-cell title="职位"  :value='positionName'></i-cell>
             </i-cell-group>
         </div>
 
@@ -24,8 +24,19 @@ export default {
 	},
 	data () {
 		return {
-
+			phone: '',
+			name: '',
+			companyName: '',
+			positionName: ''
 		}
+	},
+	onLoad (option) {
+		let userInfo = this.$local.fetch('userInfo') || {}
+		this.phone = userInfo.phone
+		let companyInfo = this.$local.fetch('companyInfo') || {}
+		this.companyName = companyInfo.companyName
+		this.name = userInfo.name
+		this.positionName = userInfo.positionName
 	},
 	methods: {
 		loginOut () {
