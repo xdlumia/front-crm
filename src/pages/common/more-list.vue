@@ -39,7 +39,9 @@ export default {
 		this.busType = option.busType
 		let params = {
 			busType: option.busType,
-			isEnabled: option.isEnabled
+			isEnabled: option.isEnabled,
+			limit: 20,
+			page: 1
 		}
 
 		this.formsfieldconfigQueryList(params)

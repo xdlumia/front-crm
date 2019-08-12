@@ -23,7 +23,7 @@
             </i-select>
             <picker-date v-model="form.reckonFinishTime" label="预计成交日期" placeholder="请选择日期">
             </picker-date>
-            <i-select v-model="form.tradeCode" :props="{label:'content',value:'code'}" label="行业" :options="dictionaryOptions('CRM_HY')"/>
+            <i-select v-model="form.tradeCode" :props="{label:'content',value:'code'}" label="行业" :options="dictionaryOptions('CRM_KH_HY')"/>
             <i-select v-model="form.sourceCode" :props="{label:'content',value:'code'}" label="来源" :options="dictionaryOptions('CRM_LY')"/>
 			<a url="/pages/common/more-tags?busType=2">
 				<i-input disabled v-model="labelNames" label="标签" placeholder="请选择">
@@ -53,11 +53,11 @@ export default {
 			fieldList: [], // 自定义字段列表
 			clientName: '', // 客户名称
 			labelNames: '', // 标签名称组合
-			deptName: 'deptInfo',
+			deptName: this.$local.fetch('deptInfo').deptName,
 			form: {
 				id: '', // 主键id
 				chanceName: '', // '示例：机会名称',
-				clientId: '', // 客户id
+				clientId: '1', // 客户id
 				formsFieldValueSaveVos: [
 					// {
 					// busId:'', // 100000,
@@ -67,7 +67,7 @@ export default {
 					// }
 				],
 				lableBusinessSaveVo: {
-					busId: this.busId, // 100000,
+					busId: this.busId || '', // 100000,
 					busType: 2, // 业务类型(0客户，1联系人，2机会，3成交,4业务属性)
 					labelIdArray: []
 				},

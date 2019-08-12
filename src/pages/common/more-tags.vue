@@ -67,7 +67,7 @@ export default {
 	onLoad (option) {
 		this.busType = option.busType
 		// 获取标签列表
-		this.lableinfoList({ busType: this.busType })
+		this.lableinfoList()
 	},
 	methods: {
 		submitForm () {
@@ -85,7 +85,7 @@ export default {
 					.then(res => {
 						this.isEdit = false
 						// 获取标签列表
-						this.lableinfoList({ busType: this.busType })
+						this.lableinfoList()
 					})
 			} else {
 				let checkArray = this.tagList.filter(item => this.selCheked.includes(item.id))
@@ -96,8 +96,8 @@ export default {
 			}
 		},
 		// 获取标签列表
-		lableinfoList (params) {
-			this.$api.seeCrmService.lableinfoList(params)
+		lableinfoList () {
+			this.$api.seeCrmService.lableinfoList({ busType: this.busType, limit: 20, page: 1 })
 				.then(res => {
 					this.tagList = res.data || []
 				})
