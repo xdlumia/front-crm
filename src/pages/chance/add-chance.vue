@@ -7,7 +7,7 @@
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
 			<a url="/pages/client/choose-client">
-				<i-input disabled v-model="clientName" label="客户名称" placeholder="请填写客户名称" required>
+				<i-input disabled v-model="form.clientName" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
@@ -31,7 +31,18 @@
 				</i-input>
 			</a>
             <i-input v-model="form.note" label="备注" placeholder="点击填写" type="textarea" />
-            <i-input v-for="(item,index) of form.formsFieldValueSaveVos" :key="index" v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+			<p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
+				<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<i-input v-if='item.fieldType == 1' type='number' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<picker-date v-if='item.fieldType == 2' v-model="item.fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+				<i-select
+				v-if='item.fieldType == 3'
+				v-model="form.fieldValue"
+				:props="{label:'content',value:'code'}"
+				:label="item.fieldName"
+				placeholder="请选择"
+				:options="dictionaryOptions(item.groupCode)"/>
+			</p>
         </m-form>
         <a url="/pages/common/more-list?busType=2&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
@@ -51,13 +62,13 @@ export default {
 			busId: '',
 			editType: '', // 编辑类型 1为编辑. 2为复制 空为新建
 			fieldList: [], // 自定义字段列表
-			clientName: '', // 客户名称
 			labelNames: '', // 标签名称组合
 			deptName: this.$local.fetch('deptInfo').deptName,
 			form: {
 				id: '', // 主键id
 				chanceName: '', // '示例：机会名称',
-				clientId: '1', // 客户id
+				clientId: '', // 客户id
+				clientName: '',
 				formsFieldValueSaveVos: [
 					// {
 					// busId:'', // 100000,
@@ -123,7 +134,7 @@ export default {
 		}
 		// 客户回调
 		uni.$once('chooseClient', data => {
-			this.clientName = data.name
+			this.form.clientName = data.name
 			this.form.clientId = data.id
 		})
 		// 标签回掉
@@ -162,14 +173,23 @@ export default {
 		// 提交表单
 		submitForm () {
 			let api = 'saleschanceSave'
+			// this.editType 1编辑 2复制
 			if (this.editType === '1') {
 				api = 'saleschanceUpdate'
 			}
-			this.$api.seeCrmService[api](this.form)
+			let params = JSON.parse(JSON.stringify(this.form))
+			params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
+				return { busId: this.busId, busType: 2, fieldConfigId: item.id, fieldValue: item.fieldValue }
+			})
+			this.$api.seeCrmService[api](params)
 				.then(res => {
 					if (res.code === 200) {
-						// 返回上一页
-						this.$routing.navigateBack()
+						if (this.editType === '2') {
+							this.$routing.navigateTo(`/pages/chance/index`)
+						} else {
+							// 返回上一页
+							this.$routing.navigateBack()
+						}
 					}
 				})
 		},
@@ -192,7 +212,7 @@ export default {
 		},
 		// 获取表单字典配置列表
 		formsfieldconfigQueryList () {
-			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '-1' })
+			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '0' })
 				.then(res => {
 					// this.fieldList = res.data || []
 					this.form.formsFieldValueSaveVos = res.data || []

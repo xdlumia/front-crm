@@ -15,9 +15,9 @@
                 :key='item.id'
             >
                 <div class="f13 d-text-black b d-elip">{{item.headline}}</div>
-                <div class="d-text-qgray f13 twowrap">{{item.text}}</div>
+                <div class="d-text-qgray f13 twowrap h50">{{item.text}}</div>
                 <div class="mt10" v-if='item.masterPicArray && item.masterPicArray.length'>
-                    <img class="attr-img" v-for='(imgItem, imgIndex) in item.masterPicArray' :key='imgIndex' :src="imgItem.fileUrl" alt="">
+                    <img class="attr-img" mode='aspectFit' v-for='(imgItem, imgIndex) in item.masterPicArray' :key='imgIndex' :src="imgItem.fileUrl" alt="">
                 </div>
                 <div class='d-center'>
                     <span class="f12 d-text-qgray d-cell">{{item.createTime | timeToStr('hh:ii')}}</span>
@@ -25,12 +25,12 @@
                 </div>
             </a>
             <i-load-more
-                :tip=" !loading ?'没有更多了':'加载中'"
+                :tip=" !loading && !list.length ? '暂无数据' : !loading ? '没有更多了' : '加载中'"
                 :loading="loading"
             />
         </scroll-view>
         <div class="pl15 pr15">
-           <a url='/pages/client/add-attr-info' class="add-attr-btn f14 d-text-black d-bg-white ac">+ 添加</a>
+           <a :url="'/pages/client/add-attr-info?id=' + query.clientId" class="add-attr-btn f14 d-text-black d-bg-white ac">+ 添加</a>
         </div>
     </div>
 </template>
@@ -77,9 +77,12 @@ export default {
 				let resulte = await this.$api.seeCrmService.clientinfoListClientbusiness(params)
 				if (resulte.code === 200) {
 					// 如果传入了page 则重新赋值
+					resulte.data.forEach(item => {
+						item.text && (item.text = item.text.replace(/<[^>]+>/g, ''))
+					})
 					this.list = page ? resulte.data : [].concat(this.list, resulte.data)
 					this.params.page++
-					if (resulte.count <= this.list) {
+					if (resulte.count <= this.list.length) {
 						this.loading = false
 					}
 				}

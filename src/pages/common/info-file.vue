@@ -9,14 +9,14 @@
     <div>
         <mPanel top="10" title="附件" color="#4889f4">
 			<span slot="add">
-				<upload-file>
+				<upload-file @success="uploadSuccess">
 					<i-icon type="add" size="24" color="#466bef"></i-icon>
 				</upload-file>
 			</span>
+            <div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
             <div class="detail-list" v-for="(item,index) of list" :key="index">
-                <a :href="item.fileUrl" class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> {{item.filelName}}</a>
+                <a :href="item.path" class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> {{item.name}}</a>
             </div>
-			<uploadFile></uploadFile>
         </mPanel>
     </div>
 </template>
@@ -44,6 +44,9 @@ export default {
 				.then(res => {
 					this.list = res.data || []
 				})
+		},
+		uploadSuccess (urlObj) {
+			this.list.push(urlObj)
 		}
 	}
 

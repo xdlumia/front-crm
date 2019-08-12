@@ -7,19 +7,19 @@
     <div class="hfull d-auto-y" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc">
             <m-list label-width="120" label="机会名称">{{detailInfo.chanceName || '-'}}</m-list>
-            <m-list label-width="120" label="所属部门">{{detailInfo.aaa || '-'}}</m-list>
+            <m-list label-width="120" label="所属部门">{{detailInfo.deptName || '-'}}</m-list>
             <m-list label-width="120" label="客户名称">{{detailInfo.clientName || '-'}}</m-list>
             <m-list label-width="120" label="负责人">{{detailInfo.leaderName || '-'}}</m-list>
             <m-list label-width="120" label="销售金额（元）">{{detailInfo.salesMoney || '-'}}</m-list>
             <m-list label-width="120" label="销售阶段">{{detailInfo.stageName || '-'}}</m-list>
             <m-list label-width="120" label="赢率">{{detailInfo.salesStageEntity.equityedge || '-'}}</m-list>
             <m-list label-width="120" label="预计成交日期">{{detailInfo.reckonFinishTime | timeToStr('y-m-d')}}</m-list>
-            <m-list label-width="120" label="行业">{{detailInfo.tradeCode || '-'}}</m-list>
-            <m-list label-width="120" label="来源">{{detailInfo.sourceCode || '-'}}</m-list>
+            <m-list label-width="120" label="行业">{{detailInfo.tradeCode | dictionary('CRM_KH_HY')}}</m-list>
+            <m-list label-width="120" label="来源">{{detailInfo.sourceCode | dictionary('CRM_LY')}}</m-list>
             <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc">
-            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntityList" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
+            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
         </mPanel>
     </div>
 </template>

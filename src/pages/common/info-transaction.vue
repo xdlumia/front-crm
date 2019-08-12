@@ -7,7 +7,8 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="成交记录" color="#3cc695" url="`/pages/transaction/index?select=1`">
+        <mPanel top="10" title="成交记录" color="#3cc695" url="/pages/transaction/index">
+            <div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
             <div class="detail-list">
                 <p class="f12 d-elip d-text-gray">购买房源6603A/500W</p>
                 <p class="f12 d-elip d-text-gray">

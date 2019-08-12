@@ -8,6 +8,7 @@
 <template>
     <div>
         <mPanel title="联系人" color="#7765cc" :url="url">
+			<div class="detail-list ac f12 d-text-gray" v-if="!contactList.length">暂无数据</div>
             <div class="detail-list" v-for="(item,index) of contactList" :key="index">
                 <div class="list-title">
                     <title>{{item.linkkanName}}</title> <span class="d-text-qgray">{{item.position}}</span>

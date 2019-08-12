@@ -8,7 +8,6 @@ let state = {
 
 let mutations = {
 	setPool (state, info) {
-		console.log(info)
 		state.pool = info
 	},
 
@@ -18,8 +17,8 @@ let mutations = {
 }
 
 let actions = {
-	getList ({ commit, state }) {
-		api.seeCrmService.clientpublicpoolList().then(res => {
+	getList ({ commit, state }, params = { page: 1, limit: 15 }) {
+		api.seeCrmService.clientpublicpoolList(params).then(res => {
 			if (res.data && res.data.length) {
 				// 如果当前公海池没有数据 则设置
 				!Object.keys(state.pool).length && commit('setPool', res.data[0])

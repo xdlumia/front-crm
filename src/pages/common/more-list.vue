@@ -76,7 +76,7 @@ export default {
 					isEnabled: 0
 				}
 			})
-			this.$api.seeCrmService.formsfieldconfigSave(params)
+			this.$api.seeCrmService.formsfieldconfigUpdateBatch(params)
 				.then(res => {
 					// 返回上一页
 					this.$routing.navigateBack()

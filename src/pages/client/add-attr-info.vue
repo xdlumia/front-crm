@@ -20,35 +20,30 @@
 
         <div class="form-row d-flex">
             <div class="f14 d-text-black form-row-item form-row-label mr10">
-                主图:
-            </div>
-            <div class="d-cell mr10 form-row-item">
-                <img class='attr-img' src='http://file.515md.com:8888/%E4%BA%A7%E5%93%81/%E6%96%B0%E4%BA%A7%E5%93%81%E6%96%B9%E5%90%91/%E5%AE%A2%E6%88%B7%E7%AE%A1%E7%90%86v1.0.7/images/2_5_3_0添加业务属性效果/u15380.png' />
-            </div>
-            <div class='b'>
-                <uni-icon type='plus' size='16' color='#1890FF' />
-            </div>
-        </div>
-
-        <div class="form-row d-flex">
-            <div class="f14 d-text-black form-row-item form-row-label mr10">
                 视频:
             </div>
-            <div class="d-cell mr10 form-row-item">
-                <video class='attr-img' id="myVideo" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" enable-danmu danmu-btn controls></video>
+            <div class="d-cell mr10 form-row-item" >
+                <video v-if='videoArray && videoArray[0]' class='attr-img' :src="videoArray[0].fileUrl" enable-danmu danmu-btn controls></video>
             </div>
-            <div class='b'>
+            <div class='b' @click='chooseVideo'>
                 <uni-icon type='plus' size='16' color='#1890FF' />
             </div>
         </div>
 
-        <div class="form-row d-flex">
-            <div class="f14 d-text-black hfull form-row-item form-row-label mr10">
-                <div style='line-height: 1'>文字:</div>
+        <div class='form-row bb'>
+            <div class="f14 d-text-black form-row-item form-row-label mr10 pb10">
+                内容:
             </div>
-            <div class="d-cell mr10 form-row-item">
-                <textarea v-model='form.text' class='wfull f12 d-text-gray' placeholder="请填写文字" maxlength="500"></textarea>
+            <div class='d-flex pb10 bb'>
+                <div @click='insertImage'>
+                    <i-icon i-class='pr20' type="picture_fill" size='26' color='#333' />
+                </div>
+                <div @click='clear'>
+                    <i-icon type="trash" size='26' color='#333' />
+                </div>
             </div>
+            <editor id="editor" class="ql-container" placeholder="请输入内容" showImgSize showImgToolbar showImgResize @input="changContent" @ready="onEditorReady">
+            </editor>
         </div>
 
         <div class="form-row d-flex">
@@ -56,20 +51,20 @@
                 文件:
             </div>
             <div class="d-cell mr10 form-row-item">
-                <div class="d-center mb10">
+                <div class="d-center mb10" v-for='(item, index) in fileArray' :key='index'>
                     <div class='iconfont iconadjunct f12 d-text-gray mr5'></div>
-                    <span class="d-cell f12 d-text-gray">xxxxxxxx.jpg</span>
-                    <uni-icon type='minus' size='16' color='red' />
+                    <span class="d-cell f12 d-text-gray">{{item.fileName}}</span>
+                    <div @click='delFile(index)'>
+                        <uni-icon type='minus' size='16' color='red' />
+                    </div>
                 </div>
-                <div class="d-center mb10">
-                    <div class='iconfont iconadjunct f12 d-text-gray mr5'></div>
-                    <span class="d-cell f12 d-text-gray">xxxxxxxx.jpg</span>
-                    <uni-icon type='minus' size='16' color='red' />
-                </div>
+
                 <div class="d-center mb10">
                     <div class='iconfont f12 d-text-gray mr5'></div>
                     <span class="d-cell f12 d-text-gray"></span>
-                    <uni-icon type='plus' size='16' color='#1890FF' />
+                    <div @click='chooseMessageFile'>
+                        <uni-icon type='plus' size='16' color='#1890FF' />
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,29 +76,52 @@
 </template>
 
 <script>
-import { setTimeout } from 'timers'
+import * as OSS from '@/utils/upload/OSSConfig'
+import { mapActions, mapState } from 'vuex'
+
 export default {
 	data () {
 		return {
 			id: 0,
 			form: {
+				clientId: 0,
 				busId: 0,
 				busType: 0, // 0客户，1联系人，2机会，3成交,4业务属性
-				img: '',
-				video: '',
-				headline: '',
-				text: '',
-				file: []
-			}
+				headline: ''
+			},
+			editorCtx: null, // 编辑器对象
+			content: '',
+			fileArray: [] // 文件对象
 		}
 	},
+
 	onLoad (data) {
-		this.form.id = this.form.busId = data.id
+		this.form.id = this.form.busId = this.form.clientId = data.id
+	},
+	computed: {
+		...mapState(['oss'])
 	},
 	methods: {
+		...mapActions(['checkOssTicket']),
 		async clientinfoSaveClientbusiness () {
+			if (!this.form.headline) {
+				this.$utils.toast.text('请填写标题')
+				return
+			}
+
+			let params = {}
+
+			// 图片集合
+			params.masterPicArray = this.content.delta.ops.filter(item => item.attributes).map(item => ({
+				fileUrl: item.insert.image
+			}))
+			// 文件 集合
+			params.fileArray = this.fileArray
+			// 富文本 内容
+			params.text = this.content.html
+
 			try {
-				let resulte = await this.$api.seeCrmService.clientinfoSaveClientbusiness(this.form)
+				let resulte = await this.$api.seeCrmService.clientinfoSaveClientbusiness({ ...this.form, ...params })
 				if (resulte.code === 200) {
 					this.$utils.toast.text('保存成功')
 					setTimeout(() => {
@@ -112,6 +130,143 @@ export default {
 				}
 			} catch (err) {
 
+			}
+		},
+
+		// 插入视频
+		chooseVideo () {
+			try {
+				uni.chooseVideo({
+					count: 1,
+					sourceType: ['camera', 'album'],
+					success: async (res) => {
+						this.$utils.showLoading('视频上传中')
+						let { fileName, filePath } = await this.upload(res.tempFilePath)
+						this.videoArray = [{
+							fileName,
+							fileUrl: filePath
+						}]
+					}
+				})
+			} catch (err) {
+				this.$utils.toast.text('视频上传失败')
+			} finally {
+				this.$utils.hideLoading()
+			}
+		},
+
+		// 插入图片
+		insertImage () {
+			uni.chooseImage({
+				count: 1,
+				success: async (res) => {
+					try {
+						this.$utils.showLoading('文件上传中')
+						let { fileName, filePath } = await this.upload(res.tempFilePaths[0])
+						this.editorCtx.insertImage({
+							src: filePath,
+							data: {
+								fileName
+							}
+						})
+					} catch (err) {
+						this.$utils.toast.text('文件上传失败')
+					} finally {
+						uni.hideLoading()
+					}
+				}
+			})
+		},
+
+		// 选择文件
+		chooseMessageFile () {
+			uni.chooseMessageFile({
+				count: 1,
+				type: 'file',
+				success: async (res) => {
+					let { fileName, filePath } = await this.upload(res.tempFiles[0].path, res.tempFiles[0].name)
+					this.fileArray.push({
+						fileName,
+						fileUrl: filePath
+					})
+				}
+			})
+		},
+
+		// 删除文件
+		delFile (index) {
+			this.fileArray.splice(index, 1)
+		},
+		// 清除内容
+		clear () {
+			this.editorCtx.clear()
+		},
+		// 编辑器内容 变化
+		changContent (e) {
+			const formats = e.detail
+			this.content = formats
+		},
+
+		// 初始化编辑器
+		onEditorReady () {
+			uni.createSelectorQuery().select('#editor').context((res) => {
+				this.editorCtx = res.context
+				// this.editorCtx.setContents({
+				//     html: '<p><img src=\"https://oss-a-develop.oss-cn-beijing.aliyuncs.com/1008/pic/201908/1565579626868CARCjzENWP.jpg\" style=\"\" width=\"181\">123123</p><p>12312</p><p>42<img src=\"https://oss-a-develop.oss-cn-beijing.aliyuncs.com/1008/pic/201908/1565579638753iTN2wmhfAj.jpg\" style=\"cursor: nesw-resize;\" width=\"88\">13</p><p><br></p><p>123</p>'
+				// })
+			}).exec()
+		},
+
+		// 上传文件
+		async upload (filePath = '', fileName) {
+			try {
+				await this.checkOssTicket(this)
+			} catch (error) {
+				// console.error(error, 2)
+			}
+
+			try {
+				const myDate = new Date()
+				const datePath =
+                        myDate.getFullYear() +
+                        OSS.addZero(myDate.getMonth() + 1) +
+                        '/' // 文件储存路径
+				let suffix = filePath.substring(filePath.lastIndexOf('.'))
+				fileName = fileName || new Date().getTime() + OSS.randomString(10) + suffix
+				let fileStoragePath =
+                        (this.$store.state.userInfo.companyCode || '1008') +
+                        '/pic/' +
+                        datePath +
+                        fileName // 文件存储路径
+				let server = global.g.ApiUrl.ossUrl
+				let accessSecret = this.oss.accessKeySecret
+				let accessId = this.oss.accessKeyId
+				let base64 = OSS.getPolicyBase64()
+				let signature = OSS.getSignature(base64, accessSecret)
+
+				let [err] = await uni.uploadFile({
+					url: server, // 开发者服务器 url
+					filePath: filePath, // 要上传文件资源的路径
+					name: 'file', // 必须填file
+					formData: {
+						Filename: fileName,
+						key: fileStoragePath,
+						policy: base64,
+						OSSAccessKeyId: accessId,
+						signature: signature,
+						success_action_status: '200',
+						'x-oss-security-token': this.oss.securityToken
+					}
+				})
+				if (err) {
+					return Promise.reject(err)
+				}
+				return Promise.resolve({
+					fileName: fileName,
+					filePath: server + fileStoragePath
+				})
+			} catch (e) {
+				return Promise.reject(e)
 			}
 		}
 	}
@@ -144,6 +299,10 @@ export default {
     .attr-img{
         width: 135px;
         height: 75px;
+    }
+
+    .ql-container{
+       height: 300px;
     }
 
 </style>

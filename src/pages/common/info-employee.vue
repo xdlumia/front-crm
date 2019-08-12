@@ -8,7 +8,8 @@
 <template>
     <div>
         <mPanel top="10" title="团队成员" color="#4889f4" :url="'/pages/index/colleagueChoose?isRadio=1&ids=' + ids + '&partiType=0&type=' + query.type">
-            <div class="detail-list d-flex-lr bb" v-for='item in list' :key='item.id'>
+            <div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
+			<div class="detail-list d-flex-lr bb" v-for='item in list' :key='item.id'>
                 <image class="detail-list-img" data-name="徐丽丽" src="" alt=""></image>
                 <p>
                     <b class="f16">{{item.rmEmployeeEntity.employeeName}}</b>
