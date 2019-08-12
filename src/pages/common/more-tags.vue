@@ -81,7 +81,7 @@ export default {
 					}
 					tagParams.push({ busType: this.busType, labelName: item.labelName })
 				}
-				this.$api.seeCrmService.lableinfoSave(tagParams)
+				this.$api.seeCrmService.lableinfoUpdateBatch(tagParams)
 					.then(res => {
 						this.isEdit = false
 						// 获取标签列表

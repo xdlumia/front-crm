@@ -37,7 +37,7 @@ Api.interceptors.request.use(async config => {
 	return config
 })
 
-Api.interceptors.response.use(response => {
+Api.interceptors.response.use((response) => {
 	let res = response.data
 	uni.hideLoading()
 	if (+response.data.code === 402) {
@@ -67,10 +67,10 @@ Api.interceptors.response.use(response => {
 		uni.showToast({ title: res.msg, icon: 'none' })
 	}
 	return Promise.resolve(res)
-}, err => {
-	if (err) {
+}, (error) => {
+	if (error) {
 		uni.hideLoading()
-		return Promise.reject(err)
+		return Promise.reject(error)
 	}
 })
 

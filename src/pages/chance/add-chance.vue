@@ -167,8 +167,10 @@ export default {
 			}
 			this.$api.seeCrmService[api](this.form)
 				.then(res => {
-					// 返回上一页
-					this.$routing.navigateBack()
+					if (res.code === 200) {
+						// 返回上一页
+						this.$routing.navigateBack()
+					}
 				})
 		},
 		// 获取部门列表
