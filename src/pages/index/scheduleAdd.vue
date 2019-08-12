@@ -8,18 +8,19 @@
         <scroll-view scroll-y style="height:calc(100vh - 115px)">
             <m-form ref="acheduleForm" class="uni-pb100" :model="acheduleForm" :rules="rules">
                 <div class="d-bg-schedule"></div>
-                    <i-input maxlength='32' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
+                    <i-input :disabled='!isadd && !ishandel' maxlength='32' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
                 <div class="d-bg-schedule"></div>
 
                 <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
-                    <i-input label="位置" maxlength='32' v-model="acheduleForm.address" placeholder="点击输入" class='wfull'/>
-                    <div @click="chooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
+                    <i-input label="位置" :disabled='!isadd && !ishandel' maxlength='32' v-model="acheduleForm.address" placeholder="点击输入" class='wfull'/>
+                    <div v-if="isadd || ishandel" @click="chooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
                         <i-icon type="coordinates" size="22" color="#999" />
                     </div>
                 </div>
                 <div class="d-bg-schedule"></div>
 
                 <ruiDatePicker
+                     :disabled='!isadd && !ishandel'
                     fields="minute"
                     start="2010-00-00 00:00"
                     end="2030-12-30 23:59"
@@ -29,6 +30,7 @@
                 </ruiDatePicker>
 
                 <ruiDatePicker
+                     :disabled='!isadd && !ishandel'
                     fields="minute"
                     start="2010-00-00 00:00"
                     end="2030-12-30 23:59"
@@ -38,6 +40,7 @@
                 </ruiDatePicker>
 
                 <i-select
+                     :disabled='!isadd && !ishandel'
                     v-model="acheduleForm.remindSecond"
                     :props="{label:'name',value:'id'}"
                     label="提醒"
@@ -46,7 +49,7 @@
                     :options="tixData">
                 </i-select>
 
-                <a :url="`/pages/index/colleagueChoose?isRadio=0`">
+                <a :url="(isadd || ishandel) ? `/pages/index/colleagueChoose?isRadio=0` : ''">
                     <i-input disabled label="参与人" v-model="acheduleForm.particiNames" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
                 </a>
                 <div class="d-bg-schedule"></div>
@@ -62,26 +65,31 @@
                     </i-select>
                 </a> -->
                 <i-cell-group>
-                    <a :url='`/pages/client/choose-client?id=${clientData.id}`'>
+                    <a :url="(isadd || ishandel) ? `/pages/client/choose-client?id=${clientData.id}` : ''">
                         <i-input disabled label="客户" v-model="clientData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                     </a>
-                    <a :url='`/pages/contact/index?select=1&id=${contactData.id}`'>
+                    <a :url="(isadd || ishandel) ? `/pages/contact/index?select=1&id=${contactData.id}` : ''">
                         <i-input disabled label="联系人" v-model="contactData.linkkanName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                     </a>
-                    <a :url='`/pages/chance/choose-chance?&id=${chanceData.id}`'>
+                    <a :url="(isadd || ishandel) ? `/pages/chance/choose-chance?&id=${chanceData.id}` : ''">
                         <i-input disabled label="销售机会" v-model="chanceData.chanceName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                     </a>
-                    <a :url='`/pages/transaction/index?select=1&id=${transactionData.id}`'>
+                    <a :url="(isadd || ishandel) ? `/pages/transaction/index?select=1&id=${transactionData.id}` : ''">
                         <i-input disabled label="成交记录" v-model="transactionData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                     </a>
-                    <a :url='`/pages/highseas/index?select=1&id=${highseasData.id}`'>
+                    <a :url="(isadd || ishandel) ? `/pages/highseas/index?select=1&id=${highseasData.id}` : ''">
                         <i-input disabled label="客户公海池" v-model="highseasData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                     </a>
                 </i-cell-group>
             </m-form>
         </scroll-view>
         <div class="footer-fixed-menu">
-            <i-button @click="fsubmit" type="primary" i-class="f16">确 定</i-button>
+            <i-button v-if="ishandel || isadd" @click="fsubmit" type="primary" i-class="f16">确 定</i-button>
+            <div class="d-flex" v-else>
+                <i-button @click="ishandel = true" i-class="f16" style="width:50%">编 辑</i-button>
+                <i-button @click="deleteInfo" type="primary" i-class="f16" style="width:50%">删 除</i-button>
+            </div>
+
         </div>
 
     </div>
@@ -139,6 +147,8 @@ export default {
 			date: '',
 			scheId: '',
 			timeIndex: '',
+			isadd: true, // 是新增还是编辑
+			ishandel: false, // 切换编辑和回显状态
 			tixIndex: '',
 			tixData: [{ name: '提前十分钟', id: 600 }, { name: '提前30分钟', id: 1800 }, { name: '提前一小时', id: 3600 }, { name: '提前三小时', id: 10800 }],
 			clientData: {}, // 关联的客户data
@@ -190,7 +200,9 @@ export default {
 		})
 		if (option.scheId) {
 			this.scheId = option.scheId
-			this.getScheduleInfo(option.scheId)
+			// this.getScheduleInfo(option.scheId)
+			this.ishandel = false
+			this.isadd = false
 		}
 	},
 	methods: {
@@ -205,6 +217,17 @@ export default {
 					this.transactionData = { name: this.acheduleForm.transactionRecordName || '', id: this.acheduleForm.transactionRecordId || '' }// 成交记录
 					this.chanceData = { chanceName: this.acheduleForm.salesFunnelName || '', id: this.acheduleForm.salesFunnelId || '' }// 销售机会
 					this.highseasData = { name: this.acheduleForm.seaPoolName || '', id: this.acheduleForm.seaPoolId || '' }// 公海池
+				})
+		},
+		// 删除
+		deleteInfo () {
+			this.$utils.showModal('确定删除当前日程？')
+				.then(() => {
+					this.$api.seeCrmService.scheduleLogicDelete({ id: this.scheId })
+						.then(res => {
+							this.$routing.navigateBack()
+							uni.$emit('updateIndexList', { params: '' })
+						})
 				})
 		},
 		bindDateChange () {

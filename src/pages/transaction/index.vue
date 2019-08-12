@@ -246,8 +246,6 @@ export default {
 		},
 		// 被选中的确定
 		fsubmit () {
-			// console.log(this.chooseData)
-
 			if (!this.chooseData) {
 				this.$utils.toast.text('请选择成交记录')
 			} else {
