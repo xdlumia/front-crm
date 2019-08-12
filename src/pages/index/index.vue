@@ -279,6 +279,8 @@ export default {
 
 	},
 	onShow () {
+		this.userInfo = this.$local.fetch('userInfo') || {}
+		this.userId = this.userInfo.id
 		this.getIndexList()
 		this.changeTime()
 		this.getDates()
@@ -286,8 +288,6 @@ export default {
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
 		this.scheduleSelectSalesFunnel()
-		this.userInfo = this.$local.fetch('userInfo') || {}
-		this.userId = this.userInfo.id
 	},
 	onLoad (option) {
 		// 选择的当前人
@@ -298,15 +298,19 @@ export default {
 	methods: {
 		// 获取日程列表
 		getIndexList () {
-			this.$api.seeCrmService.scheduleList(null, this.userInfo.id)
+			this.$api.seeCrmService.scheduleList({
+				userId: this.userInfo.id,
+				page: 1,
+				limit: 500
+			})
 				.then(res => {
 					this.indexList = res.data
-					this.indexList = [
-						{ address: '示例：详细地址', content: '示例：日程内容', endTime: 1565334107725, startTime: 1565330507000, remindSecond: 3600, id: 1 },
-						{ address: '示例：详细地址111', content: '示例：日程内容111', endTime: 1565420507000, startTime: 1565416907000, remindSecond: 360, id: 2 },
-						{ address: '示例：详细地址22222', content: '示例：日程内容2222', endTime: 1565334107725, startTime: 1565330507000, remindSecond: 3600, id: 3 },
-						{ address: '示例：详细地址3333', content: '示例：日程内容3333', endTime: 1566459603000, startTime: 1566463203000, remindSecond: 3600, id: 4 }
-					]
+					// this.indexList = [
+					// 	{ address: '示例：详细地址', content: '示例：日程内容', endTime: 1565334107725, startTime: 1565330507000, remindSecond: 3600, id: 1 },
+					// 	{ address: '示例：详细地址111', content: '示例：日程内容111', endTime: 1565420507000, startTime: 1565416907000, remindSecond: 360, id: 2 },
+					// 	{ address: '示例：详细地址22222', content: '示例：日程内容2222', endTime: 1565334107725, startTime: 1565330507000, remindSecond: 3600, id: 3 },
+					// 	{ address: '示例：详细地址3333', content: '示例：日程内容3333', endTime: 1566459603000, startTime: 1566463203000, remindSecond: 3600, id: 4 }
+					// ]
 					this.indexList.forEach((item) => {
 						this.allcolleagues.push(this.changeTime(item.startTime))
 						// console.log(this.changeTime(item.startTime))
@@ -318,14 +322,14 @@ export default {
 		scheduleSelectSalesKit () {
 			this.$api.seeCrmService.scheduleSelectSalesKit(null, this.userId)
 				.then(res => {
-					this.salesKitForm = res.data
+					this.salesKitForm = res.data || []
 				})
 		},
 		// 查询本月当前人的排行榜
 		scheduleSelectCompanyRanking () {
 			this.$api.seeCrmService.scheduleSelectCompanyRanking(null, this.userId)
 				.then(res => {
-					this.rankingList = res.data
+					this.rankingList = res.data || []
 				})
 		},
 		// 查询本月当前人的销售漏斗
@@ -333,10 +337,11 @@ export default {
 			this.$api.seeCrmService.scheduleSelectSalesFunnel(null, this.userId)
 				.then(res => {
 					this.funnelList = []
-					res.data.forEach((item) => {
-						this.funnelList.push({ value: item.amount, name: item.stageName + ':' + item.amount }, { value: 4000, name: '需求确定:4000' }, { value: 6589, name: '方案报价:6589' }, { value: 4852, name: '谈判审核:4000' }, { value: 1589, name: '赢单:4000' }, { value: 4295, name: '输单:4295' }, { value: 7852, name: '无效:7852' })
+					let arr = res.data || []
+					arr.forEach((item) => {
+						this.funnelList.push({ value: item.amount, name: item.stageName + ':' + item.amount })
 					})
-					this.ec.option.series[0].data = this.funnelList
+					this.ec.option.series[0].data = this.funnelList || []
 					this.$refs.echart.init()
 				})
 		},
