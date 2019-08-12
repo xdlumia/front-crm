@@ -304,7 +304,7 @@ export default {
 				limit: 500
 			})
 				.then(res => {
-					this.indexList = res.data
+					this.indexList = res.data || []
 					// this.indexList = [
 					// 	{ address: '示例：详细地址', content: '示例：日程内容', endTime: 1565334107725, startTime: 1565330507000, remindSecond: 3600, id: 1 },
 					// 	{ address: '示例：详细地址111', content: '示例：日程内容111', endTime: 1565420507000, startTime: 1565416907000, remindSecond: 360, id: 2 },
@@ -327,7 +327,7 @@ export default {
 		},
 		// 查询本月当前人的排行榜
 		scheduleSelectCompanyRanking () {
-			this.$api.seeCrmService.scheduleSelectCompanyRanking(null, this.userId)
+			this.$api.seeCrmService.scheduleSelectCompanyRanking()
 				.then(res => {
 					this.rankingList = res.data || []
 				})
