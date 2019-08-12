@@ -12,8 +12,8 @@
                     </div>
                 </div>
             </filter-plane>
-            <filter-plane title='销售阶段' v-model='filterData.stageIds' :dataList='stageList'/>
-            <filter-plane title='预计成交日期' v-model='filterData.transationTime' isSingle :dataList='dateList'/>
+            <filter-plane title='销售阶段' v-model='filterData.stageIds' isSingle :dataList='stageLists'/>
+            <filter-plane title='预计成交日期' v-model='filterData.transationTime' isSingle :dataList='stageLists'/>
             <filter-plane title='机会来源' v-model='filterData.sourceCode' :dataList="dictionaryOptions('CRM_LY')"/>
         </scroll-view>
         <div class='filter-btn d-center f18 d-text-blue'>
@@ -39,7 +39,7 @@ export default {
 			principal: [],
 			dateList: dateList,
 			filterData: {
-				stageIds: [], // 销售阶段
+				stageIds: '', // 销售阶段
 				transationTime: '', // 预计成交日期
 				sourceCode: []
 			}
@@ -50,6 +50,9 @@ export default {
 	watch: {
 	},
 	computed: {
+		stageLists () {
+			return this.stageList.map(item => { return { content: item.stageName, code: item.id } })
+		}
 	},
 	methods: {
 		addPrincipal () {

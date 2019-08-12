@@ -7,7 +7,7 @@
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
 			<a url="/pages/client/choose-client">
-				<i-input disabled v-model="clientName" label="客户名称" placeholder="请填写客户名称" required>
+				<i-input disabled v-model="form.clientName" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
@@ -51,13 +51,13 @@ export default {
 			busId: '',
 			editType: '', // 编辑类型 1为编辑. 2为复制 空为新建
 			fieldList: [], // 自定义字段列表
-			clientName: '', // 客户名称
 			labelNames: '', // 标签名称组合
 			deptName: this.$local.fetch('deptInfo').deptName,
 			form: {
 				id: '', // 主键id
 				chanceName: '', // '示例：机会名称',
-				clientId: '1', // 客户id
+				clientId: '', // 客户id
+				clientName: '',
 				formsFieldValueSaveVos: [
 					// {
 					// busId:'', // 100000,
@@ -123,7 +123,7 @@ export default {
 		}
 		// 客户回调
 		uni.$once('chooseClient', data => {
-			this.clientName = data.name
+			this.form.clientName = data.name
 			this.form.clientId = data.id
 		})
 		// 标签回掉
@@ -162,14 +162,19 @@ export default {
 		// 提交表单
 		submitForm () {
 			let api = 'saleschanceSave'
+			// this.editType 1编辑 2复制
 			if (this.editType === '1') {
 				api = 'saleschanceUpdate'
 			}
 			this.$api.seeCrmService[api](this.form)
 				.then(res => {
 					if (res.code === 200) {
-						// 返回上一页
-						this.$routing.navigateBack()
+						if (this.editType === '2') {
+							this.$routing.navigateTo(`/pages/chance/index`)
+						} else {
+							// 返回上一页
+							this.$routing.navigateBack()
+						}
 					}
 				})
 		},

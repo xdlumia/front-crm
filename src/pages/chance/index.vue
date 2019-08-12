@@ -26,7 +26,7 @@
     </i-steps>
     <!-- 统计 -->
     <div class="chance-sts bt d-fixed wfull" :style="{top:`calc(64px + 39px + 65px)`}">
-      <li class="sts-item">{{stageSts.stageCount}}个商机</li>
+      <li class="sts-item">{{stageSts.totalCount}}个商机</li>
       <li class="sts-item">{{stageSts.totalSalesChanceMoney}}元</li>
       <li class="sts-item" v-if="currStage != 0">赢率{{stageSts.equityedge}}%</li>
     </div>
@@ -44,8 +44,8 @@
 		<circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" />
 		</div>
 		<div class="flex-item item-info d-elip wfull">
-			<h4 class="d-elip">{{item.chanceName || '-'}}</h4>
-			<p class="d-text-gray d-elip">{{item.clientName || '-'}}</p>
+			<h4 class="d-elip f13">{{item.chanceName || '-'}}</h4>
+			<p class="d-text-gray d-elip f13">{{item.clientName || '-'}}</p>
 			<i-row>
 				<i-col :span="12" class="d-text-gray f12">{{item.createTime | timeToStr}}</i-col>
 				<i-col  v-if='!isSelect' :span="12" class="f14 ar">¥{{item.salesMoney}}</i-col>
@@ -127,7 +127,10 @@ export default {
 			],
 			// 步骤列表
 			stageList: [],
-			stageSts: {},
+			stageSts: {
+				totalCount: '',
+				totalSalesChanceMoney: ''
+			},
 			currStage: 0,
 			queryForm: {
 				limit: 10,
@@ -142,6 +145,9 @@ export default {
 				orderByStr: 'a.follow_up_time' // 排序字段（a.follow_up_time跟进日期，a.stage_propel_time阶段更新日期，a.sales_money销售金额，c.equityedge赢率）
 			}
 		}
+	},
+	onShow () {
+		this.$refs.list.reload()
 	},
 	onLoad (option) {
 		// console.log(option)
@@ -214,7 +220,9 @@ export default {
 		saleschanceSalesChanceStatistics (params) {
 			this.$api.seeCrmService.saleschanceSalesChanceStatistics(params)
 				.then(res => {
-					this.stageSts = res.data || {}
+					let data = res.data || {}
+					this.stageSts.totalCount = data.totalCount
+					this.stageSts.totalSalesChanceMoney = data.totalSalesChanceMoney
 				})
 		},
 		// 获取销售阶段
