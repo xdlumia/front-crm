@@ -58,7 +58,7 @@ export default {
 		},
 		// 上传图片
 		async upload (fileList, index) {
-			let filePath = fileList[index]
+			let filePath = fileList[index].path
 			// return new Promise(async (resolve, reject) => {
 			try {
 				await this.checkOssTicket(this)
@@ -71,7 +71,7 @@ export default {
 				const datePath =
                         myDate.getFullYear() +
                         OSS.addZero(myDate.getMonth() + 1) +
-                        '/' // 文件储存路径
+						'/' // 文件储存路径
 				let suffix = filePath.substring(filePath.lastIndexOf('.'))
 				let fileName =
                         new Date().getTime() + OSS.randomString(10) + suffix
@@ -105,7 +105,9 @@ export default {
 							this.value.push({ filePath: imageUrl })
 							this.tempImgs.shift()
 							this.tempImgs = this.tempImgs.concat([])
-							this.$emit('success', imageUrl)
+							let fileObj = fileList[index]
+							fileObj.path = imageUrl
+							this.$emit('success', fileObj)
 							index++
 							if (index < fileList.length) {
 								this.upload(fileList, index)
