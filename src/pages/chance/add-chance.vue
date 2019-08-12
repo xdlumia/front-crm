@@ -31,7 +31,18 @@
 				</i-input>
 			</a>
             <i-input v-model="form.note" label="备注" placeholder="点击填写" type="textarea" />
-            <i-input v-for="(item,index) of form.formsFieldValueSaveVos" :key="index" v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+			<p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
+				<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<i-input v-if='item.fieldType == 1' type='number' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<picker-date v-if='item.fieldType == 2' v-model="item.fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+				<i-select
+				v-if='item.fieldType == 3'
+				v-model="form.fieldValue"
+				:props="{label:'content',value:'code'}"
+				:label="item.fieldName"
+				placeholder="请选择"
+				:options="dictionaryOptions(item.groupCode)"/>
+			</p>
         </m-form>
         <a url="/pages/common/more-list?busType=2&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
@@ -166,7 +177,11 @@ export default {
 			if (this.editType === '1') {
 				api = 'saleschanceUpdate'
 			}
-			this.$api.seeCrmService[api](this.form)
+			let params = JSON.parse(JSON.stringify(this.form))
+			params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
+				return { busId: this.busId, busType: 2, fieldConfigId: item.id, fieldValue: item.fieldValue }
+			})
+			this.$api.seeCrmService[api](params)
 				.then(res => {
 					if (res.code === 200) {
 						if (this.editType === '2') {
@@ -197,7 +212,7 @@ export default {
 		},
 		// 获取表单字典配置列表
 		formsfieldconfigQueryList () {
-			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '-1' })
+			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '0' })
 				.then(res => {
 					// this.fieldList = res.data || []
 					this.form.formsFieldValueSaveVos = res.data || []

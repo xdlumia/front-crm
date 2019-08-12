@@ -19,7 +19,7 @@
             <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc">
-            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntityList" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
+            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
         </mPanel>
     </div>
 </template>
