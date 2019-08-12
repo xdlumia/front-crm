@@ -10,7 +10,7 @@
       :current="currStage"
       :list="stageList"
       class="change-steps d-fixed wfull pt5 pb5"
-      :style="{top:`calc(64px + 39px)`}">
+      :style="{top:`calc(${navH} + 39px)`}">
       <i-step
         @step="setpHandle('all',0)"
         content="全部销售机会">
@@ -33,8 +33,8 @@
     <!-- 列表内容 -->
     <scroll-list
       class="d-absolute wfull"
-      :style="{top:`calc(64px + 39px + 65px + 35px)`}"
-      height="`calc(100vh - 64px - 39px - 65px + 35px)`"
+      :style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
+      :height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
       :api="api"
       :params="queryForm"
       @getList='getList'
