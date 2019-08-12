@@ -52,7 +52,7 @@
             </div>
 
             <i-load-more
-                :tip=" !loading ?'没有更多了':'加载中'"
+                :tip=" !loading && !list.length ? '暂无数据' : !loading ? '没有更多了' : '加载中'"
                 :loading="loading"
             />
 
@@ -88,6 +88,9 @@ export default {
 	},
 	created () {
 		this.getFollowup()
+		uni.$on('updateFollow', () => {
+			this.getFollowup(1)
+		})
 	},
 	methods: {
 
