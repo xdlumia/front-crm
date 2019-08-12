@@ -29,7 +29,7 @@
                             <div class="d-center">
                                 <span class="f14 d-text-blue mr30">{{item.creatorName}}</span>
                                 <span class="d-cell f12 d-text-gray">{{item.createTime | timeToStr('hh:ii')}}</span>
-                                <span class='note-tag f12 d-text-white'>{{item.followType | dictionary('CRM_GJLX')}}</span>
+                                <span class='note-tag f12 d-text-white' v-show='item.followType'>{{item.followType | dictionary('CRM_GJLX')}}</span>
                             </div>
                             <div class="note-content mb5">
                                 {{item.content}}
@@ -105,7 +105,7 @@ export default {
 				if (resulte.code === 200) {
 					this.list = page ? resulte.data : [].concat(this.list, resulte.data)
 					this.params.page++
-					if (resulte.count <= this.list) {
+					if (resulte.count <= this.list.length) {
 						this.loading = false
 					}
 				}

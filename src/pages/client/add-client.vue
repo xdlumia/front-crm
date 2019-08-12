@@ -8,7 +8,7 @@
 <template>
     <div class='add-follow-page'>
         <NavBar :title='title' />
-        <scroll-view scroll-y style="height:calc(100vh - 115px)">
+        <scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
 
             <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
 

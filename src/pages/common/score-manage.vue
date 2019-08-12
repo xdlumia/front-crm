@@ -29,7 +29,7 @@
 				<i-input labelWidth='150' label="计算评分为" type='number' v-model='subItem.fieldGrade' placeholder="请输入" i-class='ar pr20'></i-input>
 			</div>
 			<div v-if='item.fieldRuleEntityList.length' class='d-bg-white'>
-				<i-input labelWidth='150' label="否者，计算项的评分为" type='number' v-model='subItem.fieldGrade' placeholder="请输入" i-class='ar pr20' ></i-input>
+				<i-input labelWidth='150' label="否则，计算项的评分为" type='number' v-model='subItem.elseFieldGrade' placeholder="请输入" i-class='ar pr20' ></i-input>
 			</div>
 		</div>
 
@@ -151,8 +151,7 @@ export default {
 
 		// 添加数据字典数据
 		setDisCodeData (code, parentIndex, index) {
-			// console.log(code, parentIndex, index)
-			let data = [{ id: 1, fieldName: '测试' + index, filedType: 1 }] || this.dictionaryOptions(code)
+			let data = this.dictionaryOptions(code)
 			this.$set(this.subFieldData[parentIndex], index, data)
 		},
 
@@ -169,6 +168,7 @@ export default {
 
 			this.$api.seeCrmService.fieldweightSave({ saveVo: this.scoreData }).then(res => {
 				// console.log(res)
+				this.$routing.navigateBack()
 			})
 		}
 

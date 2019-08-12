@@ -52,16 +52,16 @@
 			<div class="">
 				<i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
 					<i-tab index="0">
-						<followInfo :query='{cilentId: detailInfo.id}' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
+						<followInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="1">
 						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="2">
-						<correlationInfo :query='{id: detailInfo.id, type: 0}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+						<correlationInfo :query='{id: detailInfo.id, busType: 0}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index='3'>
-						<attrInfo :query='{cilentId: detailInfo.id}' :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
+						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
 					</i-tab>
 				</i-tabs>
 			</div>

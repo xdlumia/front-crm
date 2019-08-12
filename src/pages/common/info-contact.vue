@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel title="联系人" color="#7765cc" url="/pages/contact/index?select=1">
+        <mPanel title="联系人" color="#7765cc" :url="url">
             <div class="detail-list" v-for="(item,index) of contactList" :key="index">
                 <div class="list-title">
                     <title>{{item.linkkanName}}</title> <span class="d-text-qgray">{{item.position}}</span>
@@ -28,6 +28,11 @@ export default {
 	data () {
 		return {
 			contactList: []
+		}
+	},
+	computed: {
+		url () {
+			return +this.query.busType === 0 ? '/pages/contact/add-contact?clientId=' + this.query.id : '/pages/contact/index?select=1'
 		}
 	},
 	onLoad (option) {
