@@ -31,7 +31,7 @@
 				</i-input>
 			</a>
             <i-input v-model="form.note" label="备注" placeholder="点击填写" type="textarea" />
-            <i-input v-for="(item,index) of fieldList" :key="index" v-model="form.note" :label="item.fieldName" placeholder="点击填写" />
+            <i-input v-for="(item,index) of form.formsFieldValueSaveVos" :key="index" v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
         </m-form>
         <a url="/pages/common/more-list?busType=2&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
@@ -194,7 +194,8 @@ export default {
 		formsfieldconfigQueryList () {
 			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '-1' })
 				.then(res => {
-					this.fieldList = res.data || []
+					// this.fieldList = res.data || []
+					this.form.formsFieldValueSaveVos = res.data || []
 				})
 		},
 		// 获取销售阶段
