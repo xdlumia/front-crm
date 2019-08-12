@@ -4,14 +4,9 @@
     <div>
         <m-form ref="form" class="uni-pb100" :model="form" :rules="rules">
             <i-input maxlength='32' v-model="form.name" label="名称" placeholder="请输入" required />
-			<i-select
-                v-model="form.name"
-                :props="{label:'name',value:'id'}"
-                label="销售机会"
-                placeholder="请选择"
-                required
-                :options="upData">
-            </i-select>
+			<a url="/pages/chance/choose-chance">
+				<i-input label="销售机会" disabled v-model="form.chanceName" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
+			</a>
             <i-input maxlength='32' v-model="form.clientId" disabled label="客户名称" placeholder="请输入"/>
             <i-select
                 v-model="form.linkId"
@@ -23,11 +18,11 @@
             </i-select>
 			<i-select
                 v-model="form.transactionStatus"
-                :props="{label:'name',value:'id'}"
+                :props="{label:'content',value:'code'}"
                 label="成交状态"
                 placeholder="请选择"
                 required
-                :options="upData">
+                :options="CRM_CJZT">
             </i-select>
 			<picker-date v-model="form.startTime" label="开始时间" placeholder="请选择" required>
             </picker-date>
@@ -61,6 +56,7 @@ export default {
 			upTypeIndex: '',
 			upData: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			form: {
+				chanceName: '', // 销售机会名称
 				name: '', // 名称
 				salesFunnelId: '', // 销售机会id
 				clientId: '', // 客户名称id
@@ -116,6 +112,13 @@ export default {
 		if (this.type === 'edit') {
 			this.getCardInfo()
 		}
+		// 销售机会回调
+		uni.$on('chooseChance', data => {
+			// this.chanceData = data
+			this.form.chanceName = data.chanceName || ''
+			this.form.salesFunnelId = data.id || ''
+			console.log(data)
+		})
 	},
 	methods: {
 		async fsubmit () {
@@ -130,6 +133,9 @@ export default {
 	},
 	created () {},
 	computed: {
+		CRM_CJZT () {
+			return this.dictionaryOptions('CRM_CJZT')
+		}
 	}
 }
 </script>
