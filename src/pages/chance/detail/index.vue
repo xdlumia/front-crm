@@ -62,14 +62,14 @@
       <i-tabs :current="currTabIndex" :tabList="tabBars" @change="tagsChange">
         <i-tab index="0">
           <!-- 跟进: -->
-          <followInfo :query="{salesFunnelId:id}" height="calc(100vh - 380px)" />
+          <followInfo :query="{salesFunnelId:busId}" height="calc(100vh - 380px)" />
         </i-tab>
         <i-tab index="1">
-          <detailsInfo :detailInfo="detailsInfo" height="calc(100vh - 380px)" />
+          <detailInfo :detailInfo="detailsInfo" height="calc(100vh - 380px)" />
         </i-tab>
         <i-tab index="2">
           <!-- 相关信息 -->
-          <correlationInfo :query="{busId:id,busType:2}" height="calc(100vh - 380px)" />
+          <correlationInfo :query="{busId:busId,busType:2,clientId:detailsInfo.clientId}" height="calc(100vh - 380px)" />
         </i-tab>
       </i-tabs>
       <!-- 底部操作按钮 -->
@@ -109,14 +109,14 @@
 </template>
 
 <script>
-import detailsInfo from './components/detail-info'
+import detailInfo from './components/detail-info'
 import followInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './components/correlation-info'
 let moreActionsTitle = ['更多操作', '复制', '转移给他人', '删除', '日程']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
 	components: {
-		detailsInfo,
+		detailInfo,
 		followInfo,
 		correlationInfo
 	},
@@ -127,7 +127,7 @@ export default {
 				{ title: '详细信息' },
 				{ title: '相关信息' }
 			],
-			id: '', // 当前详情id
+			busId: '', // 当前详情id
 			currTabIndex: 0,
 			// 商机阶段列表
 			stageList: [],
@@ -143,10 +143,10 @@ export default {
 	},
 	onShow () {
 		// 获取详情
-		this.saleschanceInfo(this.id)
+		this.saleschanceInfo(this.busId)
 	},
 	onLoad (option) {
-		this.id = option.id
+		this.busId = option.id
 		// 获取详情
 		this.saleschanceInfo(option.id)
 		// 获取联系人列表

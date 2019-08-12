@@ -28,7 +28,10 @@ export default {
 	},
 	data () {
 		return {
-			contactList: []
+			contactList: [],
+			form: {
+				linkmanId: '' // 客户id
+			}
 		}
 	},
 	computed: {
@@ -37,17 +40,40 @@ export default {
 		}
 	},
 	onLoad (option) {
+		// 客户回调
+		uni.$once('chooseContact', data => {
+			this.form.linkmanId = data.id
+			// 业务与联系人关系保存
+			this.saveContact()
+		})
 	},
 	created () {
-		this.linkmanQueryList(this.query)
 	},
 	methods: {
-		// 获取联系人列表
-		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params)
+		// 业务与联系人关系保存
+		saveContact () {
+			this.$api.seeCrmService.linkmanrelationSave(Object.assign({}, this.query, this.form))
 				.then(res => {
+					if (res.code !== 200) return
+					// console.log('保存成功')
+					this.linkmanrelationList()
+				})
+		},
+		// 获取联系人列表
+		linkmanrelationList () {
+			this.$api.seeCrmService.linkmanrelationList({ busId: this.query.busId, busType: this.query.busType })
+				.then(res => {
+					if (res.code !== 200) return
 					this.contactList = res.data || []
 				})
+		}
+	},
+	watch: {
+		'query.busId': {
+			handler (val) {
+				this.linkmanrelationList()
+			},
+			deep: true
 		}
 	}
 
