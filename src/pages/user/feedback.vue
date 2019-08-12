@@ -12,7 +12,7 @@
 
         <div class="d-bg-white pl20 pr20 pt10">
             <div class="d-text-black f13 pb15">添加图片[最多只能上传9张图片]</div>
-            <imagePick />
+            <mUpload v-model='imglist' />
         </div>
 
         <div class='footer-fixed-menu'>
@@ -22,15 +22,16 @@
 </template>
 
 <script>
-import imagePick from '@/components/image-pick'
+import mUpload from '@/components/m-upload'
 export default {
 	components: {
-		imagePick
+		mUpload
 	},
 	data () {
 		return {
 			isHidePlaceholder: false,
-			feedCon: ''
+			feedCon: '',
+			imglist: []
 		}
 	},
 	methods: {

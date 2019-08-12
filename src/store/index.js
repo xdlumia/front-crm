@@ -30,6 +30,11 @@ let mutations = {
 
 	setUserInfo (state, data) {
 		state.userInfo = data
+	},
+
+	// oss
+	setOssTicket (state, data) {
+		state.oss = data || {}
 	}
 }
 

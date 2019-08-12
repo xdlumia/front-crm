@@ -70,6 +70,7 @@ import NavBar from './components/nav-bar'
 import circleProgress from './components/circle-progress'
 import scrollList from './components/scroll-list'
 import mForm from './components/m-form'
+import uParse from './components/parse/parse.vue' // 富文本
 // 自定义头部
 
 Vue.config.productionTip = false
@@ -131,6 +132,7 @@ Vue.component('NavBar', NavBar)
 Vue.component('circleProgress', circleProgress)
 Vue.component('scrollList', scrollList)
 Vue.component('mForm', mForm)
+Vue.component('uParse', uParse)
 
 /** 全局注册UI组件 - END */
 
