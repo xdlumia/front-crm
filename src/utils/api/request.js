@@ -14,8 +14,8 @@ Api = require('flyio')
 let Flyio = require('flyio/dist/npm/wx')
 Api = new Flyio()
 // #endif
-
-Api.interceptors.request.use(async (config, promise) => {
+Api.default.config.timeout = 300000
+Api.interceptors.request.use(async config => {
 	let token = local.getItem('token')
 	let finger = local.getItem('finger')
 	if ((!token || !finger) && !config.url.match('wxLogin/temporaryAuthorization')) {
@@ -37,7 +37,7 @@ Api.interceptors.request.use(async (config, promise) => {
 	return config
 })
 
-Api.interceptors.response.use((response, promise) => {
+Api.interceptors.response.use(response => {
 	let res = response.data
 	uni.hideLoading()
 	if (+response.data.code === 402) {
@@ -50,13 +50,14 @@ Api.interceptors.response.use((response, promise) => {
 				url: global.g.redirectUrl
 			})
 		}
-		return promise.resolve(
-			Object.assign({
-				data: []
-			},
-			response.data
-			)
-		)
+		return Promise.reject(res.msg)
+		// return Promise.resolve(
+		// 	Object.assign({
+		// 		data: []
+		// 	},
+		// 	response.data
+		// 	)
+		// )
 	}
 	if (res.code !== 200) {
 		uni.showToast({ title: res.msg, icon: 'none' })
@@ -65,15 +66,12 @@ Api.interceptors.response.use((response, promise) => {
 	if (res.code === 200 && response.request.method !== 'get') {
 		uni.showToast({ title: res.msg, icon: 'none' })
 	}
-	return promise.resolve(res)
-},
-(err, promise) => {
+	return Promise.resolve(res)
+}, err => {
 	if (err) {
 		uni.hideLoading()
-		return promise.reject(err.response)
+		return Promise.reject(err)
 	}
-	return Promise.reject(error)
-}
-)
+})
 
 export default Api
