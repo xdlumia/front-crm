@@ -15,7 +15,7 @@
 
 			<scroll-list
 				:height="'calc(100vh - ' + navH +' - 40px)'"
-				:api="api"
+				api="seeCrmService.clientinfoPagelist"
 				:params="queryForm"
 				@getList='getList'
 				ref='list'>
@@ -112,11 +112,6 @@ export default {
 			chooseDataIndex: '', // 已选择的索引
 			chooseData: '' // 已选择的数据
 
-		}
-	},
-	computed: {
-		api () {
-			return !this.isSelect ? 'seeCrmService.clientinfoPagelist' : 'seeCrmService.clientinfoList'
 		}
 	},
 	onLoad () {
