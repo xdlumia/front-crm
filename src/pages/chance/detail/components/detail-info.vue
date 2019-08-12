@@ -7,7 +7,7 @@
     <div class="hfull d-auto-y" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc">
             <m-list label-width="120" label="机会名称">{{detailInfo.chanceName || '-'}}</m-list>
-            <m-list label-width="120" label="所属部门">{{detailInfo.aaa || '-'}}</m-list>
+            <m-list label-width="120" label="所属部门">{{detailInfo.deptName || '-'}}</m-list>
             <m-list label-width="120" label="客户名称">{{detailInfo.clientName || '-'}}</m-list>
             <m-list label-width="120" label="负责人">{{detailInfo.leaderName || '-'}}</m-list>
             <m-list label-width="120" label="销售金额（元）">{{detailInfo.salesMoney || '-'}}</m-list>

@@ -13,6 +13,7 @@
 					<i-icon type="add" size="24" color="#466bef"></i-icon>
 				</upload-file>
 			</span>
+            <div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
             <div class="detail-list" v-for="(item,index) of list" :key="index">
                 <a :href="item.fileUrl" class="f13 d-elip mt5 d-text-gray iconfont iconadjunct"> {{item.filelName}}</a>
             </div>
