@@ -89,6 +89,7 @@ export default {
 			that.formData.deptId = JSON.parse(data).id
 			that.formData.deptName = JSON.parse(data).deptName
 		})
+
 		// 回显选择角色返回的信息
 		uni.$on('backFromRole', function (data) {
 			that.formData.roleList = []

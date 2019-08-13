@@ -41,7 +41,8 @@ export default {
 		return {
 			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode,
 			image: 'src/assets/img/logo.png',
-			shareText: '团队邀请'
+			shareText: '团队邀请',
+			avatarUrl: ''
 		}
 	},
 	onShareAppMessage () {
@@ -51,10 +52,14 @@ export default {
 			imageUrl: this.image ? this.image : 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/app/share-logo@3.png'
 		}
 	},
+	onLoad (option) {
+		this.avatarUrl = option.avatarUrl || ''
+		this.link += '&avatarUrl=' + this.avatarUrl
+	},
 	methods: {
 		share () {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode
+				url: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode + '&avatarUrl=' + this.avatarUrl
 			})
 		},
 		copyToClip () {

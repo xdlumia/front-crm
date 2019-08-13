@@ -103,7 +103,7 @@ export default {
 	},
 	onLoad (option) {
 		let userInfo = this.$local.fetch('userInfo') || {}
-		this.phone = userInfo.phone
+		this.phone = userInfo.phone.substring(0, 3) + '****' + userInfo.phone.substring(userInfo.phone.length - 4)
 		this.avatarUrl = userInfo.avatarUrl || 'https://i.loli.net/2017/08/21/599a521472424.jpg'
 		this.name = userInfo.name
 		this.positionName = userInfo.positionName

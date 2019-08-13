@@ -79,10 +79,11 @@ export default {
 						uni.showToast({ title: '标签名称没有填写', icon: 'none' })
 						return
 					}
-					tagParams.push({ busType: this.busType, labelName: item.labelName })
+					tagParams.push({ busType: this.busType, id: item.id || '', labelName: item.labelName })
 				}
-				this.$api.seeCrmService.lableinfoUpdateBatch(tagParams)
+				this.$api.seeCrmService.lableinfoSave(tagParams)
 					.then(res => {
+						if (res.code !== 200) return
 						this.isEdit = false
 						// 获取标签列表
 						this.lableinfoList()

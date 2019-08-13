@@ -98,7 +98,7 @@ export default {
 		reload (page) {
 			if (this.pager.loading) return
 			// 如果页码参数
-			this.params.page = page || 1
+			this.queryParams.page = page || 1
 			// api动态加载完 开始重新请求数据
 			this.$nextTick(() => {
 				this._getList()
@@ -107,7 +107,7 @@ export default {
 		getNextPage () {
 			if (this.pager.loading) return
 			if (!this.pager.noMore) {
-				this.params.page++
+				this.queryParams.page++
 				this._getList()
 			}
 		}

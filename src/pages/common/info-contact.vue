@@ -53,7 +53,7 @@ export default {
 	methods: {
 		// 业务与联系人关系保存
 		saveContact () {
-			this.$api.seeCrmService.linkmanrelationSave(Object.assign({}, this.query, this.form))
+			this.$api.seeCrmService.linkmanrelationSave(Object.assign({}, { busId: this.query.busId, busType: this.query.busType, clientId: this.query.clientId }, this.form))
 				.then(res => {
 					// console.log('保存成功')
 					this.linkmanQueryList()
@@ -61,7 +61,7 @@ export default {
 		},
 		// 获取联系人列表
 		linkmanQueryList () {
-			this.$api.seeCrmService.linkmanQueryList({ busId: this.query.busId, busType: this.query.busType })
+			this.$api.seeCrmService.linkmanQueryList({ busId: this.query.busId, busType: this.query.busType, time: '' })
 				.then(res => {
 					this.contactList = res.data || []
 				})
