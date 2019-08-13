@@ -37,14 +37,16 @@
                             <div class='d-flex' v-if='item.files && item.files.length'>
                                 <img class="note-img" v-for='imgItem in item.files' :key='imgItem.id' :src="imgItem.fileUrl" />
                             </div>
-                            <div class="mb5" v-if='item.linkName'>
+                            <div class="mb5" v-show='item.linkName'>
                                 <uni-tag size='small' :text="'关联联系人：' + item.linkName" circle />
                             </div>
                             <div class="d-flex">
-                                <div class="mr10">
+                                <div class="mr10" v-show='item.intention'>
                                     <uni-tag size='small' :text="item.intention | dictionary('CRM_YXCD')" circle />
                                 </div>
-                                <uni-tag size='small' :text="'下次通话时间：' + item.nextTime | timeToStr('yyyy-mm-dd')" circle/>
+                                <uni-tag size='small' circle v-show='item.nextTime'>
+                                    下次通话时间：{{item.nextTime | timeToStr('yyyy-mm-dd')}}
+                                </uni-tag>
                             </div>
                         </div>
                     </div>

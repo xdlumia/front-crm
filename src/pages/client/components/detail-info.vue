@@ -9,18 +9,17 @@
     <div class="hfull d-auto-y" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc">
             <m-list label="客户名称">{{detailInfo.name}}</m-list>
-            <m-list label="所属部门">{{detailInfo.aaa}}</m-list>
+            <m-list label="所属部门">{{detailInfo.deptName}}</m-list>
             <m-list label="负责人">{{detailInfo.leaderName}}</m-list>
             <m-list label="客户级别">{{detailInfo.gradeCode | dictionary('CRM_KHJB')}}</m-list>
             <m-list label="行业">{{detailInfo.tradeCode | dictionary('CRM_KH_HY')}}</m-list>
             <m-list label="来源">{{detailInfo.sourceCode | dictionary('CRM_LY')}}</m-list>
             <m-list label="成交状态">{{detailInfo.makeBargainCode | dictionary('CRM_CJZT')}}</m-list>
-            <m-list label="备注">{{detailInfo.note}}</m-list>
+            <m-list label="备注">{{detailInfo.note || ''}}</m-list>
             <!-- <m-list label="客户身份">{{detailInfo.aaa}}</m-list>
             <m-list label="客户积分">{{detailInfo.aaa}}</m-list> -->
             <m-list label="销售额（元）">{{detailInfo.totalSalesChanceMoney}}</m-list>
             <m-list v-for='item in basicInfo' :key='item.id' :label="item.fieldName">{{item.fieldValue}}</m-list>
-
         </mPanel>
 		<mPanel title="联系信息" bg="#f8f9fc">
             <m-list label="手机号">{{detailInfo.phone}}</m-list>

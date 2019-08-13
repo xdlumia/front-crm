@@ -1,5 +1,5 @@
 <template>
-	<view v-if="text" :class="[disabled ? 'uni-tag--disabled' : '',inverted ? 'uni-tag--inverted' : '',circle ? 'uni-tag--circle' : '', mark ? 'uni-tag--mark' : '', 'uni-tag--' + size, 'uni-tag--' + type]" class="uni-tag" @click="_onClick">{{ text }}</view>
+	<view :class="[disabled ? 'uni-tag--disabled' : '',inverted ? 'uni-tag--inverted' : '',circle ? 'uni-tag--circle' : '', mark ? 'uni-tag--mark' : '', 'uni-tag--' + size, 'uni-tag--' + type]" class="uni-tag" @click="_onClick">{{ text }}<slot /></view>
 </template>
 
 <script>

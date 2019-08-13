@@ -10,7 +10,7 @@
 -->
 <template>
 <div style="background-color:#f9f9f9">
-    <NavBar title="添加跟进"/>
+    <NavBar :title="bus_type[form.busType].title"/>
     <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <div class="d-bg-white">
@@ -22,19 +22,17 @@
                     :options="dictionaryOptions('CRM_GJLX')">
                 </i-select>
 
-				<template v-if='form.busType == 0'>
-					<a url="/pages/contact/index?select=1">
-						<i-input disabled v-model="linkName" label="联系人" placeholder="请选择联系人">
-							<i-icon type="enter" size="16" color="#999" />
-						</i-input>
-					</a>
+				<a url="/pages/contact/index?select=1" v-if='form.busType != 1'>
+					<i-input disabled v-model="linkName" label="联系人" placeholder="请选择联系人">
+						<i-icon type="enter" size="16" color="#999" />
+					</i-input>
+				</a>
 
-					<a url="/pages/chance/choose-chance">
-						<i-input disabled v-model="chanceName" label="销售机会" placeholder="请选择销售机会">
-							<i-icon type="enter" size="16" color="#999" />
-						</i-input>
-					</a>
-				</template>
+				<a url="/pages/chance/choose-chance" v-if='form.busType == 0'>
+					<i-input disabled v-model="chanceName" label="销售机会" placeholder="请选择销售机会">
+						<i-icon type="enter" size="16" color="#999" />
+					</i-input>
+				</a>
 
 				<!-- <a url="/pages/client/choose-client" v-if="form.busType != 1">
 					<i-input disabled v-model="clientName" label="客户名称" placeholder="请选择客户名称">
@@ -46,7 +44,6 @@
 
 				</picker-date>
 				<i-select
-					v-if="form.busType == 0"
                     v-model="form.intention"
                     :props="{label:'content',value:'code'}"
                     label="意向程度"
@@ -69,6 +66,7 @@
 </template>
 <script>
 import mUpload from '@/components/m-upload'
+
 export default {
 	components: {
 		mUpload
@@ -99,14 +97,29 @@ export default {
 			}
 		}
 	},
+	computed: {
+		bus_type () {
+			return {
+				0: {
+					field: 'clientId',
+					title: '跟进客户'
+				},
+				1: {
+					field: 'linkId',
+					title: '跟进联系人'
+				},
+				2: {
+					field: 'salesFunnelId',
+					title: '跟进销售机会'
+				}
+			}
+		}
+	},
 	onLoad (option) {
 		this.form.busId = option.busId
 		this.form.busType = option.busType
 
-		// 客户的跟进
-		if (+option.busType === 0) {
-			this.form.clientId = option.busId
-		}
+		this.form[this.bus_type[option.busType].field] = option.busId
 
 		// 客户回调
 		uni.$once('chooseClient', data => {
