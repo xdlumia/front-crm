@@ -36,7 +36,7 @@ export default {
 	},
 	computed: {
 		url () {
-			return +this.query.busType === 0 ? '/pages/contact/add-contact?clientId=' + this.query.id : '/pages/contact/index?select=1'
+			return +this.query.busType === 0 ? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId : '/pages/contact/index?select=1'
 		}
 	},
 	onLoad (option) {
