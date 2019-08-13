@@ -146,7 +146,6 @@ export default {
 				.then(res => {
 					if (res.code === 200) {
 						this.tagAllList = res.data
-						// console.log(this.tagAllList, 'tagAllList')
 					}
 				})
 		},
@@ -181,11 +180,8 @@ export default {
 			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: this.astype, isOriginal: -1 })
 				.then(res => {
 					if (res.code === 200) {
-						// console.log(res)
-						// this.informationList = res.data || []
-
+						this.informationList = res.data || []
 					}
-					this.informationList = [{ fieldName: '内置字段', groupCode: '1', isOriginal: 1, ishandel: false, id: 1, isEnabled: 0 }, { fieldName: '非内置字段', groupCode: '2', isOriginal: 0, ishandel: false, id: 2, isEnabled: 0 }]
 					this.informationList.forEach((item) => {
 						if (item.isEnabled === 0) {
 							this.checkList.push(item.id)
