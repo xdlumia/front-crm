@@ -12,7 +12,7 @@
         <i-input maxlength="32" v-model="form.clientName" disabled label="客户名称" placeholder="请输入"/>
 
         <a :url="form.salesFunnelId ? (`/pages/contact/index?busType=2&select=1&multiple=1&linkIds=${JSON.stringify(form.linkIds) || '[]'}&chanceId=${form.salesFunnelId}`) : ''">
-          <i-input label="联系人" disabled v-model="form.linkkanName" placeholder=" " required>
+          <i-input label="联系人" disabled v-model="form.linkkanNames" placeholder=" " required>
             <uni-icon type="forward" size="18" color="#999"/>
           </i-input>
         </a>
@@ -64,9 +64,10 @@ export default {
 				salesFunnelId: '', // 销售机会id
 				clientId: '', // 客户名称id
 				linkId: '', // 联系人id
-				linkkanName: '', // 联系人名称
+				linkkanNames: '', // 联系人名称
 				transactionStatus: '', // 成交状态(数据字典)
 				startTime: '', // 开始时间
+				totalAmount: '', // 总金额
 				endTime: '', // 结束时间
 				belongDeptCode: '', // 所属部门code
 				signDate: ''// 签约日期
@@ -76,7 +77,11 @@ export default {
 					required: true,
 					message: '请输入名称'
 				}],
-				linkkanName: [{
+				salesFunnelId: [{
+					required: true,
+					message: '请选择销售机会'
+				}],
+				linkkanNames: [{
 					required: true,
 					message: '请选择联系人'
 				}],
@@ -95,6 +100,9 @@ export default {
 				totalAmount: [{
 					required: true,
 					message: '请输入总金额'
+				}, {
+					type: 'price',
+					message: '金额格式不正确'
 				}]
 			}
 		}
@@ -120,15 +128,14 @@ export default {
 
 		// 联系人回调
 		uni.$on('chooseContact', data => {
-			console.log(data)
-			// if(data.length>0){
-			//   data.forEach((item)=>{
-			//     this.linkIds.push(item.)
-			//   })
-			// }
-			// this.contactData = data
-			this.form.linkkanName = data.linkkanName
-			this.form.linkId = [data.id]
+			if (data.length > 0) {
+				let nameArr = []
+				data.forEach((item) => {
+					this.linkIds.push(item.id)
+					nameArr.push(item.linkkanName)
+				})
+				this.form.linkkanNames = nameArr.join(',')
+			}
 		})
 	},
 	methods: {
@@ -148,10 +155,14 @@ export default {
 		},
 		// 保存transactionrecordUpdate
 		async fsubmit () {
+			if (this.form.startTime > this.form.endTime) {
+				this.$utils.toast.text('开始时间不能大于结束时间！')
+				return
+			}
 			let name = this.type === 'add' ? 'transactionrecordSave' : 'transactionrecordUpdate'
 			await this.$refs.form.validate()
 			this.form.belongDeptCode = this.deptInfo.deptName
-			// this.form.linkId = [this.form.linkId]
+			this.form.linkId = this.linkIds
 			this.$api.seeCrmService[name](this.form)
 				.then(res => {
 					this.$routing.navigateBack()
