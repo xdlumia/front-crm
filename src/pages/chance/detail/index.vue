@@ -74,7 +74,7 @@
       </i-tabs>
       <!-- 底部操作按钮 -->
       <div class="footer-fixed-menu d-center d-bg-white">
-        <a class="d-cell al" url="/pages/common/add-follow">
+        <a class="d-cell al" :url="'/pages/common/add-follow?busType=2&busId=' + busId">
           <span class="iconfont icontianjiajihua f16" style="color:#696969"></span>
           <span class="ml5 f13 d-text-gray">添加跟进</span>
         </a>

@@ -27,7 +27,7 @@
 						</div>
 						<div class="d-flex client-tags">
 							<div class="iconfont iconqian f16 d-text-blue mr10" v-if='salesType === 1'></div>
-							<div class="c-tag f12 mr10">{{item.gradeCode | dictionary('CRM_KHJB')}}</div>
+							<div class="c-tag f12 mr10" v-show='item.gradeCode'>{{item.gradeCode | dictionary('CRM_KHJB')}}</div>
 							<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
 							<div class="c-tag f12 mr10">{{item.createTime|timeToStr('yyyy-mm-dd')}}</div>
 						</div>
@@ -63,10 +63,10 @@ import Filter from '@/components/filter'
 import FilterDiy from './components/filter-diy'
 
 // 筛选数据
-let queryType = ['全部客户', '我负责的客户', '我下属负责的客户', '我参与的客户', '我关注的', '7天未跟进的客户', '我下属参与的'].map((item, index) => {
+let queryType = ['全部客户', '我负责的', '我参与的', '我关注的', '7天未跟进的', '我下属负责的', '我下属参与的'].map((item, index) => {
 	return {
 		name: item,
-		id: index
+		id: index - 1
 	}
 })
 

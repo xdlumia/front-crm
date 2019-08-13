@@ -234,6 +234,9 @@ export default {
 				let params = {
 					...this.form
 				}
+				params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
+					return { busId: this.busId, busType: 0, fieldConfigId: item.id, fieldValue: item.fieldValue }
+				})
 
 				// this.id 为 false 则是新增
 				let resulte = await this.$api.seeCrmService[!this.id ? 'clientinfoSave' : 'clientinfoUpdate'](params)
