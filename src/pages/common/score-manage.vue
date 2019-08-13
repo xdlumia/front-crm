@@ -13,16 +13,18 @@
 			</div>
 			<div class='d-center score-rule pl15 pr15'>
 				<div class="d-cell f13 d-text-black">评分规则条件</div>
-				<div class="btn-score f12" @click='addChildField(index)'>添加字段</div>
+				<div class="btn-score f12" @click='addChildField(index)'>添加</div>
 			</div>
 
 			<div class="mb5 d-bg-white" v-for='(subItem, subIndex) in item.fieldRuleEntityList' :key='subIndex'>
+
 				<!-- filedType == 0 是填写数字 -->
 				<i-input labelWidth='100' :label=" item.fieldName + '一'" disabled v-if="item.filedType == 0">
 					<div class='d-center' style='width:200px;'>
 						<input type="number" v-model='subItem.minValue' class='input-box f13 d-text-black d-cell' /><span class="ml5 mr5 d-text-qgray">-</span><input type="number" v-model='subItem.maxValue' class='input-box d-text-black f13 d-cell'  />
 					</div>
 				</i-input>
+
 				<!-- filedType == 1 是选择标签 -->
 				<i-select v-if="item.filedType == 1" labelWidth='150' i-class='ar pr20' :props="{label:'fieldName',value:'id'}" :label=" item.fieldName + '一'" :options="subFieldData[index][subIndex]" />
 
@@ -153,6 +155,7 @@ export default {
 		// 添加数据字典数据
 		setDisCodeData (code, parentIndex, index) {
 			let data = this.dictionaryOptions(code)
+			console.log(data)
 			this.$set(this.subFieldData[parentIndex], index, data)
 		},
 

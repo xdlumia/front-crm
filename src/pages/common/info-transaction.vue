@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="成交记录" color="#3cc695" url="/pages/transaction/index">
+        <mPanel top="10" title="成交记录" color="#3cc695" :url="url">
             <div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
             <div class="detail-list">
                 <p class="f12 d-elip d-text-gray">购买房源6603A/500W</p>
@@ -25,6 +25,11 @@ export default {
 	props: ['query'],
 	components: {
 		// mPager
+	},
+	computed: {
+		url () {
+			return +this.query.busType === 0 ? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId : '/pages/transaction/index?select=1'
+		}
 	},
 	data () {
 		return {

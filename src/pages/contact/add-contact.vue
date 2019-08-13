@@ -100,6 +100,12 @@ export default {
 			this.busId = option.id
 			this.editType = option.editType
 		}
+
+		if (option.clientId && option.clientName) {
+			this.clientName = option.clientName
+			this.form.clientId = option.clientId
+		}
+
 		// 客户回调
 		uni.$once('chooseClient', data => {
 			this.clientName = data.name

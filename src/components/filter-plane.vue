@@ -8,7 +8,7 @@
 				@click='tagClick(item)'
 				v-for='(item, index) in dataList'
 				:key='index'
-				:class="{active: isSingle ? ids === item[valueKey] : [].includes.call(ids, item[valueKey])}"
+				:class="{active: isSingle ? ids.toString() === item[valueKey].toString() : [].includes.call(ids, item[valueKey])}"
 			>{{item[labelKey]}}</div>
         </div>
     </div>
@@ -72,6 +72,10 @@ export default {
 				let index = this.ids.indexOf(item[this.valueKey])
 				index !== -1 && this.ids.splice(index, 1)
 			} else {
+				if (this.ids === item[this.valueKey]) {
+					this.ids = ''
+					return
+				}
 				this.ids = item[this.valueKey]
 			}
 			this.$forceUpdate()
