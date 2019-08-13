@@ -12,9 +12,22 @@
         placeholder="来源"
         label="标签名称">
         </i-input>
-		<dragSort :list="tagList">
-
-		</dragSort>
+		<!-- <dragSort :list="tagList" v-slot={row}>
+			<i-input
+			:label-width="isEdit?30:0"
+			:disabled="!isEdit"
+			v-model="row.labelName"
+			:key="index"
+			placeholder="请输入选项名称"
+			@focus="focusChange(row,index)">
+				<div slot="label" v-show="isEdit" @click="deleteMoreList(row.labelName)" class="uni-icon uni-icon-minus-filled f18 d-text-red"></div>
+				<m-checkbox :max="5" v-if="!isEdit" v-model="selCheked"  :label="row.id" />
+				<span v-if="isEdit" class="d-block ar" style="width:90px;">
+					<i @click="clear(row,index)" v-if="row.focus" class="uni-icon uni-icon-clear mr10 f18 d-text-qgray"></i>
+					<i class="uni-icon uni-icon-bars f18 ml10"></i>
+				</span>
+			</i-input>
+		</dragSort> -->
         <i-input
         :label-width="isEdit?30:0"
         :disabled="!isEdit"
@@ -140,14 +153,14 @@ export default {
 		}
 	},
 	watch: {
-		selCheked: {
-			handler (val) {
-				if (val.length === 5) {
-					uni.showToast({ title: '最大只能选择5条', icon: 'none' })
-				}
-			},
-			deep: true
-		}
+		// selCheked: {
+		// 	handler (val) {
+		// 		if (val.length === 5) {
+		// 			uni.showToast({ title: '最大只能选择5条', icon: 'none' })
+		// 		}
+		// 	},
+		// 	deep: true
+		// }
 	}
 }
 </script>
