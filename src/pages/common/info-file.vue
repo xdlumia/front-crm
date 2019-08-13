@@ -40,7 +40,7 @@ export default {
 	},
 	methods: {
 		fileinfoQueryList () {
-			this.$api.seeCrmService.fileinfoQueryList(this.query)
+			this.$api.seeCrmService.fileinfoQueryList({ busId: this.query.busId, busType: this.query.busType })
 				.then(res => {
 					if (res.code !== 200) return
 					this.list = res.data || []
