@@ -116,11 +116,16 @@ export default {
 			this.form.salesFunnelId = data.id || ''
 			this.form.clientId = data.clientId || ''
 			this.form.clientName = data.clientName || ''
-			// this.linkIds = []
 		})
 
 		// 联系人回调
 		uni.$on('chooseContact', data => {
+			console.log(data)
+			// if(data.length>0){
+			//   data.forEach((item)=>{
+			//     this.linkIds.push(item.)
+			//   })
+			// }
 			// this.contactData = data
 			this.form.linkkanName = data.linkkanName
 			this.form.linkId = [data.id]
