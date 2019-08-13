@@ -12,7 +12,9 @@
         placeholder="来源"
         label="标签名称">
         </i-input>
+		<dragSort :list="tagList">
 
+		</dragSort>
         <i-input
         :label-width="isEdit?30:0"
         :disabled="!isEdit"

@@ -34,7 +34,7 @@ export default {
 				return this.value.includes(this.label)
 			},
 			set (val) {
-				console.log(arr)
+				// console.log(arr)
 			}
 
 		}

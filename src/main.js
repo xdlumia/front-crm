@@ -51,6 +51,7 @@ import uniParse from './components/basic/uni/uParse/src/wxParse.vue'
 import uniFab from './components/basic/uni/uni-fab/uni-fab'
 import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
 import uniTag from './components/basic/uni/uni-tag/uni-tag'
+import dragSort from './components/basic/uni/drag-sort'
 // import tabPane from './components/basic/uni/uni-tabs/tabPane'
 // import tabs from './components/basic/uni/uni-tabs/tabs'
 // 自定义
@@ -103,6 +104,7 @@ Vue.component('iSwipeout', iSwipeout)
 Vue.component('iSwitch', iSwitch)
 Vue.component('iTab', iTab)
 Vue.component('iTabs', iTabs)
+Vue.component('dragSort', dragSort)
 
 // uni UI component
 Vue.component('uniIcon', uniIcon)
