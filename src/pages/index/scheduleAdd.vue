@@ -145,7 +145,7 @@ export default {
 			},
 			value1: '',
 			date: '',
-			scheId: '',
+			scheId: '', // 日程id
 			timeIndex: '',
 			isadd: true, // 是新增还是编辑
 			ishandel: false, // 切换编辑和回显状态
@@ -165,13 +165,12 @@ export default {
 	onLoad (option) {
 		if (option.scheId) {
 			this.scheId = option.scheId
-			// this.getScheduleInfo(option.scheId)
+			this.getScheduleInfo(option.scheId)
 			this.ishandel = false
 			this.isadd = false
 		}
 	},
 	onShow () {
-		console.log('12341')
 		// 客户回调
 		uni.$on('chooseClient', data => {
 			this.clientData = data
@@ -179,7 +178,6 @@ export default {
 		// 成交记录回调
 		uni.$on('chooseTransaction', data => {
 			this.transactionData = data
-			console.log(data)
 		})
 		// 销售机会回调
 		uni.$on('chooseChance', data => {
