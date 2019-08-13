@@ -3,7 +3,8 @@
         <NavBar title='编辑销售阶段' />
         <i-cell-group class="f13">
             <!-- <dragSort  v-slot="{ row,index }" :list="resultList" @change="onDragSortChange"> -->
-                <i-cell class="wfull" v-for="(item,index) of stageList" :key="index">
+                <div class="stage-cell f12 ac" v-if="!tageList.length" :key="index">暂无数据</div>
+                <div class="stage-cell" v-for="(item,index) of stageList" :key="index">
                     <i-row>
                         <i-col span="3">
                             <p><i class="stage-index">{{index+1}}</i></p>
@@ -25,7 +26,7 @@
                             <i class="uni-icon uni-icon-bars f16"></i>
                         </i-col>
                     </i-row>
-                </i-cell>
+                </div>
             <!-- </dragSort> -->
         </i-cell-group>
         <i-cell>
@@ -36,7 +37,7 @@
         <p class="f12 d-text-qgray pl15 mt10 mb10"><i class="uni-icon uni-icon-info-filled f12 mr5"></i>最多可添加5个销售阶段</p>
 
         <i-cell-group>
-            <i-cell v-for="(item,index) of resultList" :key="index">
+            <div class="stage-cell" v-for="(item,index) of resultList" :key="index">
                 <i-row>
                     <i-col span="8">
                         <span style="color:#fff">0</span>
@@ -48,7 +49,7 @@
                     </i-col>
 
                 </i-row>
-            </i-cell>
+            </div>
             <i-cell>
                 <p class="f12 d-text-qgray"><i class="uni-icon uni-icon-info-filled f12 mr5"></i>结果阶段,无需设置</p>
             </i-cell>
@@ -148,6 +149,7 @@ export default {
 			})
 			this.$api.seeCrmService.salesstageUpdateBatch(params)
 				.then(res => {
+					if (res.code !== 200) return
 					// 返回上一页
 					this.$routing.navigateBack()
 				})
@@ -157,6 +159,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .stage-cell{
+        position: relative;
+        padding: 12px 15px;
+        background: #fff;
+        line-height: 1.4;
+        font-size: 14px;
+        overflow: hidden;
+        border-bottom: 1px solid #f2f2f2;
+
+    }
     .stage-page{
         .stage-name{
             /deep/ .detail-panel-item{
