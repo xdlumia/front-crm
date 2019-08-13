@@ -11,7 +11,7 @@
         </a>
         <i-input maxlength="32" v-model="form.clientName" disabled label="客户名称" placeholder="请输入"/>
 
-        <a :url="form.salesFunnelId ? (`/pages/contact/index?select=1&multiple=1&linkIds=${JSON.stringify(form.linkIds) || ''}&chanceId=${form.salesFunnelId}`) : ''">
+        <a :url="form.salesFunnelId ? (`/pages/contact/index?busType=2&select=1&multiple=1&linkIds=${JSON.stringify(form.linkIds) || '[]'}&chanceId=${form.salesFunnelId}`) : ''">
           <i-input label="联系人" disabled v-model="form.linkkanName" placeholder=" " required>
             <uni-icon type="forward" size="18" color="#999"/>
           </i-input>
