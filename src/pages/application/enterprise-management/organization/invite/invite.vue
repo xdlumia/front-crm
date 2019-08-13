@@ -8,44 +8,47 @@
 <template>
   <view>
     <NavBar title="邀请你加入" />
-    <!-- 头部 -->
-    <i-row class="m10">
-        <i-col span="4" i-class="col-class">
-            <img class="h20" src="/static/img/index.png" style="border-radius: 5px;" />
-        </i-col>
-        <i-col span="4" i-class="col-class">
-            <span class="b" ref="inviter">
-				{{inviter}}
-            </span>
-        </i-col>
-        <i-col span="16" i-class="col-class">
-            邀请你加入
-        </i-col>
-    </i-row>
-    <!-- 公司 -->
-    <i-row class="m10">
-        <i-col span="24" i-class="col-class f16 b ac">
-                {{companyName}}
-        </i-col>
-    </i-row>
-    <!-- 表单 -->
-    <i-panel :rules="rules">
-        <i-input v-model="name" label ="真实姓名" autofocus placeholder="真实姓名" prop="name" />
-        <i-input v-model="phone"  type="number" label ="手机号码" placeholder="请输入手机号" prop="phone" maxlength="11" />
-        <div class="d-center bb">
-            <div class="d-cell"><input class="pt10 pb10 pl20" type="number" v-model="validateCode" prop="validateCode" placeholder="请输入验证码" @blur="checkValidateCode"/></div>
-            <div v-if="show" class="pr50"><a class="d-text-blue" @click="getValidateCode">获取验证码</a></div>
-            <div v-if="!show" class="pr50"><span class="d-text-blue">{{count}} s后可重新获取</span></div>
-        </div>
-        <i-input  label ="申请理由" v-model="applyReason" prop="applyReason" placeholder="选填" maxlength="50" />
-    </i-panel>
-    <!-- 底部 -->
-    <!-- 提交按钮 -->
-    <i-row class="m10">
-        <i-col span="24" i-class="col-class">
-            <auth-button class="wfull ac h30 d-bg-blue">提交申请</auth-button>
-        </i-col>
-    </i-row>
+	<view class="pl10 pr20 pt10">
+		<!-- 头部 -->
+		<i-row class="m10">
+			<i-col span="4" i-class="col-class">
+				<img class="avatar-img" :src='avatarUrl' style="border-radius: 5px;" />
+			</i-col>
+			<i-col span="4" i-class="col-class">
+				<span class="b" ref="inviter">
+					{{inviter}}
+				</span>
+			</i-col>
+			<i-col span="16" i-class="col-class">
+				邀请你加入
+			</i-col>
+		</i-row>
+		<!-- 公司 -->
+		<i-row class="m10">
+			<i-col span="24" i-class="col-class f16 b ac">
+					{{companyName}}
+			</i-col>
+		</i-row>
+		<div style="border: 0.3px solid #f2f2f2;height:0"></div>
+		<!-- 表单 -->
+		<i-panel :rules="rules">
+			<i-input v-model="name" label ="真实姓名" autofocus placeholder="真实姓名" prop="name" />
+			<i-input v-model="phone"  type="number" label ="手机号码" placeholder="请输入手机号" prop="phone" maxlength="11" />
+			<div class="d-center bb">
+				<div class="d-cell"><input class="pt10 pb10 pl20" type="number" v-model="validateCode" prop="validateCode" placeholder="请输入验证码" @blur="checkValidateCode"/></div>
+				<div v-if="show" class="pr50"><a class="d-text-blue" @click="getValidateCode">获取验证码</a></div>
+				<div v-if="!show" class="pr50"><span class="d-text-blue">{{count}} s后可重新获取</span></div>
+			</div>
+			<i-input  label ="申请理由" v-model="applyReason" prop="applyReason" placeholder="选填" maxlength="50" />
+		</i-panel>
+		<!-- 底部 -->
+		<!-- 提交按钮 -->
+		<i-row class="m10">
+			<i-col span="24" i-class="col-class">
+				<button  class="wfull ac f16 h40 d-bg-blue" style="line-height: 40px" @click="submitApply">提交申请</button>
+			</i-col>
+		</i-row>
+	</view>
   </view>
 </template>
 <script>
@@ -60,6 +63,7 @@ export default {
 			companyName: '',
 			companyCode: '',
 			validateOk: false,
+			avatarUrl: '',
 
 			show: true,
 			count: '',
@@ -67,15 +71,25 @@ export default {
 		}
 	},
 	onLoad (option) {
-		if (option.inviter) {
-			this.inviter = option.inviter
-		}
-		if (option.companyName) {
-			this.companyName = option.companyName
-			this.companyCode = option.companyCode
-		}
+		this.inviter = option.inviter || '无邀请人'
+
+		this.companyName = option.companyName || '无邀请公司'
+		this.companyCode = option.companyCode
+
+		this.avatarUrl = option.avatarUrl
+
+		uni.$on('handleClick', function (data) {
+			console.log(data)
+		})
 	},
 	methods: {
+		// 获取用户信息
+		// handleUserInfoClick(data){
+		// 	if(data){
+		// 		this.avatarUrl = data.detail.userInfo.avatarUrl
+		// 	}
+		// 	this.submitApply()
+		// },
 		// 提交申请
 		submitApply () {
 			if (this.validateOk) {
@@ -83,8 +97,9 @@ export default {
 					'name': this.name,
 					'phone': this.phone,
 					'applyReason': this.applyReason,
-					'ownerDeptTotalCode': this.companyCode,
-					'inviter': this.inviter
+					'companyCode': this.companyCode,
+					'inviter': this.inviter,
+					'photo': this.avatarUrl
 				}).then((response) => {
 					if (response.code === 200) {
 						uni.redirectTo({
@@ -100,7 +115,7 @@ export default {
 		},
 		// 校验验证码validateSmsCode
 		checkValidateCode () {
-			if (this.phone !== '' && this.code !== '') {
+			if (this.phone !== '' && this.validateCode !== '') {
 				this.$api.seeCrmService.userapplicationinformationValidateSmsCode({ 'phone': this.phone, 'verificationCode': this.validateCode }).then((response) => {
 					this.$utils.toast.text(response.msg)
 					if (response.code === 200) {
@@ -146,3 +161,10 @@ export default {
 	}
 }
 </script>
+<style scoped>
+.avatar-img{
+	border-radius: 70px;
+	width: 30px;
+	height: 30px;
+}
+</style>

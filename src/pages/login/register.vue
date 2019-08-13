@@ -40,6 +40,10 @@ export default {
 		}
 	},
 	onLoad (option) {
+		let that = this
+		uni.$on('backFromRegister', function (data) {
+			that.current = 1
+		})
 	},
 	methods: {
 

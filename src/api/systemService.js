@@ -22,9 +22,19 @@ export default {
 		url: '/rmhandbook/getHandbookMenuListPublish',
 		methods: 'get'
 	},
+	// 获取帮助手册发布版单个详情
+	getHandbookInfo: {
+		url: '/rmhandbook/queryObject/{id}',
+		methods: 'get'
+	},
 	// 保存客户管理反馈记录
 	saveCustomerFeedback: {
 		url: '/rmsuggestfeedbackrecord/saveCustomerFeedback',
+		methods: 'post'
+	},
+	// 申请公司
+	applyCompany: {
+		url: '	/rmapplycompany/apply',
 		methods: 'post'
 	}
 }

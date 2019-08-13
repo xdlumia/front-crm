@@ -238,6 +238,12 @@
 			}
 		},
 		{
+			"path": "pages/user/help-info",
+			"style": {
+				"navigationBarTitleText": "帮助中心详情"
+			}
+		},
+		{
 			"path": "pages/user/feedback",
 			"style": {
 				"navigationBarTitleText": "意见反馈"

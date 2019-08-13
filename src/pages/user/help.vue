@@ -3,10 +3,7 @@
         <NavBar title="帮助中心" />
         <div class="d-bg-white">
             <i-cell-group v-for="(item) in helps" :key="item.id">
-                <!-- <a :url='"helpDetail" + item.entity'> -->
-                <a>
-                    <i-cell :title='item.title'  is-link></i-cell>
-                </a>
+                <i-cell :title='item.title'  is-link @click="toInfo(item.id)"></i-cell>
             </i-cell-group>
         </div>
 
@@ -40,8 +37,9 @@ export default {
 		})
 	},
 	methods: {
-		loginOut () {
-			this.$routing.redirectTo('/pages/login/index')
+		toInfo (id) {
+			let url = '/pages/user/help-info?id=' + id
+			this.$routing.navigateTo(url)
 		}
 	}
 }
