@@ -20,25 +20,24 @@ export default {
 	},
 	data () {
 		return {
-			isChecked: false
+			// isChecked: false
 		}
 	},
 	onReady () {
 	},
 	created () {
-		this.isChecked = this.value.includes(this.label)
+		// this.isChecked = this.value.includes(this.label)
 	},
 	computed: {
-		// isChecked: {
-		// 	get () {
-		// 		console.log(this.value.includes(this.label))
-		// 		return this.value.includes(this.label)
-		// 	},
-		// 	set (val) {
-		// 		console.log(arr)
-		// 	}
+		isChecked: {
+			get () {
+				return this.value.includes(this.label)
+			},
+			set (val) {
+				console.log(arr)
+			}
 
-		// }
+		}
 	},
 	methods: {
 		changeChecked () {
