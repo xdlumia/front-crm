@@ -62,7 +62,7 @@
       <i-tabs :current="currTabIndex" :tabList="tabBars" @change="tagsChange">
         <i-tab index="0">
           <!-- 跟进: -->
-          <followInfo :query="{salesFunnelId:busId}" height="calc(100vh - 380px)" />
+          <followInfo :query='{clientId: detailsInfo.id, busType: 2}' height="calc(100vh - 380px)" />
         </i-tab>
         <i-tab index="1">
           <detailInfo :detailInfo="detailsInfo" height="calc(100vh - 380px)" />
@@ -142,8 +142,7 @@ export default {
 		}
 	},
 	onShow () {
-		// 获取详情
-		this.saleschanceInfo(this.busId)
+
 	},
 	onLoad (option) {
 		this.busId = option.id
@@ -151,6 +150,11 @@ export default {
 		this.saleschanceInfo(option.id)
 		// 获取联系人列表
 		this.linkmanQueryList({ id: option.id, busType: 2 })
+		// 编辑成功刷新列表
+		uni.$on('addChance', data => {
+			// 获取详情
+			this.saleschanceInfo(this.busId)
+		})
 	},
 	created () {
 		// 获取销售阶段

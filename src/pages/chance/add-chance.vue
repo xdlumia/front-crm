@@ -133,12 +133,12 @@ export default {
 			this.editType = option.editType
 		}
 		// 客户回调
-		uni.$once('chooseClient', data => {
+		uni.$on('chooseClient', data => {
 			this.form.clientName = data.name
 			this.form.clientId = data.id
 		})
 		// 标签回掉
-		uni.$once('moreTags', data => {
+		uni.$on('moreTags', data => {
 			this.labelNames = data.map(item => item.labelName).join(',')
 			this.form.lableBusinessSaveVo.labelIdArray = data.map(item => item.id)
 		})
@@ -187,6 +187,8 @@ export default {
 						if (this.editType === '2') {
 							this.$routing.navigateTo(`/pages/chance/index`)
 						} else {
+							// 编辑成功emit给返回页
+							uni.$emit('addChance')
 							// 返回上一页
 							this.$routing.navigateBack()
 						}

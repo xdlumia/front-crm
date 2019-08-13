@@ -41,7 +41,7 @@ export default {
 	},
 	onLoad (option) {
 		// 客户回调
-		uni.$once('chooseContact', data => {
+		uni.$on('chooseContact', data => {
 			this.form.linkmanId = data.id
 			// 业务与联系人关系保存
 			this.saveContact()
@@ -56,12 +56,12 @@ export default {
 				.then(res => {
 					if (res.code !== 200) return
 					// console.log('保存成功')
-					this.linkmanrelationList()
+					this.linkmanQueryList()
 				})
 		},
 		// 获取联系人列表
-		linkmanrelationList () {
-			this.$api.seeCrmService.linkmanrelationList({ busId: this.query.busId, busType: this.query.busType })
+		linkmanQueryList () {
+			this.$api.seeCrmService.linkmanQueryList({ busId: this.query.busId, busType: this.query.busType })
 				.then(res => {
 					if (res.code !== 200) return
 					this.contactList = res.data || []
@@ -71,7 +71,7 @@ export default {
 	watch: {
 		'query.busId': {
 			handler (val) {
-				this.linkmanrelationList()
+				this.linkmanQueryList()
 			},
 			deep: true
 		}
