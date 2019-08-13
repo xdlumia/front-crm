@@ -8,7 +8,7 @@
     <!-- 步骤 -->
     <i-steps
       :current="currStage"
-      :list="stageList"
+	v-if="stageList.length"
       class="change-steps d-fixed wfull pt5 pb5"
       :style="{top:`calc(${navH} + 39px)`}">
       <i-step
@@ -25,17 +25,17 @@
       </i-step>
     </i-steps>
     <!-- 统计 -->
-    <div class="chance-sts bt d-fixed wfull" :style="{top:`calc(64px + 39px + 65px)`}">
+    <div class="chance-sts bt d-fixed wfull" :style="{top:`calc(${navH} + 39px + 65px)`}">
       <li class="sts-item">{{stageSts.totalCount}}个商机</li>
       <li class="sts-item">{{stageSts.totalSalesChanceMoney}}元</li>
-      <li class="sts-item" v-if="currStage != 0">赢率{{stageSts.equityedge}}%</li>
+      <li class="sts-item" v-if="currStage != 0 && currStage != '-1'">赢率{{stageSts.equityedge}}%</li>
     </div>
     <!-- 列表内容 -->
     <scroll-list
       class="d-absolute wfull"
       :style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
       :height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
-      :api="api"
+      api="seeCrmService.saleschanceQueryPageList"
       :params="queryForm"
       @getList='getList'
       ref='list'>
@@ -198,11 +198,26 @@ export default {
 			this.queryForm[item.prop] = item.id
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
+			// 获取统计
+			if (item.prop !== 'orderByStr') {
+				this.saleschanceSalesChanceStatistics()
+			}
 		},
 		diyFilterSubmit (filterData) {
+			// 如果全选阶段选中全部
+			if (filterData.stageIds.length === this.stageList.length) {
+				this.currStage = 0
+			} else if (filterData.stageIds.length > 1) {
+				this.currStage = '-1'
+			} else if (filterData.stageIds.length === 1) {
+				let [id] = filterData.stageIds
+				this.currStage = this.stageList.findIndex(item => item.id === id)
+			}
 			this.queryForm = Object.assign({}, this.queryForm, filterData)
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
+			// 获取统计
+			this.saleschanceSalesChanceStatistics()
 		},
 		// 销售阶段筛选
 		setpHandle (row, index) {
@@ -210,15 +225,17 @@ export default {
 			if (index !== 0) {
 				this.queryForm.stageIds = [row.id]
 				this.stageSts.equityedge = row.equityedge
+			} else {
+				this.queryForm.stageIds = []
 			}
 			// 获取销售机会阶段统计
-			this.saleschanceSalesChanceStatistics(this.queryForm)
+			this.saleschanceSalesChanceStatistics()
 			// 刷新列表
 			this.$refs.list.reload()
 		},
 		// 获取销售统计
-		saleschanceSalesChanceStatistics (params) {
-			this.$api.seeCrmService.saleschanceSalesChanceStatistics(params)
+		saleschanceSalesChanceStatistics () {
+			this.$api.seeCrmService.saleschanceSalesChanceStatistics(this.queryForm)
 				.then(res => {
 					let data = res.data || {}
 					this.stageSts.totalCount = data.totalCount

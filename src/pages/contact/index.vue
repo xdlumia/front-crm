@@ -127,7 +127,7 @@ export default {
 			if (!this.select) {
 				this.$routing.navigateTo('/pages/contact/detail/index?id=' + row.id)
 			} else {
-				// 如过不是多选
+				// 如过是多选
 				if (this.multiple) {
 					if (this.linkIds.includes(row.id)) {
 						// 点击当前行 已经选中的取消

@@ -31,6 +31,7 @@
 				</i-input>
 			</a>
             <i-input v-model="form.note" label="备注" placeholder="点击填写" type="textarea" />
+			{{form.formsFieldValueSaveVos.length}}
 			<p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
 				<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
 				<i-input v-if='item.fieldType == 1' type='number' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
@@ -208,7 +209,11 @@ export default {
 				.then(res => {
 					let data = res.data || {}
 					for (let key in this.form) {
-						this.form[key] = data[key]
+						if (key === 'formsFieldValueSaveVos') {
+							this.form.formsFieldValueSaveVos = data.formsFieldValueEntitys
+						} else {
+							this.form[key] = data[key]
+						}
 					}
 				})
 		},
