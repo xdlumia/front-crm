@@ -4,14 +4,14 @@
     <div>
       <m-form ref="form" class="uni-pb100" :model="form" :rules="rules">
         <i-input maxlength="32" v-model="form.name" label="名称" placeholder="请输入" required/>
-        <a :url="`/pages/chance/choose-chance?id=${form.salesFunnelId}`">
+        <a :url="`/pages/chance/choose-chance?id=${form.salesFunnelId}&clientId=${clientId}`">
           <i-input label="销售机会" disabled v-model="form.salesFunnelName" placeholder=" " required>
             <uni-icon type="forward" size="18" color="#999"/>
           </i-input>
         </a>
         <i-input maxlength="32" v-model="form.clientName" disabled label="客户名称" placeholder="请输入"/>
 
-    <a :url="`/pages/contact/index?select=1&multiple=1&id=${form.linkId}`">
+        <a :url="`/pages/contact/index?select=1&multiple=1&linkids=${JSON.parse(form.linkids) || ''}&chanceId=${form.salesFunnelId}`">
           <i-input label="联系人" disabled v-model="form.linkkanName" placeholder=" " required>
             <uni-icon type="forward" size="18" color="#999"/>
           </i-input>
@@ -55,6 +55,8 @@ export default {
 			upTypeIndex: '',
 			linkManData: [], // 关联的联系人列表
 			type: 'add',
+			clientId: '',
+			linkids: [1, 2, 3, 4], // 联系人ids，用于选择联系人回显
 			form: {
 				salesFunnelName: '', // 销售机会名称
 				clientName: '', // 客户名称
@@ -104,6 +106,9 @@ export default {
 			this.detailId = option.id
 			this.getTransactionDetail()
 		}
+		if (option.clientId) {
+			this.clientId = option.clientId || ''
+		}
 		// 销售机会回调
 		uni.$on('chooseChance', data => {
 			// this.chanceData = data
@@ -111,6 +116,7 @@ export default {
 			this.form.salesFunnelId = data.id || ''
 			this.form.clientId = data.clientId || ''
 			this.form.clientName = data.clientName || ''
+			// this.linkids = []
 		})
 
 		// 联系人回调
