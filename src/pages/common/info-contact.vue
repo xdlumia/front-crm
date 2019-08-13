@@ -61,7 +61,7 @@ export default {
 		},
 		// 获取联系人列表
 		linkmanQueryList () {
-			this.$api.seeCrmService.linkmanQueryList({ busId: this.query.busId, busType: this.query.busType })
+			this.$api.seeCrmService.linkmanQueryList({ busId: this.query.busId, busType: this.query.busType, time: '' })
 				.then(res => {
 					this.contactList = res.data || []
 				})

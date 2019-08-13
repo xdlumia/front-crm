@@ -106,7 +106,7 @@ export default {
 		}
 	},
 	onLoad (option) {
-		this.select = option.selec
+		this.select = option.select
 		if (option.multiple) {
 			this.multiple = option.multiple
 			this.linkIds = JSON.parse(option.linkIds)
