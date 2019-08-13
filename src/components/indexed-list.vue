@@ -78,6 +78,10 @@ export default {
 		this.init(this.list)
 	},
 	watch: {
+		isCheckedAllData(val){
+			// this.childEchodata = [...this.echodata]
+			this.isCheckedData = val
+		}
 	},
 	methods: {
 		initPage: function (data) {
@@ -85,7 +89,11 @@ export default {
 			that.init(data)
 		},
 		init: function (array=[], callback) {
+			// console.log(this.isCheckedAllData)
 			var that = this
+			that.childEchodata = [...that.echodata]
+			// that.isCheckedData = [...that.isCheckedAllData]
+
 			if (array.length && array.length <= 0) {
 				return false
 			}
@@ -93,8 +101,6 @@ export default {
 			if (typeof temData === 'undefined') {
 				temData = {}
 			}
-			that.childEchodata = [...this.echodata]
-			that.isCheckedData = [...this.isCheckedAllData]
 			that.setViewWH(that)
 			that.buildTextData(that, array)
 		},

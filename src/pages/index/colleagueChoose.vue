@@ -69,7 +69,16 @@ export default {
 	onLoad (option) {
 		this.isRadio = option.isRadio == 0 ? false : true// eslint-disable-line
 		this.query = option
-		this.echodata = option.ids ? option.ids.split(',') : []
+		if (option.ids) {
+			let arr = option.ids.split(',')
+			if (arr.length > 1) {
+				arr.forEach((item) => {
+					this.echodata.push(Number(item))
+				})
+			} else {
+				this.echodata = [Number(option.ids)]
+			}
+		}
 		if (option.subordinate) { // 首页请求下属的数据
 			this.userId = option.userId
 			this.getChildrenEmployee()
@@ -82,8 +91,7 @@ export default {
 		getAlllist () {
 			this.$api.seeCrmService.organizationalStructureColleagues(this.queryform)
 				.then(res => {
-					this.dataArr = res.data
-					this.$refs.sortPickerList.initPage(this.dataArr)
+					this.dataArr = res.data || []
 					this.init()
 				})
 		},
@@ -91,8 +99,7 @@ export default {
 		getChildrenEmployee () {
 			this.$api.seeCrmService.organizationalStructureGetChildrenEmployee({ employeeId: this.userId })
 				.then(res => {
-					this.dataArr = res.data
-					this.$refs.sortPickerList.initPage(this.dataArr)
+					this.dataArr = res.data || []
 					this.init()
 				})
 		},
@@ -100,7 +107,7 @@ export default {
 			this.isCheckedAllData = this.dataArr.filter((item) => {
 				return this.echodata.includes(item.userId)
 			})
-			// console.log(this.isCheckedAllData)
+			this.$refs.sortPickerList.initPage(this.dataArr)
 		},
 		clickData (data) {
 			this.isCheckedAllData = data

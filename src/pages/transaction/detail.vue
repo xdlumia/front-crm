@@ -38,7 +38,7 @@
                     <detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
                 </i-tab>
                 <i-tab index="1">
-                    <correlationInfo :query='{busType:3,name:detailInfo.name,busId:detailId}' :height="'calc(100vh - 217px - 50px - ' + navH + ')'" />
+                    <correlationInfo v-if="Object.keys(detailInfo).length" :query='{busType:3,name:detailInfo.name,busId:detailInfo.id}' :height="'calc(100vh - 217px - 50px - ' + navH + ')'" />
                 </i-tab>
             </i-tabs>
         </div>
@@ -80,10 +80,6 @@ export default {
 			phoneActions: [
 				{
 					name: '联系人电话'
-				},
-				{
-					name: '赵利春 18910453728',
-					phone: 18910453728
 				}
 			],
 			detailInfo: {},
@@ -105,6 +101,8 @@ export default {
 	},
 	onShow () {
 		this.getTransactionDetail()
+		// 获取联系人列表
+		this.linkmanQueryList({ id: this.detailId, busType: 3 })
 	},
 	methods: {
 		// 请求成交记录详情
@@ -128,8 +126,20 @@ export default {
 		handlerAction (item) {
 			this[item] = !this[item]
 		},
-
+		// 获取联系人列表
+		linkmanQueryList (params) {
+			this.$api.seeCrmService.linkmanQueryList(params)
+				.then(res => {
+					let data = res.data || []
+					let phones = data.map(item => {
+						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+					})
+					this.phoneActions.push(...phones)
+				})
+		},
+		// 拨打电话
 		handlePhone ({ target: { index } }) {
+			if (!index) return
 			this.callPhone(this.phoneActions[index].phone)
 		},
 

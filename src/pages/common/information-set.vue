@@ -110,7 +110,7 @@ export default {
 		return {
 			informationList: [], // 列表所有list
 			statusTypes: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
-			msgArr: [{ name: '文字', type: 0 }, { name: '数字', type: 1 }, { name: '日期', type: 2 }, { name: '标签', type: 3 }, { name: '标签', type: 3 }, { name: '标签', type: 3 }],
+			msgArr: [{ name: '文字', type: 0 }, { name: '数字', type: 1 }, { name: '日期', type: 2 }, { name: '标签', type: 3 }],
 			tagAllList: [], // 所有标签的数组
 			msgName: '',
 			msgid: '',
@@ -194,15 +194,6 @@ export default {
 		},
 		bindPickerChange (e) {
 			this.msgIndex = e.target.value
-		},
-		bindColumnChange (e) {
-			if (e.detail.value === 3) {
-				this.msgArr.push(['成交记录'])
-				this.msgIndex = [3, 0]
-			} else {
-				this.msgArr.splice(1, 1)
-				this.msgIndex = [0]
-			}
 		},
 		changeHandelStatus (index) {
 			this.$forceUpdate()

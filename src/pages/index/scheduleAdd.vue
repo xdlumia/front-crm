@@ -49,7 +49,7 @@
                     :options="tixData">
                 </i-select>
 
-                <a :url="(isadd || ishandel) ? `/pages/index/colleagueChoose?isRadio=0` : ''">
+                <a :url="(isadd || ishandel) ? `/pages/index/colleagueChoose?isRadio=0&ids=${acheduleForm.participants}` : ''">
                     <i-input disabled label="参与人" v-model="acheduleForm.particiNames" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
                 </a>
                 <div class="d-bg-schedule"></div>
@@ -212,7 +212,7 @@ export default {
 			let namesArr = []
 			if (data.data) {
 				data.data.forEach((item) => {
-					idsArr.push(item.id)
+					idsArr.push(item.userId)
 					namesArr.push(item.employeeName)
 				})
 			}
@@ -224,8 +224,10 @@ export default {
 		getScheduleInfo (id) {
 			this.$api.seeCrmService.scheduleInfo(null, id)
 				.then(res => {
-					this.acheduleForm = res.data
+					this.acheduleForm = res.data || {}
 					this.acheduleForm.particiNames = this.acheduleForm.participantNames ? this.acheduleForm.participantNames.join(',') : ''
+					this.acheduleForm.startTime = this.changeTime(this.acheduleForm.startTime)
+					this.acheduleForm.endTime = this.changeTime(this.acheduleForm.endTime)
 
 					this.clientData = { name: this.acheduleForm.clientName || '', id: this.acheduleForm.clientId || '' }// 客户，
 					this.contactData = { name: this.acheduleForm.linkName || '', id: this.acheduleForm.linkId || '' }// 联系人
@@ -233,6 +235,9 @@ export default {
 					this.chanceData = { name: this.acheduleForm.salesFunnelName || '', id: this.acheduleForm.salesFunnelId || '' }// 销售机会
 					this.highseasData = { name: this.acheduleForm.seaPoolName || '', id: this.acheduleForm.seaPoolId || '' }// 公海池
 				})
+		},
+		changeTime (time) {
+			return new Date(time).getFullYear() + '-' + (new Date(time).getMonth() + 1) + '-' + new Date(time).getDate() + ' ' + new Date(time).getHours() + ':' + new Date(time).getMinutes()
 		},
 		// 删除
 		deleteInfo () {
@@ -278,11 +283,19 @@ export default {
 
 			this.acheduleForm.startTime = Date.parse(this.acheduleForm.startTime)
 			this.acheduleForm.endTime = Date.parse(this.acheduleForm.endTime)
-			this.$api.seeCrmService.transactionrecordSave(this.acheduleForm)
-				.then(res => {
-					this.$routing.navigateBack()
-					uni.$emit('updateIndexList', { params: '' })
-				})
+			if (this.isadd) {
+				this.$api.seeCrmService.scheduleSave(this.acheduleForm)
+					.then(res => {
+						this.$routing.navigateBack()
+						uni.$emit('updateIndexList', { params: '' })
+					})
+			} else {
+				this.$api.seeCrmService.scheduleUpdate(this.acheduleForm)
+					.then(res => {
+						this.$routing.navigateBack()
+						uni.$emit('updateIndexList', { params: '' })
+					})
+			}
 		},
 		// 选择地图
 		chooseMap () {

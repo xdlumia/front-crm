@@ -64,8 +64,6 @@ export default {
 			labelName: '',
 			queryForm: {
 				// 列表form
-				page: 1,
-				limit: 15,
 				busType: 3 // 业务类型 0客户，1联系人，2机会，3成交
 			},
 			typeform: {
@@ -86,7 +84,6 @@ export default {
 	methods: {
 		// 所有标签项
 		getTagsList (list) {
-			console.log(list)
 			this.tagsList = list
 		},
 		moreAdd () {

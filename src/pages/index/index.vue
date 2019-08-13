@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="d-text-gray ml15">
-                            {{item.startTime | timeToStr('y-m-d hh:ii')}} - {{item.endTime | timeToStr('y-m-d hh:ii')}}
+                            {{item.startTime | timeToStr('hh:ii')}} - {{item.endTime | timeToStr('hh:ii')}}
                         </div>
                     </div>
                 </a>
@@ -184,8 +184,6 @@
                 </div>
                 <div class="wfull" style="height:200px;">
                    <view class="echartsBox">
-                        <!-- 引入的mpvue-echarts组件 -->
-                        <!-- <mpvue-echarts :echarts='echarts' canvasId="chat1" @onInit="fn1OnInit" ref='lineChart' class="ec-canvas"/> -->
                          <ec-canvas :ec="ec" ref='echart'></ec-canvas>
                     </view>
                 </div>
@@ -305,12 +303,6 @@ export default {
 			})
 				.then(res => {
 					this.indexList = res.data || []
-					// this.indexList = [
-					// 	{ address: '示例：详细地址', content: '示例：日程内容', endTime: 1565334107725, startTime: 1565330507000, remindSecond: 3600, id: 1 },
-					// 	{ address: '示例：详细地址111', content: '示例：日程内容111', endTime: 1565420507000, startTime: 1565416907000, remindSecond: 360, id: 2 },
-					// 	{ address: '示例：详细地址22222', content: '示例：日程内容2222', endTime: 1565334107725, startTime: 1565330507000, remindSecond: 3600, id: 3 },
-					// 	{ address: '示例：详细地址3333', content: '示例：日程内容3333', endTime: 1566459603000, startTime: 1566463203000, remindSecond: 3600, id: 4 }
-					// ]
 					this.indexList.forEach((item) => {
 						this.allcolleagues.push(this.changeTime(item.startTime))
 						// console.log(this.changeTime(item.startTime))
