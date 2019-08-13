@@ -41,14 +41,15 @@ export default {
 	},
 	methods: {
 		changeChecked () {
-			if (!this.value.includes(this.label) && this.max && this.value.length >= this.max) {
+			if (!this.value.includes(this.label) && !this.value.includes(this.label) && this.max && this.value.length >= this.max) {
+				uni.showToast({ title: `最大只能选择${this.max}条`, icon: 'none' })
 				return
 			}
-			this.isChecked = !this.isChecked
-			if (this.isChecked) {
-				this.value.push(this.label)
-			} else {
+			// this.isChecked = !this.isChecked
+			if (this.value.includes(this.label)) {
 				this.value.splice(this.value.indexOf(this.label), 1)
+			} else {
+				this.value.push(this.label)
 			}
 			this.$emit('input', this.value)
 			this.$emit('change', this.value)

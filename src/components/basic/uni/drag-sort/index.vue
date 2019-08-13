@@ -10,12 +10,9 @@
     damping="40"
     :animation="active !== index"
     class="drag-sort-item"
-    style="height:55px"
+    style="height:50px"
     :class="{'active': active === index, 'vh-1px-t': item.index > 0}">
-      <view class="item">{{item[props.label]}}</view>
-      <view class="touch-tight">
-        <view class="ico_drag"></view>
-      </view>
+      <slot v-bind:row="item" v-bind:index="index"></slot>
     </movable-view>
     <movable-view
     class="touch"
@@ -36,7 +33,7 @@ export default {
   components: {},
   data () {
     return {
-      height: 55, // 高度
+      height: 50, // 高度
       currentList: [],
       active: -1, // 当前激活的item
       itemIndex: 0, // 当前激活的item的原index
@@ -46,7 +43,7 @@ export default {
   },
   computed: {
     currentListLength (){
-      return this.currentList.length * this.height
+      return this.currentList.length
     }
   },
   props: {
@@ -178,33 +175,14 @@ export default {
 }
 .drag-sort-item {
   position: absolute !important;
-  display: flex;
-  align-items: center;
   width: 100%;
   padding: 0;
   margin: 0;
-  background: #fff;
-  padding: 0 15px;
   box-sizing: border-box;
-  .item {
-    flex: 1;
-  }
-  .touch-tight {
-    width: 24px;
-    display: flex;
-    justify-content: center;
-  }
 }
 .touch {
   height: 100%;
   width: 50px;
-}
-.ico_drag {
-  display: inline-block;
-  width: 24px;
-  height: 12px;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAYCAYAAAC8/X7cAAAAAXNSR0IArs4c6QAAAEtJREFUWAnt1cEJACAMA0B1/506moIr5FEK51+Jl0d2Vd01+JzB2X90H5jeoPwECBDIBLYlzgDj25Y4JvQAAQIERgtY4u76LHF3Aw8rGQnK3sYAXQAAAABJRU5ErkJggg==) 0 0 no-repeat;
-  background-size: 100% auto;
 }
 .active {
   box-shadow: 0 0 40rpx #DDDDDD;
