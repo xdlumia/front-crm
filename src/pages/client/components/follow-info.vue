@@ -32,7 +32,7 @@
                                 <span class='note-tag f12 d-text-white' v-show='item.followType'>{{item.followType | dictionary('CRM_GJLX')}}</span>
                             </div>
                             <div class="note-content mb5">
-                                {{item.content}}
+                                我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水我是是水水
                             </div>
                             <div class='d-flex' v-if='item.files && item.files.length'>
                                 <img class="note-img" v-for='imgItem in item.files' :key='imgItem.id' :src="imgItem.fileUrl" />

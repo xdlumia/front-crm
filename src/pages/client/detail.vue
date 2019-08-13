@@ -58,7 +58,7 @@
 						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="2">
-						<correlationInfo :query='{id: detailInfo.id, busType: 0}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+						<correlationInfo :query='{busId: detailInfo.id, busType: 0}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index='3'>
 						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
@@ -101,53 +101,20 @@ import attrInfo from './components/attr-info'
 // let moreActions = moreActionsTitle.map(item => ({ name: item }))
 
 let moreActions = [
-	{
-		name: '更多操作',
-		id: 0
-	},
-	{
-		name: '复制',
-		id: 1
-	},
-	{
-		name: '退回公海',
-		id: 2
-	},
-	{
-		name: '变更负责人',
-		id: 3
-	},
-	{
-		name: '删除',
-		id: 4
-	},
-	{
-		name: '日程',
-		id: 5
-	}
+	{ name: '更多操作', id: 0 },
+	{ name: '复制', id: 1 },
+	{ name: '退回公海', id: 2 },
+	{ name: '变更负责人', id: 3 },
+	{ name: '删除', id: 4 },
+	{ name: '日程', id: 5 }
 ]
 
 let moreActionsPool = [
-	{
-		name: '更多操作',
-		id: 0
-	},
-	{
-		name: '分配',
-		id: 6
-	},
-	{
-		name: '删除',
-		id: 4
-	},
-	{
-		name: '领取',
-		id: 7
-	},
-	{
-		name: '日程',
-		id: 5
-	}
+	{ name: '更多操作', id: 0 },
+	{ name: '分配', id: 6 },
+	{ name: '删除', id: 4 },
+	{ name: '领取', id: 7 },
+	{ name: '日程', id: 5 }
 ]
 
 export default {
@@ -306,7 +273,7 @@ export default {
 				3: () => {
 					// 变更负责人
 					uni.$once('colleagueChoose', data => {
-						this.updateLeader(data.data.map(item => item.id)[0])
+						this.updateLeader(data.data.map(item => item.userId)[0])
 					})
 					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
 				},

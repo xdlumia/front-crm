@@ -210,9 +210,11 @@ export default {
 			if (this.isRepeat) return
 			await this.$refs.mform.validate()
 			try {
-				let resulte = await this.$api.seeCrmService.clientinfoList({
+				let resulte = await this.$api.seeCrmService.clientinfoPageList({
 					phone: this.form.phone,
-					precisionName: this.form.name
+					precisionName: this.form.name,
+					page: 1,
+					limit: 1
 				})
 				if (resulte.code === 200 && !resulte.data.length) {
 					this.isRepeat = true
