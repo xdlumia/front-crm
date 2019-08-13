@@ -38,7 +38,7 @@
                     <detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
                 </i-tab>
                 <i-tab index="1">
-                    <correlationInfo :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
+                    <correlationInfo :query='{busType:3,name:detailInfo.name,busId:detailId}' :height="'calc(100vh - 217px - 50px - ' + navH + ')'" />
                 </i-tab>
             </i-tabs>
         </div>
@@ -153,8 +153,8 @@ export default {
 						})
 				},
 				3: () => {
-					this.$routing.navigateTo('/pages/index/scheduleAdd')
-					uni.$emit('chooseTransaction', { id: this.detailId, name: this.detailInfo.name })
+					this.$routing.navigateTo('/pages/index/scheduleAdd?busType=3&name=' + this.detailInfo.name + '&id=' + this.detailId)
+					// uni.$emit('chooseTransaction', { id: this.detailId, name: this.detailInfo.name })
 				}
 			}
 			fnType[index]()

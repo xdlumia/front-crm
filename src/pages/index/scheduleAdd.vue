@@ -69,10 +69,10 @@
                         <i-input disabled label="客户" v-model="clientData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                     </a>
                     <a :url="(isadd || ishandel) ? `/pages/contact/index?select=1&id=${contactData.id}` : ''">
-                        <i-input disabled label="联系人" v-model="contactData.linkkanName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                        <i-input disabled label="联系人" v-model="contactData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                     </a>
                     <a :url="(isadd || ishandel) ? `/pages/chance/choose-chance?&id=${chanceData.id}` : ''">
-                        <i-input disabled label="销售机会" v-model="chanceData.chanceName" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                        <i-input disabled label="销售机会" v-model="chanceData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
                     </a>
                     <a :url="(isadd || ishandel) ? `/pages/transaction/index?select=1&id=${transactionData.id}` : ''">
                         <i-input disabled label="成交记录" v-model="transactionData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
@@ -150,6 +150,13 @@ export default {
 			isadd: true, // 是新增还是编辑
 			ishandel: false, // 切换编辑和回显状态
 			tixIndex: '',
+			typeform: {
+				'0': 'clientData',
+				'1': 'contactData',
+				'2': 'chanceData',
+				'3': 'transactionData',
+				'4': 'highseasData'
+			},
 			tixData: [{ name: '提前十分钟', id: 600 }, { name: '提前30分钟', id: 1800 }, { name: '提前一小时', id: 3600 }, { name: '提前三小时', id: 10800 }],
 			clientData: {}, // 关联的客户data
 			transactionData: {}, // 关联的成交记录data
@@ -169,6 +176,10 @@ export default {
 			this.ishandel = false
 			this.isadd = false
 		}
+		if (option.busType) {
+			this[this.typeform[option.busType]].name = option.name || ''
+			this[this.typeform[option.busType]].id = option.id || ''
+		}
 	},
 	onShow () {
 		// 客户回调
@@ -182,10 +193,12 @@ export default {
 		// 销售机会回调
 		uni.$on('chooseChance', data => {
 			this.chanceData = data
+			this.chanceData.name = data.chanceName
 		})
 		// 联系人回调
 		uni.$on('chooseContact', data => {
 			this.contactData = data
+			this.contactData.name = data.linkkanName
 		})
 		// 公海池回调
 		uni.$on('choosePool', data => {
@@ -215,9 +228,9 @@ export default {
 					this.acheduleForm.particiNames = this.acheduleForm.participantNames ? this.acheduleForm.participantNames.join(',') : ''
 
 					this.clientData = { name: this.acheduleForm.clientName || '', id: this.acheduleForm.clientId || '' }// 客户，
-					this.contactData = { linkkanName: this.acheduleForm.linkName || '', id: this.acheduleForm.linkId || '' }// 联系人
+					this.contactData = { name: this.acheduleForm.linkName || '', id: this.acheduleForm.linkId || '' }// 联系人
 					this.transactionData = { name: this.acheduleForm.transactionRecordName || '', id: this.acheduleForm.transactionRecordId || '' }// 成交记录
-					this.chanceData = { chanceName: this.acheduleForm.salesFunnelName || '', id: this.acheduleForm.salesFunnelId || '' }// 销售机会
+					this.chanceData = { name: this.acheduleForm.salesFunnelName || '', id: this.acheduleForm.salesFunnelId || '' }// 销售机会
 					this.highseasData = { name: this.acheduleForm.seaPoolName || '', id: this.acheduleForm.seaPoolId || '' }// 公海池
 				})
 		},
