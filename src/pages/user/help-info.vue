@@ -1,17 +1,15 @@
 <template>
     <div class="user-info-page hfull">
         <NavBar title="帮助中心" />
-        <div class="d-bg-white">
-            <parse :content='content'></parse>
-        </div>
+
+        <u-parse v-if='content' :content="content" />
+
     </div>
 </template>
 
 <script>
-import parse from '@/components/parse/parse'
 export default {
 	components: {
-		parse
 	},
 	data () {
 		return {
