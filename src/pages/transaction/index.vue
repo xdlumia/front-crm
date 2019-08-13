@@ -38,7 +38,7 @@
 
 		<div class='highseas-list-view d-relative'>
 			<scroll-list
-				:height="'calc(100vh - ' + navH +' - 150px)'"
+				:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
 				api="seeCrmService.transactionrecordList"
 				@getList='getTransactionList'
 				:params="queryForm"
@@ -58,20 +58,20 @@
 				</div>
 			</div>
 			</scroll-list>
-		</div>
 
-		<div v-if="chooseType == 0" class="footer-fixed-menu d-center d-bg-white">
-			<a url='/pages/transaction/transaction-add' class="d-cell al">
-				<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建成交</span>
-			</a>
-			<a url='/pages/transaction/transaction-manage' class="d-cell ar">
-				<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理成交记录</span>
-			</a>
-		</div>
+			<div v-if="chooseType == 0" class="footer-fixed-menu d-center d-bg-white">
+				<a url='/pages/transaction/transaction-add' class="d-cell al">
+					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建成交</span>
+				</a>
+				<a url='/pages/transaction/transaction-manage' class="d-cell ar">
+					<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理成交记录</span>
+				</a>
+			</div>
 
-		<div v-else class="footer-fixed-menu">
-            <i-button @click="fsubmit" type="primary" i-class="f16">确 定</i-button>
-        </div>
+			<div v-else class="footer-fixed-menu">
+				<i-button @click="fsubmit" type="primary" i-class="f16">确 定</i-button>
+			</div>
+		</div>
     </div>
 </template>
 
@@ -269,7 +269,7 @@ export default {
 	.highseas-list-view{
 		margin-top: 87px;
 		box-sizing: border-box;
-		padding-bottom: 110px;
+		// padding-bottom: 110px;
 	}
 	.highseas-item{
 		border-bottom:1px solid #d7d7d7;
@@ -301,12 +301,6 @@ export default {
 		.btn-item{
 			line-height: 49px;
 		}
-	}
-
-	.diy-filter{
-		padding-bottom: 50px;
-		box-sizing: border-box;
-		background: #f2f2f2;
 	}
 
 </style>

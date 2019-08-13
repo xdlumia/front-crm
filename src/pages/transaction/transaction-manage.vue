@@ -1,14 +1,14 @@
 <template>
 <div class="d-bg-white" style="heigth:100vh">
     <NavBar title="管理成交记录"/>
-    <a url='/pages/common/information-set' class="toptrasaction">
+    <a url='/pages/common/information-set?busType=3' class="toptrasaction">
        <span class="d-text-black fl ml15">成交记录信息设置</span>
        <uni-icon type='arrowright' size='16' color='#696969' class='fr mr15'/>
    </a>
    <div class="downtrasaction">
            <span class="d-text-gray f12 ml15">可以设置成交记录有哪些基本信息</span>
    </div>
-   <a url='/pages/common/tags-set' class="toptrasaction">
+   <a url='/pages/common/tags-set?busType=3' class="toptrasaction">
        <span class="d-text-black fl ml15">成交记录标签管理</span>
        <uni-icon type='arrowright' size='16' color='#696969' class='fr mr15'/>
    </a>
