@@ -68,14 +68,15 @@ export default {
 	},
 	onLoad (option) {
 		this.title = option.title // 页面标题
-		this.getFormsfieldconfig().then(res => {
+		this.getFormsfieldconfig(option.busType).then(res => {
 			this.getWeightList(option.busType)
 		})
 	},
 	methods: {
-		async getFormsfieldconfig () {
+		async getFormsfieldconfig (busType) {
 			let resulte = await this.$api.seeCrmService.formsfieldconfigQueryList({
-				fieldTypes: [1, 3]
+				fieldTypes: [1, 3],
+				busType
 			})
 			this.fieldData = resulte.data
 			return Promise.resolve()
