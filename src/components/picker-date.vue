@@ -15,7 +15,7 @@
  */ -->
 <template>
     <picker :disabled="disabled" mode="date" :value="currValue" @change="bindDateChange">
-		<i-input disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" required>
+		<i-input disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" :required='required'>
 			<i class="iconfont f16 iconshouye_chengjiaoshujurili" style="color: #5a5a5a;"></i>
 		</i-input>
 	</picker>
@@ -36,7 +36,10 @@ export default {
 		labelWidth: {
 			default: '100'
 		},
-		required: Boolean,
+		required: {
+			type: Boolean,
+			default: false
+		},
 		placeholder: {
 			type: String,
 			default: '请选择'

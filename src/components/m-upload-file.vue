@@ -107,6 +107,7 @@ export default {
 							this.tempImgs = this.tempImgs.concat([])
 							let fileObj = fileList[index]
 							fileObj.path = imageUrl
+							fileObj.type = suffix.replace('.', '')
 							this.$emit('success', fileObj)
 							index++
 							if (index < fileList.length) {

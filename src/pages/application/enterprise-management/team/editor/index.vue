@@ -84,10 +84,12 @@ export default {
 	},
 	onLoad: function (option) {
 		let that = this
+		// 回显选择部门返回的信息
 		uni.$on('backFromOrg', function (data) {
 			that.formData.deptId = JSON.parse(data).id
 			that.formData.deptName = JSON.parse(data).deptName
 		})
+		// 回显选择角色返回的信息
 		uni.$on('backFromRole', function (data) {
 			that.formData.roleList = []
 			that.formData.roleList.push(JSON.parse(data))

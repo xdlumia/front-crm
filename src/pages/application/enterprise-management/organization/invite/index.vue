@@ -39,7 +39,9 @@ let user = local.fetch('userInfo')
 export default {
 	data () {
 		return {
-			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode
+			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode,
+			image: 'src/assets/img/logo.png',
+			shareText: '团队邀请'
 		}
 	},
 	onShareAppMessage () {

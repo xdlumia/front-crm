@@ -67,7 +67,7 @@
 			</div>
 
 			<div class="footer-fixed-menu d-center d-bg-white">
-				<a :url="'/pages/common/add-follow?busId='+ id +'&busType=3'" class="d-cell al">
+				<a :url="'/pages/common/add-follow?busId='+ id +'&busType=0'" class="d-cell al">
 					<span class='iconfont icontianjiajihua f16' style='color:#696969'></span><span class="ml5 f13  d-text-gray">添加跟进</span>
 				</a>
 				<div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
