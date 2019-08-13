@@ -24,7 +24,8 @@
           </div>
           <div class="flex-item item-progress">
             <span v-if="select=='1'">
-                  <m-radio v-model="busId" :label='item.id'></m-radio>
+                  <m-checkbox v-if="multiple" v-model="linkIds" :label='item.id'></m-checkbox>
+                  <m-radio v-else v-model="linkIds" :label='item.id'></m-radio>
             </span>
             <i v-else @click="callPhone(item.mobile)" class="iconfont f20 d-text-blue iconcall"></i>
           </div>
@@ -72,10 +73,13 @@ export default {
 	},
 	data () {
 		return {
+			// 跳转参数
+			select: '', // 是否选择
+			multiple: '', // 是否多选
+			linkIds: [], // 联系人ids 当为选择页面的时候选中的id
+
 			list: [], // 联系人列表
-			select: '',
 			chooseRowIndex: '', // 选中行数据的下标
-			busId: '', // 当为选择页面的时候选中的id
 			filterData: [
 				{
 					prop: 'queryType',
@@ -92,6 +96,7 @@ export default {
 			queryForm: {
 				limit: 10,
 				page: 1,
+				busId: '', // 业务id
 				linkkanName: '', // 联系人名称
 				linkanNameOrMobile: '', // 姓名或手机号
 				queryType: '', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
@@ -101,8 +106,16 @@ export default {
 		}
 	},
 	onLoad (option) {
-		this.busId = option.id
-		this.select = option.select
+		this.select = option.selec
+		if (option.multiple) {
+			this.multiple = option.multiple
+			this.linkIds = JSON.parse(option.linkIds)
+			this.queryForm.busId = option.chanceId
+			this.queryForm.busType = option.busType
+			this.queryForm.limit = 99
+		} else {
+			this.linkIds = option.id
+		}
 	},
 	methods: {
 		// 获取列表数据
@@ -114,8 +127,18 @@ export default {
 			if (!this.select) {
 				this.$routing.navigateTo('/pages/contact/detail/index?id=' + row.id)
 			} else {
-				this.chooseRowIndex = index
-				this.busId = row.id
+				// 如过不是多选
+				if (this.multiple) {
+					if (this.linkIds.includes(row.id)) {
+						// 点击当前行 已经选中的取消
+						this.linkIds.splice(this.linkIds.indexOf(row.id), 1)
+					} else {
+						this.linkIds.push(row.id)
+					}
+				} else {
+					this.chooseRowIndex = index
+					this.linkIds = row.id
+				}
 			}
 		},
 		// 列表筛选方法
@@ -136,12 +159,17 @@ export default {
 
 		// 确定选中
 		submitChooseData () {
-			if (!this.busId) {
+			if (!this.linkIds) {
 				this.$utils.toast.text('请选择客户')
 				return
 			}
-			let row = this.list[this.chooseRowIndex]
-			uni.$emit('chooseContact', row)
+			let data
+			if (this.multiple) {
+				data = this.list.filter(item => this.linkIds.includes(item.id))
+			} else {
+				data = this.list[this.chooseRowIndex]
+			}
+			uni.$emit('chooseContact', data)
 			this.$routing.navigateBack()
 		}
 	},
@@ -149,9 +177,9 @@ export default {
 		// console.log()
 	},
 	computed: {
-		api () {
-			return !this.select ? 'seeCrmService.linkmanQueryList' : 'seeCrmService.linkmanQueryPageList'
-		}
+		// api () {
+		// 	return this.select ? 'seeCrmService.linkmanQueryList' : 'seeCrmService.linkmanQueryPageList'
+		// }
 	}
 }
 </script>

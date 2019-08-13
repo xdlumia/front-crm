@@ -48,13 +48,13 @@ export default {
 		})
 	},
 	created () {
+		this.linkmanQueryList()
 	},
 	methods: {
 		// 业务与联系人关系保存
 		saveContact () {
 			this.$api.seeCrmService.linkmanrelationSave(Object.assign({}, this.query, this.form))
 				.then(res => {
-					if (res.code !== 200) return
 					// console.log('保存成功')
 					this.linkmanQueryList()
 				})
@@ -63,18 +63,17 @@ export default {
 		linkmanQueryList () {
 			this.$api.seeCrmService.linkmanQueryList({ busId: this.query.busId, busType: this.query.busType })
 				.then(res => {
-					if (res.code !== 200) return
 					this.contactList = res.data || []
 				})
 		}
 	},
 	watch: {
-		'query.busId': {
-			handler (val) {
-				this.linkmanQueryList()
-			},
-			deep: true
-		}
+		// 'query.busId': {
+		// 	handler (val) {
+		// 		this.linkmanQueryList()
+		// 	},
+		// 	deep: true
+		// }
 	}
 
 }

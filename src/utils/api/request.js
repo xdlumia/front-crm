@@ -23,10 +23,10 @@ Api.interceptors.request.use(async config => {
 			await getApp().$vm.temporaryAuthorization(true)
 		} catch (error) { }
 	}
-	uni.showLoading({
-		title: '加载中...',
-		mask: true
-	})
+	// uni.showLoading({
+	// 	title: '加载中...',
+	// 	mask: true
+	// })
 	config.headers['token'] = local.getItem('token') || ''
 	config.headers['finger'] = local.getItem('finger') || ''
 	config.headers['uid'] = uuid()
@@ -39,7 +39,7 @@ Api.interceptors.request.use(async config => {
 
 Api.interceptors.response.use((response) => {
 	let res = response.data
-	uni.hideLoading()
+	// uni.hideLoading()
 	if (+response.data.code === 402) {
 		local.remove('finger')
 		local.remove('token')
@@ -69,7 +69,7 @@ Api.interceptors.response.use((response) => {
 	return Promise.resolve(res)
 }, (error) => {
 	if (error) {
-		uni.hideLoading()
+		// uni.hideLoading()
 		return Promise.reject(error)
 	}
 })

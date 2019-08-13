@@ -69,7 +69,7 @@
         </i-tab>
         <i-tab index="2">
           <!-- 相关信息 -->
-          <correlationInfo :query="{busId:busId,busType:2,clientId:detailsInfo.clientId}" height="calc(100vh - 380px)" />
+          <correlationInfo v-if="detailsInfo.clientId" :query="{busId:busId,busType:2,clientId:detailsInfo.clientId}" height="calc(100vh - 380px)" />
         </i-tab>
       </i-tabs>
       <!-- 底部操作按钮 -->
@@ -149,7 +149,7 @@ export default {
 		// 获取详情
 		this.saleschanceInfo(option.id)
 		// 获取联系人列表
-		this.linkmanQueryList({ id: option.id, busType: 2 })
+		this.linkmanQueryList({ busId: option.id, busType: 2 })
 		// 编辑成功刷新列表
 		uni.$on('addChance', data => {
 			// 获取详情

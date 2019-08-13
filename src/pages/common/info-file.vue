@@ -36,6 +36,7 @@ export default {
 	onLoad (option) {
 	},
 	created () {
+		this.fileinfoQueryList()
 	},
 	methods: {
 		fileinfoQueryList () {
@@ -64,12 +65,12 @@ export default {
 		}
 	},
 	watch: {
-		'query.busId': {
-			handler (val) {
-				this.fileinfoQueryList()
-			},
-			deep: true
-		}
+		// 'query.busId': {
+		// 	handler (val) {
+		// 		this.fileinfoQueryList()
+		// 	},
+		// 	deep: true
+		// }
 	}
 
 }
