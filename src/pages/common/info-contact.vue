@@ -39,7 +39,7 @@ export default {
 		uni.$on('chooseContact', data => {
 			this.form.linkmanRelationSaveVoList = data.map(item => {
 				return {
-					busId: this.query.busId,
+					busId: Number(this.query.busId),
 					busType: this.query.busType,
 					clientId: this.query.clientId,
 					linkmanId: item.id
