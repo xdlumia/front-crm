@@ -343,7 +343,9 @@ export default {
 						this.funnelList.push({ value: item.amount, name: item.stageName + ':' + item.amount })
 					})
 					this.ec.option.series[0].data = this.funnelList || []
-					this.$refs.echart.init()
+					this.$nextTick(() => {
+						this.$refs.echart.init()
+					})
 				})
 		},
 		// 日历的点击

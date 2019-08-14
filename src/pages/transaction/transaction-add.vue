@@ -108,13 +108,15 @@ export default {
 		}
 	},
 	onLoad (option) {
+		console.log(option)
+
 		this.type = option.type || 'add'
 		this.cardCode = option.cardCode || ''
 		if (this.type === 'edit') {
 			this.detailId = option.id
 			this.getTransactionDetail()
 		}
-		if (option.clientId) {
+		if (option.clientId) { // clientId,在客户里边调用成交记录的话，需要将客户id带给销售机会，用来筛选当前客户关联的销售机会
 			this.clientId = option.clientId || ''
 		}
 		// 销售机会回调
