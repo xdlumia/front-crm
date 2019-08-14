@@ -142,20 +142,20 @@ export default {
 							scrollOffset: true
 						},
 						data => {
-							res(data.width)
+							resolve(data.width)
 						}
 					).exec()
 					// #endif
 					// #ifdef MP-BAIDU
 				swan.createSelectorQuery().select('.wxParse').boundingClientRect(function (rect) {
-					// rect[0].width
+					// resolve[0].width
 				}).exec()
 				// #endif
 				// #ifdef MP-ALIPAY
 				my.createSelectorQuery()
 					.select('.wxParse')
 					.boundingClientRect().exec((ret) => {
-						res(ret[0].width)
+						resolve(ret[0].width)
 					})
 				// #endif
 			})
