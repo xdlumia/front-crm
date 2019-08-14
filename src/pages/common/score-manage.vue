@@ -53,17 +53,17 @@ export default {
 			fieldData: [],
 			subFieldData: [],
 			scoreData: [
-				{
-					busType: '',
-					fieldConfigId: '',
-					fieldDescribe: '',
-					fieldName: '',
-					fieldRuleEntityList: [],
-					filedType: '',
-					userDefinedType: '',
-					weight: '',
-					groupCode: ''
-				}
+				// {
+				// 	busType: '',
+				// 	fieldConfigId: '',
+				// 	fieldDescribe: '',
+				// 	fieldName: '',
+				// 	fieldRuleEntityList: [],
+				// 	filedType: '',
+				// 	userDefinedType: '',
+				// 	weight: '',
+				// 	groupCode: ''
+				// }
 			],
 			scoreList: [],
 			typeform: {

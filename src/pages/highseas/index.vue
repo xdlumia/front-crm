@@ -15,7 +15,7 @@
         <div>
             <div class="page-search-box d-flex" :style="'top: '+ navH">
                 <a url='/pages/common/search?searchType=4' class="search-input d-center d-cell pl10">
-                    <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">搜索客户名称</span>
+                    <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">{{queryForm.name || '搜索客户名称'}}</span>
                 </a>
             </div>
 
@@ -24,7 +24,7 @@
             </Filter>
         </div>
 
-		<div class='highseas-list-view d-relative'>
+		<div class='highseas-list-view d-relative' v-if='queryForm.poolId'>
 			<scroll-list
 				ref='list'
 				:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
@@ -37,7 +37,7 @@
 						<div class="d-cell">
 							<div class="f13 d-text-black">{{item.name}}</div>
 							<div class="f12 d-text-qgray">退回时间：{{item.sendBackTime | timeToStr('yyyy-mm-dd hh:ii')}}</div>
-							<div class="f12 d-text-qgray">退回次数：{{item.sendBackNum}}</div>
+							<div class="f12 d-text-qgray">退回次数：{{item.sendBackNum || 0}}</div>
 						</div>
 						<div class="d-center" v-if='!select'>
 							<div class="mr15" @click.stop='receive(item)'>
@@ -91,7 +91,10 @@ export default {
 			queryForm: {
 				queryType: '', // 查询类型
 				sortType: '', // 排序类型
-				poolId: '' // 公海池id
+				poolId: '', // 公海池id
+				lonSort: '',
+				latSort: '',
+				name: ''
 			},
 			list: [],
 			filterData: [
@@ -99,18 +102,18 @@ export default {
 					prop: 'queryType',
 					current: {
 						name: '全部客户',
-						id: 0
+						id: -1
 					},
 					list: [
 						{
 							name: '全部客户',
-							id: 0
+							id: -1
 						}, {
 							name: '我负责的客户',
-							id: 1
+							id: 0
 						}, {
 							name: '我关注的客户',
-							id: 4
+							id: 2
 						}
 					]
 				},
@@ -128,12 +131,22 @@ export default {
 	onLoad (option) {
 		this.select = option.select || 0
 		this.$store.dispatch('highseas/getList')
-		this.queryForm.poolId = this.pool.id
+
+		// 设置经纬度
+		let localtion = this.$local.fetch('localtion') || this.$store.state.localtion
+		this.queryForm.lonSort = localtion.longitude
+		this.queryForm.latSort = localtion.latitude
+
+		uni.$on('updatedate', ({ searchInfo }) => {
+			this.queryForm.name = searchInfo
+			this.$refs.list.reload()
+		})
 	},
 	onReady () {
 		let selects = {}
 		this.filterData.forEach(item => {
 			selects[item.prop] = item.current || item.list[0]
+			this.queryForm[item.prop] = selects[item.prop].id
 		})
 		this.filterSelect = selects
 	},
@@ -174,7 +187,7 @@ export default {
 		receive (item, index) {
 			this.$api.seeCrmService.clientinfoClaimClient({
 				clientId: item.id,
-				poolId: this.pool.id,
+				poolId: this.queryForm.pooId,
 				sendBackType: item.sendBackType,
 				leaderId: item.leaderId
 			}).then(res => {
@@ -210,12 +223,20 @@ export default {
 		allocation (leaderId, item) {
 			this.$api.seeCrmService.clientinfoAllocation({
 				clientId: item.id,
-				poolId: this.pool.id,
+				poolId: this.queryForm.pooId,
 				sendBackType: item.sendBackType,
 				leaderId: leaderId
 			})
 		}
 
+	},
+	watch: {
+		pool: {
+			deep: true,
+			handler (pool) {
+				this.queryForm.poolId = pool.id
+			}
+		}
 	}
 }
 </script>
