@@ -1,13 +1,13 @@
-<!-- 添加机会 -->
+<!-- 添加联系人 -->
 <!-- wangxiaodong -->
 <template>
 <div class="d-bg-white">
-    <NavBar title="新建联系人"/>
+    <NavBar  :title="`${titleType}联系人`"/>
     <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.linkkanName" label="姓名" placeholder="请填写" required />
             <a url="/pages/client/choose-client">
-				<i-input disabled v-model="clientName" label="客户名称" placeholder="请填写客户名称" required>
+				<i-input disabled v-model="form.clientName" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
@@ -16,16 +16,27 @@
             <i-input v-model="form.mobile" label="手机" placeholder="请填写"/>
             <i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
             <i-input v-model="form.address" label="地址" placeholder="请填写"/>
-            <i-select v-model="form.phone" :props="{label:'name',value:'id'}" label="所属部门" :options="upData"/>
-            <i-select v-model="form.roleCode" :props="{label:'name',value:'id'}" label="联系人角色" :options="upData"/>
+			<i-input v-model="deptName" label="所属部门" placeholder="请填写"/>
+            <i-select v-model="form.roleCode" :props="{label:'content',value:'code'}" label="联系人角色" :options="dictionaryOptions('CRM_LXR_JS')"/>
             <i-input v-model="form.note" label="备注" placeholder="备注" type="textarea" />
-            <i-input v-for="(item,index) of fieldList" :key="index" v-model="form.note" :label="item.fieldName" placeholder="点击填写" />
+            <p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
+				<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<i-input v-if='item.fieldType == 1' type='number' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<picker-date v-if='item.fieldType == 2' v-model="item.fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+				<i-select
+				v-if='item.fieldType == 3'
+				v-model="form.fieldValue"
+				:props="{label:'content',value:'code'}"
+				:label="item.fieldName"
+				placeholder="请选择"
+				:options="dictionaryOptions(item.groupCode)"/>
+			</p>
         </m-form>
         <a url="/pages/common/more-list?busType=2&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
 	<!-- 保存 -->
     <div class="footer-fixed-menu">
-      <i-button type="primary" i-class="f16">保存</i-button>
+      <i-button type="primary" i-class="f16" @click="submitForm">保存</i-button>
     </div>
 </div>
 </template>
@@ -39,12 +50,13 @@ export default {
 			busId: '', // 业务id
 			editType: '', // 编辑类型 1为编辑. 2为复制 空为新建
 			fieldList: [], // 自定义字段列表
-			clientName: '', // 客户名称
 			labelNames: '', // 标签名称组合
+			deptName: this.$local.fetch('deptInfo').deptName,
 			form: {
 				address: '', // 示例：地址',
 				busId: '', // 业务id
-				busType: 0, // 业务类型0客户，1联系人，2机会，3成交,4业务属性
+				busType: 1, // 业务类型0客户，1联系人，2机会，3成交,4业务属性
+				clientName: '', // 客户名称
 				clientId: '', // 客户id
 				email: '', // 示例：电子邮件',
 				formsFieldValueSaveVos: [
@@ -75,7 +87,7 @@ export default {
 					required: false
 				}, {
 					type: 'email',
-					message: '金额格式不正确'
+					message: '邮箱格式不正确'
 				}],
 				mobile: [{
 					required: false
@@ -89,7 +101,7 @@ export default {
 	onShow () {
 		if (this.busId) {
 			// 获取详情
-			this.saleschanceInfo(this.busId)
+			this.linkmanInfo(this.busId)
 		} else {
 			// 获取字段列表
 			this.formsfieldconfigQueryList()
@@ -102,13 +114,13 @@ export default {
 		}
 
 		if (option.clientId && option.clientName) {
-			this.clientName = option.clientName
+			this.form.clientName = option.clientName
 			this.form.clientId = option.clientId
 		}
 
 		// 客户回调
 		uni.$once('chooseClient', data => {
-			this.clientName = data.name
+			this.form.clientName = data.name
 			this.form.clientId = data.id
 		})
 		// 标签回掉
@@ -118,74 +130,52 @@ export default {
 		})
 	},
 	created () {
-		// 获取销售阶段
-		this.salesstageQueryList()
-		// 获取部门列表
-		this.getDepts()
 	},
 	methods: {
 		// 保存
-		async saveChance () {
+		async submitForm () {
 			await this.$refs.mform.validate()
-			// 验证机会名称
-			this.$api.seeCrmService.saleschanceVerifyChanceName({ chanceName: this.form.chanceName })
-				.then(res => {
-					if (res.data) {
-						// 如果没有重复提交表单
-						this.submitForm()
-						return
-					}
-					this.$utils.showModal('已有重复的销售机会,是否继续创建?')
-						.then(async () => {
-							// 如果没有重复提交表单
-							this.submitForm()
-						})
-						.catch(() => {})
-				})
-			// saleschance/verifyChanceName
-		},
-		// 提交表单
-		submitForm () {
-			let api = 'saleschanceSave'
+			let api = 'linkmanSave'
+			// this.editType 1编辑 2复制
 			if (this.editType === '1') {
-				api = 'saleschanceUpdate'
+				api = 'linkmanUpdate'
 			}
-			this.$api.seeCrmService[api](this.form)
+			let params = JSON.parse(JSON.stringify(this.form))
+			params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
+				return { busId: this.busId, busType: 1, fieldConfigId: item.id, fieldValue: item.fieldValue }
+			})
+			this.$api.seeCrmService[api](params)
 				.then(res => {
-					// 返回上一页
-					this.$routing.navigateBack()
+					if (res.code !== 200) return
+					if (this.editType === '2') {
+						this.$routing.navigateTo(`/pages/contact/index`)
+					} else {
+						// 编辑成功emit给返回页
+						uni.$emit('addContact')
+						// 返回上一页
+						this.$routing.navigateBack()
+					}
 				})
 		},
-		// 获取部门列表
-		getDepts () {
-			this.$api.seeCrmService.organizationalStructureDepts({ limit: 100, paeg: 1 })
-				.then(res => {
-					this.deptList = res.data || []
-				})
-		},
-		// 查询机会详情
-		saleschanceInfo (id) {
-			this.$api.seeCrmService.saleschanceInfo(null, id)
+		// 查询联系人详情
+		linkmanInfo (id) {
+			this.$api.seeCrmService.linkmanInfo(null, id)
 				.then(res => {
 					let data = res.data || {}
 					for (let key in this.form) {
-						this.form[key] = data[key]
+						if (key === 'formsFieldValueSaveVos') {
+							this.form.formsFieldValueSaveVos = data.formsFieldValueEntitys
+						} else {
+							this.form[key] = data[key]
+						}
 					}
 				})
 		},
 		// 获取表单字典配置列表
 		formsfieldconfigQueryList () {
-			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 1, isEnabled: '-1' })
+			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 1, isEnabled: '0' })
 				.then(res => {
-					this.fieldList = res.data || []
-				})
-		},
-		// 获取销售阶段
-		salesstageQueryList () {
-			this.$api.seeCrmService.salesstageQueryList()
-				.then(res => {
-					let data = res.data || []
-					this.stageList = data
+					this.form.formsFieldValueSaveVos = res.data || []
 				})
 		}
 	},
