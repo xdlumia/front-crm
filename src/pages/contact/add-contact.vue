@@ -3,7 +3,7 @@
 <template>
 <div class="d-bg-white">
     <NavBar  :title="`${titleType}联系人`"/>
-    <scroll-view scroll-y style="height:calc(100vh - 115px)">
+    <scroll-view scroll-y style="height:calc(100vh - 120px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.linkmanName" label="姓名" placeholder="请填写" required />
             <a url="/pages/client/choose-client">
@@ -32,7 +32,7 @@
 				:options="dictionaryOptions(item.groupCode)"/>
 			</p>
         </m-form>
-        <a url="/pages/common/more-list?busType=2&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
+        <a url="/pages/common/more-list?busType=1&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
 	<!-- 保存 -->
     <div class="footer-fixed-menu">
