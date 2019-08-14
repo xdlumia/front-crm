@@ -115,11 +115,12 @@ export default {
 			this.detailId = option.id
 			this.getTransactionDetail()
 		}
-
-		if (option.busId === 0) { // eslint disabled// 在客户里边调用成交记录的话，需要将客户id带给销售机会，用来筛选当前客户关联的销售机会
-			this.clientId = option.busId || ''
-		} else if (option.busId === 2) { // eslint disabled // 在机会里边调用成交记录的话，需要取到当前机会的id，用id去查询详情，填充客户名称，并且传到联系人，走正常成交记录流程
-			this.$api.seeCrmService.saleschanceInfo(null, option.busId).then(res => {
+		// 在客户里边调用成交记录的话，需要将客户id带给销售机会，用来筛选当前客户关联的销售机会
+		// 在机会里边调用成交记录的话，需要取到当前机会的id，用id去查询详情，填充客户名称，并且传到联系人，走正常成交记录流程
+		if (option.busType == 0) { // eslint-disable-line
+			this.clientId = option.id || ''
+		} else if (option.busType == 2) { // eslint-disable-line
+			this.$api.seeCrmService.saleschanceInfo(null, option.id).then(res => {
 				let data = res.data || {}
 				this.form.salesFunnelName = data.chanceName || ''
 				this.form.salesFunnelId = data.id || ''

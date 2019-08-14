@@ -110,7 +110,7 @@ export default {
 		return {
 			informationList: [], // 列表所有list
 			statusTypes: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
-			msgArr: [{ name: '文字', type: 0 }, { name: '数字', type: 1 }, { name: '日期', type: 2 }, { name: '标签', type: 3 }],
+			msgArr: [{ name: '文本', type: 0 }, { name: '数字', type: 1 }, { name: '日期', type: 2 }, { name: '标签', type: 3 }],
 			tagAllList: [], // 所有标签的数组
 			msgName: '',
 			msgid: '',
@@ -208,7 +208,7 @@ export default {
 				this.$api.seeCrmService.formsfieldconfigUpdate({
 					id: id,
 					busType: this.busType,
-					content: fieldName
+					fieldName: fieldName
 				})
 					.then(res => {
 						this.isShow = false
@@ -224,7 +224,7 @@ export default {
 		fdelete (id) {
 			this.$utils.showModal('确定删除当前标签？')
 				.then(() => {
-					this.$api.seeCrmService.formsfieldconfigDelete(null, id)
+					this.$api.seeCrmService.formsfieldconfigDelete({ id: id })
 						.then(res => {
 							if (res.code === 200) {
 								this.$utils.toast.text('删除成功')
@@ -259,9 +259,10 @@ export default {
 		},
 		// 新增保存
 		saveformsfieldconfig () {
+			console.log(this.msgid)
 			if (!this.listForm.fieldName) {
 				this.$utils.toast.text('属性名称不能为空')
-			} else if (!this.msgid) {
+			} else if (!this.msgid && this.msgid != 0) {// eslint-disable-line
 				this.$utils.toast.text('表单类型不能为空')
 			} else {
 				let params = {
