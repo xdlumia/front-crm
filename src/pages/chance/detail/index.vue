@@ -103,7 +103,7 @@
         show-cancel
         @cancel="handlerAction('phoneShow')"
         @click="handlePhone"
-      />
+      ></i-actionSheet>
     </div>
   </div>
 </template>

@@ -3,7 +3,7 @@
         <NavBar title='编辑销售阶段' />
         <i-cell-group class="f13">
             <!-- <dragSort  v-slot="{ row,index }" :list="resultList" @change="onDragSortChange"> -->
-                <div class="stage-cell f12 ac" v-if="!tageList.length" :key="index">暂无数据</div>
+                <div class="stage-cell f12 ac" v-if="!stageList.length" :key="index">暂无数据</div>
                 <div class="stage-cell" v-for="(item,index) of stageList" :key="index">
                     <i-row>
                         <i-col span="3">
@@ -59,7 +59,7 @@
             <i-button type="primary" i-class="f16" @click="submit()">保存</i-button>
         </div>
         <!-- 更多 action -->
-        <i-actionSheet :visible="moreShow" :actions="equityList" show-cancel @cancel="handlerAction()" @click="handleMore" />
+        <i-actionSheet class="stage-set" :visible="moreShow" :actions="equityList" show-cancel @cancel="handlerAction()" @click="handleMore" />
 
     </div>
 </template>
@@ -159,6 +159,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .stage-set{
+        /deep/ .i-as{
+            height: 80%;
+        }
+    }
     .stage-cell{
         position: relative;
         padding: 12px 15px;

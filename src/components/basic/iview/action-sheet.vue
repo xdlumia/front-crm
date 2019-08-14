@@ -55,7 +55,8 @@ export default {
             default: []
         }
     },
-
+    computed:{
+    },
     methods: {
         handleClickMask () {
             if (!this.maskClosable) return
