@@ -2,7 +2,7 @@
 <!-- 徐贺 -->
 <template>
   <div class="d-bg-white">
-    <NavBar :title="`编辑${typeform[astype]}标签`"/>
+    <NavBar :title="`编辑${typeform[busType]}标签`"/>
     <div style="height: 10px;background: #f2f2f2;"></div>
     <div class="toptrasaction wfull">
       <span class="d-text-black fl ml15">标签名称</span>
@@ -87,7 +87,7 @@ export default {
 				'3': '成交记录'
 			},
 			isAdd: false, // 新增框是否显示
-			astype: 0,
+			busType: 0,
 			dicCode: '', // 当前标签code
 			queryform: {
 				dicCode: '',
@@ -115,7 +115,7 @@ export default {
 	onLoad (option) {
 		this.queryform.dicCode = option.dicCode
 		this.dicCode = option.dicCode
-		this.astype = option.astype
+		this.busType = option.busType
 		this.tagName = option.tagName
 		this.getValueList()
 	},
@@ -192,7 +192,7 @@ export default {
 			if (this.tagName) {
 				this.$api.seeCrmService.dictionaryrelationSave({
 					tagName: this.tagName,
-					busType: this.astype,
+					busType: this.busType,
 					labelCode: this.dicCode
 				})
 					.then(res => {
