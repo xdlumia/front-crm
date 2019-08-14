@@ -40,7 +40,7 @@ export default {
 	},
 	methods: {
 		loginOut () {
-			this.$routing.redirectTo('/pages/login/index')
+			this.$routing.reLaunch('/pages/login/index')
 		}
 	}
 }
