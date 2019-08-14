@@ -13,7 +13,7 @@
 			</a>
             <i-input v-model="form.position" label="职位" placeholder="请填写"/>
             <i-input v-model="form.phone" label="电话" placeholder="请填写"/>
-            <i-input v-model="form.mobile" label="手机" placeholder="请填写"/>
+            <i-input v-model="form.mobile" label="手机" placeholder="请填写" required />
             <i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
             <i-input v-model="form.address" label="地址" placeholder="请填写"/>
 			<i-input v-model="deptName" label="所属部门" placeholder="请填写"/>
@@ -108,6 +108,8 @@ export default {
 		}
 	},
 	onLoad (option) {
+		// 获取字段列表
+		this.formsfieldconfigQueryList()
 		if (option.id) {
 			this.busId = option.id
 			this.editType = option.editType
@@ -119,14 +121,19 @@ export default {
 		}
 
 		// 客户回调
-		uni.$once('chooseClient', data => {
+		uni.$on('chooseClient', data => {
 			this.form.clientName = data.name
 			this.form.clientId = data.id
 		})
 		// 标签回掉
-		uni.$once('moreTags', data => {
+		uni.$on('moreTags', data => {
 			this.labelNames = data.map(item => item.labelName).join(',')
 			this.form.lableBusinessSaveVo.labelIdArray = data.map(item => item.id)
+		})
+		// 更多条目回掉
+		uni.$on('moreList', data => {
+			// 获取字段列表
+			this.formsfieldconfigQueryList()
 		})
 	},
 	created () {

@@ -6,17 +6,17 @@
       <!-- 顶部信息 -->
       <div class="chance-datail-title pt10 pb10 pl15 pr15 f13">
         <div class="uni-flex uni-row">
-          <div class="flex-item d-elip wfull f16" style="color:#333">{{detailsInfo.chanceName}}</div>
+          <div class="flex-item d-elip wfull f16" style="color:#333">{{detailInfo.chanceName}}</div>
           <div class="flex-item datail-handle">
-            <a class="d-inline" :url="`/pages/chance/add-chance?id=${detailsInfo.id}&editType=1`">
+            <a class="d-inline" :url="`/pages/chance/add-chance?id=${detailInfo.id}&editType=1`">
               <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
             </a>
-            <span @click="updateAttention(detailsInfo.isWatchful)">
+            <span @click="updateAttention(detailInfo.isWatchful)">
               <i-icon
-                :type="detailsInfo.isWatchful?'like_fill':'like'"
+                :type="detailInfo.isWatchful?'like_fill':'like'"
                 size="20"
                 class="ml15"
-                :color="detailsInfo.isWatchful?'#FF5533':'#999'"
+                :color="detailInfo.isWatchful?'#FF5533':'#999'"
               />
             </span>
           </div>
@@ -24,19 +24,19 @@
         <div class="f12">
           客户名称:
           <a
-            :url="`/pages/client/detail?id=${detailsInfo.id}`"
+            :url="`/pages/client/detail?id=${detailInfo.id}`"
             class="d-elip d-text-blue"
             style="display:inline"
-          >{{detailsInfo.clientName}}</a>
+          >{{detailInfo.clientName}}</a>
         </div>
-        <div class="f12">负责人: {{detailsInfo.leaderName || '-'}}</div>
+        <div class="f12">负责人: {{detailInfo.leaderName || '-'}}</div>
         <div class="f12">
-          销售金额(元): {{detailsInfo.salesMoney || '-'}}
+          销售金额(元): {{detailInfo.salesMoney || '-'}}
           <span class="fr">
             预计成交日期
             <time
               class="d-inline d-text-blue f12"
-            >{{detailsInfo.reckonFinishTime | timeToStr('y-m-d')}}</time>
+            >{{detailInfo.reckonFinishTime | timeToStr('y-m-d')}}</time>
           </span>
         </div>
       </div>
@@ -65,11 +65,11 @@
           <followInfo v-if="busId" :query='{salesFunnelId: busId}' height="calc(100vh - 380px)" />
         </i-tab>
         <i-tab index="1">
-          <detailInfo :detailInfo="detailsInfo" height="calc(100vh - 380px)" />
+          <detailInfo :detailInfo="detailInfo" height="calc(100vh - 380px)" />
         </i-tab>
         <i-tab index="2">
           <!-- 相关信息 -->
-          <correlationInfo v-if="detailsInfo.clientId" :query="{busId:busId,busType:2,name:detailsInfo.chanceName,clientId:detailsInfo.clientId,chanceId:busId}" height="calc(100vh - 380px)" />
+          <correlationInfo v-if="detailInfo.clientId" :query="{busId:busId,busType:2,name:detailInfo.chanceName,clientId:detailInfo.clientId,chanceId:busId}" height="calc(100vh - 380px)" />
         </i-tab>
       </i-tabs>
       <!-- 底部操作按钮 -->
@@ -134,7 +134,7 @@ export default {
 			// 当前阶段
 			stageActive: 0,
 			// 机会详情
-			detailsInfo: {},
+			detailInfo: {},
 			moreShow: false,
 			phoneShow: false,
 			moreActions: moreActions,
@@ -164,7 +164,7 @@ export default {
 		// 查询机会详情
 		saleschanceInfo (id) {
 			this.$api.seeCrmService.saleschanceInfo(null, id).then(res => {
-				this.detailsInfo = res.data || {}
+				this.detailInfo = res.data || {}
 				// 获取销售阶段
 				this.salesstageQueryList()
 			})
@@ -174,9 +174,9 @@ export default {
 			this.$api.seeCrmService.salesstageQueryList().then(res => {
 				let data = res.data || []
 				data.forEach((item, index) => {
-					if (this.detailsInfo.stageId === item.id) {
+					if (this.detailInfo.stageId === item.id) {
 						this.stageActive = index
-						this.detailsInfo.stageName = item.stageName
+						this.detailInfo.stageName = item.stageName
 					}
 				})
 				this.stageList = data
@@ -202,7 +202,7 @@ export default {
 		// 阶段更换
 		setpHandle (row, index) {
 			this.stageActive = index
-			this.$api.seeCrmService.updatelStagePrope({ id: this.detailsInfo.id, stageId: row.id })
+			this.$api.seeCrmService.updatelStagePrope({ id: this.detailInfo.id, stageId: row.id })
 				.then(res => {
 					// console.log('阶段更改成功')
 				})
@@ -211,17 +211,17 @@ export default {
 		updateAttention (val) {
 			// 是否关注（0-未关注，1-已关注）
 			if (!val) {
-				this.$api.seeCrmService.watchfulbusinessSave({ busId: this.detailsInfo.id, busType: 2 })
+				this.$api.seeCrmService.watchfulbusinessSave({ busId: this.detailInfo.id, busType: 2 })
 					.then(res => {
 						if (res.code !== 200) return
-						this.detailsInfo.isWatchful = 1
+						this.detailInfo.isWatchful = 1
 					// console.log('关注成功')
 					})
 			} else {
-				this.$api.seeCrmService.watchfulbusinessDelete({ busId: this.detailsInfo.id, busType: 2 })
+				this.$api.seeCrmService.watchfulbusinessDelete({ busId: this.detailInfo.id, busType: 2 })
 					.then(res => {
 						if (res.code !== 200) return
-						this.detailsInfo.isWatchful = 0
+						this.detailInfo.isWatchful = 0
 					// console.log('删除关注成功')
 					})
 			}
@@ -239,13 +239,13 @@ export default {
 				1: () => {
 					// 1编辑 2复制
 					this.$routing.navigateTo(
-						`/pages/chance/add-chance?id=${this.detailsInfo.id}&editType=2`
+						`/pages/chance/add-chance?id=${this.detailInfo.id}&editType=2`
 					)
 				},
 				// 转移
 				2: () => {
 					this.$routing.navigateTo(
-						`/pages/index/colleagueChoose?id=${this.detailsInfo.id}`
+						`/pages/index/colleagueChoose?id=${this.detailInfo.id}`
 					)
 				},
 				// 删除
@@ -264,7 +264,7 @@ export default {
 				4: () => {
 					// 更多日程
 					this.$routing.navigateTo(
-						`/pages/index/scheduleAdd?id=${detailsInfo.id}`
+						`/pages/index/scheduleAdd?id=${detailInfo.id}`
 					)
 				}
 			}

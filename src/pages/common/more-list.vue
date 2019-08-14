@@ -79,6 +79,9 @@ export default {
 			})
 			this.$api.seeCrmService.formsfieldconfigUpdateBatch(params)
 				.then(res => {
+					if (res.code !== 200) return
+					// 多选状态下保存
+					uni.$emit('moreList')
 					// 返回上一页
 					this.$routing.navigateBack()
 				})

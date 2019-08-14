@@ -11,7 +11,7 @@
 			<div class="detail-list ac f12 d-text-gray" v-if="!contactList.length">暂无数据</div>
             <div class="detail-list" v-for="(item,index) of contactList" :key="index">
                 <div class="list-title">
-                    <title>{{item.linkkanName}}</title> <span class="d-text-qgray">{{item.position}}</span>
+                    <title>{{item.linkmanName}}</title> <span class="d-text-qgray">{{item.position}}</span>
                     <span @click="callPhone(item.mobile)" class="fr iconfont iconcall f18 d-text-gray" ></span>
                 </div>
                 <p class="f12 d-elip d-text-qgray">{{item.clientName}}</p>
@@ -34,18 +34,21 @@ export default {
 			}
 		}
 	},
-	computed: {
-		url () {
-			return +this.query.busType === 0 ? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId : '/pages/contact/index?select=1&add=1'
-		}
-	},
-	onLoad (option) {
-		// 客户回调
+	onReady (option) {
+		// 联系人回掉
 		uni.$on('chooseContact', data => {
+			console.log(data)
 			this.form.linkmanId = data.id
 			// 业务与联系人关系保存
 			this.saveContact()
 		})
+	},
+	computed: {
+		url () {
+			return +this.query.busType === 0
+				? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId
+				: '/pages/contact/index?select=1&add=1&busType=' + this.query.busType + ''
+		}
 	},
 	created () {
 		this.linkmanQueryList()

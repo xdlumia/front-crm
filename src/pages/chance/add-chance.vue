@@ -118,19 +118,14 @@ export default {
 			}
 		}
 	},
-	onShow () {
-		if (this.busId) {
-			// 获取详情
-			this.saleschanceInfo(this.busId)
-		} else {
-			// 获取字段列表
-			this.formsfieldconfigQueryList()
-		}
-	},
 	onLoad (option) {
+		// 获取字段列表
+		this.formsfieldconfigQueryList()
 		if (option.id) {
 			this.busId = option.id
 			this.editType = option.editType
+			// 获取详情
+			this.saleschanceInfo(this.busId)
 		}
 		// 客户回调
 		uni.$on('chooseClient', data => {
@@ -141,6 +136,11 @@ export default {
 		uni.$on('moreTags', data => {
 			this.labelNames = data.map(item => item.labelName).join(',')
 			this.form.lableBusinessSaveVo.labelIdArray = data.map(item => item.id)
+		})
+		// 更多条目回掉
+		uni.$on('moreList', data => {
+			// 获取字段列表
+			this.formsfieldconfigQueryList()
 		})
 	},
 	created () {
