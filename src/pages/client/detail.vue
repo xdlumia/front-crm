@@ -153,7 +153,7 @@ export default {
 				}
 			],
 			currIndex: 0,
-			source: 0 // 来源是否为公海池 1 为公海池进入的详情
+			source: 0 // 来源是否为公海池 0为客户列表进入 1 为公海池列表进入的详情
 		}
 	},
 	onLoad (data) {
@@ -171,7 +171,7 @@ export default {
 	},
 	computed: {
 		sendBackType () {
-			return detailInfo.sendBackType !== 1
+			return +source === 1 && +detailInfo.sendBackType !== 1
 		}
 	},
 	methods: {
