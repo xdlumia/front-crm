@@ -3,7 +3,7 @@
 <template>
 <div class="d-bg-white">
     <NavBar :title="`${titleType}销售机会`"/>
-    <scroll-view scroll-y style="height:calc(100vh - 115px)">
+    <scroll-view scroll-y style="height:calc(100vh - 120px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
 			<a url="/pages/client/choose-client">
