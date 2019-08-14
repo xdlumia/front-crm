@@ -53,7 +53,6 @@ export default {
 
 <style lang="scss" scoped>
 .filter-input {
-  width: 100%;
   height: 30px;
   border: 3px solid #efefef;
   border-radius: 2px;
