@@ -17,14 +17,12 @@
     >
       <div class="chance-item uni-flex uni-row" v-for="(item,index) of list" :key="item.id">
         <div @click="handlerClient(item, index)" class="wfull flex-item item-info d-elip">
-          <!-- <a url="./detail/index"> -->
           <h4 class="d-elip">{{item.linkmanName}}</h4>
           <p class="d-text-qgray d-elip f12">{{item.clientName}}</p>
           <div class="d-flex mt5" style="align-items: center;">
             <div class="c-tag f12 mr10">{{item.score || 0}}分</div>
             <div class="c-tag f12 mr10">{{item.createTime|timeToStr('yyyy-mm-dd')}}</div>
           </div>
-          <!-- </a> -->
         </div>
         <div class="flex-item item-progress">
           <span v-if="select=='1'">
@@ -35,6 +33,9 @@
         </div>
       </div>
     </scroll-list>
+	<a url='/pages/client/add-client' class="d-cell al d-bg-white"  v-if="select && isAdd">
+		<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
+	</a>
     <!-- 客户 -->
     <div class="footer-fixed-menu d-center d-bg-white bt" v-if="!select">
       <a class="d-cell al" url="/pages/contact/add-contact">
@@ -77,6 +78,7 @@ export default {
 	data () {
 		return {
 			// 跳转参数
+			isAdd: '', // 是否新增联系人
 			select: '', // 是否选择
 			multiple: '', // 是否多选
 			linkIds: [], // 联系人ids 当为选择页面的时候选中的id
@@ -112,7 +114,8 @@ export default {
 		this.$refs.list.reload()
 	},
 	onLoad (option) {
-		this.select = option.select
+		this.select = option.select || ''
+		this.isAdd = option.isAdd || ''
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
 		if (option.multiple) {
