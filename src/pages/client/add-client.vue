@@ -111,6 +111,7 @@ export default {
 	data () {
 		return {
 			title: '新建客户信息',
+			isCopy: '是否复制',
 			id: 0,
 			isRepeat: false,
 			isSkipContact: false, // 是否新建联系人
@@ -151,8 +152,10 @@ export default {
 	},
 	onLoad (params) {
 		this.id = params.id || 0
-		if (this.id) {
-			this.title = '编辑客户信息'
+		this.isCopy = params.isCopy || 0
+
+		if (this.id || this.isCopy) {
+			this.title = (this.id ? '编辑' : '复制') + '客户信息'
 			this.getDetailInfo()
 		} else {
 			this.getMoreField()

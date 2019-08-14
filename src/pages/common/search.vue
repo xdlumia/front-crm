@@ -26,10 +26,10 @@
                 <span class="d-text-black ml15 mt15">历史搜索</span>
                 <span @click="deleteSearchList()" class="d-text-blue f13 mr15 mt15">清除</span>
             </div>
-            <div class="search-history p15" style="padding-top: 10px;">
+            <div class="search-history p15" style="padding-top: 10px;" v-if="searchHistoryList.length > 0">
                 <div class="d-bg-white p1 searchistory mr5 mb5" v-for="(item,index) in searchHistoryList" :key="index">
-                    <span style="color: #666;" class="pl5">{{item}}</span>
-                    <uni-icon @click="deleteSearchList(index)" class="ml5 fr" type='closeempty' color="#999" size='20'/>
+                    <span style="color: #666;" class="pl5 pr5" @click="clickToSearch(item)">{{item}}</span>
+                    <uni-icon @click="deleteSearchList(index)" class="fr" type='closeempty' color="#999" size='20'/>
                 </div>
             </div>
              <i-button @click="searchData">搜索</i-button>
@@ -94,6 +94,7 @@ export default {
 		if (Object.keys(this.searchForm).length > 0) {
 			this.searchHistoryList = this.searchForm[this.optionType] || []
 		}
+		// console.log(this.searchForm)
 	},
 	computed: {
 		isBack () {
@@ -105,6 +106,11 @@ export default {
 		}
 	},
 	methods: {
+		clickToSearch (item) {
+			// console.log(item)
+			uni.$emit('updatedate', { searchInfo: item })
+			this.$routing.navigateBack()
+		},
 		// 进行搜索的方法
 		searchData () {
 			if (this.searchHistoryList.length > 0) {
@@ -112,9 +118,10 @@ export default {
 					this.searchHistoryList.push(this.searchInfo)
 				}
 			} else {
-				this.searchHistoryList.push(this.searchInfo)
+				if (this.searchInfo) {
+					this.searchHistoryList.push(this.searchInfo)
+				}
 			}
-
 			this.searchForm[this.optionType] = this.searchHistoryList
 			this.$local.save('searchForm', this.searchForm)
 

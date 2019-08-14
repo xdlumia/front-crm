@@ -4,14 +4,14 @@
     <div>
       <m-form ref="form" class="uni-pb100" :model="form" :rules="rules">
         <i-input maxlength="32" v-model="form.name" label="名称" placeholder="请输入" required/>
-        <a :url="`/pages/chance/choose-chance?id=${form.salesFunnelId}&clientId=${clientId}`">
+        <a :url="`/pages/chance/choose-chance?id=${form.salesFunnelId}&clientId=${clientId}&busType=3`">
           <i-input label="销售机会" disabled v-model="form.salesFunnelName" placeholder=" " required>
             <uni-icon type="forward" size="18" color="#999"/>
           </i-input>
         </a>
         <i-input maxlength="32" v-model="form.clientName" disabled label="客户名称" placeholder="请输入"/>
 
-        <a :url="form.salesFunnelId ? (`/pages/contact/index?busType=2&select=1&multiple=1&linkIds=${JSON.stringify(form.linkIds) || '[]'}&chanceId=${form.salesFunnelId}`) : ''">
+        <a :url="form.salesFunnelId ? (`/pages/contact/index?busType=2&select=1&multiple=1&linkIds=${JSON.stringify(form.linkIds) || '[]'}&busId=${form.salesFunnelId}`) : ''">
           <i-input label="联系人" disabled v-model="form.linkkanNames" placeholder=" " required>
             <uni-icon type="forward" size="18" color="#999"/>
           </i-input>
@@ -114,8 +114,17 @@ export default {
 			this.detailId = option.id
 			this.getTransactionDetail()
 		}
-		if (option.clientId) {
+		if (option.clientId) { // clientId,在客户里边调用成交记录的话，需要将客户id带给销售机会，用来筛选当前客户关联的销售机会
 			this.clientId = option.clientId || ''
+		}
+		if (option.chanceId) { // clientId,在机会里边调用成交记录的话，需要取到当前机会的id，用id去查询详情，填充客户名称，并且传到联系人，走正常成交记录流程
+			this.$api.seeCrmService.saleschanceInfo(null, option.chanceId).then(res => {
+				let data = res.data || {}
+				this.form.salesFunnelName = data.chanceName || ''
+				this.form.salesFunnelId = data.id || ''
+				this.form.clientId = data.clientId || ''
+				this.form.clientName = data.clientName || ''
+			})
 		}
 		// 销售机会回调
 		uni.$on('chooseChance', data => {

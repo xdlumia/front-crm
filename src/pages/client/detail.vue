@@ -58,7 +58,7 @@
 						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="2">
-						<correlationInfo :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+						<correlationInfo :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name, clientId: detailInfo.id}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index='3'>
 						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
@@ -171,14 +171,13 @@ export default {
 	},
 	computed: {
 		sendBackType () {
-			return +this.source === 1 && +detailInfo.sendBackType !== 1
+			return +this.source === 0 && +detailInfo.sendBackType !== 1
 		}
 	},
 	methods: {
 
-		editClient (id = '') {
-			this.$routing.navigateTo('./add-client?id=' + id)
-
+		editClient (id = '', isCopy = 0) {
+			this.$routing.navigateTo('./add-client?id=' + id + '&isCopy=' + isCopy)
 			this.$store.commit('client/setClientInfo', this.detailInfo)
 		},
 
@@ -269,7 +268,7 @@ export default {
 			let fnType = {
 				1: () => {
 					// 复制
-					this.editClient()
+					this.editClient('', 1)
 				},
 				2: () => {
 					// 退回公海

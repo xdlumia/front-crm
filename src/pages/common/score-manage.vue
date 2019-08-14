@@ -4,7 +4,7 @@
  */ -->
 <template>
 	<div class="score-manage-page">
-		<NavBar :title="title"/>
+		<NavBar :title="`${typeform[busType]}评分`"/>
 
 		<div class="pb20" v-for='(item, index) in scoreData' :key='index'>
 			<div class='d-bg-white'>
@@ -49,7 +49,7 @@
 export default {
 	data () {
 		return {
-			title: '',
+			busType: '',
 			fieldData: [],
 			subFieldData: [],
 			scoreData: [
@@ -65,11 +65,18 @@ export default {
 					groupCode: ''
 				}
 			],
-			scoreList: []
+			scoreList: [],
+			typeform: {
+				'0': '客户',
+				'1': '联系人',
+				'2': '销售机会',
+				'3': '成交记录'
+			}
 		}
 	},
 	onLoad (option) {
-		this.title = option.title // 页面标题
+		this.busType = option.busType // busType
+
 		this.getFormsfieldconfig(option.busType).then(res => {
 			this.getWeightList(option.busType)
 		})

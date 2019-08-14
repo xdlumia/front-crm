@@ -22,13 +22,13 @@
                     :options="dictionaryOptions('CRM_GJLX')">
                 </i-select>
 
-				<a url="/pages/contact/index?select=1" v-if='form.busType != 1'>
+				<a :url="'/pages/contact/index?select=1&busId=' + form.busId" v-if='form.busType != 1'>
 					<i-input disabled v-model="linkName" label="联系人" placeholder="请选择联系人">
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>
 				</a>
 
-				<a url="/pages/chance/choose-chance" v-if='form.busType == 0'>
+				<a :url="'/pages/chance/choose-chance?busId=' + form.busId"  v-if='form.busType == 0'>
 					<i-input disabled v-model="chanceName" label="销售机会" placeholder="请选择销售机会">
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>
@@ -53,7 +53,7 @@
             <div class="d-bg-white mt10">
                 <i-input v-model="form.content" label="跟进内容" placeholder="备注" type="textarea" required/>
                 <div class="pl15 pr15 mt5">
-					<mUpload :wdith="80" :height="80" v-model='fileAddress' />
+					<mUpload :wdith="80" :height="80" limit="5" v-model='fileAddress' />
 				</div>
             </div>
         </m-form>
