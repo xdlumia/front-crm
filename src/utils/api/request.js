@@ -40,7 +40,7 @@ Api.interceptors.request.use(async config => {
 Api.interceptors.response.use((response) => {
 	let res = response.data
 	// uni.hideLoading()
-	if (+response.data.code === 402) {
+	if (+response.data.code === 402 || +response.data.code === 403) {
 		uni.$emit('loginout')
 		return Promise.reject(res.msg)
 		// return Promise.resolve(

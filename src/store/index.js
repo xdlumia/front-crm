@@ -16,7 +16,10 @@ let state = {
 	/* 当前系统信息 */
 	systemInfo: {},
 	/* 用户信息 */
-	userInfo: {}
+	userInfo: {},
+
+	localtion: {} // 位置信息
+
 }
 
 let mutations = {
@@ -35,6 +38,10 @@ let mutations = {
 	// oss
 	setOssTicket (state, data) {
 		state.oss = data || {}
+	},
+
+	setLocation (state, data) {
+		state.localtion = data
 	}
 }
 
