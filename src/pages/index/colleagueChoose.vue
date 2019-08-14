@@ -81,6 +81,7 @@ export default {
 		}
 		if (option.subordinate) { // 首页请求下属的数据
 			this.userId = option.userId
+			// this.getAlllist()
 			this.getChildrenEmployee()
 		} else {
 			this.getAlllist()

@@ -105,10 +105,16 @@ export default {
 			that.buildTextData(that, array)
 		},
 		wxaSortPickerItemTap: function (child) {
+			
 			this.child = child
 			if (this.isRadio) {
-				this.childEchodata.includes(child.userId) ? (this.childEchodata = []) : (this.childEchodata = [child.userId])
-				this.isCheckedData.length>0 ? (this.isCheckedData = []) :( this.isCheckedData.push(child))
+				if(this.childEchodata.includes(child.userId)){
+					this.childEchodata = []
+					this.isCheckedData = []
+				}else{
+					this.childEchodata = [child.userId]
+					this.isCheckedData = [child]
+				}
 				this.$emit('clickData', this.isCheckedData)
 			} else {
 				if(this.childEchodata.includes(child.userId)){

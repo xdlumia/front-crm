@@ -74,7 +74,7 @@
                 <div class="d-flex ml15" style="height: 26px;align-items: center;">
                     <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar>
                     <a :url="`/pages/index/colleagueChoose?subordinate=1&userId=${userInfo.id}&ids=${userId}`">
-                        <span class="d-text-qgray f13 ml5">{{userInfo.name}}</span>
+                        <span class="d-text-qgray f13 ml5">{{userName}}</span>
                     </a>
                     <uni-icon type="arrowdown" class="pl5 d-text-qgray" size="16"/>
                 </div>
@@ -258,6 +258,7 @@ export default {
 			hour: 3600, // 区分小时还是分钟
 			mint: 60,
 			userId: 1,
+			userName: '',
 			allcolleagues: [], // 有日程的所有时间
 			salesKitForm: {}, // 销售简报
 			rankingList: [], // 排行榜
@@ -274,23 +275,31 @@ export default {
 		}
 	},
 	created () {
-
-	},
-	onShow () {
 		this.userInfo = this.$local.fetch('userInfo') || {}
 		this.userId = this.userInfo.id
-		this.getIndexList()
-		this.changeTime()
-		this.getDates()
-		this.getTodayDate()
+		this.userName = this.userInfo.name
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
 		this.scheduleSelectSalesFunnel()
 	},
+	onShow () {
+		this.getIndexList()
+		this.changeTime()
+		this.getDates()
+		this.getTodayDate()
+	},
 	onLoad (option) {
 		// 选择的当前人
 		uni.$on('colleagueChoose', data => {
-			this.userId = data.data[0].id
+			if (data.data.length > 0) {
+				this.userId = data.data[0].userId
+				this.userName = data.data[0].employeeName
+			} else {
+				this.userId = this.userInfo.id
+				this.userName = this.userInfo.name
+			}
+			this.scheduleSelectSalesKit()
+			this.scheduleSelectSalesFunnel()
 		})
 	},
 	methods: {
@@ -317,7 +326,7 @@ export default {
 					this.salesKitForm = res.data || []
 				})
 		},
-		// 查询本月当前人的排行榜
+		// 查询本月的排行榜
 		scheduleSelectCompanyRanking () {
 			this.$api.seeCrmService.scheduleSelectCompanyRanking()
 				.then(res => {
