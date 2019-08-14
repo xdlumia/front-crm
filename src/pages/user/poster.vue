@@ -13,16 +13,23 @@
 <script>
 
 export default {
-	components: {
-
-	},
 	data () {
 		return {
 			style: {},
 			imgUrl: 'http://oss-a-develop.oss-cn-beijing.aliyuncs.com/1016/crm/1565774770370/883890ed-c7d2-48b7-9bd5-4768163b8742.jpg'
 		}
 	},
+	onLoad () {
+		this.getImg()
+	},
 	methods: {
+		getImg () {
+			this.$api.seeCrmService.posterGet().then(res => {
+				if (res.code === 200) {
+					this.imgUrl = res.data || ''
+				}
+			})
+		},
 		handleClick () {
 			this.$utils.settingAuth('保存图片', 'writePhotosAlbum', () => {
 				uni.downloadFile({
@@ -52,7 +59,6 @@ export default {
 			let ratio = $width / $height // 图片的真实宽高比例
 			let viewWidth = screenWidth // 设置图片显示宽度，左右留有16rpx边距
 			let viewHeight = screenWidth / ratio // 计算的高度值
-
 			// 将图片的datadata-index作为image对象的key,然后存储图片的宽高值
 			this.style = {
 				width: viewWidth + 'px',
