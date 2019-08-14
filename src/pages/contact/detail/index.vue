@@ -155,7 +155,7 @@ export default {
 			let fnType = {
 				// 转移
 				1: () => {
-					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${detailInfo.id}`)
+					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${this.busId}`)
 				},
 				// 删除
 				2: () => {
@@ -172,7 +172,7 @@ export default {
 				},
 				// 复制 editType = 1编辑 2复制
 				3: () => {
-					this.$routing.navigateTo(`/pages/contact/add-contact?id=${this.detailInfo.id}&editType=2`)
+					this.$routing.navigateTo(`/pages/contact/add-contact?id=${this.busId}&editType=2`)
 				}
 			}
 			fnType[index]()
