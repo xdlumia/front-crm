@@ -171,7 +171,7 @@ export default {
 	},
 	computed: {
 		sendBackType () {
-			return +source === 1 && +detailInfo.sendBackType !== 1
+			return +this.source === 1 && +detailInfo.sendBackType !== 1
 		}
 	},
 	methods: {

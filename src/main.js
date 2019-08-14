@@ -147,6 +147,35 @@ try {
 	store.commit('setSystemInfo', {})
 }
 
+// 注册登录事件
+uni.$on('login', data => {
+	// 保存token finger syscode
+	local.setItem('token', data.token)
+	local.setItem('finger', data.finger)
+	local.setItem('sysCode', data.sysCode)
+})
+
+uni.$on('setUserInfo', (data) => {
+	local.save('userInfo', data)
+	local.save('companyInfo', data.companyEntity)
+	local.save('deptInfo', data.rmDeptEntity)
+	local.save('roleInfo', data.rmRoleEntities)
+	local.save('sourceList', data.sourceList)
+	local.setItem('token', data.token)
+	local.setItem('finger', data.finger)
+	store.commit('setUserInfo', data)
+})
+
+// 注册退出事件
+uni.$on('loginout', () => {
+	local.remove('userInfo')
+	local.remove('finger')
+	local.remove('sysCode')
+	uni.reLaunch({
+		url: global.g.redirectUrl || '/pages/login/index'
+	})
+})
+
 App.mpType = 'app'
 
 Vue.prototype.$store = store

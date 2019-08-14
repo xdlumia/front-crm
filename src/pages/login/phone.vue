@@ -36,7 +36,6 @@
 </template>
 <script>
 import uuid from 'uuid'
-import local from '@/utils/localStorage'
 export default {
 	data () {
 		return {
@@ -68,7 +67,7 @@ export default {
 					this.$utils.toast.text(response.msg)
 					if (response.code === 200) {
 						// 保存数据到本地
-						this.setTokenFingerSyscode(response.data)
+						uni.$emit('login', response.data)
 						this.getUserDetail(response.data.sysCode)
 					}
 				})
@@ -79,29 +78,13 @@ export default {
 			this.$api.bizSystemService.getUserDetail({}, { 'syscode': syscode }).then((response) => {
 				this.$utils.toast.text(response.msg)
 				if (response.code === 200) {
-					this.setUserDataToLocal(response.data)
+					uni.$emit('setUserInfo', response.data)
 					// 跳转到首页
 					this.$routing.switchTab('/pages/index/index')
 				}
 			})
 		},
-		// 保存token finger syscode
-		setTokenFingerSyscode (data) {
-			local.setItem('token', data.token)
-			local.setItem('finger', data.finger)
-			local.setItem('sysCode', data.sysCode)
-		},
-		// 保存数据到本地
-		setUserDataToLocal (data) {
-			local.save('userInfo', data)
-			local.save('companyInfo', data.companyEntity)
-			local.save('deptInfo', data.rmDeptEntity)
-			local.save('roleInfo', data.rmRoleEntities)
-			local.save('sourceList', data.sourceList)
-			local.setItem('token', data.token)
-			local.setItem('finger', data.finger)
-			this.$store.commit('setUserInfo', data)
-		},
+
 		// 验证码发送后的倒计时
 		timeGo () {
 			const TIME_COUNT = 60
