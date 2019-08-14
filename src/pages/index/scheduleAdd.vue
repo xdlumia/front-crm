@@ -4,7 +4,7 @@
  */ -->
 <template>
     <div>
-        <NavBar title="新建日程" />
+        <NavBar :title="handelTypeForm[handelType]" />
         <scroll-view scroll-y style="height:calc(100vh - 115px)">
             <m-form ref="acheduleForm" class="uni-pb100" :model="acheduleForm" :rules="rules">
                 <div class="d-bg-schedule"></div>
@@ -86,7 +86,7 @@
         <div class="footer-fixed-menu">
             <i-button v-if="ishandel || isadd" @click="fsubmit" type="primary" i-class="f16">确 定</i-button>
             <div class="d-flex" v-else>
-                <i-button @click="ishandel = true" i-class="f16" style="width:50%">编 辑</i-button>
+                <i-button @click="ishandel = true,handelType = '2'" i-class="f16" style="width:50%">编 辑</i-button>
                 <i-button @click="deleteInfo" type="primary" i-class="f16" style="width:50%">删 除</i-button>
             </div>
 
@@ -150,6 +150,11 @@ export default {
 			isadd: true, // 是新增还是编辑
 			ishandel: false, // 切换编辑和回显状态
 			tixIndex: '',
+			handelTypeForm: {
+				'0': '新建日程',
+				'1': '日程详情',
+				'2': '编辑日程'
+			},
 			typeform: {
 				'0': 'clientData',
 				'1': 'contactData',
@@ -157,6 +162,7 @@ export default {
 				'3': 'transactionData',
 				'4': 'highseasData'
 			},
+			handelType: '0',
 			tixData: [{ name: '提前十分钟', id: 600 }, { name: '提前30分钟', id: 1800 }, { name: '提前一小时', id: 3600 }, { name: '提前三小时', id: 10800 }],
 			clientData: {}, // 关联的客户data
 			transactionData: {}, // 关联的成交记录data
@@ -170,7 +176,8 @@ export default {
 	created () {
 	},
 	onLoad (option) {
-		if (option.scheId) {
+		if (option.scheId) { // 详情
+			this.handelType = '1'
 			this.scheId = option.scheId
 			this.getScheduleInfo(option.scheId)
 			this.ishandel = false

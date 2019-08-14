@@ -46,7 +46,7 @@
                         <div class="wfull d-flex">
                             <div class="d-flex cirle-blue" style="margin-top: 7px;">
                             </div>
-                            <span class="d-text-gray ml10">{{item.content}}</span>
+                            <span class="d-text-gray ml10" style="max-width:60%">{{item.content}}</span>
                             <div class="ac ml10 pl5 pr5 f12" style="height: 18px;line-height: 18px;color:#457FF5;border: 1px solid #457FF5;border-radius: 5px;">
                                 <span>{{ item.remindSecond&lt;3600 ? ((item.remindSecond/60) + '分钟') : (item.remindSecond/3600 + '小时') }}</span>
                             </div>
@@ -308,7 +308,7 @@ export default {
 			this.$api.seeCrmService.scheduleList({
 				userId: this.userInfo.id,
 				page: 1,
-				limit: 500
+				limit: 1000
 			})
 				.then(res => {
 					this.indexList = res.data || []
@@ -344,7 +344,7 @@ export default {
 					})
 					this.ec.option.series[0].data = this.funnelList || []
 					this.$nextTick(() => {
-						this.$refs.echart.init()
+						// this.$refs.echart.init()
 					})
 				})
 		},

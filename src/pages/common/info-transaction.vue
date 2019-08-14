@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="成交记录" color="#3cc695" :url="`/pages/transaction/transaction-add?busType=${query.busType}&name=${query.name}&id=${query.busId}&clientId=${query.clientId || ''}&chanceId=${query.chanceId || '55'}`">
+        <mPanel top="10" title="成交记录" color="#3cc695" :url="`/pages/transaction/transaction-add?busType=${query.busType}&name=${query.name}&id=${query.busId}`">
             <div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
 			<div v-else>
 				<div class="detail-list d-flex" v-for="(item,index) in list" :key='index'>
