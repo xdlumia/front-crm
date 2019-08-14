@@ -30,24 +30,31 @@ export default {
 		return {
 			contactList: [],
 			form: {
-				linkmanId: '' // 客户id
+				linkmanId: [] // 客户ids
 			}
 		}
 	},
 	onReady (option) {
 		// 联系人回掉
 		uni.$on('chooseContact', data => {
-			console.log(data)
-			this.form.linkmanId = data.id
+			this.form.linkmanId = data.map(item => {
+				return {
+					busId: this.query.busId,
+					busType: this.query.busType,
+					clientId: this.query.clientId,
+					linkmanId: item.id
+				}
+			})
 			// 业务与联系人关系保存
-			this.saveContact()
+			this.linkmanrelationSaveBatch(params)
 		})
 	},
 	computed: {
 		url () {
+			let linkIds = JSON.stringify(this.contactList.map(item => item.id))
 			return +this.query.busType === 0
 				? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId
-				: '/pages/contact/index?select=1&add=1'
+				: '/pages/contact/index?select=1&add=1&multiple=1&linkIds=' + linkIds + ''
 		}
 	},
 	created () {
@@ -55,8 +62,8 @@ export default {
 	},
 	methods: {
 		// 业务与联系人关系保存
-		saveContact () {
-			this.$api.seeCrmService.linkmanrelationSave(Object.assign({}, { busId: this.query.busId, busType: this.query.busType, clientId: this.query.clientId }, this.form))
+		linkmanrelationSaveBatch () {
+			this.$api.seeCrmService.linkmanrelationSaveBatch(Object.assign({}, { busId: this.query.busId, busType: this.query.busType, clientId: this.query.clientId }, this.form))
 				.then(res => {
 					// console.log('保存成功')
 					this.linkmanQueryBusList()

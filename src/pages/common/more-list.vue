@@ -66,18 +66,15 @@ export default {
 		},
 		// 保存字段
 		saveField () {
-			let params = this.fieldList.filter(item => this.selList.includes(item.id))
-			params = params.map(item => {
-				return {
-					busType: item.busType,
-					fieldType: item.fieldType,
-					fieldName: item.fieldName,
-					groupCode: item.groupCode,
-					id: item.id,
-					isEnabled: 0
+			// 选中的参数isEnabled=0  没选中=1
+			this.fieldList.forEach(item => {
+				if (this.selList.includes(item.id)) {
+					item.isEnabled = 0
+				} else {
+					item.isEnabled = 1
 				}
 			})
-			this.$api.seeCrmService.formsfieldconfigUpdateBatch(params)
+			this.$api.seeCrmService.formsfieldconfigUpdateBatch(this.fieldList)
 				.then(res => {
 					if (res.code !== 200) return
 					// 多选状态下保存
