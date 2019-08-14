@@ -34,7 +34,7 @@
 				<detailInfo v-if="detailInfo.id" :detailInfo="detailInfo" height="calc(100vh - 280px)"/>
 			</i-tab>
 			<i-tab index="2">
-				<correlationInfo v-if="busId" :query="{busId:busId,busType:1}" height="calc(100vh - 280px)"/>
+				<correlationInfo v-if="busId" :query="{busId:busId,busType:1,name:detailInfo.linkmanName,}" height="calc(100vh - 280px)"/>
 			</i-tab>
 		</i-tabs>
       <!-- 底部操作按钮 -->
