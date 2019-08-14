@@ -137,18 +137,17 @@ export default {
 		this.queryForm.lonSort = localtion.longitude
 		this.queryForm.latSort = localtion.latitude
 
-		uni.$on('updatedate', ({ searchInfo }) => {
-			this.queryForm.name = searchInfo
-			this.$refs.list.reload()
-		})
-	},
-	onReady () {
 		let selects = {}
 		this.filterData.forEach(item => {
 			selects[item.prop] = item.current || item.list[0]
 			this.queryForm[item.prop] = selects[item.prop].id
 		})
 		this.filterSelect = selects
+
+		uni.$on('updatedate', ({ searchInfo }) => {
+			this.queryForm.name = searchInfo
+			this.$refs.list.reload()
+		})
 	},
 	computed: {
 		pool () {
@@ -232,6 +231,7 @@ export default {
 	},
 	watch: {
 		pool: {
+			immediate: true,
 			deep: true,
 			handler (pool) {
 				this.queryForm.poolId = pool.id
