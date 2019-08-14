@@ -2,7 +2,7 @@
 <!-- 徐贺 -->
 <template>
   <div class="d-bg-white">
-    <NavBar :title="`${typeform[busType]}标签管理`"/>
+    <NavBar :title="`${typeform[queryForm.busType]}标签管理`"/>
     <!-- :height="'calc(100vh - ' + navH +' - 230px)'" -->
     <scroll-list
       api="seeCrmService.dictionaryrelationList"
@@ -11,7 +11,7 @@
       ref="list"
     >
       <a
-        :url="`/pages/common/edit-tags?dicCode=${item.labelCode}&busType=${busType}&tagName=${item.labelName}`"
+        :url="`/pages/common/edit-tags?dicCode=${item.labelCode}&busType=${queryForm.busType}&tagName=${item.labelName}`"
         class="toptrasaction"
         v-for="(item,index) in tagsList"
         :key="index"
@@ -48,7 +48,7 @@
     <div class="moreinfo" @click="moreAdd">
       <div class="ml15">
         <uni-icon type="plus-filled" size="18" color="#4889F4"/>
-        <span class="d-text-black ml10">添加{{typeform[busType]}}标签</span>
+        <span class="d-text-black ml10">添加{{typeform[queryForm.busType]}}标签</span>
       </div>
     </div>
     <div class="footer-fixed-menu">
@@ -72,14 +72,13 @@ export default {
 				'2': '机会',
 				'3': '成交记录'
 			},
-			busType: 3, // 区分进来的是哪个页面
 			isAdd: false, // 新增框是否显示
 			tagsList: [] // 所有标签项
 		}
 	},
 	onLoad (option) {
 		// console.log(option)
-		this.busType = option.busType
+		this.queryForm.busType = option.busType
 	},
 	methods: {
 		// 所有标签项
@@ -116,7 +115,7 @@ export default {
 				this.$api.seeCrmService
 					.dictionaryrelationSave({
 						labelName: this.labelName,
-						busType: this.busType
+						busType: this.queryForm.busType
 					})
 					.then(res => {
 						this.isAdd = false

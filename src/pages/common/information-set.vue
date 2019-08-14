@@ -2,7 +2,7 @@
 <!-- 徐贺 -->
 <template>
 <div class="d-bg-white">
-    <NavBar :title="`${typeform[astype]}信息设置`"/>
+    <NavBar :title="`${typeform[busType]}信息设置`"/>
 
     <div class="inforcollese" @click="iscollapse = !iscollapse">
         <span class="f14 d-text-black">系统内置字段</span>
@@ -129,11 +129,11 @@ export default {
 				'2': '机会',
 				'3': '成交记录'
 			},
-			astype: 3 // 区分进来的是哪个页面
+			busType: 3 // 区分进来的是哪个页面
 		}
 	},
 	onLoad (option) {
-		this.astype = option.busType || 3
+		this.busType = option.busType || 3
 	},
 	created () {
 		this.getInfosList()
@@ -142,7 +142,7 @@ export default {
 	methods: {
 		// 获取所有的标签
 		getTagList () {
-			this.$api.seeCrmService.dictionaryrelationList({ busType: this.astype })
+			this.$api.seeCrmService.dictionaryrelationList({ busType: this.busType })
 				.then(res => {
 					if (res.code === 200) {
 						this.tagAllList = res.data
@@ -177,7 +177,7 @@ export default {
 		},
 		// 获取所有列表
 		getInfosList () {
-			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: this.astype, isOriginal: -1 })
+			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: this.busType, isOriginal: -1 })
 				.then(res => {
 					if (res.code === 200) {
 						this.informationList = res.data || []
@@ -207,7 +207,7 @@ export default {
 			if (fieldName) {
 				this.$api.seeCrmService.formsfieldconfigUpdate({
 					id: id,
-					busType: this.astype,
+					busType: this.busType,
 					content: fieldName
 				})
 					.then(res => {
@@ -224,7 +224,7 @@ export default {
 		fdelete (id) {
 			this.$utils.showModal('确定删除当前标签？')
 				.then(() => {
-					this.$api.seeCrmService.formsfieldconfigUpdate(null, id)
+					this.$api.seeCrmService.formsfieldconfigDelete(null, id)
 						.then(res => {
 							if (res.code === 200) {
 								this.$utils.toast.text('删除成功')
@@ -243,7 +243,7 @@ export default {
 			let arr = []
 			if (this.checkList.length > 0) {
 				this.checkList.forEach((item) => {
-					arr.push({ busType: this.astype, id: item })
+					arr.push({ busType: this.busType, id: item })
 				})
 			} else {
 				arr = []
@@ -265,7 +265,7 @@ export default {
 				this.$utils.toast.text('表单类型不能为空')
 			} else {
 				let params = {
-					busType: this.astype,
+					busType: this.busType,
 					fieldName: this.listForm.fieldName,
 					isEnabled: 0,
 					fieldType: this.msgid,

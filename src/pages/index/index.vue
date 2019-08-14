@@ -11,7 +11,7 @@
             <!--显示本周-->
 
             <div v-if="timelong == 7">
-                <div class="d-text-black ml15 mt10" @click='timelong = 30'>{{todayDate}}
+                <div class="d-text-black ml15 mt10" @click='timelong = 30,clickDay = todayDate'>{{todayDate}}
                     <uni-icon type="arrowdown" class="pl5" size="18"/>
                 </div>
                 <div class="d-flex mt15">
