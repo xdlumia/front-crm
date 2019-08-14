@@ -176,6 +176,20 @@ uni.$on('loginout', () => {
 	})
 })
 
+uni.getLocation({
+	type: 'gcj02',
+	success: data => {
+		if (data.errMsg === 'getLocation:ok') {
+			let localtion = {
+				latitude: data.latitude,
+				longitude: data.longitude
+			}
+			local.save('localtion', localtion)
+			store.commit('setLocation', localtion)
+		}
+	}
+})
+
 App.mpType = 'app'
 
 Vue.prototype.$store = store

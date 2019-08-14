@@ -94,7 +94,9 @@ export default {
 			queryForm: {
 				name: '', // 搜索
 				queryType: '', // 查询类型
-				sortType: '' // 排序类型
+				sortType: '', // 排序类型
+				lonSort: '', // 经度
+				latSort: '' // 纬度
 			},
 			// 筛选数据
 			filterData: [
@@ -122,6 +124,11 @@ export default {
 			this.queryForm[item.prop] = selects[item.prop].id
 		})
 		this.filterSelect = selects
+
+		// 设置经纬度
+		let localtion = this.$local.fetch('localtion') || this.$store.state.localtion
+		this.queryForm.lonSort = localtion.longitude
+		this.queryForm.latSort = localtion.latitude
 
 		uni.$on('updatedate', (name) => {
 			this.form.name = name
