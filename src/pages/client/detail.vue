@@ -176,9 +176,8 @@ export default {
 	},
 	methods: {
 
-		editClient (id = '') {
-			this.$routing.navigateTo('./add-client?id=' + id)
-
+		editClient (id = '', isCopy = 0) {
+			this.$routing.navigateTo('./add-client?id=' + id + '&isCopy=' + isCopy)
 			this.$store.commit('client/setClientInfo', this.detailInfo)
 		},
 
@@ -269,7 +268,7 @@ export default {
 			let fnType = {
 				1: () => {
 					// 复制
-					this.editClient()
+					this.editClient('', 1)
 				},
 				2: () => {
 					// 退回公海

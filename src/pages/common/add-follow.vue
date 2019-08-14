@@ -53,7 +53,7 @@
             <div class="d-bg-white mt10">
                 <i-input v-model="form.content" label="跟进内容" placeholder="备注" type="textarea" required/>
                 <div class="pl15 pr15 mt5">
-					<mUpload :wdith="80" :height="80" v-model='fileAddress' />
+					<mUpload :wdith="80" :height="80" limit="5" v-model='fileAddress' />
 				</div>
             </div>
         </m-form>
