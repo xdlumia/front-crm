@@ -94,7 +94,8 @@ export default {
 				poolId: '', // 公海池id
 				lonSort: '',
 				latSort: '',
-				name: ''
+				name: '',
+				belongType: 1 // 是否为 0 为 客户列表 1 为公海池
 			},
 			list: [],
 			filterData: [

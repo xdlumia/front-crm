@@ -96,7 +96,8 @@ export default {
 				queryType: '', // 查询类型
 				sortType: '', // 排序类型
 				lonSort: '', // 经度
-				latSort: '' // 纬度
+				latSort: '', // 纬度
+				belongType: 0 // 是否为 0 为 客户列表 1 为公海池
 			},
 			// 筛选数据
 			filterData: [

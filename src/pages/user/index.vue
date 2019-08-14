@@ -74,7 +74,7 @@
                             <div class='f12 mt5' style='color: #07BD13'>微信</div>
                         </button>
                     </div>
-                    <a class="d-cell ac">
+                    <a url='/pages/user/poster' class="d-cell ac">
                         <div class='pop-icon d-center' style='background:#3399ff'>
                             <div class='iconfont iconmingpian2 d-text-white f24' ></div>
                         </div>
