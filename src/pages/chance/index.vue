@@ -157,9 +157,10 @@ export default {
 	},
 	onShow () {
 		this.$refs.list.reload()
+		// 获取销售阶段
+		this.salesstageQueryList()
 	},
 	onLoad (option) {
-		console.log(option)
 		// this.select = option.select
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''

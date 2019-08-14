@@ -90,7 +90,7 @@ export default {
 					message: '邮箱格式不正确'
 				}],
 				mobile: [{
-					required: false
+					required: true
 				}, {
 					type: 'phone',
 					message: '手机号格式不正确'

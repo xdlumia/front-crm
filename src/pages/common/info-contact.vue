@@ -47,11 +47,11 @@ export default {
 		url () {
 			return +this.query.busType === 0
 				? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId
-				: '/pages/contact/index?select=1&add=1&busType=' + this.query.busType + ''
+				: '/pages/contact/index?select=1&add=1'
 		}
 	},
 	created () {
-		this.linkmanQueryList()
+		this.linkmanQueryBusList()
 	},
 	methods: {
 		// 业务与联系人关系保存
@@ -59,12 +59,12 @@ export default {
 			this.$api.seeCrmService.linkmanrelationSave(Object.assign({}, { busId: this.query.busId, busType: this.query.busType, clientId: this.query.clientId }, this.form))
 				.then(res => {
 					// console.log('保存成功')
-					this.linkmanQueryList()
+					this.linkmanQueryBusList()
 				})
 		},
 		// 获取联系人列表
-		linkmanQueryList () {
-			this.$api.seeCrmService.linkmanQueryList({ busId: this.query.busId, busType: this.query.busType, time: '' })
+		linkmanQueryBusList () {
+			this.$api.seeCrmService.linkmanQueryBusList({ busId: this.query.busId, busType: this.query.busType, time: '' })
 				.then(res => {
 					this.contactList = res.data || []
 				})
@@ -73,7 +73,7 @@ export default {
 	watch: {
 		// 'query.busId': {
 		// 	handler (val) {
-		// 		this.linkmanQueryList()
+		// 		this.linkmanQueryBusList()
 		// 	},
 		// 	deep: true
 		// }

@@ -202,7 +202,7 @@ export default {
 		// 阶段更换
 		setpHandle (row, index) {
 			this.stageActive = index
-			this.$api.seeCrmService.updatelStagePrope({ id: this.detailInfo.id, stageId: row.id })
+			this.$api.seeCrmService.saleschanceUpdatelStagePrope({ id: this.detailInfo.id, stageId: row.id })
 				.then(res => {
 					// console.log('阶段更改成功')
 				})
