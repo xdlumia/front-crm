@@ -30,14 +30,14 @@ export default {
 		return {
 			contactList: [],
 			form: {
-				linkmanId: [] // 客户ids
+				linkmanRelationSaveVoList: [] // 客户ids
 			}
 		}
 	},
 	onReady (option) {
 		// 联系人回掉
 		uni.$on('chooseContact', data => {
-			this.form.linkmanId = data.map(item => {
+			this.form.linkmanRelationSaveVoList = data.map(item => {
 				return {
 					busId: this.query.busId,
 					busType: this.query.busType,
@@ -46,7 +46,7 @@ export default {
 				}
 			})
 			// 业务与联系人关系保存
-			this.linkmanrelationSaveBatch(params)
+			this.linkmanrelationSaveBatch()
 		})
 	},
 	computed: {
