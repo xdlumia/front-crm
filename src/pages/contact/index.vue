@@ -14,8 +14,8 @@
       :params="queryForm"
       @getList='getList'
       ref='list'>
-        <div @click='handlerClient(item, index)' class="chance-item uni-flex uni-row" v-for="(item,index) of list" :key="item.id">
-          <div class="wfull flex-item item-info d-elip">
+        <div class="chance-item uni-flex uni-row" v-for="(item,index) of list" :key="item.id">
+          <div @click='handlerClient(item, index)' class="wfull flex-item item-info d-elip">
             <!-- <a url="./detail/index"> -->
               <h4 class="d-elip">{{item.linkkanName}}</h4>
               <p class="d-text-qgray d-elip f12 ">{{item.clientName}}</p>
@@ -99,11 +99,14 @@ export default {
 				busId: '', // 业务id
 				linkkanName: '', // 联系人名称
 				linkanNameOrMobile: '', // 姓名或手机号
-				queryType: '', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
-				orderByStr: '', // 排序字段（a.follow_up_time，a.modify_time阶段更新日期，a.create_time创建日期）
+				queryType: '0', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
+				orderByStr: 'a.follow_up_time', // 排序字段（a.follow_up_time，a.modify_time阶段更新日期，a.create_time创建日期）
 				createTimeType: '' // 创建时间（0-本周，1-本季，2-本年，3-上周，4-上月,5-本月，6-今天，7-下周）
 			}
 		}
+	},
+	onShow () {
+		this.$refs.list.reload()
 	},
 	onLoad (option) {
 		this.select = option.select

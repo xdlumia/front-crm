@@ -183,25 +183,17 @@ export default {
 			})
 			this.$api.seeCrmService[api](params)
 				.then(res => {
-					if (res.code === 200) {
-						if (this.editType === '2') {
-							this.$routing.navigateTo(`/pages/chance/index`)
-						} else {
-							// 编辑成功emit给返回页
-							uni.$emit('addChance')
-							// 返回上一页
-							this.$routing.navigateBack()
-						}
+					if (res.code !== 200) return
+					if (this.editType === '2') {
+						this.$routing.navigateTo(`/pages/chance/index`)
+					} else {
+						// 编辑成功emit给返回页
+						uni.$emit('addChance')
+						// 返回上一页
+						this.$routing.navigateBack()
 					}
 				})
 		},
-		// 获取部门列表
-		// getDepts () {
-		// 	this.$api.enterpriseManagementService.getDepts({ limit: 100, paeg: 1 })
-		// 		.then(res => {
-		// 			this.deptList = res.data || []
-		// 		})
-		// },
 		// 查询机会详情
 		saleschanceInfo (id) {
 			this.$api.seeCrmService.saleschanceInfo(null, id)

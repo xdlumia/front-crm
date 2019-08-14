@@ -41,15 +41,7 @@ Api.interceptors.response.use((response) => {
 	let res = response.data
 	// uni.hideLoading()
 	if (+response.data.code === 402) {
-		local.remove('finger')
-		local.remove('token')
-		local.remove('userInfo')
-		if (global.g.redirectUrl) {
-			console.warn('未登录')
-			uni.redirectTo({
-				url: global.g.redirectUrl
-			})
-		}
+		uni.$emit('loginout')
 		return Promise.reject(res.msg)
 		// return Promise.resolve(
 		// 	Object.assign({

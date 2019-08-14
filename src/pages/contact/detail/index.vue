@@ -8,16 +8,21 @@
         <div class="uni-flex uni-row">
           <div
             class="flex-item d-elip wfull f16"
-            style="color:#333">{{detailInfo.linkkanName || '-'}}</div>
+            style="color:#333">{{detailInfo.linkmanName || '-'}}</div>
           <div class="flex-item datail-handle">
             <a class="d-inline" :url="`/pages/contact/add-contact?id=${detailsInfo.id}&editType=1`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
 			<span @click="updateAttention(detailsInfo.isWatchful)">
-				<i-icon :type="detailsInfo.isWatchful?'like_fill':'like'" size="20" class="ml15" :color="detailsInfo.isWatchful?'#FF5533':'#999'" />
-			</span>
+              <i-icon
+                :type="detailsInfo.isWatchful?'like_fill':'like'"
+                size="20"
+                class="ml15"
+                :color="detailsInfo.isWatchful?'#FF5533':'#999'"
+              />
+            </span>
 			</div>
         </div>
         <div class="f12">负责人: {{detailInfo.leaderName || '-'}}</div>
-        <div class="f12"><a :url="`/pages/client/detail/index?id=${detailInfo.clientId}`" class="d-elip d-text-blue" style="display:inline">{{detailInfo.clientName}}</a></div>
+        <div class="f12"><a :url="`/pages/client/detail?id=${detailInfo.clientId}`" class="d-elip d-text-blue" style="display:inline">{{detailInfo.clientName}}</a></div>
         <div class="f12">{{detailInfo.address || '-'}}</div>
       </div>
       <!-- tabs切换组件 -->
@@ -75,7 +80,7 @@ export default {
 				{ title: '详细信息' },
 				{ title: '相关信息' }
 			],
-			id: '', // 当前详情id
+			busId: '', // 当前详情id
 			// tab当前选中项
 			currTabIndex: 0,
 			detailInfo: {},
@@ -86,11 +91,16 @@ export default {
 		}
 	},
 	onLoad (option) {
-		this.id = option.id
-		// 获取详情
-		this.linkmanInfo(option.id)
+		this.busId = option.id
 		// 获取联系人列表 bus_type 0客户，1联系人，2机会，3成交
 		this.linkmanQueryList({ id: option.id, busType: 1 })
+		// 获取详情
+		this.linkmanInfo(option.id)
+		// 编辑成功刷新列表
+		uni.$on('addContact', data => {
+			// 获取详情
+			this.linkmanInfo(option.id)
+		})
 	},
 	methods: {
 		// 查询联系人详情
@@ -124,10 +134,20 @@ export default {
 		// 关注状态切换
 		updateAttention (val) {
 			// 是否关注（0-未关注，1-已关注）
-			if (val) {
-				this.detailsInfo.isWatchful = 1
+			if (!val) {
+				this.$api.seeCrmService.watchfulbusinessSave({ busId: this.detailsInfo.id, busType: 1 })
+					.then(res => {
+						if (res.code !== 200) return
+						this.detailsInfo.isWatchful = 1
+					// console.log('关注成功')
+					})
 			} else {
-				this.detailsInfo.isWatchful = 0
+				this.$api.seeCrmService.watchfulbusinessDelete({ busId: this.detailsInfo.id, busType: 1 })
+					.then(res => {
+						if (res.code !== 200) return
+						this.detailsInfo.isWatchful = 0
+					// console.log('删除关注成功')
+					})
 			}
 		},
 		handleMore ({ target: { index } }) {
@@ -141,7 +161,7 @@ export default {
 				2: () => {
 					this.$utils.showModal()
 						.then(() => {
-							this.$api.seeCrmService.linkmanDelete({ id: this.id })
+							this.$api.seeCrmService.linkmanDelete({ id: this.busId })
 								.then(res => {
 									// 删除成功跳转到列表页
 									this.$routing.navigateTo(`/pages/contact/index`)

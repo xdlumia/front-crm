@@ -4,13 +4,13 @@
         <i-cell-group class="f13">
             <!-- <dragSort  v-slot="{ row,index }" :list="resultList" @change="onDragSortChange"> -->
                 <div class="stage-cell f12 ac" v-if="!stageList.length" :key="index">暂无数据</div>
-                <div class="stage-cell" v-for="(item,index) of stageList" :key="index">
+                <div class="stage-cell" v-for="(item,index) of stageListFilter" :key="index">
                     <i-row>
                         <i-col span="3">
                             <p><i class="stage-index">{{index+1}}</i></p>
                         </i-col>
                         <i-col span="3">
-                            <span @click="delStage(index)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
+                            <span @click="delStage(item)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
                         </i-col>
                         <i-col span="4">
                             <p @click="handlerAction(item)" class="f13">{{item.equityedge}}%</p>
@@ -83,6 +83,11 @@ export default {
 		this.salesstageQueryList()
 		this.equityList = this.equityedgeList()
 	},
+	computed: {
+		stageListFilter () {
+			return this.stageList.filter(item => item.isDelete === 0)
+		}
+	},
 	methods: {
 		equityedgeList () {
 			let list = []
@@ -107,8 +112,8 @@ export default {
 			this.stageList.push({ equityedge: '', stageName: '' })
 		},
 		// 删除阶段列表
-		delStage (index) {
-			this.stageList.splice(index, 1)
+		delStage (row) {
+			row.isDelete = 1 // isDelete 1为删除
 		},
 		// onDragSortChange (e) {
 		// 	console.log(e)
@@ -128,26 +133,22 @@ export default {
 		// 提交表单
 		submit () {
 			// 验证
-			for (let i = 0; i < this.stageList.length; i++) {
-				if (!this.stageList[i].stageName || !this.stageList[i].equityedge) {
+			for (let i = 0; i < this.stageListFilter.length; i++) {
+				if (!this.stageListFilter[i].stageName || !this.stageListFilter[i].equityedge) {
 					this.$utils.toast.text('阶段赢率和名称是必填项')
 					return
 				}
-				if (this.stageList[i + 1] && this.stageList[i].equityedge >= this.stageList[i + 1].equityedge) {
+				if (this.stageListFilter[i + 1] && this.stageListFilter[i].equityedge >= this.stageListFilter[i + 1].equityedge) {
 					this.$utils.toast.text('阶段赢率是递增关系')
 					return
 				}
 			}
-			// 调用保存接口
-			let params = this.stageList.map((item, index) => {
-				return {
-					equityedge: item.equityedge,
-					id: item.id || '',
-					stageName: item.stageName,
-					positionNum: index + 1
-				}
+			// 修改排序
+			this.stageListFilter.forEach((item, index) => {
+				item.positionNum = index + 1
 			})
-			this.$api.seeCrmService.salesstageUpdateBatch(params)
+			// 调用保存接口
+			this.$api.seeCrmService.salesstageUpdateBatch(this.stageList)
 				.then(res => {
 					if (res.code !== 200) return
 					// 返回上一页

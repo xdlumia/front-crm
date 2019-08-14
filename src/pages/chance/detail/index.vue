@@ -211,14 +211,20 @@ export default {
 		updateAttention (val) {
 			// 是否关注（0-未关注，1-已关注）
 			if (!val) {
-				this.detailsInfo.isWatchful = 1
-			} else {
-				this.detailsInfo.isWatchful = 0
-			}
-			this.$api.seeCrmService.watchfulbusinessSave({ busId: this.detailsInfo.id, busType: 2 })
-				.then(res => {
+				this.$api.seeCrmService.watchfulbusinessSave({ busId: this.detailsInfo.id, busType: 2 })
+					.then(res => {
+						if (res.code !== 200) return
+						this.detailsInfo.isWatchful = 1
 					// console.log('关注成功')
-				})
+					})
+			} else {
+				this.$api.seeCrmService.watchfulbusinessDelete({ busId: this.detailsInfo.id, busType: 2 })
+					.then(res => {
+						if (res.code !== 200) return
+						this.detailsInfo.isWatchful = 0
+					// console.log('删除关注成功')
+					})
+			}
 		},
 		handlerAction (item) {
 			this[item] = !this[item]

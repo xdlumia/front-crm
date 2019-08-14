@@ -12,7 +12,7 @@
         placeholder="来源"
         label="标签名称">
         </i-input>
-		<dragSort :list="tagList" v-slot={row}>
+		<!-- <dragSort :list="tagList" v-slot={row}>
 			<i-input
 			:label-width="30"
 			v-model="row.labelName"
@@ -24,7 +24,7 @@
 					<i class="uni-icon uni-icon-bars f18 ml10"></i>
 				</span>
 			</i-input>
-		</dragSort>
+		</dragSort> -->
         <i-input
         :label-width="isEdit?30:0"
         :disabled="!isEdit"

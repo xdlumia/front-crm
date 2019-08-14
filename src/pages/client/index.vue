@@ -92,6 +92,7 @@ export default {
 	data () {
 		return {
 			queryForm: {
+				name: '', // 搜索
 				queryType: '', // 查询类型
 				sortType: '' // 排序类型
 			},
@@ -121,6 +122,10 @@ export default {
 			this.queryForm[item.prop] = selects[item.prop].id
 		})
 		this.filterSelect = selects
+
+		uni.$on('updatedate', (name) => {
+			this.form.name = name
+		})
 	},
 	methods: {
 		// 获取列表数据
@@ -133,12 +138,14 @@ export default {
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
 		},
+
 		// 自定义筛选回调
 		diyFilterSubmit (filterData) {
 			this.queryForm = Object.assign({}, this.queryForm, filterData)
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
 		},
+
 		//
 		handlerClient (item, index) {
 			if (!this.isSelect) {
@@ -159,6 +166,11 @@ export default {
 			uni.$emit('chooseClient', { id, name })
 
 			this.$routing.navigateBack()
+		}
+	},
+	watch: {
+		'form.name' () {
+			this.$refs.list.reload()
 		}
 	}
 }

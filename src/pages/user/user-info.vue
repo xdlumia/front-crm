@@ -40,7 +40,7 @@ export default {
 	},
 	methods: {
 		loginOut () {
-			this.$routing.redirectTo('/pages/login/index')
+			uni.$emit('loginout')
 		}
 	}
 }
