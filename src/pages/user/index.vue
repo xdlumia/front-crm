@@ -57,7 +57,7 @@
             <i-cell title="帮助中心" is-link url='/pages/user/help'></i-cell>
             <i-cell title="意见反馈" is-link url='/pages/user/feedback'></i-cell>
             <button class='al' style='padding:0;' open-type="contact">
-                <i-cell title="在线咨询" is-link></i-cell>
+                <i-cell title="我的客服" is-link></i-cell>
             </button>
             <i-cell title="推荐给好友" is-link @click='openPop'></i-cell>
             <i-cell title="客服电话" value='1810474315' @click="callPhone('181811111111')"></i-cell>
