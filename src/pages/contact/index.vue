@@ -1,55 +1,58 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会" :isSearch="true" placeholder="输入联系人姓名,手机号" searchType='3' />
+    <NavBar title="机会" :isSearch="true" placeholder="输入联系人姓名,手机号" searchType="3" />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
-    <Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
-			<filter-diy @submit='diyFilterSubmit'/>
-		</Filter>
+    <Filter :filterData="filterData" @filterSubmit="filterSubmit" ref="filter">
+      <filter-diy @submit="diyFilterSubmit" />
+    </Filter>
     <!-- 列表内容 -->
     <scroll-list
       class="d-absolute wfull"
       :style="{top:`calc(39px + ${navH})`}"
       height="`calc(100vh - ${navH} - 39px)`"
-      api="seeCrmService.linkmanQueryPageList"
+      :api="api"
       :params="queryForm"
-      @getList='getList'
-      ref='list'>
-        <div class="chance-item uni-flex uni-row" v-for="(item,index) of list" :key="item.id">
-          <div @click='handlerClient(item, index)' class="wfull flex-item item-info d-elip">
-            <!-- <a url="./detail/index"> -->
-              <h4 class="d-elip">{{item.linkkanName}}</h4>
-              <p class="d-text-qgray d-elip f12 ">{{item.clientName}}</p>
-              <time class="d-text-qgray f12 fl">创建日期: {{item.createTime}}</time>
-            <!-- </a> -->
+      @getList="getList"
+      ref="list"
+    >
+      <div class="chance-item uni-flex uni-row" v-for="(item,index) of list" :key="item.id">
+        <div @click="handlerClient(item, index)" class="wfull flex-item item-info d-elip">
+          <!-- <a url="./detail/index"> -->
+          <h4 class="d-elip">{{item.linkmanName}}</h4>
+          <p class="d-text-qgray d-elip f12">{{item.clientName}}</p>
+          <div class="d-flex mt5" style="align-items: center;">
+            <div class="c-tag f12 mr10">{{item.score || 0}}分</div>
+            <div class="c-tag f12 mr10">{{item.createTime|timeToStr('yyyy-mm-dd')}}</div>
           </div>
-          <div class="flex-item item-progress">
-            <span v-if="select=='1'">
-                  <m-checkbox v-if="multiple" v-model="linkIds" :label='item.id'></m-checkbox>
-                  <m-radio v-else v-model="linkIds" :label='item.id'></m-radio>
-            </span>
-            <i v-else @click="callPhone(item.mobile)" class="iconfont f20 d-text-blue iconcall"></i>
-          </div>
+          <!-- </a> -->
         </div>
+        <div class="flex-item item-progress">
+          <span v-if="select=='1'">
+            <m-checkbox v-if="multiple" v-model="linkIds" :label="item.id"></m-checkbox>
+            <m-radio v-else v-model="linkIds" :label="item.id"></m-radio>
+          </span>
+          <i v-else @click="callPhone(item.mobile)" class="iconfont f20 d-text-blue iconcall"></i>
+        </div>
+      </div>
     </scroll-list>
     <!-- 客户 -->
-    <div class="footer-fixed-menu d-center d-bg-white bt" v-if='!select'>
-      <a class="d-cell al" url='/pages/contact/add-contact'>
+    <div class="footer-fixed-menu d-center d-bg-white bt" v-if="!select">
+      <a class="d-cell al" url="/pages/contact/add-contact">
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建联系人</span>
       </a>
-      <a class="d-cell ar" url='/pages/contact/manage/index'>
+      <a class="d-cell ar" url="/pages/contact/manage/index">
         <i-icon type="setup" size="18" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">管理联系人</span>
       </a>
     </div>
-    <div class="footer-fixed-menu" v-if='select'>
-      <i-button type="primary" i-class="f16" @click='submitChooseData'>确定</i-button>
+    <div class="footer-fixed-menu" v-if="select">
+      <i-button type="primary" i-class="f16" @click="submitChooseData">确定</i-button>
     </div>
   </div>
 </template>
 
 <script>
-
 import Filter from '@/components/filter'
 import FilterDiy from './filter-diy'
 let queryType = [
@@ -97,7 +100,7 @@ export default {
 				limit: 10,
 				page: 1,
 				busId: '', // 业务id
-				linkkanName: '', // 联系人名称
+				linkmanName: '', // 联系人名称
 				linkanNameOrMobile: '', // 姓名或手机号
 				queryType: '0', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
 				orderByStr: 'a.follow_up_time', // 排序字段（a.follow_up_time，a.modify_time阶段更新日期，a.create_time创建日期）
@@ -110,12 +113,11 @@ export default {
 	},
 	onLoad (option) {
 		this.select = option.select
+		this.queryForm.busId = option.busId || ''
+		this.queryForm.busType = option.busType || ''
 		if (option.multiple) {
 			this.multiple = option.multiple
 			this.linkIds = JSON.parse(option.linkIds)
-			this.queryForm.busId = option.chanceId
-			this.queryForm.busType = option.busType
-			this.queryForm.limit = 99
 		} else {
 			this.linkIds = option.id
 		}
@@ -180,9 +182,11 @@ export default {
 		// console.log()
 	},
 	computed: {
-		// api () {
-		// 	return this.select ? 'seeCrmService.linkmanQueryList' : 'seeCrmService.linkmanQueryPageList'
-		// }
+		api () {
+			return this.select
+				? 'seeCrmService.linkmanQueryList'
+				: 'seeCrmService.linkmanQueryPageList'
+		}
 	}
 }
 </script>

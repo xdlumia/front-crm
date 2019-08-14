@@ -35,7 +35,7 @@
       class="d-absolute wfull"
       :style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
       :height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
-      api="seeCrmService.saleschanceQueryPageList"
+      :api="api"
       :params="queryForm"
       @getList='getList'
       ref='list'>
@@ -45,10 +45,19 @@
 		</div>
 		<div class="flex-item item-info d-elip wfull">
 			<h4 class="d-elip f13">{{item.chanceName || '-'}}</h4>
-			<p class="d-text-gray d-elip f13">{{item.clientName || '-'}}</p>
 			<i-row>
-				<i-col :span="12" class="d-text-gray f12">{{item.createTime | timeToStr}}</i-col>
-				<i-col  v-if='!isSelect' :span="12" class="f14 ar">¥{{item.salesMoney}}</i-col>
+				<i-col :span="12" class="d-text-gray f12">
+					<p class="d-text-gray d-elip f13">{{item.clientName || '-'}}</p>
+				</i-col>
+				<i-col v-if='!isSelect' :span="12" class="f14 ar">¥{{item.salesMoney}}</i-col>
+			</i-row>
+			<i-row>
+				<i-col :span="12" class="d-text-gray f12">
+					<div class="d-flex mt5" style="align-items: center;">
+						<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
+						<div class="c-tag f12 mr10">{{item.createTime|timeToStr('yyyy-mm-dd')}}</div>
+					</div>
+				</i-col>
 			</i-row>
 		</div>
 		<div class="flex-item d-flex" style="width:50px;align-items: center;" v-if="isSelect">
@@ -150,7 +159,11 @@ export default {
 		this.$refs.list.reload()
 	},
 	onLoad (option) {
-		// console.log(option)
+		console.log(option)
+		// this.select = option.select
+		this.queryForm.busId = option.busId || ''
+		this.queryForm.busType = option.busType || ''
+		this.queryForm.clientId = option.clientId || ''
 	},
 	created () {
 		// this.busId = this.id

@@ -191,14 +191,5 @@ export default {
 	.client-tags{
 		align-items: center;
 	}
-	.c-tag{
-		padding: 0 10px;
-		height: 20px;
-		background: #f2f2f2;
-		color: #ccc;
-		line-height: 20px;
-		text-align: center;
-		border-radius: 100px;
-	}
 
 </style>

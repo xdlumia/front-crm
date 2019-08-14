@@ -6,9 +6,9 @@
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc">
-            <m-list label="姓名">{{detailInfo.linkkanName}}</m-list>
+            <m-list label="姓名">{{detailInfo.linkmanName}}</m-list>
             <m-list label="负责人">{{detailInfo.leaderName}}</m-list>
-            <m-list label="公司名称">{{detailInfo.aaa}}</m-list>
+            <m-list label="公司名称">{{detailInfo.clientName}}</m-list>
         </mPanel>
 		<mPanel title="联系信息" bg="#f8f9fc">
             <m-list label="手机">{{detailInfo.mobile}}</m-list>
@@ -34,40 +34,11 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
-		// // 滚动到顶部刷新
-		// scrolltoupper (e) {
-		// 	console.log(e)
-		// },
-		// // 滚动到底部加载
-		// scrolltolower (e) {
-		// 	console.log(e)
-		// },
-		// 打开列表详情
-		openDetail (index) {
-			this.$routing.navigateTo('./detail/index')
-		}
-
 	},
-	// // 监听用户下拉动作，一般用于下拉刷新
-	// onPullDownRefresh  () {
-	// 	this.$refs.list.reload()
-	// 	wx.vibrateShort()
-	// 	wx.stopPullDownRefresh()
-	// },
-	// // 页面上拉触底事件的处理函数
-	// onReachBottom () {
-	// 	this.$refs.list.getNextPage()
-	// },
 	created () {}
 }
 </script>
 
 <style scoped lang="scss">
-.chance-item{
-    border-bottom:1px solid #efefef;
-    background-color:#fff;
-    padding:10px;
-    .item-progress{ display: flex; align-items: center; margin-right:10px; }
-    .item-info{font-size:14px; color:#333}
- }
+
 </style>

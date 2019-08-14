@@ -5,7 +5,7 @@
     <NavBar  :title="`${titleType}联系人`"/>
     <scroll-view scroll-y style="height:calc(100vh - 115px)">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
-            <i-input v-model="form.linkkanName" label="姓名" placeholder="请填写" required />
+            <i-input v-model="form.linkmanName" label="姓名" placeholder="请填写" required />
             <a url="/pages/client/choose-client">
 				<i-input disabled v-model="form.clientName" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
@@ -75,7 +75,7 @@ export default {
 					// ]
 				},
 				leaderId: '', // 责任人id
-				linkkanName: '', // 示例：联系人名称',
+				linkmanName: '', // 示例：联系人名称',
 				mobile: '', // 示例：手机号',
 				note: '', // 示例：备注',
 				phone: '', // 示例：电话',

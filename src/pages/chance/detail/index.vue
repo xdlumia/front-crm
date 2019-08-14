@@ -69,7 +69,7 @@
         </i-tab>
         <i-tab index="2">
           <!-- 相关信息 -->
-          <correlationInfo v-if="detailsInfo.clientId" :query="{busId:busId,busType:2,clientId:detailsInfo.clientId}" height="calc(100vh - 380px)" />
+          <correlationInfo v-if="detailsInfo.clientId" :query="{busId:busId,busType:2,name:detailsInfo.chanceName,clientId:detailsInfo.clientId,chanceId:busId}" height="calc(100vh - 380px)" />
         </i-tab>
       </i-tabs>
       <!-- 底部操作按钮 -->

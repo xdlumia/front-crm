@@ -10,13 +10,13 @@
             class="flex-item d-elip wfull f16"
             style="color:#333">{{detailInfo.linkmanName || '-'}}</div>
           <div class="flex-item datail-handle">
-            <a class="d-inline" :url="`/pages/contact/add-contact?id=${detailsInfo.id}&editType=1`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
-			<span @click="updateAttention(detailsInfo.isWatchful)">
+            <a class="d-inline" :url="`/pages/contact/add-contact?id=${detailInfo.id}&editType=1`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
+			<span @click="updateAttention(detailInfo.isWatchful)">
               <i-icon
-                :type="detailsInfo.isWatchful?'like_fill':'like'"
+                :type="detailInfo.isWatchful?'like_fill':'like'"
                 size="20"
                 class="ml15"
-                :color="detailsInfo.isWatchful?'#FF5533':'#999'"
+                :color="detailInfo.isWatchful?'#FF5533':'#999'"
               />
             </span>
 			</div>
@@ -28,13 +28,13 @@
       <!-- tabs切换组件 -->
       <i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
 			<i-tab index="0">
-				<notesInfo :query="{salesFunnelId:id}" height="calc(100vh - 280px)"/>
+				<notesInfo v-if="busId" :query="{busId:busId, busType:1}" height="calc(100vh - 280px)"/>
 			</i-tab>
 			<i-tab index="1">
-				<detailInfo :detailInfo="detailsInfo" height="calc(100vh - 280px)"/>
+				<detailInfo v-if="detailInfo.id" :detailInfo="detailInfo" height="calc(100vh - 280px)"/>
 			</i-tab>
 			<i-tab index="2">
-				<correlationInfo :query="{busId:id,busType:1}" height="calc(100vh - 280px)"/>
+				<correlationInfo v-if="busId" :query="{busId:busId,busType:1}" height="calc(100vh - 280px)"/>
 			</i-tab>
 		</i-tabs>
       <!-- 底部操作按钮 -->
@@ -93,7 +93,7 @@ export default {
 	onLoad (option) {
 		this.busId = option.id
 		// 获取联系人列表 bus_type 0客户，1联系人，2机会，3成交
-		this.linkmanQueryList({ id: option.id, busType: 1 })
+		this.linkmanQueryList({ busId: option.id, busType: 1 })
 		// 获取详情
 		this.linkmanInfo(option.id)
 		// 编辑成功刷新列表
@@ -126,7 +126,7 @@ export default {
 				.then(res => {
 					let data = res.data || []
 					this.phoneActions = data.map(item => {
-						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
 					})
 					this.phoneActions.unshift({ name: '联系人电话' })
 				})
@@ -135,17 +135,17 @@ export default {
 		updateAttention (val) {
 			// 是否关注（0-未关注，1-已关注）
 			if (!val) {
-				this.$api.seeCrmService.watchfulbusinessSave({ busId: this.detailsInfo.id, busType: 1 })
+				this.$api.seeCrmService.watchfulbusinessSave({ busId: this.detailInfo.id, busType: 1 })
 					.then(res => {
 						if (res.code !== 200) return
-						this.detailsInfo.isWatchful = 1
+						this.detailInfo.isWatchful = 1
 					// console.log('关注成功')
 					})
 			} else {
-				this.$api.seeCrmService.watchfulbusinessDelete({ busId: this.detailsInfo.id, busType: 1 })
+				this.$api.seeCrmService.watchfulbusinessDelete({ busId: this.detailInfo.id, busType: 1 })
 					.then(res => {
 						if (res.code !== 200) return
-						this.detailsInfo.isWatchful = 0
+						this.detailInfo.isWatchful = 0
 					// console.log('删除关注成功')
 					})
 			}
@@ -163,6 +163,7 @@ export default {
 						.then(() => {
 							this.$api.seeCrmService.linkmanDelete({ id: this.busId })
 								.then(res => {
+									if (res.code !== 200) return
 									// 删除成功跳转到列表页
 									this.$routing.navigateTo(`/pages/contact/index`)
 								})

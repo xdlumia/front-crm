@@ -3,7 +3,7 @@
     <scroll-view class="diy-filter" :style='"height: calc(100vh - "+ navH + " - 40px)"' scroll-y>
       <filter-plane title="姓名">
         <div class="pb10 wfull" style="box-sizing:border-box">
-          <input class="filter-input" name="linkkanName" v-model="filterData.linkkanName" placeholder="请输入关键字" type="text" />
+          <input class="filter-input" name="linkmanName" v-model="filterData.linkmanName" placeholder="请输入关键字" type="text" />
         </div>
       </filter-plane>
       <filter-plane title='创建日期' v-model='filterData.createTimeType' isSingle :dataList='dateList'/>
@@ -34,7 +34,7 @@ export default {
 		return {
 			dateList: dateList,
 			filterData: {
-				linkkanName: '', // 联系人名称
+				linkmanName: '', // 联系人名称
 				createTimeType: '', // 创建日期
 				sourceCode: []
 			}
