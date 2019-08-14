@@ -8,14 +8,14 @@
 <template>
     <div class="client-detail-page">
 		<template v-if='!loading'>
-			<NavBar title='客户详情' />
+			<NavBar title='客户详情' searchType='0' />
 			<!-- 顶部信息 -->
 
 			<div class="chance-datail-title pl15 pr15 pb10 f13 d-bg-white bb mb15">
 				<div class="uni-flex uni-row pt10 mb5">
 					<div class="flex-item d-elip wfull f16 d-text-black">{{detailInfo.name}}</div>
 					<div class="flex-item datail-handle">
-						<div @click='editClient(id)' class='d-inline'><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></div>
+						<div @click='editClient(id)' class='d-inline' v-if='sendBackType'><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></div>
 						<span @click='watchfulbusiness'>
 							<i-icon type="like_fill" size="20" class="ml15" :color="!detailInfo.watchfulBusinessStatus ? '#999' : '#ff5533'" />
 						</span>
@@ -73,7 +73,7 @@
 				<div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
 					<span class="iconfont iconcall f18" style='color: #696969'></span><span class="ml5 f13  d-text-gray">打电话</span>
 				</div>
-				<div class="d-cell ar" @click="handlerAction('moreShow')">
+				<div class="d-cell ar" @click="handlerAction('moreShow')" v-if='sendBackType'>
 					<i-icon type='more' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">更多</span>
 				</div>
 			</div>
@@ -168,6 +168,11 @@ export default {
 		this.getDetailInfo()
 		// 获取联系人列表
 		this.linkmanQueryList({ id: this.id, busType: 0 })
+	},
+	computed: {
+		sendBackType () {
+			return detailInfo.sendBackType !== 1
+		}
 	},
 	methods: {
 

@@ -67,12 +67,12 @@
 
 				<div class='d-bg-white pb10'>
 					<div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
-						<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
-						<i-input v-if='item.fieldType == 1' type='number' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
-						<picker-date v-if='item.fieldType == 2' v-model="item.fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+						<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+						<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+						<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
 						<i-select
 							v-if='item.fieldType === 3'
-							v-model="form.fieldValue"
+							v-model="form.formsFieldValueSaveVos[index].fieldValue"
 							:props="{label:'content',value:'code'}"
 							:label="item.fieldName"
 							placeholder="请选择"
@@ -116,6 +116,7 @@ export default {
 			isSkipContact: false, // 是否新建联系人
 			labelNames: '', // 标签名称组合
 			form: {
+				id: '',
 				name: '', // 姓名
 				phone: '', // 手机
 				address: '', // 地址
@@ -152,17 +153,18 @@ export default {
 		this.id = params.id || 0
 		if (this.id) {
 			this.title = '编辑客户信息'
+			this.getDetailInfo()
+		} else {
+			this.getMoreField()
 		}
+
 		// 公海池 id
 		this.form.poolId = params.poolId || ''
 
-		uni.$once('moreTags', data => {
+		uni.$on('moreTags', data => {
 			this.labelNames = data.map(item => item.labelName).join(',')
 			this.form.lableBusinessSaveVo.labelIdArray = data.map(item => item.id)
 		})
-	},
-	onShow () {
-		this.id ? this.getDetailInfo() : this.getMoreField()
 	},
 	onUnload () {
 		this.id = 0
@@ -170,9 +172,13 @@ export default {
 	},
 	methods: {
 		getDetailInfo () {
-			let info = this.$store.state.client.clientInfo || {}
+			let info = JSON.parse(JSON.stringify(this.$store.state.client.clientInfo || {}))
 			for (let key in this.form) {
-				this.form[key] = info[key]
+				if (key === 'formsFieldValueSaveVos') {
+					this.form.formsFieldValueSaveVos = info.formsFieldValueEntities
+				} else {
+					this.form[key] = info[key]
+				}
 			}
 		},
 		handleChange ({ value }) {
@@ -236,9 +242,10 @@ export default {
 				let params = {
 					...this.form
 				}
-				params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
+
+				!this.id && (params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
 					return { busId: this.busId, busType: 0, fieldConfigId: item.id, fieldValue: item.fieldValue }
-				})
+				}))
 
 				// this.id 为 false 则是新增
 				let resulte = await this.$api.seeCrmService[!this.id ? 'clientinfoSave' : 'clientinfoUpdate'](params)
@@ -250,6 +257,7 @@ export default {
 					this.$routing.navigateBack()
 				}
 			} catch (err) {
+				console.log(err)
 			}
 		}
 
