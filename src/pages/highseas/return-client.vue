@@ -34,12 +34,14 @@ export default {
 			clientId: 0,
 			leaderId: 0,
 			id: 0,
-			pool: {}
+			pool: {},
+			isSendBackType: 0 // 是否已被保留退回
 		}
 	},
 	onLoad (option) {
 		this.clientId = option.clientId
 		this.leaderId = option.leaderId
+		this.isSendBackType = option.sendBackType
 
 		this.$store.dispatch('highseas/getList')
 	},
@@ -55,6 +57,10 @@ export default {
 		},
 		// 退回公海
 		returnPool (sendBackType) {
+			if (+sendBackType === 1 && +this.isSendBackType === 1) {
+				this.$utils.toast.text('该客户已被保留退回')
+				return
+			}
 			this.$api.seeCrmService.clientinfoSendBackPool({
 				clientId: this.clientId,
 				poolId: this.id,
@@ -62,16 +68,10 @@ export default {
 				leaderId: this.leaderId
 			}).then(res => {
 				if (res.code === 200) {
-					console.log(res)
-					// this.$routing.navigateBack()
+					this.$routing.navigateBack(2)
 				}
 			})
 		}
-
-		// submit () {
-		// 	Object.keys(this.pool).length && this.$store.commit('highseas/setPool', this.pool)
-		// 	this.$routing.navigateBack()
-		// }
 	}
 }
 </script>
