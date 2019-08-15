@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel title="销售机会" color="#7765cc">
+        <mPanel title="销售机会" color="#FFBA59">
 			<div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
             <div class="detail-list uni-flex uni-row pb10" v-for="(item,index) of list" :key="index">
                 <div class="flex-item item-progress mr10">

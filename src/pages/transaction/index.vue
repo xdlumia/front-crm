@@ -94,7 +94,7 @@ export default {
 				name: '', // 名称
 				transactionStatus: [], // 成交记录状态
 				transationTime: '', // 成交时间
-				queryType: '', // 查询类型（0-全部，1-我负责的，2-我参与的，3-我下属负责的，4-我下属参与的, 5-我关注的）
+				queryType: 0,	 // 查询类型（-1 -全部，0-我负责的，1-我参与的，4-我下属负责的，5-我下属参与的, 2-我关注的）
 				sortType: ''// 排序查询类型（0-创建日期，1-最新修改日期）
 			},
 			transactionStatus: {
@@ -137,30 +137,30 @@ export default {
 			filterData: [
 				{
 					prop: 'queryType',
-					current: { id: 0, name: '全部' },
+					current: { id: 0, name: '我负责的' },
 					list: [
 						{
-							id: 0,
+							id: -1,
 							name: '全部'
 						},
 						{
-							id: 1,
+							id: 0,
 							name: '我负责的'
 						},
 						{
-							id: 2,
+							id: 1,
 							name: '我参与的'
 						},
 						{
-							id: 3,
+							id: 4,
 							name: '我下属负责的'
 						},
 						{
-							id: 4,
+							id: 5,
 							name: '我下属参与的'
 						},
 						{
-							id: 5,
+							id: 2,
 							name: '我关注的'
 						}
 					]
@@ -231,7 +231,7 @@ export default {
 				totalAmountMax: '', // 总金额最大值
 				transactionStatus: [], // 成交记录状态
 				transationTime: '', // 成交时间
-				queryType: '', // 查询类型（0-全部，1-我负责的，2-我参与的，3-我下属负责的，4-我下属参与的, 5-我关注的）
+				queryType: 0, // 查询类型（-1 -全部，0-我负责的，1-我参与的，4-我下属负责的，5-我下属参与的, 2-我关注的）
 				sortType: ''// 排序查询类型（0-创建日期，1-最新修改日期）
 			}
 			this.$refs.list.reload()

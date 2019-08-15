@@ -37,6 +37,10 @@
      <i-input maxlength="32" v-model="deptInfo.deptName" disabled label="所属部门" placeholder="请输入"/>
         <picker-date v-model="form.signDate" label="签约日期" placeholder="请选择日期"></picker-date>
       </m-form>
+			<div class="pt10 pl15 pr15 d-bg-white bb">
+					<div class='f13 mb10 d-text-black'>备注</div>
+					<textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
+			</div>
       <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block">
         <i-icon type="add" size="18" color="#999"/>添加更多条目
       </a>
@@ -70,6 +74,7 @@ export default {
 				totalAmount: '', // 总金额
 				endTime: '', // 结束时间
 				belongDeptCode: '', // 所属部门code
+				note: '', // 备注
 				signDate: ''// 签约日期
 			},
 			rules: {
@@ -140,11 +145,12 @@ export default {
 
 		// 联系人回调
 		uni.$on('chooseContact', data => {
+			console.log(data)
 			if (data.length > 0) {
 				let nameArr = []
 				data.forEach((item) => {
 					this.linkIds.push(item.id)
-					nameArr.push(item.linkkanName)
+					nameArr.push(item.linkmanName)
 				})
 				this.form.linkkanNames = nameArr.join(',')
 			}
@@ -163,6 +169,16 @@ export default {
 		linkmanQueryList (params) {
 			this.$api.seeCrmService.linkmanrelationList(params)
 				.then(res => {
+					console.log(res)
+					let data = res.data || []
+					if (data.length > 0) {
+						let nameArr = []
+						data.forEach((item) => {
+							this.linkIds.push(item.id)
+							nameArr.push(item.linkmanName)
+						})
+						this.form.linkkanNames = nameArr.join(',')
+					}
 				})
 		},
 		// 保存transactionrecordUpdate

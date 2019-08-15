@@ -28,19 +28,7 @@ export default {
 	},
 	data () {
 		return {
-			dataArr: [
-				{ employeeName: '中国', userId: 'China' },
-				{ employeeName: '俄罗斯', userId: 'Russia' },
-				{ employeeName: '美国', userId: 'America' },
-				{ employeeName: '澳大利亚', userId: 'Australia' },
-				{ employeeName: '巴西', userId: 'Brazil' },
-				{ employeeName: '韩国', userId: 'Korea' },
-				{ employeeName: '朝鲜', userId: 'North Korea' },
-				{ employeeName: '英国', userId: 'Britain' },
-				{ employeeName: '德国', userId: 'Germany' },
-				{ employeeName: '加拿大', userId: 'Canada' },
-				{ employeeName: '非洲', userId: 'New Zealand' }
-			],
+			dataArr: [],
 			clickDatas: {},
 			isRadio: true,
 			queryform: {

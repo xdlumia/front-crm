@@ -1,13 +1,13 @@
 <!--
 /**
-* @author 王晓冬
+* @author 徐贺
 * @name 日程
 * @date 2019年7月299日
 **/
 -->
 <template>
     <div>
-        <mPanel top="10" title="日程" color="#4889f4" :url="`/pages/index/scheduleAdd?busType=${query.busType}&name=${query.name}&id=${query.busId}`">
+        <mPanel top="10" title="日程" color="#00BCD4" :url="`/pages/index/scheduleAdd?busType=${query.busType}&name=${query.name}&id=${query.busId}`">
             <div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
 			<div v-else>
 				<div class="detail-list" v-for="(item,index) in list" :key="index">
