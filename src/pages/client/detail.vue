@@ -272,7 +272,7 @@ export default {
 				},
 				2: () => {
 					// 退回公海
-					this.$routing.navigateTo('/pages/highseas/return-client?clientId=' + this.id + '&leaderId=' + this.detailInfo.leaderId)
+					this.$routing.navigateTo('/pages/highseas/return-client?clientId=' + this.id + '&leaderId=' + this.detailInfo.leaderId + '&sendBackType=' + this.detailInfo.sendBackType)
 				},
 				3: () => {
 					// 变更负责人
@@ -287,7 +287,7 @@ export default {
 				},
 				5: () => {
 					// 更多日程
-					this.$routing.navigateTo('/pages/index/scheduleAdd')
+					this.$routing.navigateTo('/pages/index/scheduleAdd?busId=' + this.id + '&busType=0&name=' + this.detailInfo.name)
 				},
 				6: () => {
 					// 分配
@@ -324,7 +324,7 @@ export default {
 				partiType: 0
 			}).then(res => {
 				if (res.code === 200) {
-					// 完成
+
 				}
 			})
 		},
