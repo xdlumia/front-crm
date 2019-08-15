@@ -205,7 +205,7 @@ export default {
 		// 联系人回调
 		uni.$on('chooseContact', data => {
 			this.contactData = data
-			this.contactData.name = data.linkkanName
+			this.contactData.name = data.linkmanName
 		})
 		// 公海池回调
 		uni.$on('choosePool', data => {
