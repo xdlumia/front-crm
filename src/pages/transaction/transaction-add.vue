@@ -47,7 +47,7 @@
 						<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
 						<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
 						<i-select
-							v-if='item.fieldType === 3'
+							v-if='item.fieldType == 3'
 							v-model="form.formsFieldValueSaveVos[index].fieldValue"
 							:props="{label:'content',value:'code'}"
 							:label="item.fieldName"
@@ -138,6 +138,12 @@ export default {
 		} else {
 			this.getMoreField()
 		}
+
+		// 更多条目回掉
+		uni.$on('moreList', data => {
+			// 获取字段列表
+			this.getMoreField()
+		})
 		// 在客户里边调用成交记录的话，需要将客户id带给销售机会，用来筛选当前客户关联的销售机会
 		// 在机会里边调用成交记录的话，需要取到当前机会的id，用id去查询详情，填充客户名称，并且传到联系人，走正常成交记录流程
 		if (option.busType == 0) { // eslint-disable-line
@@ -220,9 +226,11 @@ export default {
 				return
 			}
 			let name = this.type === 'add' ? 'transactionrecordSave' : 'transactionrecordUpdate'
-			if ((this.type === 'add') && this.form.formsFieldValueSaveVos.length > 0) {
+			if (this.form.formsFieldValueSaveVos.length > 0) {
 				this.form.formsFieldValueSaveVos.forEach((item) => {
-					item.fieldConfigId = item.id
+					if (!item.fieldConfigId) {
+						item.fieldConfigId = item.id
+					}
 				})
 			}
 			await this.$refs.form.validate()
