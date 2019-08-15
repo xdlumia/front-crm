@@ -1,9 +1,8 @@
 <template>
     <view>
-        <scroll-view class="wxaSortPickerList" scroll-y="true" :style="{height: scrollHeight + 'px'}" :scroll-into-view="wxaSortPickerData.wxaSortPickertoView">
+        <scroll-view class="wxaSortPickerList" scroll-y="true" :style="{height: scrollHeight-130 + 'px'}" :scroll-into-view="wxaSortPickerData.wxaSortPickertoView">
 		<div class="page-search-box d-flex">
             <div class="search-input d-center d-cell pl10">
-                <!-- <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5"><input placeholder="搜成交记录名称" /></span> -->
                 <i-icon style='position: absolute;left: 3px;top: 0px;' type="search" size="20" color='#c5c5c5' />
                 <input v-model="searchValue" style="padding-left: 15px;height: 29px;" placeholder="搜姓名，手机号" />
             </div>
@@ -50,7 +49,7 @@ export default {
 			wxaSortPickerData: {
 				wxaSortPickertoView: '',
 				view: {
-					scrollHeight: '500px'
+					scrollHeight: '900px'
 				},
 				textData: null,
 				dataType: 'dataType'
@@ -281,6 +280,7 @@ export default {
 			var that = this
 			uni.getSystemInfo({
 				success: function (res) {
+					console.log(res)
 					var windowHeight = res.windowHeight
 					var temData = that.wxaSortPickerData
 					if (typeof temData === 'undefined') {

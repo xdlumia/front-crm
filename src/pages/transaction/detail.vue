@@ -10,7 +10,9 @@
                     <a :url="`/pages/transaction/transaction-add?type=edit&id=${detailId}`">
                         <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
                     </a>
-                    <i-icon type="like_fill" size="20" class="ml15" color="#ff5533" />
+					<span @click="changeWatchful">
+						<i-icon type="like_fill" size="20" class="ml15" :color="!detailInfo.isWatchful ? '#999' : '#ff5533'" />
+					</span>
                 </div>
             </div>
 
@@ -142,7 +144,17 @@ export default {
 			if (!index) return
 			this.callPhone(this.phoneActions[index].phone)
 		},
-
+		// 关注  取关
+		changeWatchful () {
+			let type = this.detailInfo.isWatchful ? 'watchfulbusinessDelete' : 'watchfulbusinessSave'
+			this.$api.seeCrmService[type]({
+				busId: this.detailInfo.id,
+				busType: 3
+			})
+				.then(res => {
+					this.getTransactionDetail()
+				})
+		},
 		handleMore ({ target: { index } }) {
 			let fnType = {
 				1: () => {

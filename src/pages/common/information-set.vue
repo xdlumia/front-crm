@@ -224,7 +224,7 @@ export default {
 		fdelete (id) {
 			this.$utils.showModal('确定删除当前标签？')
 				.then(() => {
-					this.$api.seeCrmService.formsfieldconfigDelete({ id: id })
+					this.$api.seeCrmService.formsfieldconfigLogicDelete({ id: id })
 						.then(res => {
 							if (res.code === 200) {
 								this.$utils.toast.text('删除成功')

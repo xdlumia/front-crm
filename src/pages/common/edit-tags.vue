@@ -94,22 +94,7 @@ export default {
 				page: 1,
 				limit: 15
 			},
-			valueList: [{
-				dicCode: 'FM_BUILDING_TYPE',
-				code: 'BB_CXFW-1',
-				isEnable: 1,
-				content: '平房'
-			}, {
-				dicCode: 'FM_BUILDING_TYPE',
-				isEnable: 1,
-				code: 'BB_CXFW-1',
-				content: '楼房'
-			}, {
-				dicCode: 'FM_BUILDING_TYPE',
-				isEnable: 1,
-				code: 'BB_CXFW-1',
-				content: '二房'
-			}]
+			valueList: []
 		}
 	},
 	onLoad (option) {
