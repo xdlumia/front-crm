@@ -111,10 +111,12 @@ export default {
 	},
 	onLoad (option) {
 		// 获取字段列表
+		console.log(option.id)
 		this.formsfieldconfigQueryList()
 		if (option.id) {
 			this.busId = option.id
 			this.editType = option.editType
+			this.form.id = option.id
 		}
 
 		if (option.clientId && option.clientName) {

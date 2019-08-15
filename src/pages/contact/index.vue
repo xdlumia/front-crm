@@ -70,7 +70,8 @@ let queryType = [
 	{ id: '1', name: '我参与的' },
 	{ id: '-1', name: '全部' },
 	{ id: '3', name: '7天未跟进的' },
-	{ id: '4', name: '我下属的' }
+	{ id: '4', name: '我下属负责的' },
+	{ id: '5', name: '我下属参与的' }
 ]
 // 列表排序数据
 let sortType = [
@@ -137,6 +138,13 @@ export default {
 
 		uni.$on('updatedate', ({ searchInfo }) => {
 			this.queryForm.linkmanNameOrMobile = searchInfo
+			this.$refs.list.reload()
+		})
+	},
+	onReady () {
+		// 公共搜索反馈
+		uni.$on('updatedate', (data) => {
+			this.queryForm.linkmanName = data.searchInfo
 			this.$refs.list.reload()
 		})
 	},

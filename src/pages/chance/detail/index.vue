@@ -189,7 +189,7 @@ export default {
 				let data = res.data || []
 				this.phoneActions = data.map(item => {
 					return {
-						name: `${item.linkkanName} ${item.mobile}`,
+						name: `${item.linkmanName} ${item.mobile}`,
 						phone: item.mobile
 					}
 				})
