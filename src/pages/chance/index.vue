@@ -1,6 +1,6 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称" searchType='1' />
+    <NavBar title="机会" :isSearch="true" :placeholder="queryForm.clientOrChanceName || '输入销售机会名称'" searchType='1' />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
 			<filter-diy :stageList="stageList"  @submit='diyFilterSubmit' />
@@ -87,13 +87,20 @@
 import Filter from '@/components/filter'
 import FilterDiy from './filter-diy'
 // 筛选数据
-let queryType = [
-	{ id: '-1', name: '全部' },
-	{ id: '0', name: '我负责的' },
-	{ id: '4', name: '我下属的' },
-	{ id: '2', name: '我关注的' },
-	{ id: '3', name: '7天未跟进' }
-]
+// let queryType = [
+// 	{ id: '-1', name: '全部' },
+// 	{ id: '0', name: '我负责的' },
+// 	{ id: '4', name: '我下属的' },
+// 	{ id: '2', name: '我关注的' },
+// 	{ id: '3', name: '7天未跟进' }
+// ]
+// 筛选数据
+let queryType = ['全部客户', '我负责的', '我参与的', '我关注的', '7天未跟进的', '我下属负责的', '我下属参与的'].map((item, index) => {
+	return {
+		name: item,
+		id: index - 1
+	}
+})
 // 列表排序数据
 let sortType = [
 	{ id: 'a.follow_up_time', name: '最新跟进时间' },
@@ -159,9 +166,10 @@ export default {
 		this.$refs.list.reload()
 		// 获取销售阶段
 		this.salesstageQueryList()
+
+		this.$forceUpdate()
 	},
 	onLoad (option) {
-		console.log(option)
 		// this.select = option.select
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
@@ -171,6 +179,10 @@ export default {
 			this.queryForm.busId = option.clientId
 			this.queryForm.busType = 0
 		}
+		uni.$on('updatedate', ({ searchInfo }) => {
+			this.queryForm.clientOrChanceName = searchInfo
+			this.$refs.list.reload()
+		})
 	},
 	created () {
 		// this.busId = this.id
@@ -306,7 +318,7 @@ export default {
     padding-right: 5px;
     margin-right: 5px;
     border-right: 1px solid #999;
-    &::last-child{border:none}
+    &:last-child{border-right:none}
   }
 }
 .chance-item {

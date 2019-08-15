@@ -15,7 +15,7 @@
                 :key='item.id'
             >
                 <div class="f13 d-text-black b d-elip">{{item.headline}}</div>
-                <div class="d-text-qgray f13 twowrap h50">{{item.text}}</div>
+                <div class="d-text-qgray f13 twowrap h50">{{item.text || ''}}</div>
                 <div class="mt10" v-if='item.masterPicArray && item.masterPicArray.length'>
                     <img class="attr-img" mode='aspectFit' v-for='(imgItem, imgIndex) in item.masterPicArray' :key='imgIndex' :src="imgItem.fileUrl" alt="">
                 </div>
@@ -60,8 +60,12 @@ export default {
 			loading: true
 		}
 	},
-	created () {
+	onReady () {
 		this.getListClientbusiness()
+		uni.$on('attrBack', data => {
+			console.log(1)
+			this.getListClientbusiness(1)
+		})
 	},
 	methods: {
 		// 获取业务属性列表

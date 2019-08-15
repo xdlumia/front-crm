@@ -104,7 +104,7 @@ export default {
 	onShow () {
 		this.getTransactionDetail()
 		// 获取联系人列表
-		this.linkmanQueryList({ id: this.detailId, busType: 3 })
+		this.linkmanQueryList({ busId: this.detailId, busType: 3 })
 	},
 	onReady () {
 	},
@@ -132,12 +132,11 @@ export default {
 		},
 		// 获取联系人列表
 		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params)
+			this.$api.seeCrmService.linkmanQueryBusList(params)
 				.then(res => {
 					let data = res.data || []
-					console.log(data, 'linkmanQueryListlinkmanQueryList')
 					let phones = data.map(item => {
-						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
 					})
 					this.phoneActions.push(...phones)
 				})

@@ -72,6 +72,7 @@ export default {
     left: 0;
     width: 100%;
     box-sizing: border-box;
+    z-index: 3;
     .d-cell{
         padding: 10px 15px;
     }

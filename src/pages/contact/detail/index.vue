@@ -28,18 +28,18 @@
       <!-- tabs切换组件 -->
       <i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
 			<i-tab index="0">
-				<notesInfo v-if="busId" :query="{busId:busId, busType:1}" height="calc(100vh - 280px)"/>
+				<notesInfo v-if="busId" :query="{linkId: busId}" :height="'calc(100vh - 49px - 40px - 122px - 50px - ' + navH + ')'"/>
 			</i-tab>
 			<i-tab index="1">
-				<detailInfo v-if="detailInfo.id" :detailInfo="detailInfo" height="calc(100vh - 280px)"/>
+				<detailInfo v-if="detailInfo.id" :detailInfo="detailInfo" :height="'calc(100vh - 49px - 122px - 50px - ' + navH + ')'"/>
 			</i-tab>
 			<i-tab index="2">
-				<correlationInfo v-if="busId" :query="{busId:busId,busType:1,name:detailInfo.linkmanName,}" height="calc(100vh - 280px)"/>
+				<correlationInfo v-if="busId" :query="{busId:busId,busType:1,name:detailInfo.linkmanName,}" :height="'calc(100vh - 49px - 122px - 50px - ' + navH + ')'"/>
 			</i-tab>
 		</i-tabs>
       <!-- 底部操作按钮 -->
       <div class="footer-fixed-menu d-center d-bg-white">
-        <a class="d-cell al" :url="'/pages/common/add-follow?busType=1&busId=' + id"  >
+        <a class="d-cell al" :url="'/pages/common/add-follow?busType=1&busId=' + busId">
           <span class='iconfont icontianjiajihua f16' style='color:#696969'></span><span class="ml5 f13  d-text-gray">添加跟进</span>
         </a>
         <div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
