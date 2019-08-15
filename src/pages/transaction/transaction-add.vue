@@ -162,14 +162,13 @@ export default {
 			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
 				.then(res => {
 					this.form = res.data || {}
-					this.linkmanQueryList({ id: this.form.id, busType: 3 })
+					this.linkmanQueryList({ busId: this.form.id, busType: 3 })
 				})
 		},
 		// 根据成交id获取联系人列表
 		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanrelationList(params)
+			this.$api.seeCrmService.linkmanQueryBusList(params)
 				.then(res => {
-					console.log(res)
 					let data = res.data || []
 					if (data.length > 0) {
 						let nameArr = []

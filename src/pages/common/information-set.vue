@@ -179,6 +179,7 @@ export default {
 		},
 		// 获取所有列表
 		getInfosList () {
+			this.checkList = []
 			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: this.busType, isOriginal: -1 })
 				.then(res => {
 					if (res.code === 200) {
