@@ -62,14 +62,15 @@
       <i-tabs :current="currTabIndex" :tabList="tabBars" @change="tagsChange">
         <i-tab index="0">
           <!-- 跟进: -->
-          <followInfo v-if="busId" :query='{salesFunnelId: busId}' height="calc(100vh - 380px)" />
+          <followInfo v-if="busId" :query='{salesFunnelId: busId}' :height="'calc(100vh - 49px - 121px - 50px - 96px - 46px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="1">
-          <detailInfo :detailInfo="detailInfo" height="calc(100vh - 380px)" />
+          <detailInfo :detailInfo="detailInfo" :height="'calc(100vh - 49px - 50px - 121px - 96px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="2">
           <!-- 相关信息 -->
-          <correlationInfo v-if="detailInfo.clientId" :query="{busId:busId,busType:2,name:detailInfo.chanceName,clientId:detailInfo.clientId,chanceId:busId}" height="calc(100vh - 380px)" />
+          <correlationInfo v-if="detailInfo.clientId" :query="{busId:busId,busType:2,name:detailInfo.chanceName,clientId:detailInfo.clientId,chanceId:busId}"
+          :height="'calc(100vh - 49px - 50px - 121px - 96px - ' + navH + ')'" />
         </i-tab>
       </i-tabs>
       <!-- 底部操作按钮 -->
@@ -215,14 +216,14 @@ export default {
 					.then(res => {
 						if (res.code !== 200) return
 						this.detailInfo.isWatchful = 1
-					// console.log('关注成功')
+						// console.log('关注成功')
 					})
 			} else {
 				this.$api.seeCrmService.watchfulbusinessDelete({ busId: this.detailInfo.id, busType: 2 })
 					.then(res => {
 						if (res.code !== 200) return
 						this.detailInfo.isWatchful = 0
-					// console.log('删除关注成功')
+						// console.log('删除关注成功')
 					})
 			}
 		},

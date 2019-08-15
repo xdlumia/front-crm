@@ -1,6 +1,6 @@
 <template>
   <div>
-    <scroll-view class="diy-filter" :style='"height: calc(100vh - "+ navH + " - 40px)"' scroll-y>
+    <scroll-view class="diy-filter" :style='"height: calc(100vh - "+ navH + " - 49px - 40px)"' scroll-y>
       <filter-plane title="姓名">
         <div class="pb10 wfull" style="box-sizing:border-box">
           <input class="filter-input" name="linkmanName" v-model="filterData.linkmanName" placeholder="请输入关键字" type="text" />
@@ -75,5 +75,6 @@ export default {
   padding-bottom: 50px;
   box-sizing: border-box;
   background: #f2f2f2;
+  position: relative;
 }
 </style>

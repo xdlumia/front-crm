@@ -103,7 +103,7 @@ export default {
 			filterData: [
 				{
 					prop: 'queryType',
-					current: queryType[0],
+					current: queryType[1],
 					list: queryType
 				},
 				{

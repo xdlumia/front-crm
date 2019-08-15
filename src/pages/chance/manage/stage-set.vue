@@ -85,7 +85,7 @@ export default {
 	},
 	computed: {
 		stageListFilter () {
-			return this.stageList.filter(item => item.isDelete === 0)
+			return this.stageList.filter(item => !item.isDelete)
 		}
 	},
 	methods: {
@@ -138,7 +138,7 @@ export default {
 					this.$utils.toast.text('阶段赢率和名称是必填项')
 					return
 				}
-				if (this.stageListFilter[i + 1] && this.stageListFilter[i].equityedge >= this.stageListFilter[i + 1].equityedge) {
+				if (this.stageListFilter[i + 1] && +this.stageListFilter[i].equityedge >= +this.stageListFilter[i + 1].equityedge) {
 					this.$utils.toast.text('阶段赢率是递增关系')
 					return
 				}

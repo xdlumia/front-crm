@@ -102,7 +102,7 @@ export default {
 		position: fixed;
 		left: 0;
 		width: 100%;
-		z-index: 2;
+		z-index: 4;
 	}
 	.filter-title{
 		justify-content: space-between;
