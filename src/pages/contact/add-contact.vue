@@ -13,7 +13,7 @@
 			</a>
             <i-input v-model="form.position" label="职位" placeholder="请填写"/>
             <i-input v-model="form.phone" label="电话" placeholder="请填写"/>
-            <i-input v-model="form.mobile" label="手机" placeholder="请填写" required />
+            <i-input v-model="form.mobile" label="手机" maxlength='11' placeholder="请填写" required />
             <i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
             <i-input v-model="form.address" label="地址" placeholder="请填写"/>
 			<i-input v-model="deptName" label="所属部门" placeholder="请填写"/>
@@ -90,7 +90,8 @@ export default {
 					message: '邮箱格式不正确'
 				}],
 				mobile: [{
-					required: true
+					required: true,
+					message: '请填写手机号'
 				}, {
 					type: 'phone',
 					message: '手机号格式不正确'
