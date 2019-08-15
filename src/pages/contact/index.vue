@@ -24,8 +24,8 @@
             <div class="c-tag f12 mr10">{{item.createTime|timeToStr('yyyy-mm-dd')}}</div>
           </div>
         </div>
-        <div class="flex-item item-progress">
-          <span v-if="select=='1'">
+        <div class="flex-item item-progress" >
+          <span v-if="select=='1'" @click="handlerClient(item, index)">
             <m-checkbox v-if="multiple" v-model="linkIds" :label="item.id"></m-checkbox>
             <m-radio v-else v-model="linkIds" :label="item.id"></m-radio>
           </span>
@@ -115,7 +115,7 @@ export default {
 	},
 	onLoad (option) {
 		this.select = option.select || ''
-		this.isAdd = option.isAdd || ''
+		this.isAdd = option.add || ''
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
 		if (option.multiple) {
@@ -186,7 +186,7 @@ export default {
 	},
 	computed: {
 		api () {
-			return this.select
+			return this.multiple
 				? 'seeCrmService.linkmanQueryList'
 				: 'seeCrmService.linkmanQueryPageList'
 		}

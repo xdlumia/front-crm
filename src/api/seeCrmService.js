@@ -1,5 +1,4 @@
-// const MOCK_ADDRESS = '/mock/5d42880818ed947b04cebc75/crm'
-const MOCK_ADDRESS = 'http://localhost:9128/'
+const MOCK_ADDRESS = 'http://10.168.1.145:7300//mock/5d42880818ed947b04cebc75/crm'
 let _isMock = false
 export default {
 	__mockAddress: MOCK_ADDRESS,
@@ -98,7 +97,7 @@ export default {
 	},
 	/* =============客户基本信息表end=========== */
 
-	/* =============公海池基本信息表start=========== */
+	/* =============公海池start=========== */
 	// 查看详细信息
 	clientpublicpoolInfo: {
 		'url': '/clientpublicpool/info/{id}',
@@ -108,6 +107,12 @@ export default {
 	// 获取列表
 	clientpublicpoolList: {
 		'url': '/clientpublicpool/list',
+		'mock': _isMock
+	},
+
+	// 定时任务回收客户
+	clientpublicpoolRecycleClient: {
+		'url': '/clientpublicpool/recycleClient',
 		'mock': _isMock
 	},
 
@@ -124,7 +129,7 @@ export default {
 		'mock': _isMock,
 		'methods': 'post'
 	},
-	/* =============公海池基本信息表end=========== */
+	/* =============公海池end=========== */
 
 	/* =============数据字典关系表start=========== */
 	// 删除
@@ -410,6 +415,12 @@ export default {
 	},
 
 	// 获取联系人列表 -- 不分页
+	linkmanQueryBusList: {
+		'url': '/linkman/queryBusList',
+		'mock': _isMock
+	},
+
+	// 获取联系人列表 -- 分页
 	linkmanQueryList: {
 		'url': '/linkman/queryList',
 		'mock': _isMock
@@ -668,6 +679,13 @@ export default {
 	// 修改销售机会
 	saleschanceUpdate: {
 		'url': '/saleschance/update',
+		'mock': _isMock,
+		'methods': 'post'
+	},
+
+	// 阶段推进
+	saleschanceUpdatelStagePrope: {
+		'url': '/saleschance/updatelStagePrope',
 		'mock': _isMock,
 		'methods': 'post'
 	},

@@ -40,6 +40,8 @@ export default {
 	onLoad (option) {
 		this.clientId = option.clientId
 		this.leaderId = option.leaderId
+
+		this.$store.dispatch('highseas/getList')
 	},
 	computed: {
 		list () {

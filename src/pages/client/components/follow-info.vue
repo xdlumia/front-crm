@@ -31,11 +31,11 @@
                                 <span class="d-cell f12 d-text-gray">{{item.createTime | timeToStr('hh:ii')}}</span>
                                 <span class='note-tag f12 d-text-white' v-show='item.followType'>{{item.followType | dictionary('CRM_GJLX')}}</span>
                             </div>
-                            <div class="note-content mb5">
+                            <div class="note-content mb5" style='white-space: pre-wrap'>
                                 {{item.content}}
                             </div>
                             <div class='d-flex' v-if='item.files && item.files.length'>
-                                <img class="note-img" v-for='imgItem in item.files' :key='imgItem.id' :src="imgItem.fileUrl" />
+                                <img class="note-img" mode='aspectFit' v-for='imgItem in item.files' :key='imgItem.id' :src="imgItem.fileUrl" />
                             </div>
                             <div class="mb5" v-show='item.linkName'>
                                 <uni-tag size='small' :text="'关联联系人：' + item.linkName" circle />
@@ -44,9 +44,11 @@
                                 <div class="mr10" v-show='item.intention'>
                                     <uni-tag size='small' :text="item.intention | dictionary('CRM_YXCD')" circle />
                                 </div>
-                                <uni-tag size='small' circle v-show='item.nextTime'>
-                                    下次通话时间：{{item.nextTime | timeToStr('yyyy-mm-dd')}}
-                                </uni-tag>
+                                <div v-show='item.nextTime'>
+                                    <uni-tag size='small' circle>
+                                        下次通话时间：{{item.nextTime | timeToStr('yyyy-mm-dd')}}
+                                    </uni-tag>
+                                </div>
                             </div>
                         </div>
                     </div>

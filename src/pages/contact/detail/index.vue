@@ -34,7 +34,7 @@
 				<detailInfo v-if="detailInfo.id" :detailInfo="detailInfo" height="calc(100vh - 280px)"/>
 			</i-tab>
 			<i-tab index="2">
-				<correlationInfo v-if="busId" :query="{busId:busId,busType:1}" height="calc(100vh - 280px)"/>
+				<correlationInfo v-if="busId" :query="{busId:busId,busType:1,name:detailInfo.linkmanName,}" height="calc(100vh - 280px)"/>
 			</i-tab>
 		</i-tabs>
       <!-- 底部操作按钮 -->
@@ -155,7 +155,7 @@ export default {
 			let fnType = {
 				// 转移
 				1: () => {
-					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${datailInfo.id}`)
+					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${this.busId}`)
 				},
 				// 删除
 				2: () => {
@@ -172,7 +172,7 @@ export default {
 				},
 				// 复制 editType = 1编辑 2复制
 				3: () => {
-					this.$routing.navigateTo(`/pages/contact/add-catact?id=${datailInfo.id}&editType=2`)
+					this.$routing.navigateTo(`/pages/contact/add-contact?id=${this.busId}&editType=2`)
 				}
 			}
 			fnType[index]()

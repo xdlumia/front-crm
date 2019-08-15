@@ -11,7 +11,7 @@
 			<div class="detail-list ac f12 d-text-gray" v-if="!contactList.length">暂无数据</div>
             <div class="detail-list" v-for="(item,index) of contactList" :key="index">
                 <div class="list-title">
-                    <title>{{item.linkkanName}}</title> <span class="d-text-qgray">{{item.position}}</span>
+                    <title>{{item.linkmanName}}</title> <span class="d-text-qgray">{{item.position}}</span>
                     <span @click="callPhone(item.mobile)" class="fr iconfont iconcall f18 d-text-gray" ></span>
                 </div>
                 <p class="f12 d-elip d-text-qgray">{{item.clientName}}</p>
@@ -30,38 +30,48 @@ export default {
 		return {
 			contactList: [],
 			form: {
-				linkmanId: '' // 客户id
+				linkmanRelationSaveVoList: [] // 客户ids
 			}
 		}
 	},
-	computed: {
-		url () {
-			return +this.query.busType === 0 ? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId : '/pages/contact/index?select=1&add=1'
-		}
-	},
-	onLoad (option) {
-		// 客户回调
+	onReady (option) {
+		// 联系人回掉
 		uni.$on('chooseContact', data => {
-			this.form.linkmanId = data.id
+			this.form.linkmanRelationSaveVoList = data.map(item => {
+				return {
+					busId: Number(this.query.busId),
+					busType: this.query.busType,
+					clientId: this.query.clientId,
+					linkmanId: item.id
+				}
+			})
 			// 业务与联系人关系保存
-			this.saveContact()
+			this.linkmanrelationSaveBatch()
 		})
 	},
+	computed: {
+		url () {
+			let linkIds = JSON.stringify(this.contactList.map(item => item.id))
+			return +this.query.busType === 0
+				? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId
+				: '/pages/contact/index?select=1&add=1&multiple=1&linkIds=' + linkIds + ''
+		}
+	},
 	created () {
-		this.linkmanQueryList()
+		this.linkmanQueryBusList()
 	},
 	methods: {
 		// 业务与联系人关系保存
-		saveContact () {
-			this.$api.seeCrmService.linkmanrelationSave(Object.assign({}, { busId: this.query.busId, busType: this.query.busType, clientId: this.query.clientId }, this.form))
+		linkmanrelationSaveBatch () {
+			this.$api.seeCrmService.linkmanrelationSaveBatch(Object.assign({}, { busId: this.query.busId, busType: this.query.busType, clientId: this.query.clientId }, this.form))
 				.then(res => {
 					// console.log('保存成功')
-					this.linkmanQueryList()
+					this.linkmanQueryBusList()
 				})
 		},
 		// 获取联系人列表
-		linkmanQueryList () {
-			this.$api.seeCrmService.linkmanQueryList({ busId: this.query.busId, busType: this.query.busType, time: '' })
+		linkmanQueryBusList () {
+			this.$api.seeCrmService.linkmanQueryBusList({ busId: this.query.busId, busType: this.query.busType, time: '' })
 				.then(res => {
 					this.contactList = res.data || []
 				})
@@ -70,7 +80,7 @@ export default {
 	watch: {
 		// 'query.busId': {
 		// 	handler (val) {
-		// 		this.linkmanQueryList()
+		// 		this.linkmanQueryBusList()
 		// 	},
 		// 	deep: true
 		// }

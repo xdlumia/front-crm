@@ -10,9 +10,9 @@
             <m-list label-width="120" label="所属部门">{{detailInfo.deptName || '-'}}</m-list>
             <m-list label-width="120" label="客户名称">{{detailInfo.clientName || '-'}}</m-list>
             <m-list label-width="120" label="负责人">{{detailInfo.leaderName || '-'}}</m-list>
-            <m-list label-width="120" label="销售金额（元）">{{detailInfo.salesMoney || '-'}}</m-list>
+            <m-list label-width="130" label="销售金额（元）">{{detailInfo.salesMoney || '-'}}</m-list>
             <m-list label-width="120" label="销售阶段">{{detailInfo.stageName || '-'}}</m-list>
-            <m-list label-width="120" label="赢率">{{detailInfo.salesStageEntity.equityedge || '-'}}</m-list>
+            <m-list label-width="120" label="赢率">{{detailInfo.salesStageEntity.equityedge || '0'}}%</m-list>
             <m-list label-width="120" label="预计成交日期">{{detailInfo.reckonFinishTime | timeToStr('y-m-d')}}</m-list>
             <m-list label-width="120" label="行业">{{detailInfo.tradeCode | dictionary('CRM_KH_HY')}}</m-list>
             <m-list label-width="120" label="来源">{{detailInfo.sourceCode | dictionary('CRM_LY')}}</m-list>

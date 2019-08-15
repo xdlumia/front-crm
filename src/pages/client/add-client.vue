@@ -111,7 +111,7 @@ export default {
 	data () {
 		return {
 			title: '新建客户信息',
-			isCopy: '是否复制',
+			isCopy: 0,
 			id: 0,
 			isRepeat: false,
 			isSkipContact: false, // 是否新建联系人
@@ -249,6 +249,9 @@ export default {
 				!this.id && (params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
 					return { busId: this.busId, busType: 0, fieldConfigId: item.id, fieldValue: item.fieldValue }
 				}))
+
+				// 判断是 公海池新建 还是 客户列表新建
+				params.belongType = this.form.poolId ? 1 : 0
 
 				// this.id 为 false 则是新增
 				let resulte = await this.$api.seeCrmService[!this.id ? 'clientinfoSave' : 'clientinfoUpdate'](params)

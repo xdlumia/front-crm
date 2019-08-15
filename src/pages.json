@@ -369,6 +369,12 @@
 			"style":{
 				"navigationBarTitleText":"申请结果"
 			}
+		},
+		{
+			"path":"pages/user/poster",
+			"style":{
+				"navigationBarTitleText":"海报"
+			}
 		}
 	],
 	"globalStyle": {
