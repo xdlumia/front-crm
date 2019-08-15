@@ -255,7 +255,7 @@ export default {
 				}
 
 				!this.id && (params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
-					return { busId: this.busId, busType: 0, fieldConfigId: item.id, fieldValue: item.fieldValue }
+					return { busId: this.busId, busType: 0, fieldConfigId: item.fieldConfigId || item.id, fieldValue: item.fieldValue }
 				}))
 
 				// 判断是 公海池新建 还是 客户列表新建
