@@ -40,9 +40,18 @@
 					</i-input>
 				</a> -->
 
-                <picker-date :required='false' v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期">
+                <picker-date :required='false' v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期" />
 
-				</picker-date>
+				<!-- <ruiDatePicker
+                    fields="minute"
+                    start="2010-00-00 00:00"
+                    end="2030-12-30 23:59"
+                    @change="startTimeChange"
+					v-model='form.nextTime'
+                >
+                    <i-input disabled label="下次联系时间" v-model="form.nextTime" placeholder="请选择日期" :required='false'></i-input>
+                </ruiDatePicker> -->
+
 				<i-select
                     v-model="form.intention"
                     :props="{label:'content',value:'code'}"
@@ -140,6 +149,9 @@ export default {
 		})
 	},
 	methods: {
+		// startTimeChange (val) {
+		// 	this.form.nextTime = val
+		// },
 		async followupSave () {
 			await this.$refs.mform.validate()
 

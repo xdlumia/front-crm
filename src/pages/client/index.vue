@@ -108,7 +108,7 @@ export default {
 				},
 				{
 					prop: 'sortType',
-					current: sortType[0],
+					current: sortType[1],
 					list: sortType
 				}
 			],
