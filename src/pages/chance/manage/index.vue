@@ -1,6 +1,6 @@
 <template>
     <div class='tags-page'>
-        <NavBar title='管理客户' />
+        <NavBar title='管理销售机会' />
         <a url="/pages/common/information-set?busType=2" class="tags-box p15 isarrow f13 d-text-black d-bg-white bt bb">机会信息管理</a>
         <div class="pl15 pr15 d-text-gray f13 pt10 pb10">可以设置商机有哪些基本信息</div>
 
