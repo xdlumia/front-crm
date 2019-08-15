@@ -41,7 +41,22 @@
 					<div class='f13 mb10 d-text-black'>备注</div>
 					<textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
 			</div>
-      <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block">
+			<div class='d-bg-white pb10'>
+					<div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
+						<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+						<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+						<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+						<i-select
+							v-if='item.fieldType === 3'
+							v-model="form.formsFieldValueSaveVos[index].fieldValue"
+							:props="{label:'content',value:'code'}"
+							:label="item.fieldName"
+							placeholder="请选择"
+							:options="dictionaryOptions(item.groupCode || '')"
+						/>
+					</div>
+				</div>
+      <a url="/pages/common/more-list?busType=3&isEnabled=-1" class="ac d-text-gray lh40 d-block">
         <i-icon type="add" size="18" color="#999"/>添加更多条目
       </a>
       <div class="footer-fixed-menu">
@@ -75,6 +90,7 @@ export default {
 				endTime: '', // 结束时间
 				belongDeptCode: '', // 所属部门code
 				note: '', // 备注
+				formsFieldValueSaveVos: [], // 更多条目里面的数据
 				signDate: ''// 签约日期
 			},
 			rules: {
@@ -119,6 +135,8 @@ export default {
 		if (this.type === 'edit') {
 			this.detailId = option.id
 			this.getTransactionDetail()
+		} else {
+			this.getMoreField()
 		}
 		// 在客户里边调用成交记录的话，需要将客户id带给销售机会，用来筛选当前客户关联的销售机会
 		// 在机会里边调用成交记录的话，需要取到当前机会的id，用id去查询详情，填充客户名称，并且传到联系人，走正常成交记录流程
@@ -161,7 +179,11 @@ export default {
 		getTransactionDetail () {
 			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
 				.then(res => {
+					console.log(res)
 					this.form = res.data || {}
+					if (res.data.formsFieldValueEntityList.length > 0) {
+						this.form.formsFieldValueSaveVos = res.data.formsFieldValueEntityList
+					}
 					this.linkmanQueryList({ busId: this.form.id, busType: 3 })
 				})
 		},
@@ -180,6 +202,17 @@ export default {
 					}
 				})
 		},
+		// 获取已选中的更多条目
+		getMoreField () {
+			this.$api.seeCrmService.formsfieldconfigQueryList({
+				busType: 3,
+				isEnabled: 0
+			}).then(res => {
+				if (res.code === 200) {
+					this.form.formsFieldValueSaveVos = res.data || []
+				}
+			})
+		},
 		// 保存transactionrecordUpdate
 		async fsubmit () {
 			if (this.form.startTime > this.form.endTime) {
@@ -187,6 +220,11 @@ export default {
 				return
 			}
 			let name = this.type === 'add' ? 'transactionrecordSave' : 'transactionrecordUpdate'
+			if ((this.type === 'add') && this.form.formsFieldValueSaveVos.length > 0) {
+				this.form.formsFieldValueSaveVos.forEach((item) => {
+					item.fieldConfigId = item.id
+				})
+			}
 			await this.$refs.form.validate()
 			this.form.belongDeptCode = this.deptInfo.deptName
 			this.form.linkId = this.linkIds

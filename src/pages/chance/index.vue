@@ -181,7 +181,7 @@ export default {
 	},
 	computed: {
 		api () {
-			return !this.isSelect ? 'seeCrmService.saleschanceQueryPageList' : 'seeCrmService.saleschanceQueryList'
+			return !this.isSelect ? 'seeCrmService.saleschanceQueryPageList' : 'seeCrmService.saleschanceQueryPageList'
 		}
 	},
 	methods: {
