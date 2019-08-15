@@ -133,11 +133,13 @@ export default {
 		}
 	},
 	onLoad (option) {
-		this.busType = option.busType || 3
+		console.log(option)
+		this.busType = option.busType || ''
+		this.getTagList()
+		this.getInfosList()
 	},
 	created () {
-		this.getInfosList()
-		this.getTagList()
+
 	},
 	methods: {
 		// 获取所有的标签
