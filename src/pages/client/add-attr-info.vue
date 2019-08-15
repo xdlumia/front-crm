@@ -53,7 +53,7 @@
             <div class="d-cell mr10 form-row-item">
                 <div class="d-center mb10" v-for='(item, index) in fileArray' :key='index'>
                     <div class='iconfont iconadjunct f12 d-text-gray mr5'></div>
-                    <span class="d-cell f12 d-text-gray">{{item.fileName}}</span>
+                    <span class="d-cell f12 d-text-gray">{{item.filelName}}</span>
                     <div @click='delFile(index)'>
                         <uni-icon type='minus' size='16' color='red' />
                     </div>
@@ -90,7 +90,11 @@ export default {
 				headline: ''
 			},
 			editorCtx: null, // 编辑器对象
-			content: '',
+			content: {
+				delta: {
+					ops: []
+				}
+			},
 			fileArray: [] // 文件对象
 		}
 	},
@@ -126,6 +130,7 @@ export default {
 					this.$utils.toast.text('保存成功')
 					setTimeout(() => {
 						this.$routing.navigateBack()
+						uni.$emit('attrBack')
 					}, 800)
 				}
 			} catch (err) {
@@ -143,7 +148,7 @@ export default {
 						this.$utils.showLoading('视频上传中')
 						let { fileName, filePath } = await this.upload(res.tempFilePath)
 						this.videoArray = [{
-							fileName,
+							filelName: fileName,
 							fileUrl: filePath
 						}]
 					}
@@ -166,7 +171,7 @@ export default {
 						this.editorCtx.insertImage({
 							src: filePath,
 							data: {
-								fileName
+								filelName: fileName
 							}
 						})
 					} catch (err) {
@@ -186,7 +191,7 @@ export default {
 				success: async (res) => {
 					let { fileName, filePath } = await this.upload(res.tempFiles[0].path, res.tempFiles[0].name)
 					this.fileArray.push({
-						fileName,
+						filelName: fileName,
 						fileUrl: filePath
 					})
 				}

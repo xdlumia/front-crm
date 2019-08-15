@@ -37,6 +37,9 @@ export default {
 	onReady (option) {
 		// 联系人回掉
 		uni.$on('chooseContact', data => {
+			if (!Array.isArray(data)) {
+				data = [data]
+			}
 			this.form.linkmanRelationSaveVoList = data.map(item => {
 				return {
 					busId: Number(this.query.busId),

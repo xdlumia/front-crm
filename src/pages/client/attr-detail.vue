@@ -24,6 +24,13 @@
                 </div>
 
 				<u-parse v-if='detail.text' :content="detail.text" />
+
+				<div class="d-cell mr10 form-row-item mt15">
+					<div class="d-center mb10" v-for='(item, index) in detail.fileArray' :key='index' @click='download(item.fileUrl)'>
+						<div class='iconfont iconadjunct f12 d-text-gray mr5'></div>
+						<span class="d-cell f12 d-text-gray">{{item.filelName}}</span>
+					</div>
+				</div>
             </div>
         </template>
 		<i-spin fix fullscreen v-else></i-spin>
@@ -55,6 +62,27 @@ export default {
 			} finally {
 				this.loading = false
 			}
+		},
+
+		download (url) {
+			uni.downloadFile({
+				url: url,
+				success: (res) => {
+					this.$utils.toast.text('正在保存')
+					uni.saveFile({
+						tempFilePath: res.tempFilePath,
+						success: ({ savedFilePath }) => {
+							this.$utils.toast.text('保存到' + savedFilePath)
+						},
+						fail: () => {
+							this.$utils.toast.text('保存失败')
+						}
+					})
+				},
+				fail: () => {
+					this.$utils.toast.text('保存失败')
+				}
+			})
 		}
 	}
 }
