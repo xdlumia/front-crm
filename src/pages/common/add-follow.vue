@@ -144,7 +144,7 @@ export default {
 
 		// 联系人回调
 		uni.$once('chooseContact', data => {
-			this.linkName = data.linkkanName
+			this.linkName = data.linkmanName
 			this.form.linkId = data.id
 		})
 	},

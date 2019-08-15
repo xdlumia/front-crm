@@ -136,7 +136,7 @@ export default {
 				.then(res => {
 					let data = res.data || []
 					let phones = data.map(item => {
-						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
 					})
 					this.phoneActions.push(...phones)
 				})
