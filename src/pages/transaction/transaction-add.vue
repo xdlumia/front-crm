@@ -4,7 +4,7 @@
     <div>
       <m-form ref="form" class="uni-pb100" :model="form" :rules="rules">
         <i-input maxlength="32" v-model="form.name" label="名称" placeholder="请输入" required/>
-        <a :url="`/pages/chance/choose-chance?id=${form.salesFunnelId}&clientId=${clientId}&busType=3`">
+        <a :url="`/pages/chance/choose-chance?id=${form.salesFunnelId}&clientId=${clientId}`">
           <i-input label="销售机会" disabled v-model="form.salesFunnelName" placeholder=" " required>
             <uni-icon type="forward" size="18" color="#999"/>
           </i-input>
