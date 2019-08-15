@@ -161,10 +161,16 @@ export default {
 		this.salesstageQueryList()
 	},
 	onLoad (option) {
+		console.log(option)
 		// this.select = option.select
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
-		this.queryForm.clientId = option.clientId || ''
+		// 如果是从客户页面过来的新增成交记录选的机会，要通过客户的busId和busType来筛选
+		if (option.clientId) {
+			this.queryForm.clientId = option.clientId || ''
+			this.queryForm.busId = option.clientId
+			this.queryForm.busType = 0
+		}
 	},
 	created () {
 		// this.busId = this.id
