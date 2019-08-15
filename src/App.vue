@@ -3,6 +3,49 @@ export default {
 	/** 以下是应用生命周期 */
 	// 当uni-app 初始化完成时触发（全局只触发一次）
 	onLaunch: function () {
+		this.$local.save('appid', 'wx19ee978ff0ef382f')
+		this.$local.save('syscode', 'crm')
+		// 1.获取用户openid
+		// 用户已经存在则获取token，finger再getUserDetail
+		// 用户不存在则跳转到登录页面
+		let that = this
+		// 进入小程序获取用户openid
+		uni.login({
+			provider: 'weixin',
+			success: function (loginRes) {
+				let code = loginRes.code
+				// 查看当前微信用户是否绑定账号
+				that.$api.systemService.isBindByWx(
+					{
+						'code': code,
+						'appId': that.$local.fetch('appid')
+					}
+				).then((response) => {
+					if (response.code === 200) {
+						if (response.data.bind) {
+							that.$api.systemService.thirdpartyAuthorizationLogin({ 'userKey': that.$local.fetch('appid') }).then((response2) => {
+								if (response2.code === 200) {
+									that.$local.setItem('token', response2.data.token)
+									that.$local.setItem('finger', response2.data.finger)
+									// 获取用户详细数据
+									that.$api.bizSystemService.getUserDetail({}, { 'syscode': that.$local.fetch('syscode') }).then((response) => {
+										that.$utils.toast.text(response.msg)
+										if (response.code === 200) {
+											uni.$emit('setUserInfo', response.data)
+											that.$routing.switchTab('/pages/index/index')
+										}
+									})
+								} else {
+									that.$utils.toast.text(response.msg)
+								}
+							})
+						} else {
+							uni.$emit('loginout')
+						}
+					}
+				})
+			}
+		})
 	},
 	// 当 uni-app 启动，或从后台进入前台显示
 	onShow: function () {

@@ -36,5 +36,20 @@ export default {
 	applyCompany: {
 		url: '	/rmapplycompany/apply',
 		methods: 'post'
+	},
+	// 查看当前微信用户是否绑定账号
+	isBindByWx: {
+		url: '/wx/isBindByWx',
+		methods: 'get'
+	},
+	//	微信用户绑定
+	userBinding: {
+		url: '/wx/userBinding',
+		methods: 'post'
+	},
+	// //第三方授权登录
+	thirdpartyAuthorizationLogin: {
+		url: '/login/thirdpartyAuthorizationLogin',
+		methods: 'get'
 	}
 }

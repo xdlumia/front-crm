@@ -1028,11 +1028,13 @@ export default {
 
 	wgwGetPhoneNumber: {
 		'url': 'userapplicationinformation/wgw/getPhoneNumber',
-		'methods': 'post'
+		'methods': 'post',
+		'mock': _isMock
 	},
 	wgwGetOpenId: {
 		'url': 'userapplicationinformation/wgw/getOpenId',
-		'methods': 'get'
+		'methods': 'get',
+		'mock': _isMock
 	},
 	posterGet: {
 		'url': '/poster/get',
