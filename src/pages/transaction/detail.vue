@@ -104,7 +104,7 @@ export default {
 	onShow () {
 		this.getTransactionDetail()
 		// 获取联系人列表
-		this.linkmanQueryList({ id: this.detailId, busType: 3 })
+		this.linkmanQueryList({ busId: this.detailId, busType: 3 })
 	},
 	onReady () {
 	},

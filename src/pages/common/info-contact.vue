@@ -48,13 +48,19 @@ export default {
 			// 业务与联系人关系保存
 			this.linkmanrelationSaveBatch()
 		})
+
+		uni.$on('addContact', data => {
+			this.linkmanQueryBusList()
+		})
 	},
 	computed: {
 		url () {
 			let linkIds = JSON.stringify(this.contactList.map(item => item.id))
 			return +this.query.busType === 0
 				? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId
-				: '/pages/contact/index?select=1&add=1&multiple=1&linkIds=' + linkIds + ''
+				: this.query.busType === 3// 成交记录不需要加号
+					? ''
+					: '/pages/contact/index?select=1&add=1&multiple=1&linkIds=' + linkIds + ''
 		}
 	},
 	created () {
