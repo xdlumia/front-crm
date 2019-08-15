@@ -167,7 +167,7 @@ export default {
 		// 获取客户详情
 		this.getDetailInfo()
 		// 获取联系人列表
-		this.linkmanQueryList({ id: this.id, busType: 0 })
+		this.linkmanQueryBusList({ busId: this.id, busType: 0 })
 	},
 	computed: {
 		sendBackType () {
@@ -248,12 +248,12 @@ export default {
 		},
 
 		// 获取联系人列表
-		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params)
+		linkmanQueryBusList (params) {
+			this.$api.seeCrmService.linkmanQueryBusList(params)
 				.then(res => {
 					let data = res.data || []
 					let phones = data.map(item => {
-						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
 					})
 					this.phoneActions.push(...phones)
 				})
