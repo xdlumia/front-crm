@@ -1025,6 +1025,15 @@ export default {
 		'mock': _isMock
 	},
 	/* =============文件压缩下载（日志和配置文件）end=========== */
+
+	wgwGetPhoneNumber: {
+		'url': 'userapplicationinformation/wgw/getPhoneNumber',
+		'methods': 'post'
+	},
+	wgwGetOpenId: {
+		'url': 'userapplicationinformation/wgw/getOpenId',
+		'methods': 'get'
+	},
 	posterGet: {
 		'url': '/poster/get',
 		'mock': _isMock
