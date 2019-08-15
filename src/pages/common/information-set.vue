@@ -265,7 +265,7 @@ export default {
 			console.log(this.msgid)
 			if (!this.listForm.fieldName) {
 				this.$utils.toast.text('属性名称不能为空')
-			} else if (!this.msgid && this.msgid != 0) {// eslint-disable-line
+			} else if (!this.msgid || this.msgid != 0) {// eslint-disable-line
 				this.$utils.toast.text('表单类型不能为空')
 			} else {
 				let params = {
