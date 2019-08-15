@@ -132,10 +132,9 @@ export default {
 		},
 		// 获取联系人列表
 		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params)
+			this.$api.seeCrmService.linkmanQueryBusList(params)
 				.then(res => {
 					let data = res.data || []
-					console.log(data, 'linkmanQueryListlinkmanQueryList')
 					let phones = data.map(item => {
 						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
 					})

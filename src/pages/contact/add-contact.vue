@@ -11,13 +11,13 @@
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
+			<i-input v-model="form.mobile" label="手机" maxlength='11' placeholder="请填写" required />
+			<i-select v-model="form.roleCode" :props="{label:'content',value:'code'}" label="联系人角色" :options="dictionaryOptions('CRM_LXR_JS')"/>
             <i-input v-model="form.position" label="职位" placeholder="请填写"/>
             <i-input v-model="form.phone" label="电话" placeholder="请填写"/>
-            <i-input v-model="form.mobile" label="手机" maxlength='11' placeholder="请填写" required />
             <i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
             <i-input v-model="form.address" label="地址" placeholder="请填写"/>
 			<i-input v-model="deptName" label="所属部门" placeholder="请填写"/>
-            <i-select v-model="form.roleCode" :props="{label:'content',value:'code'}" label="联系人角色" :options="dictionaryOptions('CRM_LXR_JS')"/>
             <i-input v-model="form.note" label="备注" placeholder="备注" type="textarea" />
             <p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
 				<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
@@ -110,10 +110,12 @@ export default {
 	},
 	onLoad (option) {
 		// 获取字段列表
+		console.log(option.id)
 		this.formsfieldconfigQueryList()
 		if (option.id) {
 			this.busId = option.id
 			this.editType = option.editType
+			this.form.id = option.id
 		}
 
 		if (option.clientId && option.clientName) {

@@ -1,14 +1,24 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会" :isSearch="true" placeholder="输入联系人姓名,手机号" searchType="3" />
+    <NavBar title="联系人"/>
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
-    <Filter :filterData="filterData" @filterSubmit="filterSubmit" ref="filter">
-      <filter-diy @submit="diyFilterSubmit" />
-    </Filter>
+		<div>
+			<div class="page-search-box d-flex" :style="'top: '+ navH">
+					<a url="/pages/common/search?searchType=3" class="wfull">
+						<div class="search-input d-center d-cell pl10">
+							<i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">搜联系人姓名，手机号</span>
+						</div>
+					</a>
+			</div>
+			<Filter :filterData="filterData" @filterSubmit="filterSubmit" ref="filter" :top='"calc("+ navH +" + 49px)"'>
+				<filter-diy @submit="diyFilterSubmit" />
+			</Filter>
+		</div>
+
     <!-- 列表内容 -->
     <scroll-list
       class="d-absolute wfull"
-      :style="{top:`calc(39px + ${navH})`}"
+      :style="{top:`calc(89px + ${navH})`}"
       height="`calc(100vh - ${navH} - 39px)`"
       :api="api"
       :params="queryForm"
@@ -61,7 +71,8 @@ let queryType = [
 	{ id: '1', name: '我参与的' },
 	{ id: '-1', name: '全部' },
 	{ id: '3', name: '7天未跟进的' },
-	{ id: '4', name: '我下属的' }
+	{ id: '4', name: '我下属负责的' },
+	{ id: '5', name: '我下属参与的' }
 ]
 // 列表排序数据
 let sortType = [
@@ -124,6 +135,13 @@ export default {
 		} else {
 			this.linkIds = option.id
 		}
+	},
+	onReady () {
+		// 公共搜索反馈
+		uni.$on('updatedate', (data) => {
+			this.queryForm.linkmanName = data.searchInfo
+			this.$refs.list.reload()
+		})
 	},
 	methods: {
 		// 获取列表数据
@@ -247,4 +265,20 @@ export default {
   padding: 10px 15px;
   box-sizing: border-box;
 }
+.page-search-box{
+        height: 29px;
+        padding: 10px 15px;
+        background: #f2f2f2;
+        position: fixed;
+        right: 0;
+        left: 0;
+		z-index:10;
+        .search-input{
+            display: block;
+            height: 100%;
+            border-radius: 3px;
+            background: #fff;
+            line-height: 29px;
+        }
+    }
 </style>
