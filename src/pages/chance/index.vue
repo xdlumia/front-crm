@@ -260,6 +260,8 @@ export default {
 		salesstageQueryList () {
 			this.$api.seeCrmService.salesstageQueryList()
 				.then(res => {
+					// if (res.code !== 200) return
+					console.log('.then')
 					let data = res.data || []
 					data.forEach(item => {
 						item.name = item.stageName
