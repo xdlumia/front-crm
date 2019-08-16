@@ -16,7 +16,11 @@ export default {
 	props: {
 		value: Array, // v-model
 		label: [String, Number],
-		max: Number
+		max: Number,
+		disabled: {
+			type: Boolean,
+			default: false
+		}
 	},
 	data () {
 		return {
@@ -41,6 +45,8 @@ export default {
 	},
 	methods: {
 		changeChecked () {
+			if (this.disabled) return
+
 			if (!this.value.includes(this.label) && !this.value.includes(this.label) && this.max && this.value.length >= this.max) {
 				uni.showToast({ title: `最大只能选择${this.max}条`, icon: 'none' })
 				return
@@ -51,6 +57,7 @@ export default {
 			} else {
 				this.value.push(this.label)
 			}
+
 			this.$emit('input', this.value)
 			this.$emit('change', this.value)
 		}
