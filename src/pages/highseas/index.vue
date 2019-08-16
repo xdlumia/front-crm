@@ -227,7 +227,7 @@ export default {
 				sendBackType: item.sendBackType || '',
 				leaderId: leaderId
 			}).then(res => {
-				this.list.slice(index, 1)
+				this.$refs.list.reload()
 			})
 		}
 
@@ -238,6 +238,11 @@ export default {
 			deep: true,
 			handler (pool) {
 				this.queryForm.poolId = pool.id
+				try {
+					this.$refs.list.reload()
+				} catch (err) {
+
+				}
 			}
 		}
 	}

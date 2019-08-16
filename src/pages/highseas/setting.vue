@@ -11,7 +11,7 @@
         <i-cell-group>
             <i-cell
                 :title="item.name"
-                :label='"领取客户上限：" + item.getClientNumMax'
+                :label='"领取客户上限：" + (item.getClientNumMax || 0)'
                 v-for="item in list"
                 :key="item.id"
                 is-link
@@ -45,7 +45,8 @@ export default {
 
 <style lang="scss" scoped>
   .setting-page{
-      height: 100vh;
+      min-height: 100vh;
       background: #f6f6f6;
+      padding-bottom: 50px;
   }
 </style>

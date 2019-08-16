@@ -162,7 +162,6 @@ export default {
 		// 添加数据字典数据
 		setDisCodeData (code, parentIndex, index) {
 			let data = this.dictionaryOptions(code)
-			console.log(data)
 			this.$set(this.subFieldData[parentIndex], index, data)
 		},
 
