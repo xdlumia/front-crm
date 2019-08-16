@@ -3,7 +3,7 @@
         <NavBar title='成交记录' searchType='2' />
         <div>
             <div class="page-search-box d-flex" :style="'top: '+ navH">
-                <a url="/pages/common/search?searchType=trasaction" class="wfull">
+                <a url="/pages/common/search?searchType=2" class="wfull">
                     <div class="search-input d-center d-cell pl10">
                         <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">搜成交记录名称</span>
                     </div>

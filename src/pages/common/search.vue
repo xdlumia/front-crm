@@ -16,7 +16,7 @@
                         <div class="hfull d-center pl30 ml5 search-box-right">
                             <div>
                                 <i-icon type="search" size="18" color='#999' class="b searchicon"/>
-                                <input v-model='searchInfo' class="wfull searchname" type="text" placeholder="搜索成交记录">
+                                <input v-model='searchInfo' class="wfull searchname" type="text" :placeholder="searchNameForm[busType]">
                             </div>
                         </div>
                     </div>
@@ -71,11 +71,22 @@ export default {
 				contact: [],
 				highseas: []
 			},
-			optionType: 0
+			searchNameForm: {
+				0: '搜索客户',
+				1: '搜索销售机会名称',
+				2: '搜索成交记录名称',
+				3: '搜索联系人',
+				4: '搜客户名称'
+			},
+			optionType: 'client',
+			busType: 0
 		}
 	},
 	onLoad (option) {
 		this.optionType = searchType[option.searchType] || 0
+		this.busType = option.searchType
+		console.log(option)
+		console.log(this.optionType, this.busType)
 	},
 	onReady () {
 		let { systemInfo } = this.$store.state
