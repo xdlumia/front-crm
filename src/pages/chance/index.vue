@@ -185,6 +185,8 @@ export default {
 		uni.$on('updatedate', ({ searchInfo }) => {
 			this.queryForm.clientOrChanceName = searchInfo
 			this.$refs.list.reload()
+			// 获取销售机会阶段统计
+			this.saleschanceSalesChanceStatistics()
 		})
 	},
 	created () {

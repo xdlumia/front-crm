@@ -77,7 +77,7 @@ export default {
 					// fieldValue:'', // '示例：字段值'
 					// }
 				],
-				lableBusinessSaveVo: {
+				lableBusinessSaveVos: {
 					busId: this.busId || '', // 100000,
 					busType: 2, // 业务类型(0客户，1联系人，2机会，3成交,4业务属性)
 					labelIdArray: []
@@ -207,6 +207,10 @@ export default {
 					for (let key in this.form) {
 						if (key === 'formsFieldValueSaveVos') {
 							this.form.formsFieldValueSaveVos = data.formsFieldValueEntitys
+						} else if (key === 'lableBusinessSaveVos') {
+							this.form.lableBusinessSaveVos = info.lableBusinessEntityList
+							this.labelNames = data.map(item => item.labelName).join(',')
+							this.form.lableBusinessSaveVos.labelIdArray = data.map(item => item.id)
 						} else {
 							this.form[key] = data[key]
 						}
