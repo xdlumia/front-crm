@@ -71,7 +71,7 @@
 						<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
 						<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
 						<i-select
-							v-if='item.fieldType === 3'
+							v-if='item.fieldType == 3'
 							v-model="form.formsFieldValueSaveVos[index].fieldValue"
 							:props="{label:'content',value:'code'}"
 							:label="item.fieldName"
@@ -168,10 +168,18 @@ export default {
 			this.labelNames = data.map(item => item.labelName).join(',')
 			this.form.lableBusinessSaveVo.labelIdArray = data.map(item => item.id)
 		})
+
+		// 更多条目回掉
+		uni.$on('moreList', data => {
+			// 获取字段列表
+			this.getMoreField()
+		})
 	},
+
 	onUnload () {
 		this.id = 0
 		this.$store.commit('client/setClientInfo', {})
+		uni.$off('moreList')
 	},
 	methods: {
 		getDetailInfo () {
@@ -247,7 +255,7 @@ export default {
 				}
 
 				!this.id && (params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
-					return { busId: this.busId, busType: 0, fieldConfigId: item.id, fieldValue: item.fieldValue }
+					return { busId: this.busId, busType: 0, fieldConfigId: item.fieldConfigId || item.id, fieldValue: item.fieldValue }
 				}))
 
 				// 判断是 公海池新建 还是 客户列表新建
@@ -263,7 +271,7 @@ export default {
 					this.$routing.navigateBack()
 				}
 			} catch (err) {
-				console.log(err)
+				// console.log(err)
 			}
 		}
 

@@ -3,31 +3,32 @@
         <NavBar title='成交记录' searchType='2' />
         <div>
             <div class="page-search-box d-flex" :style="'top: '+ navH">
-				<a url="/pages/common/search?searchType=trasaction" class="wfull">
-					<div class="search-input d-center d-cell pl10">
-						<i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">搜成交记录名称</span>
-					</div>
-				</a>
+                <a url="/pages/common/search?searchType=2" class="wfull">
+                    <div class="search-input d-center d-cell pl10">
+                        <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">搜成交记录名称</span>
+                    </div>
+                </a>
             </div>
             <!-- <filter-diy @submit='submit' @clear='clear' /> -->
             <Filter :filterData='filterData' @filterSubmit='submit' ref='filter' :top='"calc("+ navH +" + 49px)"'>
-				<div  style="padding-bottom:50px">
-					<filter-plane v-model='queryForm.transactionStatus' :title='transactionStatus.title' :dataList='transactionStatus.list'/>
-					<div style="height:10px;background:#F2F2F2"></div>
-					<filter-plane title='总金额'>
-						<div class="d-flex wfull" style="justify-content:center;alibackground:#FFF;align-items:center;height:60px">
-							<div class="page-search-box d-flex" style="background:#f5f6fa;width:90%;position:relative">
-								<div class="search-input d-center d-cell pl10 wfull" style="display:flex !important;">
-									<input v-model="queryForm.totalAmountMin" type="text" placeholder='最小值' style="width:40%">
-									<div style="width:20%;color:#999">——</div>
-									<input v-model="queryForm.totalAmountMax" type="text" placeholder='最大值' style="width:40%">
-								</div>
-							</div>
-						</div>
-					</filter-plane>
-					<div style="height:10px;background:#F2F2F2"></div>
-					<filter-plane v-model='queryForm.transationTime' title='成交时间' isSingle :dataList='transactionTime'/>
-				</div>
+                <div  style="padding-bottom:50px">
+                    <!-- 成交状态 -->
+                    <filter-plane v-model='queryForm.transactionStatus' title='成交状态' :dataList='CRM_CJZT' />
+                    <div style="height:10px;background:#F2F2F2"></div>
+                    <filter-plane title='总金额'>
+                        <div class="d-flex wfull" style="justify-content:center;alibackground:#FFF;align-items:center;height:60px">
+                            <div class="page-search-box d-flex" style="background:#f5f6fa;width:90%;position:relative">
+                                <div class="search-input d-center d-cell pl10 wfull" style="display:flex !important;">
+                                    <input v-model="queryForm.totalAmountMin" type="text" placeholder='最小值' style="width:40%">
+                                    <div style="width:20%;color:#999">——</div>
+                                    <input v-model="queryForm.totalAmountMax" type="text" placeholder='最大值' style="width:40%">
+                                </div>
+                            </div>
+                        </div>
+                    </filter-plane>
+                    <div style="height:10px;background:#F2F2F2"></div>
+                    <filter-plane v-model='queryForm.transationTime' title='成交时间' isSingle :dataList='transactionTime'/>
+                </div>
 
                 <div class='filter-btn d-center f18 d-text-blue'>
                     <div class='btn-item hfull d-cell ac' @click='clear'>清空</div>
@@ -36,42 +37,42 @@
             </Filter>
         </div>
 
-		<div class='highseas-list-view d-relative'>
-			<scroll-list
-				:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
-				api="seeCrmService.transactionrecordList"
-				@getList='getTransactionList'
-				:params="queryForm"
-				ref='list'
-			>
-			<div @click="handlerTransation(item, index)" v-for="(item,index) in transactionList" :key='index' class='d-relative'>
-				<div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
-					<div class="d-cell">
-						<div class="f13 d-text-black">{{item.name}}</div>
-						<div class="f12 d-text-qgray">客户：{{item.clientName || ''}}</div>
-						<div class="f12 d-text-qgray">成交金额：{{item.totalAmount}}</div>
-					</div>
-					<div class="d-center">
-						<div v-if="chooseType == 0" class="f13 d-text-qgray">{{item.transactionStatus | dictionary('CRM_CJZT')}}</div>
-						<m-radio v-else :label='item.id' v-model="chooseData" />
-					</div>
-				</div>
-			</div>
-			</scroll-list>
+        <div class='highseas-list-view d-relative'>
+            <scroll-list
+                :height="'calc(100vh - ' + navH +' - 40px - 49px)'"
+                api="seeCrmService.transactionrecordList"
+                @getList='getTransactionList'
+                :params="queryForm"
+                ref='list'
+            >
+            <div @click="handlerTransation(item, index)" v-for="(item,index) in transactionList" :key='index' class='d-relative'>
+                <div class="pb10 pt10 pl15 pr15 highseas-item d-center d-bg-white">
+                    <div class="d-cell">
+                        <div class="f13 d-text-black">{{item.name}}</div>
+                        <div class="f12 d-text-qgray">客户：{{item.clientName || ''}}</div>
+                        <div class="f12 d-text-qgray">成交金额：{{item.totalAmount}}</div>
+                    </div>
+                    <div class="d-center">
+                        <div v-if="chooseType == 0" class="f13 d-text-qgray">{{item.transactionStatus | dictionary('CRM_CJZT')}}</div>
+                        <m-radio v-else :label='item.id' v-model="chooseData" />
+                    </div>
+                </div>
+            </div>
+            </scroll-list>
 
-			<div v-if="chooseType == 0" class="footer-fixed-menu d-center d-bg-white">
-				<a url='/pages/transaction/transaction-add' class="d-cell al">
-					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建成交</span>
-				</a>
-				<a url='/pages/transaction/transaction-manage' class="d-cell ar">
-					<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理成交记录</span>
-				</a>
-			</div>
+            <div v-if="chooseType == 0" class="footer-fixed-menu d-center d-bg-white">
+                <a url='/pages/transaction/transaction-add' class="d-cell al">
+                    <uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建成交</span>
+                </a>
+                <a url='/pages/transaction/transaction-manage' class="d-cell ar">
+                    <i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理成交记录</span>
+                </a>
+            </div>
 
-			<div v-else class="footer-fixed-menu">
-				<i-button @click="fsubmit" type="primary" i-class="f16">确 定</i-button>
-			</div>
-		</div>
+            <div v-else class="footer-fixed-menu">
+                <i-button @click="fsubmit" type="primary" i-class="f16">确 定</i-button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -94,23 +95,8 @@ export default {
 				name: '', // 名称
 				transactionStatus: [], // 成交记录状态
 				transationTime: '', // 成交时间
-				queryType: '', // 查询类型（0-全部，1-我负责的，2-我参与的，3-我下属负责的，4-我下属参与的, 5-我关注的）
+				queryType: 0,	 // 查询类型（-1 -全部，0-我负责的，1-我参与的，4-我下属负责的，5-我下属参与的, 2-我关注的）
 				sortType: ''// 排序查询类型（0-创建日期，1-最新修改日期）
-			},
-			transactionStatus: {
-				title: '成交记录状态',
-				list: [{
-					content: '结束',
-					code: '1'
-				},
-				{
-					content: '执行中',
-					code: '2'
-				},
-				{
-					content: '意外终止',
-					code: '3'
-				}]
 			},
 			transactionTime: [
 				{
@@ -137,30 +123,30 @@ export default {
 			filterData: [
 				{
 					prop: 'queryType',
-					current: { id: 0, name: '全部' },
+					current: { id: 0, name: '我负责的' },
 					list: [
 						{
-							id: 0,
+							id: -1,
 							name: '全部'
 						},
 						{
-							id: 1,
+							id: 0,
 							name: '我负责的'
 						},
 						{
-							id: 2,
+							id: 1,
 							name: '我参与的'
 						},
 						{
-							id: 3,
+							id: 4,
 							name: '我下属负责的'
 						},
 						{
-							id: 4,
+							id: 5,
 							name: '我下属参与的'
 						},
 						{
-							id: 5,
+							id: 2,
 							name: '我关注的'
 						}
 					]
@@ -188,6 +174,11 @@ export default {
 	onLoad (options) {
 		this.chooseType = options.select || 0
 		this.chooseData = options.id || ''
+	},
+	computed: {
+		CRM_CJZT () {
+			return this.dictionaryOptions('CRM_CJZT')
+		}
 	},
 	onReady () {
 		let selects = {}
@@ -231,7 +222,7 @@ export default {
 				totalAmountMax: '', // 总金额最大值
 				transactionStatus: [], // 成交记录状态
 				transationTime: '', // 成交时间
-				queryType: '', // 查询类型（0-全部，1-我负责的，2-我参与的，3-我下属负责的，4-我下属参与的, 5-我关注的）
+				queryType: 0, // 查询类型（-1 -全部，0-我负责的，1-我参与的，4-我下属负责的，5-我下属参与的, 2-我关注的）
 				sortType: ''// 排序查询类型（0-创建日期，1-最新修改日期）
 			}
 			this.$refs.list.reload()
@@ -250,7 +241,7 @@ export default {
 				this.$utils.toast.text('请选择成交记录')
 			} else {
 				let form = this.transactionList.filter((item) => {
-					return item.id == this.chooseData // eslint-disable-line
+                    return item.id == this.chooseData // eslint-disable-line
 				})
 				uni.$emit('chooseTransaction', { id: form[0].id, name: form[0].name })
 				this.$routing.navigateBack()
@@ -262,18 +253,18 @@ export default {
 
 <style scoped lang="scss">
 
-	.highseas-page{
-		height: 100vh;
-		background: #f2f2f2;
-	}
-	.highseas-list-view{
-		margin-top: 87px;
-		box-sizing: border-box;
-		// padding-bottom: 110px;
-	}
-	.highseas-item{
-		border-bottom:1px solid #d7d7d7;
-	}
+    .highseas-page{
+        height: 100vh;
+        background: #f2f2f2;
+    }
+    .highseas-list-view{
+        margin-top: 87px;
+        box-sizing: border-box;
+        // padding-bottom: 110px;
+    }
+    .highseas-item{
+        border-bottom:1px solid #d7d7d7;
+    }
 
     .page-search-box{
         height: 29px;
@@ -282,7 +273,7 @@ export default {
         position: fixed;
         right: 0;
         left: 0;
-		z-index:10;
+        z-index:10;
         .search-input{
             display: block;
             height: 100%;
@@ -293,14 +284,14 @@ export default {
     }
 
     .filter-btn{
-		position: absolute;
-		width: 100%;
-		background: #fff;
-		height: 49px;
-		bottom: 0;
-		.btn-item{
-			line-height: 49px;
-		}
-	}
+        position: absolute;
+        width: 100%;
+        background: #fff;
+        height: 49px;
+        bottom: 0;
+        .btn-item{
+            line-height: 49px;
+        }
+    }
 
 </style>

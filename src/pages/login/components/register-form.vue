@@ -74,8 +74,9 @@ export default {
 				setStartTime: 0, // 服务开始时间
 				setName: '不是真实套餐', // 开通套餐名称
 				setEndTime: '', // 服务结束时间（开始时间加上30天）
-				applyFrom: 'crm'// 服务申请来源
-				// applicant:''//申请人
+				applyFromCode: 'crm', // 服务申请来源
+				sysCode: 'crm', // 系统编码
+				applicantName: ''// 申请人名称码
 			},
 			vilidateCode: '', // 验证码
 			validateOk: false,
@@ -87,6 +88,13 @@ export default {
 	methods: {
 		// 提交申请
 		submitApply () {
+			// 转换时间
+			let now = new Date()
+			this.form.setStartTime = now.getTime()
+			this.form.setEndTime = new Date(this.form.setStartTime)
+			this.form.setEndTime = parseInt(this.form.setStartTime) + 30 * 24 * 60 * 60 * 1000
+			this.form.applicantName = this.form.linkmanName
+
 			if (this.validateOk) {
 				this.$api.systemService.applyCompany(this.form).then((response) => {
 					if (response.code === 200) {
@@ -138,7 +146,7 @@ export default {
 						this.$utils.toast.text('验证码发送成功')
 						this.timeGo()
 					} else {
-						this.$utils.toast.text('验证码发送失败')
+						this.$utils.toast.text(response.msg)
 					}
 				})
 			} else {

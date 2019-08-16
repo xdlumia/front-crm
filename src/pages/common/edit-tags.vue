@@ -14,7 +14,7 @@
 
     <div class="moreinfo" style="justify-content: space-between;" v-for="(item,index) in valueList" :key='index'>
       <div style="display:flex;align-items:center;">
-        <div class="hfull flexcenter fl">
+        <!-- <div class="hfull flexcenter fl">
           <uni-icon
             @click="deleteMoreList(item.dicCode)"
             class="ml15 fr"
@@ -22,8 +22,8 @@
             color="#EB4D3D"
             size="20"
           />
-        </div>
-        <div class="d-text-black ml5 fl" v-if="!item.ishandel">{{item.content}}</div>
+        </div> -->
+        <div class="d-text-black ml15 fl" v-if="!item.ishandel">{{item.content}}</div>
 				<div class="ml5 fl" v-if="!item.ishandel" @click="changeHandelStatus(index)">
 					<i-icon
             class="ml5 fr"
@@ -94,6 +94,7 @@ export default {
 				page: 1,
 				limit: 15
 			},
+			tagId: '',
 			valueList: []
 		}
 	},
@@ -102,6 +103,7 @@ export default {
 		this.dicCode = option.dicCode
 		this.busType = option.busType
 		this.tagName = option.tagName
+		this.tagId = option.id
 		this.getValueList()
 	},
 	methods: {
@@ -109,17 +111,14 @@ export default {
 		getValueList () {
 			this.$api.seeDataDictionaryService.valueList(this.queryform)
 				.then(res => {
-					// this.valueList = res.data
-					// if(this.valueList.length > 0){
-					// 	this.valueList.forEach((item)=>{
-					// 		item.ishandel = false
-					// 	})
-					// }
+					this.valueList = res.data
+					if (this.valueList.length > 0) {
+						this.valueList.forEach((item) => {
+							item.ishandel = false
+						})
+					}
 				})
 			this.$forceUpdate()
-			this.valueList.forEach((item) => {
-				item.ishandel = false
-			})
 			console.log(this.valueList)
 		},
 		// 删除某个标签项
@@ -174,11 +173,13 @@ export default {
 		},
 		// 标签总名称保存
 		handelTagName () {
+			console.log(this.tagId)
 			if (this.tagName) {
 				this.$api.seeCrmService.dictionaryrelationSave({
-					tagName: this.tagName,
+					labelName: this.tagName,
 					busType: this.busType,
-					labelCode: this.dicCode
+					labelCode: this.dicCode,
+					id: this.tagId
 				})
 					.then(res => {
 						this.$routing.navigateBack()

@@ -4,7 +4,7 @@
     <div>
       <m-form ref="form" class="uni-pb100" :model="form" :rules="rules">
         <i-input maxlength="32" v-model="form.name" label="名称" placeholder="请输入" required/>
-        <a :url="`/pages/chance/choose-chance?id=${form.salesFunnelId}&clientId=${clientId}&busType=3`">
+        <a :url="`/pages/chance/choose-chance?id=${form.salesFunnelId}&clientId=${clientId}`">
           <i-input label="销售机会" disabled v-model="form.salesFunnelName" placeholder=" " required>
             <uni-icon type="forward" size="18" color="#999"/>
           </i-input>
@@ -37,7 +37,26 @@
      <i-input maxlength="32" v-model="deptInfo.deptName" disabled label="所属部门" placeholder="请输入"/>
         <picker-date v-model="form.signDate" label="签约日期" placeholder="请选择日期"></picker-date>
       </m-form>
-      <a url="/pages/common/more-list" class="ac d-text-gray lh40 d-block">
+			<div class="pt10 pl15 pr15 d-bg-white bb">
+					<div class='f13 mb10 d-text-black'>备注</div>
+					<textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
+			</div>
+			<div class='d-bg-white pb10'>
+					<div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
+						<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+						<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+						<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+						<i-select
+							v-if='item.fieldType == 3'
+							v-model="form.formsFieldValueSaveVos[index].fieldValue"
+							:props="{label:'content',value:'code'}"
+							:label="item.fieldName"
+							placeholder="请选择"
+							:options="dictionaryOptions(item.groupCode || '')"
+						/>
+					</div>
+				</div>
+      <a url="/pages/common/more-list?busType=3&isEnabled=-1" class="ac d-text-gray lh40 d-block">
         <i-icon type="add" size="18" color="#999"/>添加更多条目
       </a>
       <div class="footer-fixed-menu">
@@ -70,6 +89,8 @@ export default {
 				totalAmount: '', // 总金额
 				endTime: '', // 结束时间
 				belongDeptCode: '', // 所属部门code
+				note: '', // 备注
+				formsFieldValueSaveVos: [], // 更多条目里面的数据
 				signDate: ''// 签约日期
 			},
 			rules: {
@@ -114,7 +135,15 @@ export default {
 		if (this.type === 'edit') {
 			this.detailId = option.id
 			this.getTransactionDetail()
+		} else {
+			this.getMoreField()
 		}
+
+		// 更多条目回掉
+		uni.$on('moreList', data => {
+			// 获取字段列表
+			this.getMoreField()
+		})
 		// 在客户里边调用成交记录的话，需要将客户id带给销售机会，用来筛选当前客户关联的销售机会
 		// 在机会里边调用成交记录的话，需要取到当前机会的id，用id去查询详情，填充客户名称，并且传到联系人，走正常成交记录流程
 		if (option.busType == 0) { // eslint-disable-line
@@ -140,11 +169,12 @@ export default {
 
 		// 联系人回调
 		uni.$on('chooseContact', data => {
+			console.log(data)
 			if (data.length > 0) {
 				let nameArr = []
 				data.forEach((item) => {
 					this.linkIds.push(item.id)
-					nameArr.push(item.linkkanName)
+					nameArr.push(item.linkmanName)
 				})
 				this.form.linkkanNames = nameArr.join(',')
 			}
@@ -155,15 +185,39 @@ export default {
 		getTransactionDetail () {
 			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
 				.then(res => {
+					console.log(res)
 					this.form = res.data || {}
-					this.linkmanQueryList({ id: this.form.id, busType: 3 })
+					if (res.data.formsFieldValueEntityList.length > 0) {
+						this.form.formsFieldValueSaveVos = res.data.formsFieldValueEntityList
+					}
+					this.linkmanQueryList({ busId: this.form.id, busType: 3 })
 				})
 		},
 		// 根据成交id获取联系人列表
 		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanrelationList(params)
+			this.$api.seeCrmService.linkmanQueryBusList(params)
 				.then(res => {
+					let data = res.data || []
+					if (data.length > 0) {
+						let nameArr = []
+						data.forEach((item) => {
+							this.linkIds.push(item.id)
+							nameArr.push(item.linkmanName)
+						})
+						this.form.linkkanNames = nameArr.join(',')
+					}
 				})
+		},
+		// 获取已选中的更多条目
+		getMoreField () {
+			this.$api.seeCrmService.formsfieldconfigQueryList({
+				busType: 3,
+				isEnabled: 0
+			}).then(res => {
+				if (res.code === 200) {
+					this.form.formsFieldValueSaveVos = res.data || []
+				}
+			})
 		},
 		// 保存transactionrecordUpdate
 		async fsubmit () {
@@ -172,6 +226,13 @@ export default {
 				return
 			}
 			let name = this.type === 'add' ? 'transactionrecordSave' : 'transactionrecordUpdate'
+			if (this.form.formsFieldValueSaveVos.length > 0) {
+				this.form.formsFieldValueSaveVos.forEach((item) => {
+					if (!item.fieldConfigId) {
+						item.fieldConfigId = item.id
+					}
+				})
+			}
 			await this.$refs.form.validate()
 			this.form.belongDeptCode = this.deptInfo.deptName
 			this.form.linkId = this.linkIds

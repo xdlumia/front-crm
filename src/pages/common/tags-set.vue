@@ -11,17 +11,17 @@
       ref="list"
     >
       <a
-        :url="`/pages/common/edit-tags?dicCode=${item.labelCode}&busType=${queryForm.busType}&tagName=${item.labelName}`"
+        :url="`/pages/common/edit-tags?dicCode=${item.labelCode}&busType=${queryForm.busType}&tagName=${item.labelName}&id=${item.id}`"
         class="toptrasaction"
         v-for="(item,index) in tagsList"
         :key="index"
       >
-        <div @click.stop="deleteTag(item.labelCode)" class="hfull flexcenter ml15 fl">
+        <!-- <div @click.stop="deleteTag(item.id)" class="hfull flexcenter ml15 fl">
           <uni-icon class="fl" type="minus-filled" color="#EB4D3D" size="20"/>
-        </div>
-        <span class="d-text-black fl ml10">{{item.labelName}}</span>
+        </div> -->
+        <span class="d-text-black fl ml15">{{item.labelName}}</span>
         <span class="fr mr15">
-          <span>{{`（${item.labelName}）`}}</span>
+          <span>{{`（${item.childValueNum}）`}}</span>
           <uni-icon type="arrowright" size="16" color="#696969"/>
         </span>
       </a>
@@ -93,22 +93,22 @@ export default {
 		deleteMoreList () {
 			this.isAdd = false
 		},
-		// 删除某个标签
-		deleteTag (code) {
-			this.$utils.showModal('确定删除当前标签？')
-				.then(() => {
-					this.$api.seeCrmService.dictionaryrelationDelete(null, code)
-						.then(res => {
-							if (res.code === 200) {
-								this.$utils.toast.text('删除成功')
-								setTimeout(() => {
-									this.$refs.list.reload()
-								}, 800)
-							}
-						})
-				})
-				.catch(() => {})
-		},
+		// // 删除某个标签
+		// deleteTag (id) {
+		// 	this.$utils.showModal('确定删除当前标签？')
+		// 		.then(() => {
+		// 			this.$api.seeCrmService.dictionaryrelationDelete({id:id})
+		// 				.then(res => {
+		// 					if (res.code === 200) {
+		// 						this.$utils.toast.text('删除成功')
+		// 						setTimeout(() => {
+		// 							this.$refs.list.reload()
+		// 						}, 800)
+		// 					}
+		// 				})
+		// 		})
+		// 		.catch(() => {})
+		// },
 		// 点击确定
 		addTagsList () {
 			if (this.labelName) {

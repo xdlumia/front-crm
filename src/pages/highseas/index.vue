@@ -43,7 +43,7 @@
 							<div class="mr15" @click.stop='receive(item)'>
 								<uni-tag text="领取" type='primary' inverted size='small'></uni-tag>
 							</div>
-							<div @click.stop='handlerAllocation(item)' class="mr10">
+							<div @click.stop='handlerAllocation(item, index)' class="mr10">
 								<uni-tag text="分配" type='primary' inverted size='small'></uni-tag>
 							</div>
 						</div>
@@ -120,7 +120,7 @@ export default {
 				},
 				{
 					prop: 'sortType',
-					current: sortType[0],
+					current: sortType[1],
 					list: sortType
 				}
 			],
@@ -187,7 +187,7 @@ export default {
 		receive (item, index) {
 			this.$api.seeCrmService.clientinfoClaimClient({
 				clientId: item.id,
-				poolId: this.queryForm.pooId,
+				poolId: this.queryForm.poolId,
 				sendBackType: item.sendBackType,
 				leaderId: item.leaderId
 			}).then(res => {
@@ -197,10 +197,10 @@ export default {
 			})
 		},
 		// 分配事件
-		handlerAllocation (item) {
+		handlerAllocation (item, index) {
 			// 注册 事件
 			uni.$once('colleagueChoose', data => {
-				this.allocation(data.data.map(item => item.id)[0], item)
+				this.allocation(data.data.map(item => item.userId)[0], item, index)
 			})
 			// 设置当前选中的 客户项
 			this.cuClient = item
@@ -220,12 +220,14 @@ export default {
 		},
 
 		// 分配公海池客户
-		allocation (leaderId, item) {
+		allocation (leaderId, item, index) {
 			this.$api.seeCrmService.clientinfoAllocation({
 				clientId: item.id,
-				poolId: this.queryForm.pooId,
-				sendBackType: item.sendBackType,
+				poolId: this.queryForm.poolId,
+				sendBackType: item.sendBackType || '',
 				leaderId: leaderId
+			}).then(res => {
+				this.list.slice(index, 1)
 			})
 		}
 

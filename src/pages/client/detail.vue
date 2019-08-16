@@ -167,7 +167,7 @@ export default {
 		// 获取客户详情
 		this.getDetailInfo()
 		// 获取联系人列表
-		this.linkmanQueryList({ id: this.id, busType: 0 })
+		this.linkmanQueryBusList({ busId: this.id, busType: 0 })
 	},
 	computed: {
 		sendBackType () {
@@ -248,12 +248,12 @@ export default {
 		},
 
 		// 获取联系人列表
-		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params)
+		linkmanQueryBusList (params) {
+			this.$api.seeCrmService.linkmanQueryBusList(params)
 				.then(res => {
 					let data = res.data || []
 					let phones = data.map(item => {
-						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
 					})
 					this.phoneActions.push(...phones)
 				})
@@ -272,7 +272,7 @@ export default {
 				},
 				2: () => {
 					// 退回公海
-					this.$routing.navigateTo('/pages/highseas/return-client?clientId=' + this.id + '&leaderId=' + this.detailInfo.leaderId)
+					this.$routing.navigateTo('/pages/highseas/return-client?clientId=' + this.id + '&leaderId=' + this.detailInfo.leaderId + '&sendBackType=' + this.detailInfo.sendBackType)
 				},
 				3: () => {
 					// 变更负责人
@@ -287,7 +287,7 @@ export default {
 				},
 				5: () => {
 					// 更多日程
-					this.$routing.navigateTo('/pages/index/scheduleAdd')
+					this.$routing.navigateTo('/pages/index/scheduleAdd?busId=' + this.id + '&busType=0&name=' + this.detailInfo.name)
 				},
 				6: () => {
 					// 分配
@@ -324,7 +324,7 @@ export default {
 				partiType: 0
 			}).then(res => {
 				if (res.code === 200) {
-					// 完成
+
 				}
 			})
 		},

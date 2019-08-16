@@ -1023,6 +1023,21 @@ export default {
 	runlogCompressAndDownload: {
 		'url': '/ws/runlog/compressAndDownload',
 		'mock': _isMock
-	}
+	},
 	/* =============文件压缩下载（日志和配置文件）end=========== */
+
+	wgwGetPhoneNumber: {
+		'url': '/userapplicationinformation/wgw/getPhoneNumber',
+		'methods': 'post',
+		'mock': _isMock
+	},
+	wgwGetOpenId: {
+		'url': '/userapplicationinformation/wgw/getOpenId',
+		'methods': 'get',
+		'mock': _isMock
+	},
+	posterGet: {
+		'url': '/poster/get',
+		'mock': _isMock
+	}
 }

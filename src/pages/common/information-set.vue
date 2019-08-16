@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <scroll-view style="height:calc(100vh - 133px)" scroll-y>
+    <scroll-view style="height:calc(100vh - 178px)" scroll-y>
         <radio-group class="uni-list" @change="onChange">
                 <span v-for="(item, index) in informationList" :key="index">
                     <span v-if="item.isOriginal == 0">
@@ -112,8 +112,8 @@ export default {
 			statusTypes: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			msgArr: [{ name: '文本', type: 0 }, { name: '数字', type: 1 }, { name: '日期', type: 2 }, { name: '标签', type: 3 }],
 			tagAllList: [], // 所有标签的数组
-			msgName: '',
-			msgid: '',
+			msgName: '文本',
+			msgid: '0',
 			tagName: '',
 			tagId: '',
 			status: '',
@@ -173,12 +173,13 @@ export default {
 		closePopup () {
 			this.tagName = ''
 			this.tagId = ''
-			this.msgName = ''
-			this.msgid = ''
+			this.msgName = '文本'
+			this.msgid = '0'
 			this.$refs.popup.close()
 		},
 		// 获取所有列表
 		getInfosList () {
+			this.checkList = []
 			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: this.busType, isOriginal: -1 })
 				.then(res => {
 					if (res.code === 200) {
@@ -260,12 +261,12 @@ export default {
 				})
 		},
 		// 新增保存
+		// else if (!this.msgid && this.msgid != 0) {// eslint-disable-line
+		// 		this.$utils.toast.text('表单类型不能为空')
+		// 	}
 		saveformsfieldconfig () {
-			console.log(this.msgid)
 			if (!this.listForm.fieldName) {
 				this.$utils.toast.text('属性名称不能为空')
-			} else if (!this.msgid && this.msgid != 0) {// eslint-disable-line
-				this.$utils.toast.text('表单类型不能为空')
 			} else {
 				let params = {
 					busType: this.busType,

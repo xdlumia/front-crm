@@ -55,7 +55,7 @@ Api.interceptors.response.use(async (response, promise) => {
 		uni.showToast({ title: res.msg, icon: 'none' })
 		throw promise.reject(response.data)
 	}
-	if (res.code === 200 && response.request.method !== 'get') {
+	if (res.code === 200 && response.request.method !== 'GET') {
 		uni.showToast({ title: res.msg, icon: 'none' })
 	}
 	return res

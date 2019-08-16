@@ -1,6 +1,6 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会" :isSearch="true" placeholder="输入销售机会客户名称" searchType='1' />
+    <NavBar title="机会" :isSearch="true" :placeholder="queryForm.clientOrChanceName || '输入销售机会名称'" searchType='1' />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
 			<filter-diy :stageList="stageList"  @submit='diyFilterSubmit' />
@@ -87,13 +87,20 @@
 import Filter from '@/components/filter'
 import FilterDiy from './filter-diy'
 // 筛选数据
-let queryType = [
-	{ id: '-1', name: '全部' },
-	{ id: '0', name: '我负责的' },
-	{ id: '4', name: '我下属的' },
-	{ id: '2', name: '我关注的' },
-	{ id: '3', name: '7天未跟进' }
-]
+// let queryType = [
+// 	{ id: '-1', name: '全部' },
+// 	{ id: '0', name: '我负责的' },
+// 	{ id: '4', name: '我下属的' },
+// 	{ id: '2', name: '我关注的' },
+// 	{ id: '3', name: '7天未跟进' }
+// ]
+// 筛选数据
+let queryType = ['全部客户', '我负责的', '我参与的', '我关注的', '7天未跟进的', '我下属负责的', '我下属参与的'].map((item, index) => {
+	return {
+		name: item,
+		id: index - 1
+	}
+})
 // 列表排序数据
 let sortType = [
 	{ id: 'a.follow_up_time', name: '最新跟进时间' },
@@ -141,6 +148,7 @@ export default {
 				totalSalesChanceMoney: ''
 			},
 			currStage: 0,
+			clientId: '', // 客户id，代表从客户详情新增成交记录来的
 			queryForm: {
 				limit: 10,
 				page: 1,
@@ -159,12 +167,30 @@ export default {
 		this.$refs.list.reload()
 		// 获取销售阶段
 		this.salesstageQueryList()
+
+		this.$forceUpdate()
 	},
 	onLoad (option) {
 		// this.select = option.select
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
-		this.queryForm.clientId = option.clientId || ''
+		// 如果是从客户页面过来的新增成交记录选的机会，要通过客户的busId和busType来筛选,走的是/linkman/queryBusList这个接口，不需要多余参数
+		if (option.clientId) {
+			this.clientId = option.clientId
+			this.queryForm = {
+				page: '',
+				limit: '',
+				busId: option.clientId,
+				busType: 0
+			}
+			this.$refs.list.reload()
+		} else {
+			this.clientId = ''
+		}
+		uni.$on('updatedate', ({ searchInfo }) => {
+			this.queryForm.clientOrChanceName = searchInfo
+			this.$refs.list.reload()
+		})
 	},
 	created () {
 		// this.busId = this.id
@@ -175,7 +201,7 @@ export default {
 	},
 	computed: {
 		api () {
-			return !this.isSelect ? 'seeCrmService.saleschanceQueryPageList' : 'seeCrmService.saleschanceQueryList'
+			return !this.isSelect ? 'seeCrmService.saleschanceQueryPageList' : this.clientId ? 'seeCrmService.linkmanQueryBusList' : 'seeCrmService.saleschanceQueryPageList'
 		}
 	},
 	methods: {
@@ -302,7 +328,7 @@ export default {
     padding-right: 5px;
     margin-right: 5px;
     border-right: 1px solid #999;
-    &::last-child{border:none}
+    &:last-child{border-right:none}
   }
 }
 .chance-item {

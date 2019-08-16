@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="团队成员" color="#4889f4" :url="'/pages/index/colleagueChoose?isRadio=0&ids=' + ids + '&partiType=1&busType=' + query.busType">
+        <mPanel top="10" title="团队成员" color="#1890FF" :url="'/pages/index/colleagueChoose?isRadio=0&ids=' + ids + '&partiType=1&busType=' + query.busType">
             <div class="detail-list ac f12 d-text-gray" v-if="!list.length && !Object.keys(leader).length">暂无数据</div>
 			<div class="detail-list d-flex-lr bb" v-if='leader.rmEmployeeEntity'>
 				<image class="detail-list-img" :data-name="leader.rmEmployeeEntity.employeeName" src="" alt=""></image>

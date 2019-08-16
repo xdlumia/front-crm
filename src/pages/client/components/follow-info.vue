@@ -92,6 +92,7 @@ export default {
 	},
 	created () {
 		this.getFollowup()
+
 		uni.$on('updateFollow', () => {
 			this.getFollowup(1)
 		})
@@ -115,6 +116,8 @@ export default {
 					if (resulte.count <= this.list.length) {
 						this.loading = false
 					}
+
+					this.$forceUpdate()
 				}
 			} catch (err) {
 				this.list = []

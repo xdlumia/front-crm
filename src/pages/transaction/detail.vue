@@ -66,7 +66,7 @@
 import detailInfo from './components/detail-info'
 import correlationInfo from './components/correlation-info'
 
-let moreActionsTitle = ['更多操作', '转移', '删除', '日程']
+let moreActionsTitle = ['更多操作', '变更负责人', '删除', '日程']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
 	components: {
@@ -104,7 +104,9 @@ export default {
 	onShow () {
 		this.getTransactionDetail()
 		// 获取联系人列表
-		this.linkmanQueryList({ id: this.detailId, busType: 3 })
+		this.linkmanQueryList({ busId: this.detailId, busType: 3 })
+	},
+	onReady () {
 	},
 	methods: {
 		// 请求成交记录详情
@@ -130,11 +132,11 @@ export default {
 		},
 		// 获取联系人列表
 		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params)
+			this.$api.seeCrmService.linkmanQueryBusList(params)
 				.then(res => {
 					let data = res.data || []
 					let phones = data.map(item => {
-						return { name: `${item.linkkanName} ${item.mobile}`, phone: item.mobile }
+						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
 					})
 					this.phoneActions.push(...phones)
 				})
@@ -175,11 +177,27 @@ export default {
 						})
 				},
 				3: () => {
-					this.$routing.navigateTo('/pages/index/scheduleAdd?busType=3&name=' + this.detailInfo.name + '&id=' + this.detailId)
-					// uni.$emit('chooseTransaction', { id: this.detailId, name: this.detailInfo.name })
+					// 变更负责人
+					uni.$once('colleagueChoose', data => {
+						this.updateLeader(data.data.map(item => item.userId)[0])
+					})
+					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
 				}
 			}
 			fnType[index]()
+		},
+		// 变更负责人
+		updateLeader (leaderId) {
+			this.$api.seeCrmService.teammemberinfoUpdate({
+				busId: this.detailId,
+				busType: 3,
+				leaderId: leaderId,
+				partiType: 0
+			}).then(res => {
+				if (res.code === 200) {
+					// 完成
+				}
+			})
 		}
 	},
 	onUnload () {
