@@ -23,7 +23,7 @@ export default {
 				).then((response) => {
 					if (response.code === 200) {
 						if (response.data.bind) {
-							that.$api.systemService.thirdpartyAuthorizationLogin({ 'userKey': that.$local.fetch('appid') }).then((response2) => {
+							that.$api.systemService.thirdpartyAuthorizationLogin({ 'userKey': response.data.userKey }).then((response2) => {
 								if (response2.code === 200) {
 									that.$local.setItem('token', response2.data.token)
 									that.$local.setItem('finger', response2.data.finger)
