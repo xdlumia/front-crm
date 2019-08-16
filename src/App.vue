@@ -40,7 +40,7 @@ export default {
 								}
 							})
 						} else {
-							uni.$emit('loginout')
+							// uni.$emit('loginout')
 						}
 					}
 				})
