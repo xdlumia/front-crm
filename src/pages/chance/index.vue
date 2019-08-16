@@ -61,7 +61,7 @@
 			</i-row>
 		</div>
 		<div class="flex-item d-flex" style="width:50px;align-items: center;" v-if="isSelect">
-			<m-radio v-model="id" :label='item.id'></m-radio>
+			<m-radio v-model="id" :label='item.id' disabled></m-radio>
 		</div>
 	</div>
     </scroll-list>
@@ -95,7 +95,7 @@ import FilterDiy from './filter-diy'
 // 	{ id: '3', name: '7天未跟进' }
 // ]
 // 筛选数据
-let queryType = ['全部客户', '我负责的', '我参与的', '我关注的', '7天未跟进的', '我下属负责的', '我下属参与的'].map((item, index) => {
+let queryType = ['全部', '我负责的', '我参与的', '我关注的', '7天未跟进的', '我下属负责的', '我下属参与的'].map((item, index) => {
 	return {
 		name: item,
 		id: index - 1
