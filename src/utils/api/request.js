@@ -37,12 +37,12 @@ Api.interceptors.request.use(async config => {
 	return config
 })
 
-Api.interceptors.response.use((response) => {
+Api.interceptors.response.use(async (response, promise) => {
 	let res = response.data
 	// uni.hideLoading()
 	if (+response.data.code === 402 || +response.data.code === 403) {
 		uni.$emit('loginout')
-		return Promise.reject(res.msg)
+		throw promise.reject(response.data)
 		// return Promise.resolve(
 		// 	Object.assign({
 		// 		data: []
@@ -53,16 +53,16 @@ Api.interceptors.response.use((response) => {
 	}
 	if (res.code !== 200) {
 		uni.showToast({ title: res.msg, icon: 'none' })
-		return Promise.reject(res.msg)
+		throw promise.reject(response.data)
 	}
 	if (res.code === 200 && response.request.method !== 'GET') {
 		uni.showToast({ title: res.msg, icon: 'none' })
 	}
-	return Promise.resolve(res)
-}, (error) => {
-	if (error) {
+	return res
+}, (err, promise) => {
+	if (err) {
 		// uni.hideLoading()
-		return Promise.reject(error)
+		return promise.reject(err)
 	}
 })
 

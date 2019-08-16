@@ -106,7 +106,7 @@ let sortType = [
 	{ id: 'a.follow_up_time', name: '最新跟进时间' },
 	{ id: 'a.stage_propel_time', name: '阶段更新时间' },
 	{ id: 'a.sales_money', name: '销售金额' },
-	{ id: 'c.equityedge', name: '盈率(从高到底)' }
+	{ id: 'c.equityedge', name: '赢率(从高到底)' }
 ]
 export default {
 	props: {
@@ -247,7 +247,9 @@ export default {
 				this.currStage = '-1'
 			} else if (filterData.stageIds.length === 1) {
 				let [id] = filterData.stageIds
-				this.currStage = this.stageList.findIndex(item => item.id === id)
+				let index = this.stageList.findIndex(item => item.id === id)
+				this.stageSts.equityedge = this.stageList[index].equityedge
+				this.currStage = index + 1
 			}
 			this.queryForm = Object.assign({}, this.queryForm, filterData)
 			this.$refs.list.reload()
@@ -282,6 +284,7 @@ export default {
 		salesstageQueryList () {
 			this.$api.seeCrmService.salesstageQueryList()
 				.then(res => {
+					if (res.code !== 200) return
 					let data = res.data || []
 					data.forEach(item => {
 						item.name = item.stageName
