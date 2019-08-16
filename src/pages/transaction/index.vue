@@ -3,9 +3,9 @@
         <NavBar title='成交记录' searchType='2' />
         <div>
             <div class="page-search-box d-flex" :style="'top: '+ navH">
-                <a url="/pages/common/search?searchType=2" class="wfull">
+                <a @click="getSearch" class="wfull">
                     <div class="search-input d-center d-cell pl10">
-                        <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">搜成交记录名称</span>
+                        <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">{{queryForm.name || '搜成交记录名称'}}</span>
                     </div>
                 </a>
             </div>
@@ -186,15 +186,12 @@ export default {
 			selects[item.prop] = item.current || item.list[0]
 		})
 		this.filterSelect = selects
-
-		uni.$on('updatedate', (data) => {
-			this.queryForm.name = data.searchInfo
-			this.$refs.list.reload()
-		})
-
 		uni.$on('updatetransList', (data) => {
 			this.$refs.list.reload()
 		})
+	},
+	onShow () {
+		this.$refs.list.reload()
 	},
 	created () {
 
@@ -227,6 +224,13 @@ export default {
 			}
 			this.$refs.list.reload()
 			this.$refs.filter.hide()
+		},
+		getSearch () {
+			uni.$once('updatedate', (data) => {
+				this.queryForm.name = data.searchInfo
+				this.$refs.list.reload()
+			})
+			this.$routing.navigateTo('/pages/common/search?searchType=2')
 		},
 		handlerTransation (item, index) {
 			if (!this.chooseType) {

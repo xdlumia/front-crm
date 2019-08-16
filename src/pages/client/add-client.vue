@@ -188,7 +188,6 @@ export default {
 				if (key === 'formsFieldValueSaveVos') {
 					this.form.formsFieldValueSaveVos = info.formsFieldValueEntities
 				} else if (key === 'lableBusinessSaveVo') {
-					this.form.lableBusinessSaveVo = info.lableBusinessEntityList
 					this.labelNames = info.lableBusinessEntityList.map(item => item.labelName).join(',')
 					this.form.lableBusinessSaveVo.labelIdArray = info.lableBusinessEntityList.map(item => item.id)
 				} else {

@@ -39,6 +39,8 @@ export default {
 									that.$utils.toast.text(response.msg)
 								}
 							})
+						} else {
+							// uni.$emit('loginout')
 						}
 					}
 				})

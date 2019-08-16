@@ -8,7 +8,7 @@
         <div class="uni-flex uni-row">
           <div class="flex-item d-elip wfull f16" style="color:#333">{{detailInfo.chanceName}}</div>
           <div class="flex-item datail-handle">
-            <a class="d-inline" :url="`/pages/chance/add-chance?id=${detailInfo.id}&editType=1`">
+            <a class="d-inline" :url="`/pages/chance/add-chance?id=${detailInfo.id}&editType=1&clientId=${detailInfo.clientId}`">
               <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
             </a>
             <span @click="updateAttention(detailInfo.isWatchful)">
@@ -150,7 +150,7 @@ export default {
 		// 获取详情
 		this.saleschanceInfo(option.id)
 		// 获取联系人列表
-		this.linkmanQueryList({ busId: option.id, busType: 2 })
+		this.linkmanQueryBusList({ busId: option.id, busType: 2 })
 		// 编辑成功刷新列表
 		uni.$on('addChance', data => {
 			// 获取详情
@@ -184,8 +184,8 @@ export default {
 			})
 		},
 		// 获取联系人列表
-		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params).then(res => {
+		linkmanQueryBusList (params) {
+			this.$api.seeCrmService.linkmanQueryBusList(params).then(res => {
 				let data = res.data || []
 				this.phoneActions = data.map(item => {
 					return {

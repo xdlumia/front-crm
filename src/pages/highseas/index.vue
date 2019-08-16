@@ -14,7 +14,7 @@
 		</NavBar>
         <div>
             <div class="page-search-box d-flex" :style="'top: '+ navH">
-                <a url='/pages/common/search?searchType=4' class="search-input d-center d-cell pl10">
+                <a @click="getSearch" class="search-input d-center d-cell pl10">
                     <i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">{{queryForm.name || '搜索客户名称'}}</span>
                 </a>
             </div>
@@ -144,11 +144,6 @@ export default {
 			this.queryForm[item.prop] = selects[item.prop].id
 		})
 		this.filterSelect = selects
-
-		uni.$on('updatedate', ({ searchInfo }) => {
-			this.queryForm.name = searchInfo
-			this.$refs.list.reload()
-		})
 	},
 	computed: {
 		pool () {
@@ -165,6 +160,13 @@ export default {
 
 			this.chooseDataIndex = index
 			this.chooseData = item.id
+		},
+		getSearch () {
+			uni.$once('updatedate', (data) => {
+				this.queryForm.name = data.searchInfo
+				this.$refs.list.reload()
+			})
+			this.$routing.navigateTo('/pages/common/search?searchType=4')
 		},
 		// 获取列表数据
 		getList (list) {
