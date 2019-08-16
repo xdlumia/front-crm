@@ -85,8 +85,6 @@ export default {
 	onLoad (option) {
 		this.optionType = searchType[option.searchType] || 0
 		this.busType = option.searchType
-		console.log(option)
-		console.log(this.optionType, this.busType)
 	},
 	onReady () {
 		let { systemInfo } = this.$store.state
