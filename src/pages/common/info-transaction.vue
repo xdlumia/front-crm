@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="成交记录" color="#1FC695" :url="`/pages/transaction/transaction-add?busType=${query.busType}&name=${query.name}&id=${query.busId}`">
+        <mPanel top="10" title="成交记录" color="#1FC695"  @click='click' :isUrl='isUrl'>
             <div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
 			<div v-else>
 				<div class="detail-list d-flex" v-for="(item,index) in list" :key='index'>
@@ -29,7 +29,15 @@
 
 <script>
 export default {
-	props: ['query'],
+	props: {
+		query: {
+			type: Object
+		},
+		isUrl: {
+			type: Boolean,
+			default: true
+		}
+	},
 	components: {
 		// mPager
 	},
@@ -43,9 +51,7 @@ export default {
 	onLoad (option) {
 	},
 	onReady () {
-		uni.$on('updatetransList', (data) => {
-			this.transactionrecordQueryRecordListById()
-		})
+
 	},
 	methods: {
 		transactionrecordQueryRecordListById () {
@@ -54,6 +60,12 @@ export default {
 					this.list = res.data || []
 				}
 			})
+		},
+		click () {
+			uni.$once('updatetransList', (data) => {
+				this.transactionrecordQueryRecordListById()
+			})
+			this.$routing.navigateTo(`/pages/transaction/transaction-add?busType=${this.query.busType}&name=${this.query.name}&id=${this.query.busId}`)
 		}
 	},
 	created () {

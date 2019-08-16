@@ -8,9 +8,9 @@
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
         <!-- 联系人 -->
-        <infoContact :query="query"/>
+        <infoContact :query="query" :isUrl='false'/>
         <!-- 销售机会 -->
-         <infoChance :query="query"/>
+         <infoChance :query="query" :isUrl='false'/>
         <!-- 日程 -->
         <infoSchedule :query="query"/>
         <!-- 附件 -->

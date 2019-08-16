@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel title="销售机会" color="#FFBA59">
+        <mPanel title="销售机会" color="#FFBA59" :isUrl='isUrl'>
 			<div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
             <div class="detail-list uni-flex uni-row pb10" v-for="(item,index) of list" :key="index">
                 <div class="flex-item item-progress mr10">
@@ -29,7 +29,15 @@
 
 <script>
 export default {
-	props: ['query'],
+	props: {
+		query: {
+			type: Object
+		},
+		isUrl: {
+			type: Boolean,
+			default: true
+		}
+	},
 	components: {
 		// mPager
 	},

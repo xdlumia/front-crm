@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel title="联系人" color="#7766CC" :url="url">
+        <mPanel title="联系人" color="#7766CC" @click="click" :isUrl='isUrl'>
 			<div class="detail-list ac f12 d-text-gray" v-if="!contactList.length">暂无数据</div>
             <div class="detail-list" v-for="(item,index) of contactList" :key="index">
                 <div class="list-title">
@@ -22,7 +22,15 @@
 
 <script>
 export default {
-	props: ['query'],
+	props: {
+		query: {
+			type: Object
+		},
+		isUrl: {
+			type: Boolean,
+			default: true
+		}
+	},
 	components: {
 		// mPager
 	},
@@ -35,26 +43,7 @@ export default {
 		}
 	},
 	onReady (option) {
-		// 联系人回掉
-		uni.$on('chooseContact', data => {
-			if (!Array.isArray(data)) {
-				data = [data]
-			}
-			this.form.linkmanRelationSaveVoList = data.map(item => {
-				return {
-					busId: Number(this.query.busId),
-					busType: this.query.busType,
-					clientId: this.query.clientId,
-					linkmanId: item.id
-				}
-			})
-			// 业务与联系人关系保存
-			this.linkmanrelationSaveBatch()
-		})
 
-		uni.$on('addContact', data => {
-			this.linkmanQueryBusList()
-		})
 	},
 	computed: {
 		url () {
@@ -70,6 +59,29 @@ export default {
 		this.linkmanQueryBusList()
 	},
 	methods: {
+		click () {
+			// 联系人回掉
+			uni.$once('chooseContact', data => {
+				if (!Array.isArray(data)) {
+					data = [data]
+				}
+				this.form.linkmanRelationSaveVoList = data.map(item => {
+					return {
+						busId: Number(this.query.busId),
+						busType: this.query.busType,
+						clientId: this.query.clientId,
+						linkmanId: item.id
+					}
+				})
+				// 业务与联系人关系保存
+				this.linkmanrelationSaveBatch()
+			})
+
+			uni.$once('addContact', data => {
+				this.linkmanQueryBusList()
+			})
+			this.$routing.navigateTo(this.url)
+		},
 		// 业务与联系人关系保存
 		linkmanrelationSaveBatch () {
 			this.$api.seeCrmService.linkmanrelationSaveBatch(Object.assign({}, { busId: this.query.busId, busType: this.query.busType, clientId: this.query.clientId }, this.form))

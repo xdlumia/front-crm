@@ -177,7 +177,6 @@ export default {
 		this.queryForm.busType = option.busType || ''
 		// 如果是从客户页面过来的新增成交记录选的机会，要通过客户的id来筛选,在这里多加一个参数
 		if (option.clientId) {
-			console.log(option.clientId, 'option.clientId')
 			this.queryForm.clientId = option.clientId
 			this.$refs.list.reload()
 		} else {

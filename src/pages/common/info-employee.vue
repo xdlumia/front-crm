@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="团队成员" color="#1890FF" :url="'/pages/index/colleagueChoose?isRadio=0&ids=' + ids + '&partiType=1&busType=' + query.busType">
+        <mPanel top="10" title="团队成员" color="#1890FF" @click="click">
             <div class="detail-list ac f12 d-text-gray" v-if="!list.length && !Object.keys(leader).length">暂无数据</div>
 			<div class="detail-list d-flex-lr bb" v-if='leader.rmEmployeeEntity'>
 				<image class="detail-list-img" :data-name="leader.rmEmployeeEntity.employeeName" src="" alt=""></image>
@@ -35,6 +35,10 @@ export default {
 	props: {
 		query: {
 			type: Object
+		},
+		isUrl: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data () {
@@ -78,13 +82,13 @@ export default {
 
 			this.$forceUpdate()
 			// 注册 事件
-			uni.$once('colleagueChoose', data => {
-				if (+data.query.partiType === 1) {
-					this.updateEmployee(data.data.map(item => item.userId))
-				} else {
-					this.updateLeader(data.data.map(item => item.userId)[0])
-				}
-			})
+			// uni.$once('colleagueChoose', data => {
+			// 	if (+data.query.partiType === 1) {
+			// 		this.updateEmployee(data.data.map(item => item.userId))
+			// 	} else {
+			// 		this.updateLeader(data.data.map(item => item.userId)[0])
+			// 	}
+			// })
 		},
 
 		// 更新参与人
@@ -113,6 +117,17 @@ export default {
 					this.getEmployeeList()
 				}
 			})
+		},
+		click () {
+			// 注册 事件
+			uni.$once('colleagueChoose', data => {
+				if (+data.query.partiType === 1) {
+					this.updateEmployee(data.data.map(item => item.userId))
+				} else {
+					this.updateLeader(data.data.map(item => item.userId)[0])
+				}
+			})
+			this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=0&ids=' + this.ids + '&partiType=1&busType=' + this.query.busType)
 		}
 
 	}
