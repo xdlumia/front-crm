@@ -27,7 +27,7 @@ export default {
 	},
 	onLoad () {
 		// 获取意见反馈列表
-		let sysCode = this.$local.getItem('sysCode')
+		let sysCode = this.$local.fetch('sysCode')
 		this.$api.systemService.getHandbookMenuListPublish({ 'sysCode': sysCode }).then((response) => {
 			if (response.code === 200) {
 				this.helps = response.data

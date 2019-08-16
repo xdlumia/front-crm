@@ -45,7 +45,7 @@
 		<!-- 提交按钮 -->
 		<i-row class="m10">
 			<i-col span="24" i-class="col-class">
-				<button  class="wfull ac f16 h40 d-bg-blue" style="line-height: 40px" @click="submitApply">提交申请</button>
+				<button  class="wfull ac f16 h40 d-bg-blue" style="line-height: 40px" open-type="getUserInfo" @getuserinfo="submitApply">提交申请</button>
 			</i-col>
 		</i-row>
 	</view>
@@ -79,7 +79,6 @@ export default {
 		this.avatarUrl = option.avatarUrl
 
 		uni.$on('handleClick', function (data) {
-			console.log(data)
 		})
 	},
 	methods: {
@@ -91,7 +90,7 @@ export default {
 		// 	this.submitApply()
 		// },
 		// 提交申请
-		submitApply () {
+		submitApply ({ mp }) {
 			if (this.validateOk) {
 				this.$api.seeCrmService.userapplicationinformationSave({
 					'name': this.name,
@@ -99,7 +98,7 @@ export default {
 					'applyReason': this.applyReason,
 					'companyCode': this.companyCode,
 					'inviter': this.inviter,
-					'photo': this.avatarUrl
+					'photo': mp.detail.avatarUrl || this.avatarUrl
 				}).then((response) => {
 					if (response.code === 200) {
 						uni.redirectTo({

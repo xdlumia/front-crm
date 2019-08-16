@@ -15,16 +15,16 @@
 				ref='teamDatas'>
 			<view class="uni-flex uni-column" v-for="(item) in teamDatas" :key="item.id">
 				<view class="flex-item flex-item-V uni-flex uni-row pt15 pl15 pr15" style="height:72px">
-					<view class="flex-item width20 p10">
-						<image class="ba" style="height: 51px;width: 51px;" src="/static/img/index.png"></image>
+					<view class="flex-item width15 p10">
+						<image class="ba d-circle" style="height: 51px;width: 51px;" :src='item.photo'></image>
 					</view>
-					<view class="flex-item width32" @click="info(item)">
+					<view class="flex-item width40" @click="info(item)">
 						<view class="f14">{{item.name}}</view>
 						<view class="d-text-qgray">来源</view>
 						<view>由<span style="color:#5081F5;">{{item.inviter}}</span>邀请加入</view>
 
 					</view>
-					<view class="flex-item width48 d-center" style="margin: 40px 0;">
+					<view class="flex-item width45 d-center" style="margin: 40px 0;">
 						<button v-if="item.isAgree == 1" class="fl ml5 d-text-cgray">
 							已同意
 						</button>
@@ -36,7 +36,7 @@
 						<button type="warn" size="8px" plain="true" class="fl ml5" @click="deleteApply(item.id)">删除</button>
 					</view>
 				</view>
-				<view class="flex-item flex-item-V bb pb10" style="padding-left: 26%;padding-right: 6%;">
+				<view class="flex-item flex-item-V bb pb10" style="padding-left: 23%;padding-right: 6%;">
 					<view class="d-text-qgray">申请理由</view>
 					<view>{{item.applyReason}}</view>
 				</view>
@@ -103,13 +103,13 @@ export default {
 </script>
 
 <style>
-    .width20{
-        width: 20%;
+    .width15{
+        width: 15%;
     }
-    .width32{
-        width: 32%;
+    .width40{
+        width: 40%;
     }
-    .width48{
-        width: 48%;
+    .width45{
+        width: 45%;
     }
 </style>

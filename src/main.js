@@ -60,6 +60,7 @@ import mPanel from './components/m-panel'
 import mList from './components/m-list'
 import pickerDate from './components/picker-date'
 import mRadio from './components/m-radio'
+import mAvatat from './components/m-avatar'
 import mCheckbox from './components/m-checkbox'
 // import mUpload from './components/m-upload'
 // import mForm from './components/m-form'
@@ -124,6 +125,7 @@ Vue.component('mPanel', mPanel)
 Vue.component('mList', mList)
 Vue.component('pickerDate', pickerDate)
 Vue.component('mRadio', mRadio)
+Vue.component('mAvatat', mAvatat)
 Vue.component('mCheckbox', mCheckbox)
 // Vue.component('mUpload', mUpload)
 // Vue.component('mForm', mForm)
@@ -149,7 +151,7 @@ try {
 
 // 注册登录事件
 uni.$on('login', data => {
-	// 保存token finger syscode
+	// 保存token finger sysCode
 	local.setItem('token', data.token)
 	local.setItem('finger', data.finger)
 	local.setItem('sysCode', data.sysCode)

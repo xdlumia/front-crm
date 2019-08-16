@@ -126,6 +126,7 @@ export default {
 			this.formData.employeeName = JSON.parse(option.apply).name
 			this.formData.phone = JSON.parse(option.apply).phone
 			this.formData.id = JSON.parse(option.apply).id
+			this.formData.avatarUrl = JSON.parse(option.apply).photo
 		}
 	},
 	methods: {

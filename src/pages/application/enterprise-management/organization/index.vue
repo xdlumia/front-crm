@@ -10,7 +10,7 @@
         <NavBar title="组织架构" />
         <view class="uni-flex uni-column">
             <view class="flex-item flex-item-V mt10 mb10">
-                <span class="p10" style="color: #5081F5;">{{companyName}}</span>
+                <span class="p10 d-text-blue">{{companyName}}</span>
             </view>
             <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V uni-flex uni-column" >
@@ -22,34 +22,36 @@
             <view class="flex-item flex-item-V uni-flex uni-column" v-for="(item) in users" :key="item.id" @click="editEmployee(item.id)">
                 <view class="flex-item flex-item-V bb p10">
                     <view class="fl width20">
-                        <image class="ba" style="height: 51px;width: 51px;" src="/static/img/index.png"></image>
+						<mAvatat :text='item.employeeName' :url='item.avatarUrl'></mAvatat>
                     </view>
                     <view class="fl width20 pl10 mt15">{{item.employeeName}}</view>
-                    <view v-if="item.roleNames" class="fl ac ml10 pl5 pr5 mt15" style="color:#457FF5;border: 1px solid #457FF5;border-radius: 5px;">
+                    <view v-if="item.roleNames" class="fl ac ml10 pl5 pr5 mt15 d-text-blue" style="border: 1px solid #457FF5;border-radius: 5px;">
                         {{item.roleNames.split(',')[0]}}
                     </view>
                 </view>
             </view>
             <view class="flex-item flex-item-V bb mt10 p10 d-flex-lr" >
-               <i class="iconfont f28 iconxinjian fl " style="color: #4D7FF5;"></i>
+               <i class="iconfont f28 iconxinjian fl d-text-blue"></i>
                <button  class="pl5 fl d-text-cgray ml0" style="border: none;" open-type="getUserInfo" @getuserinfo="invite" plain="true">邀请同事加入</button >
             </view>
             <view class="flex-item flex-item-V" style="height: 50px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V bt pt10 pb10 wfull" style="position: fixed;bottom: 0;background-color: rgba(255,255,255,1)">
                 <view class="uni-flex uni-row">
-                    <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
-                        style="text-align: center;color:#4D7FF5;"
+                    <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]" class="d-text-blue"
+                        style="text-align: center;"
                         url="/pages/application/enterprise-management/team/editor/index?isEditor=0">
                         添加员工
                     </a>
                     <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
-                        style="text-align: center;color:#4D7FF5;"
+						class="d-text-blue"
+                        style="text-align: center;"
                         :url="'/pages/application/enterprise-management/organization/add-dept?isEditor=0&deptName=' + deptName + '&deptId=' + deptId">
                         添加子部门
                     </a>
                     <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]"
                         v-if="hierarchy != 0"
-                        style="text-align: center;color:#4D7FF5;"
+						class="d-text-blue"
+                        style="text-align: center;"
                         :url="'/pages/application/enterprise-management/organization/add-dept?isEditor=1&deptName=' + deptName + '&deptId=' + deptId">
                         部门设置
                     </a>

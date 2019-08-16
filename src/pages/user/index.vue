@@ -8,7 +8,7 @@
                         <div class='f18 b d-text-black mb5'>{{phone}}</div>
                         <a url='/pages/user/user-info' class="f12 d-text-gray">点击查看个人信息 ></a>
                     </div>
-                    <img class="avatar-img" :src='avatarUrl' alt="">
+                    <open-data type="userAvatarUrl" class="avatar-img d-circle"></open-data>
                 </div>
                 <div class="d-center lh35 bt mt15">
                     <a class='d-cell d-flex'>
