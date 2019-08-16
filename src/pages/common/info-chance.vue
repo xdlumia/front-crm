@@ -7,9 +7,9 @@
 -->
 <template>
     <div>
-        <mPanel title="销售机会" color="#FFBA59" :isUrl='isUrl'>
+        <mPanel title="销售机会" color="#FFBA59" @click="click" :isUrl='isUrl'>
 			<div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
-            <div class="detail-list uni-flex uni-row pb10" v-for="(item,index) of list" :key="index">
+            <div v-else class="detail-list uni-flex uni-row pb10" v-for="(item,index) of list" :key="index">
                 <div class="flex-item item-progress mr10">
                     <circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" />
                 </div>
@@ -71,12 +71,13 @@ export default {
 					})
 					this.stageList = data
 				})
+		},
+		click () {
+			uni.$once('addChance', data => {
+				this.saleschanceQueryList()
+			})
+			this.$routing.navigateTo(`/pages/chance/add-chance?clientId=${this.query.busId}&clientName=${this.query.name}`)
 		}
-		// formatStage (row) {
-		// 	let [ stage ] = this.stageList.filter(row => row.id === item.stageId)
-		// 	return 'stage.stageName || '''
-		// }
-
 	}
 
 }

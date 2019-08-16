@@ -196,6 +196,9 @@ export default {
 			this.$refs.list.reload()
 		})
 	},
+	onShow () {
+		this.$refs.list.reload()
+	},
 	created () {
 
 	},
