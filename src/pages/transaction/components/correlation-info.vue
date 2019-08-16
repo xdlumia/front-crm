@@ -12,7 +12,7 @@
         <!-- 销售机会 -->
          <infoChance :query="query" :isUrl='false'/>
         <!-- 日程 -->
-        <infoSchedule :query="query"/>
+        <infoSchedule ref="infoSchedule" :query="query"/>
         <!-- 附件 -->
         <infoFile :query="query"/>
         <!-- 团队成员 -->
@@ -44,6 +44,9 @@ export default {
 	methods: {
 		openDetail (index) {
 			this.$routing.navigateTo('./detail/index')
+		},
+		colleagueChoose () {
+			this.$refs.infoSchedule.colleagueChoose()
 		}
 
 	}
