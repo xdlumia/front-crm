@@ -10,7 +10,7 @@
         <NavBar title='选择客户公海池' />
 
         <i-cell-group>
-            <i-cell :title="item.name" :label='"领取客户上限：" + item.getClientNumMax' v-for="item in list" :key="item.id" @click='choosePool(item)'>
+            <i-cell :title="item.name" :label='"领取客户上限：" + (item.getClientNumMax || 0)' v-for="item in list" :key="item.id" @click='choosePool(item)'>
                 <div class="d-center" slot='footer'>
                     <m-radio :label='item.id' v-model="id" />
                 </div>
