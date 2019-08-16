@@ -243,15 +243,15 @@ export default {
 		},
 		// 大保存
 		fsubmit () {
-			let arr = []
-			if (this.checkList.length > 0) {
-				this.checkList.forEach((item) => {
-					arr.push({ busType: this.busType, id: item })
-				})
-			} else {
-				arr = []
-			}
-			this.$api.seeCrmService.formsfieldconfigUpdateBatch(arr)
+			// let arr = []
+			// if (this.checkList.length > 0) {
+			// 	this.checkList.forEach((item) => {
+			// 		arr.push({ busType: this.busType, id: item })
+			// 	})
+			// } else {
+			// 	arr = []
+			// }
+			this.$api.seeCrmService.formsfieldconfigUpdateBatch({ busType: this.busType, ids: this.checkList })
 				.then(res => {
 					if (res.code === 200) {
 						setTimeout(() => {

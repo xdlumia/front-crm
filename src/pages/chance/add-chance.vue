@@ -119,6 +119,11 @@ export default {
 		}
 	},
 	onLoad (option) {
+		// 客户详情，新增机会
+		if (option.clientId) {
+			this.form.clientName = option.clientName
+			this.form.clientId = option.clientId
+		}
 		// 获取字段列表
 		this.formsfieldconfigQueryList()
 		if (option.id) {
