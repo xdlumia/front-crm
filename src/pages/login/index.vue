@@ -4,7 +4,7 @@
         <div class="">
             <img class="logo-img d-block" src="../../assets/img/logo.png" alt="">
             <div class="plr40">
-                <button style="padding-left:0;padding-right:0;" ref="getPhoneButton" open-type="getPhoneNumber" @getphonenumber="handlePnoneClick">
+                <button style="padding-left:0;padding-right:0;" open-type="getPhoneNumber" @getphonenumber="handlePhoneClick">
                     <i-button type="primary" size="default" i-class="f16 mb15">
                             <uni-icon type='weixin' size='24' color='#fff' />
                             <span class="ml10">
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-
 export default {
 	components: {
 	},
@@ -38,7 +37,8 @@ export default {
 				code: '',
 				encryptedData: '',
 				iv: '',
-				sessionKey: ''
+				sessionKey: '',
+				avatarUrl: ''
 			}
 		}
 	},
@@ -54,23 +54,27 @@ export default {
 
 	methods: {
 		// 微信手机号授权回调
-		handlePnoneClick ({ mp }) {
+		handlePhoneClick ({ mp }) {
 			this.form.encryptedData = mp.detail.encryptedData
 			this.form.iv = mp.detail.iv
+			// this.form.avatarUrl = mp.detail.userInfo.avatarUrl
 			// 判断是否有绑定，是则直接登录，否则去绑定（成功则直接登录，否则去申请）
 			let that = this
 			that.$api.systemService.isBindByWx(
 				{
 					'code': that.form.code,
-					'appId': that.$local.fetch('appid')
+					'appId': that.$local.getItem('appid')
 				}
 			).then((response) => {
 				let openid = response.data.userKey
 				that.form.sessionKey = response.data.sessionKey
 				that.$local.save('openid', openid)
-				if (response.code === 200) { // 直接登录
-					if (response.data.bind) {
+				if (response.code === 200) {
+					if (response.data.bind) { // 直接登录
+						// 登录
 						that.thirdpartyAuthorizationLogin()
+						// 保存头像
+						that.updateAvatar()
 					} else { // 尝试绑定
 						// 获取手机号
 						that.$api.seeCrmService.wgwGetPhoneNumber(that.form).then((response) => {
@@ -80,12 +84,14 @@ export default {
 								that.$api.systemService.userBinding(
 									{
 										'phone': phoneNum,
-										'systemCode': that.$local.fetch('syscode'),
-										'userKey': that.$local.fetch('openid')
+										'systemCode': that.$local.getItem('sysCode'),
+										'userKey': openid
 									}
 								).then((response) => {
 									if (response.code === 200) { // 绑定成功，直接登录
 										that.thirdpartyAuthorizationLogin()
+										// 保存头像
+										that.updateAvatar()
 									} else {
 										this.$utils.toast.text('请申请')
 									}
@@ -98,6 +104,17 @@ export default {
 				}
 			})
 		},
+		// 更新头像
+		updateAvatar () {
+			this.$api.seeCrmService.organizationalStructureUpdateEmployee(
+				{
+					'id': this.$local.fetch('userInfo').employeeId,
+					'avatarUrl': this.form.avatarUrl
+				}
+			).then((response) => {
+
+			})
+		},
 		// 直接登录
 		thirdpartyAuthorizationLogin () {
 			let that = this
@@ -106,7 +123,7 @@ export default {
 					that.$local.setItem('token', response2.data.token)
 					that.$local.setItem('finger', response2.data.finger)
 					// 获取用户详细数据
-					that.$api.bizSystemService.getUserDetail({}, { 'syscode': that.$local.fetch('syscode') }).then((response) => {
+					that.$api.bizSystemService.getUserDetail({}, { 'sysCode': that.$local.fetch('sysCode') }).then((response) => {
 						that.$utils.toast.text(response.msg)
 						if (response.code === 200) {
 							uni.$emit('setUserInfo', response.data)

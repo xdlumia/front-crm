@@ -17,7 +17,7 @@
 				<radio-group @change="radioChange">
 					<label class="uni-list-cell uni-list-cell-pd" v-for="(item) in roles" :key="item.id">
 						<view>
-							<radio :value="item.id" :checked="ckeckedRoleIds.includes('' +item.id)" />
+							<radio :value="item.id" :checked="ckeckedRoleIds.includes('' +item.id)" color="#4788F4"/>
 						</view>
 						<view style="width:85%">
 							<view >{{item.roleName}}</view>

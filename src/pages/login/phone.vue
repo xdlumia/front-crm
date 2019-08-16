@@ -74,8 +74,8 @@ export default {
 			}
 		},
 		// 初始化用户详细数据
-		getUserDetail (syscode) {
-			this.$api.bizSystemService.getUserDetail({}, { 'syscode': syscode }).then((response) => {
+		getUserDetail (sysCode) {
+			this.$api.bizSystemService.getUserDetail({}, { 'sysCode': sysCode }).then((response) => {
 				this.$utils.toast.text(response.msg)
 				if (response.code === 200) {
 					uni.$emit('setUserInfo', response.data)
