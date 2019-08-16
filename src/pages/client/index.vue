@@ -7,7 +7,7 @@
 -->
 <template>
     <div class="client-page">
-        <NavBar isSearch :placeholder='queryForm.name || "搜索客户"' searchType='0' />
+        <NavBar isSearch :placeholder='queryForm.name || "搜索客户"' searchType='0' @getSearch='getSearch'/>
 		<Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
 			<filter-diy @submit='diyFilterSubmit' />
 		</Filter>
@@ -131,12 +131,20 @@ export default {
 		this.queryForm.lonSort = localtion.longitude
 		this.queryForm.latSort = localtion.latitude
 
-		uni.$on('updatedate', ({ searchInfo }) => {
-			this.queryForm.name = searchInfo
-			this.$refs.list.reload()
-		})
+		// uni.$once('updatedate', ({ searchInfo }) => {
+		// 	this.queryForm.name = searchInfo
+		// 	this.$refs.list.reload()
+		// })
+	},
+	onUnload () {
+		// 移除监听事件
+		uni.$off('updatedate')
 	},
 	methods: {
+		getSearch (data) {
+			this.queryForm.name = data.searchInfo
+			this.$refs.list.reload()
+		},
 		// 获取列表数据
 		getList (list) {
 			this.list = list

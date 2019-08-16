@@ -186,12 +186,11 @@ export default {
 			selects[item.prop] = item.current || item.list[0]
 		})
 		this.filterSelect = selects
+	},
+	onShow () {
 		uni.$on('updatetransList', (data) => {
 			this.$refs.list.reload()
 		})
-	},
-	onShow () {
-		this.$refs.list.reload()
 	},
 	created () {
 

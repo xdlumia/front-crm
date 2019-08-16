@@ -1,6 +1,6 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会" :isSearch="true" :placeholder="queryForm.clientOrChanceName || '输入销售机会名称'" searchType='1' />
+    <NavBar title="机会" :isSearch="true" :placeholder="queryForm.clientOrChanceName || '输入销售机会名称'" searchType='1' @getSearch='getSearch'/>
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
 			<filter-diy :stageList="stageList"  @submit='diyFilterSubmit' />
@@ -61,7 +61,7 @@
 			</i-row>
 		</div>
 		<div class="flex-item d-flex" style="width:50px;align-items: center;" v-if="isSelect">
-			<m-radio v-model="id" :label='item.id' disabled></m-radio>
+			<m-radio v-model="id" :label='item.id'></m-radio>
 		</div>
 	</div>
     </scroll-list>
@@ -95,7 +95,7 @@ import FilterDiy from './filter-diy'
 // 	{ id: '3', name: '7天未跟进' }
 // ]
 // 筛选数据
-let queryType = ['全部', '我负责的', '我参与的', '我关注的', '7天未跟进的', '我下属负责的', '我下属参与的'].map((item, index) => {
+let queryType = ['全部客户', '我负责的', '我参与的', '我关注的', '7天未跟进的', '我下属负责的', '我下属参与的'].map((item, index) => {
 	return {
 		name: item,
 		id: index - 1
@@ -182,12 +182,16 @@ export default {
 		} else {
 			this.queryForm.clientId = ''
 		}
-		uni.$on('updatedate', ({ searchInfo }) => {
-			this.queryForm.clientOrChanceName = searchInfo
-			this.$refs.list.reload()
-			// 获取销售机会阶段统计
-			this.saleschanceSalesChanceStatistics()
-		})
+		// uni.$on('updatedate', ({ searchInfo }) => {
+		// 	this.queryForm.clientOrChanceName = searchInfo
+		// 	this.$refs.list.reload()
+		// 	// 获取销售机会阶段统计
+		// 	this.saleschanceSalesChanceStatistics()
+		// })
+	},
+	onUnload () {
+		// 移除监听事件
+		uni.$off('updatedate')
 	},
 	created () {
 		// this.busId = this.id
@@ -202,6 +206,11 @@ export default {
 		}
 	},
 	methods: {
+		getSearch (data) {
+			this.queryForm.clientOrChanceName = data.searchInfo
+			this.$refs.list.reload()
+			this.saleschanceSalesChanceStatistics()
+		},
 		// 获取列表数据
 		getList (list) {
 			this.list = list

@@ -172,6 +172,7 @@ export default {
 									this.$utils.toast.text('删除成功')
 									setTimeout(() => {
 										this.$routing.navigateBack()
+										uni.$emit('updatetransList', { params: '' })
 									}, 800)
 								})
 						})

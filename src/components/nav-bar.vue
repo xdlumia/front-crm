@@ -30,7 +30,7 @@
                         <slot />
                     </div>
 
-                    <a :url="'/pages/common/search?searchType=' + searchType" class="search-box ac" v-else>
+                    <a @click="getSearch" class="search-box ac" v-else>
                         <div style="margin-top:-6rpx" class="d-inline">
                             <i-icon type="search" size="18" color='#c5c5c5' />
                         </div>
@@ -86,6 +86,15 @@ export default {
 		pages () {
 			let pageLen = getCurrentPages().length
 			return pageLen
+		}
+	},
+	methods: {
+		getSearch () {
+			let that = this
+			uni.$once('updatedate', (data) => {
+				that.$emit('getSearch', data)
+			})
+			this.$routing.navigateTo('/pages/common/search?searchType=' + this.searchType)
 		}
 	}
 
