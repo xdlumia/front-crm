@@ -8,7 +8,7 @@
 <template>
     <div>
         <mPanel top="10" title="日程" color="#00BCD4" :url="`/pages/index/scheduleAdd?busType=${query.busType}&name=${query.name}&id=${query.busId}`">
-            <div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
+            <div class="detail-list ac f12 d-text-gray" v-if="list.length < 1">暂无数据</div>
 			<div v-else>
 				<div class="detail-list" v-for="(item,index) in list" :key="index">
 					<p class="f13 d-elip d-text-gray">{{item.content || ''}}</p>
@@ -35,7 +35,7 @@ export default {
 
 	},
 	onReady () {
-		uni.$on('updatetransList', (data) => {
+		uni.$on('updateIndexList', (data) => {
 			this.scheduleQueryRecordListById()
 		})
 	},

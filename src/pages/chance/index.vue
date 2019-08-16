@@ -148,6 +148,7 @@ export default {
 				totalSalesChanceMoney: ''
 			},
 			currStage: 0,
+			clientId: '', // 客户id，代表从客户详情新增成交记录来的
 			queryForm: {
 				limit: 10,
 				page: 1,
@@ -173,11 +174,18 @@ export default {
 		// this.select = option.select
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
-		// 如果是从客户页面过来的新增成交记录选的机会，要通过客户的busId和busType来筛选
+		// 如果是从客户页面过来的新增成交记录选的机会，要通过客户的busId和busType来筛选,走的是/linkman/queryBusList这个接口，不需要多余参数
 		if (option.clientId) {
-			this.queryForm.clientId = option.clientId || ''
-			this.queryForm.busId = option.clientId
-			this.queryForm.busType = 0
+			this.clientId = option.clientId
+			this.queryForm = {
+				page: '',
+				limit: '',
+				busId: option.clientId,
+				busType: 0
+			}
+			this.$refs.list.reload()
+		} else {
+			this.clientId = ''
 		}
 		uni.$on('updatedate', ({ searchInfo }) => {
 			this.queryForm.clientOrChanceName = searchInfo
@@ -193,7 +201,7 @@ export default {
 	},
 	computed: {
 		api () {
-			return !this.isSelect ? 'seeCrmService.saleschanceQueryPageList' : 'seeCrmService.saleschanceQueryPageList'
+			return !this.isSelect ? 'seeCrmService.saleschanceQueryPageList' : this.clientId ? 'seeCrmService.linkmanQueryBusList' : 'seeCrmService.saleschanceQueryPageList'
 		}
 	},
 	methods: {
