@@ -93,7 +93,7 @@ export default {
 	onLoad (option) {
 		this.busId = option.id
 		// 获取联系人列表 bus_type 0客户，1联系人，2机会，3成交
-		this.linkmanQueryList({ busId: option.id, busType: 1 })
+		this.linkmanQueryBusList({ busId: option.id, busType: 1 })
 		// 获取详情
 		this.linkmanInfo(option.id)
 		// 编辑成功刷新列表
@@ -121,8 +121,8 @@ export default {
 			this.currTabIndex = index
 		},
 		// 获取联系人列表
-		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params)
+		linkmanQueryBusList (params) {
+			this.$api.seeCrmService.linkmanQueryBusList(params)
 				.then(res => {
 					let data = res.data || []
 					this.phoneActions = data.map(item => {

@@ -42,7 +42,7 @@
       </div>
       <!-- 当前阶段 -->
       <div class="mt10 mb10 change-steps" style="background-color:#fff">
-        <i-steps :current="stageActive" :list="stageList" class="wfull">
+        <i-steps :current="stageActive" ref="steps" class="wfull">
           <i-step
             @step="setpHandle(item,index)"
             v-for="(item,index) of stageList"
@@ -150,7 +150,7 @@ export default {
 		// 获取详情
 		this.saleschanceInfo(option.id)
 		// 获取联系人列表
-		this.linkmanQueryList({ busId: option.id, busType: 2 })
+		this.linkmanQueryBusList({ busId: option.id, busType: 2 })
 		// 编辑成功刷新列表
 		uni.$on('addChance', data => {
 			// 获取详情
@@ -158,8 +158,6 @@ export default {
 		})
 	},
 	created () {
-		// 获取销售阶段
-		// this.salesstageQueryList()
 	},
 	methods: {
 		// 查询机会详情
@@ -174,19 +172,18 @@ export default {
 		salesstageQueryList () {
 			this.$api.seeCrmService.salesstageQueryList().then(res => {
 				let data = res.data || []
-				data.forEach((item, index) => {
-					if (this.detailInfo.stageId === item.id) {
-						this.stageActive = index
-						this.detailInfo.stageName = item.stageName
-					}
-				})
+				let index = data.findIndex(item.id === this.detailInfo.stageId)
+				this.stageActive = index
+				this.detailInfo.stageName = data[index].stageName
 				this.stageList = data
+				// 刷新列表
+				this.$refs.steps._updateDataChange()
 			})
 		},
 		// 获取联系人列表
-		linkmanQueryList (params) {
-			this.$api.seeCrmService.linkmanQueryList(params).then(res => {
-				let data = res.data || []
+		linkmanQueryBusList (params) {
+			this.$api.seeCrmService.linkmanQueryBusList(params).then(res => {
+				let data = res.data
 				this.phoneActions = data.map(item => {
 					return {
 						name: `${item.linkmanName} ${item.mobile}`,

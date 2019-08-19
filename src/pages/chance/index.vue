@@ -1,26 +1,31 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会" :isSearch="true" :placeholder="queryForm.clientOrChanceName || '输入销售机会名称'" searchType='1' />
+    <NavBar
+      title="机会"
+      :isSearch="true"
+      :placeholder="queryForm.clientOrChanceName || '输入销售机会名称'"
+      searchType="1"
+    />
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
-    <Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
-			<filter-diy :stageList="stageList"  @submit='diyFilterSubmit' />
-		</Filter>
+    <Filter :filterData="filterData" @filterSubmit="filterSubmit" ref="filter">
+      <filter-diy :stageList="stageList" @submit="diyFilterSubmit" />
+    </Filter>
     <!-- 步骤 -->
     <i-steps
+		ref="steps"
       :current="currStage"
-	v-if="stageList.length"
       class="change-steps d-fixed wfull pt5 pb5"
-      :style="{top:`calc(${navH} + 39px)`}">
-      <i-step
-        @step="setpHandle('all',0)"
-        content="全部销售机会">
+      :style="{top:`calc(${navH} + 39px)`}"
+    >
+      <i-step @step="setpHandle('all',0)" content="全部销售机会">
         <span slot="step">all</span>
       </i-step>
       <i-step
         @step="setpHandle(item,index+1)"
         v-for="(item,index) of stageList"
         :key="index"
-        :content="item.stageName">
+        :content="item.stageName"
+      >
         <span slot="step">{{index+1}}</span>
       </i-step>
     </i-steps>
@@ -37,53 +42,62 @@
       :height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
       :api="api"
       :params="queryForm"
-      @getList='getList'
-      ref='list'>
-	<div @click='handlerClient(item, index)' v-for="(item,index) of list" :key="item.id" class="chance-item uni-flex uni-row">
-		<div class="flex-item item-progress">
-		<circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" />
-		</div>
-		<div class="flex-item item-info d-elip wfull">
-			<h4 class="d-elip f13">{{item.chanceName || '-'}}</h4>
-			<i-row>
-				<i-col :span="12" class="d-text-gray f12">
-					<p class="d-text-gray d-elip f13">{{item.clientName || '-'}}</p>
-				</i-col>
-				<i-col v-if='!isSelect' :span="12" class="f14 ar">¥{{item.salesMoney}}</i-col>
-			</i-row>
-			<i-row>
-				<i-col :span="12" class="d-text-gray f12">
-					<div class="d-flex mt5" style="align-items: center;">
-						<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
-						<div class="c-tag f12 mr10">{{item.createTime|timeToStr('yyyy-mm-dd')}}</div>
-					</div>
-				</i-col>
-			</i-row>
-		</div>
-		<div class="flex-item d-flex" style="width:50px;align-items: center;" v-if="isSelect">
-			<m-radio v-model="id" :label='item.id'></m-radio>
-		</div>
-	</div>
+      @getList="getList"
+      ref="list"
+    >
+      <div
+        @click="handlerClient(item, index)"
+        v-for="(item,index) of list"
+        :key="item.id"
+        class="chance-item uni-flex uni-row"
+      >
+        <div class="flex-item item-progress">
+          <circleProgress
+            width="45px"
+            :max="stageList.length"
+            :progress="(stageList.findIndex(row => row.id == item.stageId)+1)"
+          />
+        </div>
+        <div class="flex-item item-info d-elip wfull">
+          <h4 class="d-elip f13">{{item.chanceName || '-'}}</h4>
+          <i-row>
+            <i-col :span="12" class="d-text-gray f12">
+              <p class="d-text-gray d-elip f13">{{item.clientName || '-'}}</p>
+            </i-col>
+            <i-col v-if="!isSelect" :span="12" class="f14 ar">¥{{item.salesMoney}}</i-col>
+          </i-row>
+          <i-row>
+            <i-col :span="12" class="d-text-gray f12">
+              <div class="d-flex mt5" style="align-items: center;">
+                <div class="c-tag f12 mr10">{{item.score || 0}}分</div>
+                <div class="c-tag f12 mr10">{{item.createTime|timeToStr('yyyy-mm-dd')}}</div>
+              </div>
+            </i-col>
+          </i-row>
+        </div>
+        <div class="flex-item d-flex" style="width:50px;align-items: center;" v-if="isSelect">
+          <m-radio v-model="id" :label="item.id"></m-radio>
+        </div>
+      </div>
     </scroll-list>
     <!-- 客户 -->
-    <div class="footer-fixed-menu d-center d-bg-white bt" v-if='!isSelect'>
-      <a class="d-cell al" url='/pages/chance/add-chance'>
+    <div class="footer-fixed-menu d-center d-bg-white bt" v-if="!isSelect">
+      <a class="d-cell al" url="/pages/chance/add-chance">
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建机会</span>
       </a>
-      <a class="d-cell ar" url='./manage/index'>
+      <a class="d-cell ar" url="./manage/index">
         <i-icon type="setup" size="18" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">管理机会</span>
       </a>
     </div>
-	<div class="footer-fixed-menu" v-if='isSelect'>
-		<i-button type="primary" i-class="f16" @click='submitChooseData'>确定</i-button>
-	</div>
+    <div class="footer-fixed-menu" v-if="isSelect">
+      <i-button type="primary" i-class="f16" @click="submitChooseData">确定</i-button>
+    </div>
   </div>
 </template>
 
 <script>
-
 import Filter from '@/components/filter'
 import FilterDiy from './filter-diy'
 // 筛选数据
@@ -95,7 +109,15 @@ import FilterDiy from './filter-diy'
 // 	{ id: '3', name: '7天未跟进' }
 // ]
 // 筛选数据
-let queryType = ['全部客户', '我负责的', '我参与的', '我关注的', '7天未跟进的', '我下属负责的', '我下属参与的'].map((item, index) => {
+let queryType = [
+	'全部客户',
+	'我负责的',
+	'我参与的',
+	'我关注的',
+	'7天未跟进的',
+	'我下属负责的',
+	'我下属参与的'
+].map((item, index) => {
 	return {
 		name: item,
 		id: index - 1
@@ -124,7 +146,6 @@ export default {
 	},
 	data () {
 		return {
-
 			// 销售机会列表
 			list: [],
 			chooseRowIndex: '', // radio选中的下标
@@ -201,7 +222,11 @@ export default {
 	},
 	computed: {
 		api () {
-			return !this.isSelect ? 'seeCrmService.saleschanceQueryPageList' : this.clientId ? 'seeCrmService.linkmanQueryBusList' : 'seeCrmService.saleschanceQueryPageList'
+			return !this.isSelect
+				? 'seeCrmService.saleschanceQueryPageList'
+				: this.clientId
+					? 'seeCrmService.linkmanQueryBusList'
+					: 'seeCrmService.saleschanceQueryPageList'
 		}
 	},
 	methods: {
@@ -277,7 +302,8 @@ export default {
 		},
 		// 获取销售统计
 		saleschanceSalesChanceStatistics () {
-			this.$api.seeCrmService.saleschanceSalesChanceStatistics(this.queryForm)
+			this.$api.seeCrmService
+				.saleschanceSalesChanceStatistics(this.queryForm)
 				.then(res => {
 					let data = res.data || {}
 					this.stageSts.totalCount = data.totalCount
@@ -286,15 +312,16 @@ export default {
 		},
 		// 获取销售阶段
 		salesstageQueryList () {
-			this.$api.seeCrmService.salesstageQueryList()
-				.then(res => {
-					if (res.code !== 200) return
-					let data = res.data || []
-					data.forEach(item => {
-						item.name = item.stageName
-					})
-					this.stageList = data
+			this.$api.seeCrmService.salesstageQueryList().then(res => {
+				if (res.code !== 200) return
+				let data = res.data || []
+				data.forEach(item => {
+					item.name = item.stageName
 				})
+				this.stageList = data
+				// 刷新列表
+				this.$refs.steps._updateDataChange()
+			})
 		}
 	}
 }
@@ -329,7 +356,9 @@ export default {
     padding-right: 5px;
     margin-right: 5px;
     border-right: 1px solid #999;
-    &:last-child{border-right:none}
+    &:last-child {
+      border-right: none;
+    }
   }
 }
 .chance-item {

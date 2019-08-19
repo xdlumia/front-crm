@@ -25,7 +25,6 @@
                 //value has horizontal or vertical 
                 default : 'horizontal'
             },
-            list:{} 
         },
         methods: {
             _updateDataChange() {
@@ -52,12 +51,6 @@
                     this._updateDataChange()
                 }
             },
-            list: {
-                handler(){
-                    this._updateDataChange()
-                },
-                deep:true
-            }
         }
     }
 </script>
