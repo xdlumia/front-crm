@@ -174,7 +174,9 @@ export default {
 	onLoad (options) {
 		this.chooseType = options.select || 0
 		this.chooseData = options.id || ''
+
 		this.queryForm.queryType = options.queryType || 0
+		this.$set(this.filterData[0], 'current', { id: 2, name: '我关注的' })
 	},
 	computed: {
 		CRM_CJZT () {

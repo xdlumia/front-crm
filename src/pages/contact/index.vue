@@ -134,6 +134,9 @@ export default {
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
 		this.queryForm.queryType = option.queryType || 0
+
+		this.$set(this.filterData[0], 'current', queryType[+option.queryType + 1])
+
 		if (option.multiple) {
 			this.multiple = option.multiple
 			this.linkIds = JSON.parse(option.linkIds)

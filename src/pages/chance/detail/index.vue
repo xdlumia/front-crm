@@ -263,7 +263,7 @@ export default {
 				4: () => {
 					// 更多日程
 					this.$routing.navigateTo(
-						`/pages/index/scheduleAdd?id=${detailInfo.id}`
+						`/pages/index/scheduleAdd?busType=2&id=${this.detailInfo.id}&name=${this.detailInfo.chanceName}`
 					)
 				}
 			}

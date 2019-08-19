@@ -119,22 +119,26 @@ export default {
 		}
 	},
 	onLoad () {
-		let selects = {}
-		this.filterData.forEach(item => {
-			selects[item.prop] = item.current || item.list[0]
-			this.queryForm[item.prop] = selects[item.prop].id
-		})
-		this.filterSelect = selects
-
 		// 设置经纬度
 		let localtion = this.$local.fetch('localtion') || this.$store.state.localtion
 		this.queryForm.lonSort = localtion.longitude
 		this.queryForm.latSort = localtion.latitude
-		this.queryForm.queryType = this.$local.getItem('queryType')
-		// uni.$once('updatedate', ({ searchInfo }) => {
-		// 	this.queryForm.name = searchInfo
-		// 	this.$refs.list.reload()
-		// })
+	},
+	onShow () {
+		// 默认筛选值
+		let type = +(this.$local.getItem('queryType') || 0) + 1
+		this.$set(this.filterData[0], 'current', queryType[type])
+
+		let selects = {}
+		this.filterData.forEach(item => {
+			selects[item.prop] = item.current || item.list[0]
+			this.$set(this.queryForm, item.prop, selects[item.prop].id)
+		})
+		this.filterSelect = selects
+		this.$refs.list.reload()
+	},
+	onHide () {
+		this.$local.remove('queryType')
 	},
 	onUnload () {
 		// 移除监听事件

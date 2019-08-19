@@ -3,14 +3,14 @@
         <NavBar title="应用" />
         <div class="hfull wfull">
             <div class="flexcenter hfull wfull pt20" style='background: #FFF;'>
-                <div class="flexalone flexcenter flexconm d-text-black">
+                <a url='/pages/client/index' open-type='switchTab' class="flexalone flexcenter flexconm d-text-black">
                     <i class="iconfont icontongyekehuguanli" style="color: #FF9A26;"></i>
                     <span>客户管理</span>
-                </div>
-                <div class="flexalone flexcenter flexconm d-text-black">
+                </a>
+                <a url='/pages/chance/index' open-type='switchTab' class="flexalone flexcenter flexconm d-text-black">
                     <i class="iconfont iconqian" style="color: #4889F4;"></i>
                     <span>销售机会</span>
-                </div>
+                </a>
                 <a url='/pages/highseas/index' class="flexalone flexcenter flexconm d-text-black">
                     <i class="iconfont f20 icongengduo1" style="color: #00CA8D;"></i>
                     <span>客户公海池</span>

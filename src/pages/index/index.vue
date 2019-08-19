@@ -244,6 +244,7 @@ export default {
 						{
 							type: 'funnel',
 							width: '60%',
+							sort: 'none',
 							height: '80%',
 							left: '10%',
 							top: '5%',
@@ -345,11 +346,9 @@ export default {
 					let arr = res.data || []
 					arr.forEach((item) => {
 						this.funnelList.push({ value: item.amount, name: item.stageName + ':' + item.amount })
-						// this.funnelList.push({ data: item.amount, name: item.stageName + ':' + item.amount})
 					})
-					// this.funnelList = [{value:5000,name:'阶段1 - 5000'},{value:5000,name:'阶段2 - 5000'},{value:2000,name:'阶段3 - 2000'}]
+					// this.funnelList = [{value:2000,name:'阶段1 - 5000'},{value:5000,name:'阶段2 - 5000'},{value:2000,name:'阶段3 - 2000'}]
 					this.ec.option.series[0].data = this.funnelList || []
-					// this.opts.series = this.funnelList
 					this.$nextTick(() => {
 						if (this.$refs.echart) {
 							this.$refs.echart.init()
