@@ -3,28 +3,29 @@
         <NavBar title='编辑销售阶段' />
         <i-cell-group class="f13">
             <div class="stage-cell f12 ac" v-if="!stageListFilter.length" :key="index">暂无数据</div>
-                    <div class="stage-cell" v-for="(item,index) of stageListFilter" :key="index">
-                        <i-row>
-                            <i-col span="3">
-                                <p><i class="stage-index">{{index+1}}</i></p>
-                            </i-col>
-                            <i-col span="3">
-                                <span @click="delStage(row)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
-                            </i-col>
-                            <i-col span="4">
-                                <p @click="handlerAction(row)" class="f13">{{row.equityedge}}%</p>
-                            </i-col>
-                            <i-col span="2">
-                                <p @click="handlerAction(row)"><i-icon type="enter" size="20" color="#999" /></p>
-                            </i-col>
-                            <i-col span="10" i-class="col-class">
-                                <i-input class="stage-name" :label-width="0" v-model="row.stageName" placeholder="请输入名称"></i-input>
-                            </i-col>
-                            <i-col span="2" class="ar">
-                                <i class="uni-icon uni-icon-bars f16"></i>
-                            </i-col>
-                        </i-row>
-                    </div>
+			<div class="stage-cell" v-for="(item, index) in stageListFilter" :key="index">
+				<i-row>
+					<i-col span="3">
+						<p><i class="stage-index">{{index+1}}</i></p>
+					</i-col>
+					<i-col span="3">
+						<span @click="delStage(item)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
+					</i-col>
+					<i-col span="4">
+						<p @click="handlerAction(item)" class="f13">{{item.equityedge}}%</p>
+					</i-col>
+					<i-col span="2">
+						<p @click="handlerAction(item)"><i-icon type="enter" size="20" color="#999" /></p>
+					</i-col>
+					<i-col span="10" i-class="col-class">
+						<i-input class="stage-name" :label-width="0" v-model="item.stageName" placeholder="请输入名称"></i-input>
+					</i-col>
+					<i-col span="2" class="ar">
+						<i class="uni-icon uni-icon-bars f16" @click="dragorder(index)"></i>
+					</i-col>
+				</i-row>
+			</div>
+
         </i-cell-group>
         <i-cell>
             <div class="ac d-text-gray" @click="addStage()">
@@ -85,11 +86,24 @@ export default {
 		this.equityList = this.equityedgeList()
 	},
 	computed: {
-		stageListFilter () {
-			return this.stageList.filter(item => !item.isDelete)
+		// 计算拖动按钮高度
+		currentListLength () {
+			return this.stageListFilter.length
+		},
+		// 过滤删除的数据
+		stageListFilter: {
+			get () {
+				return this.stageList.filter(item => !item.isDelete)
+			},
+			set () {}
 		}
 	},
 	methods: {
+		dragorder (index) {
+			this.stageList.splice(index + 2, 0, this.stageList[index])
+			this.stageList.splice(index, 1)
+		},
+		// 获取阶段列表
 		equityedgeList () {
 			let list = []
 			for (var i = 5; i <= 100; i += 5) {
@@ -106,14 +120,14 @@ export default {
 		},
 		// 添加阶段
 		addStage () {
-			if (this.stageList.length >= 5) {
+			if (this.stageListFilter.length >= 5) {
 				uni.showToast({ title: '最大只能添加5条', icon: 'none' })
 				return
 			}
 			this.stageList.push({ equityedge: '', stageName: '' })
 		},
 		// 删除阶段列表
-		delStage (data) {
+		delStage (row) {
 			row.isDelete = 1 // isDelete 1为删除
 		},
 		handlerAction (row) {
@@ -125,15 +139,6 @@ export default {
 		handleMore ({ target: { index } }) {
 			this.tempRowStage.equityedge = this.equityList[index].name.replace('%', '')
 			this.moreShow = !this.moreShow
-		},
-		// 排序事件
-		onDragSortChange (data) {
-			let curr = data.data
-			let frontData = data.frontData
-			let frontDataIndex = this.stageList.findIndex(item => item.id === frontData.id)
-			this.stageList.splice(frontDataIndex + 1, 0, curr)
-			let currIndex = this.stageList.findIndex(item => item.id === curr.id)
-			this.stageList.splice(currIndex, 1)
 		},
 		// 提交表单
 		submit () {
@@ -165,6 +170,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 拖动方法样式begin
+.drag-sort {
+  width: 100%;
+}
+.drag-sort-item {
+  width: 100%;
+}
+.touch {
+  height: 100%;
+  width: 50px;
+}
+.active {
+  box-shadow: 0 0 40rpx #DDDDDD;
+  z-index: 99;
+}
+// 拖动方法样式end
+
     .stage-set{
         /deep/ .i-as{
             height: 80%;

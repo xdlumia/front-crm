@@ -143,7 +143,8 @@ export default {
 		}
 	},
 	onShow () {
-
+		// 获取联系人列表
+		this.linkmanQueryBusList({ busId: this.busId, busType: 2 })
 	},
 	onLoad (option) {
 		this.busId = option.id

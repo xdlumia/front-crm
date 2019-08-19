@@ -184,6 +184,7 @@ export default {
 		this.$refs.list.reload()
 		// 获取销售阶段
 		this.salesstageQueryList()
+		this.saleschanceSalesChanceStatistics()
 
 		this.$forceUpdate()
 	},
@@ -201,6 +202,11 @@ export default {
 		this.queryForm.queryType = this.$local.getItem('queryType')
 		// uni.$on('updatedate', ({ searchInfo }) => {
 		// 	this.queryForm.clientOrChanceName = searchInfo
+		// 	this.$refs.list.reload()
+		// 	// 获取销售机会阶段统计
+		// 	this.saleschanceSalesChanceStatistics()
+		// })
+		// uni.$on('addChance', () => {
 		// 	this.$refs.list.reload()
 		// 	// 获取销售机会阶段统计
 		// 	this.saleschanceSalesChanceStatistics()

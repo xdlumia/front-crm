@@ -18,12 +18,13 @@
     <scroll-list
       class="d-absolute wfull"
       :style="{top:`calc(39px + ${navH} + 49px)`}"
-      height="`calc(100vh - ${navH} - 39px - 49px)`"
+      height="`calc(100vh - ${navH} - 59px - 49px)`"
       :api="api"
       :params="queryForm"
       @getList="getList"
       ref="list"
     >
+	<div>
       <div class="chance-item uni-flex uni-row" v-for="(item,index) of list" :key="item.id">
         <div @click="handlerClient(item, index)" class="wfull flex-item item-info d-elip">
           <h4 class="d-elip">{{item.linkmanName}}</h4>
@@ -41,10 +42,12 @@
           <i v-else @click="callPhone(item.mobile)" class="iconfont f20 d-text-blue iconcall"></i>
         </div>
       </div>
-    </scroll-list>
-	<a url='/pages/client/add-client' class="d-cell al d-bg-white"  v-if="select && isAdd">
-		<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
+	</div>
+	<a url='/pages/contact/add-contact' class="pl5 d-bg-white pt10 pb10"  v-if="select && isAdd">
+		<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建联系人</span>
 	</a>
+    </scroll-list>
+
     <!-- 客户 -->
     <div class="footer-fixed-menu d-center d-bg-white bt" v-if="!select">
       <a class="d-cell al" url="/pages/contact/add-contact">

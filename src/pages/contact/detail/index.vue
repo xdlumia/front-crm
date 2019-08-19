@@ -90,10 +90,14 @@ export default {
 			phoneActions: []
 		}
 	},
+	onShow () {
+		// 获取联系人列表
+		this.linkmanQueryBusList({ busId: this.busId, busType: 1 })
+	},
 	onLoad (option) {
 		this.busId = option.id
 		// 获取联系人列表 bus_type 0客户，1联系人，2机会，3成交
-		this.linkmanQueryBusList({ busId: option.id, busType: 1 })
+		this.linkmanQueryBusList({ busId: this.busId, busType: 1 })
 		// 获取详情
 		this.linkmanInfo(option.id)
 		// 编辑成功刷新列表
@@ -161,10 +165,10 @@ export default {
 				2: () => {
 					this.$utils.showModal()
 						.then(() => {
-							this.$api.seeCrmService.linkmanDelete({ id: this.busId })
+							this.$api.seeCrmService.linkmanLogicDelete({ id: this.busId })
 								.then(res => {
 									if (res.code !== 200) return
-									// 删除成功跳转到列表页
+									// 删除成功跳转到列表页ß
 									this.$routing.navigateTo(`/pages/contact/index`)
 								})
 						})
