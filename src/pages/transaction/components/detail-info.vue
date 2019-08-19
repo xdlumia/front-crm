@@ -1,12 +1,12 @@
 <template>
     <div class="d-auto-y" style="height:calc( 100vh - 350px )">
-        <mPanel title="基本信息" bg="#f8f9fc">
+        <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label="主题">{{detailInfo.name || ''}}</m-list>
             <m-list label="客户">{{detailInfo.clientName || ''}}</m-list>
             <m-list label="总金额（元）">{{detailInfo.totalAmount || ''}}</m-list>
             <m-list label="成交状态">{{detailInfo.transactionStatus | dictionary('CRM_CJZT')}}</m-list>
         </mPanel>
-		<mPanel title="其他信息" bg="#f8f9fc">
+		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
 			<m-list label="负责人">{{detailInfo.leaderName || ''}}</m-list>
             <m-list label="创建日期">{{detailInfo.createTime | timeToStr('yyyy-mm-dd')}}</m-list>
             <m-list label="创建人">{{detailInfo.creatorName || ''}}</m-list>

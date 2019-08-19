@@ -188,9 +188,9 @@ export default {
 		this.filterSelect = selects
 	},
 	onShow () {
-		uni.$on('updatetransList', (data) => {
-			this.$refs.list.reload()
-		})
+		// uni.$on('updatetransList', (data) => {
+		this.$refs.list.reload()
+		// })
 	},
 	created () {
 

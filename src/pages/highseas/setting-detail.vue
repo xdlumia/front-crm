@@ -15,7 +15,7 @@
         <scroll-view :scroll-top='scrollTop' scroll-y :style="'height:calc(100vh - '+ navH +' - 46px - 50px);margin-top:40px;'">
             <m-form ref="mform" :model="info" :rules="rules" class="uni-pb100">
                 <div class='d-bg-white'>
-                    <mPanel title="基本信息" color="#4889f4">
+                    <mPanel title="基本信息" color="#4889f4" :isUrl='false'>
                         <i-input label="公海名称" v-model='info.name' required />
 
                         <a url='/pages/index/colleagueChoose'>
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="d-bg-white mt10">
-                    <mPanel top="10" title="规则设置" color="#4889f4">
+                    <mPanel top="10" title="规则设置" color="#4889f4" :isUrl='false'>
                         <div class='bb pl15 pr15 pt10 pb10'>
                             <div class='uni-h50 uni-lh50'>
                                 <label class='d-elip d-text-black  f13'>查看客户数量限制</label>
