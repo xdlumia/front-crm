@@ -127,6 +127,7 @@ export default {
 					this.updateLeader(data.data.map(item => item.userId)[0])
 				}
 			})
+
 			this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=0&ids=' + this.ids + '&partiType=1&busType=' + this.query.busType)
 		}
 
