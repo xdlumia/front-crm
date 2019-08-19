@@ -50,7 +50,7 @@ export default {
 	computed: {
 		ids () {
 			return this.list.filter(item => (item.rmEmployeeEntity && item.partiType === 1)).map(item => {
-				return item.rmEmployeeEntity.id
+				return item.rmEmployeeEntity.userId
 			}).join(',')
 		}
 	},

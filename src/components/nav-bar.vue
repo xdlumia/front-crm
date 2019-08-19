@@ -31,10 +31,10 @@
                     </div>
 
                     <a @click="getSearch" class="search-box ac" v-else>
-                        <div style="margin-top:-6rpx" class="d-inline">
+                        <div style="margin-top:-6rpx" class="d-inline" v-if='!keyword'>
                             <i-icon type="search" size="18" color='#c5c5c5' />
                         </div>
-                        <span class="f12" style="color: #575757;">{{placeholder}}</span>
+                        <span class="f12" style="color: #575757;">{{keyword || placeholder}}</span>
                     </a>
                 </div>
 
@@ -54,6 +54,10 @@ export default {
 		placeholder: {
 			type: String,
 			default: '搜索'
+		},
+		keyword: {
+			type: String,
+			default: ''
 		},
 		searchType: {
 			type: String,
