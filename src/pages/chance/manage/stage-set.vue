@@ -3,8 +3,7 @@
         <NavBar title='编辑销售阶段' />
         <i-cell-group class="f13">
             <div class="stage-cell f12 ac" v-if="!stageListFilter.length" :key="index">暂无数据</div>
-                <dragSort :list="stageList" @del="delStage" @change="onDragSortChange">
-                    <!-- <div class="stage-cell">
+                    <div class="stage-cell" v-for="(item,index) of stageListFilter" :key="index">
                         <i-row>
                             <i-col span="3">
                                 <p><i class="stage-index">{{index+1}}</i></p>
@@ -25,8 +24,7 @@
                                 <i class="uni-icon uni-icon-bars f16"></i>
                             </i-col>
                         </i-row>
-                    </div> -->
-                </dragSort>
+                    </div>
         </i-cell-group>
         <i-cell>
             <div class="ac d-text-gray" @click="addStage()">
@@ -64,9 +62,11 @@
 </template>
 
 <script>
-import dragSort from './drag-sort'
+// import dragSort from './drag-sort'
 export default {
-	components: { dragSort },
+	components: {
+
+	},
 	data () {
 		return {
 			moreShow: false,
@@ -114,9 +114,7 @@ export default {
 		},
 		// 删除阶段列表
 		delStage (data) {
-			this.stageList = data
-			console.log(data)
-			// row.isDelete = 1 // isDelete 1为删除
+			row.isDelete = 1 // isDelete 1为删除
 		},
 		handlerAction (row) {
 			if (row) {
