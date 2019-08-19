@@ -35,13 +35,13 @@
                     </div>
                 </div>
                 <div class="flexalone borbottom flexcenter">
-                    <div class="flexalone flexcenter">
+                    <div @click="haveNoModule" class="flexalone flexcenter">
                         <div style='width: 100px;'>
                             <i class="iconfont f20 iconsaoyisaojianjieban" style="color: #8E54ED;"></i>
                             <span class="ml15">扫名片</span>
                         </div>
                     </div>
-                    <div class="flexalone flexcenter">
+                    <div @click="haveNoModule" class="flexalone flexcenter">
                         <div style='width: 100px;'>
                             <i class="iconfont f20 iconmingpian" style="color: #9bb7F9;"></i>
                             <span class="ml15">智能名片</span>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="flexalone borbottom flexcenter">
-                    <div class="flexalone flexcenter">
+                    <div @click="haveNoModule" class="flexalone flexcenter">
                         <div style='width: 100px;'>
                             <i class="iconfont f20 iconhaofangtuoiconfont_wodepeixun" style="color: #FF9A26;"></i>
                             <span class="ml15">培训助手</span>
@@ -80,7 +80,9 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
-
+		haveNoModule () {
+			this.$utils.toast.text('即将开通，敬请期待')
+		}
 	},
 	created () {}
 }
