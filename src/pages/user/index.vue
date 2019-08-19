@@ -8,7 +8,12 @@
                         <div class='f18 b d-text-black mb5'>{{phone}}</div>
                         <a url='/pages/user/user-info' class="f12 d-text-gray">点击查看个人信息 ></a>
                     </div>
-                    <open-data type="userAvatarUrl" class="avatar-img d-circle"></open-data>
+                    <img v-if="avatarUrl" :src='avatarUrl' class="avatar-img d-circle">
+                    <view v-else>
+                        <button open-type="getUserInfo" @getuserinfo="handleUserInfoClick" class="ba d-circle d-bg-blue d-center avatar-img">
+                            {{name.substring(name.length -2)}}
+                        </button>
+                    </view>
                 </div>
                 <div class="d-center lh35 bt mt15">
                     <a class='d-cell d-flex'>
@@ -26,25 +31,25 @@
         <div class="attention-box pl20 pr20">
             <div class="f14 d-text-black">我的关注</div>
             <div class="d-center attention-item-box ac pl10 pr10 pb10">
-                <a url='/pages/contact/index' class="f12 d-text-qgray">
+                <a url='/pages/contact/index?queryType=2' class="f12 d-text-qgray">
                     <div class="icon-box">
                         <i-icon type="like_fill" color="#ff5533" size="26" />
                     </div>
                     <div>联系人</div>
                 </a>
-                <a url='/pages/client/index' open-type='switchTab' class="f12 d-text-qgray">
+                <a url='/pages/client/index?queryType=2' open-type='switchTab' class="f12 d-text-qgray">
                      <div class="icon-box">
                         <span class="iconfont iconkehuziliao f16" style='color:#00b17b'></span>
                     </div>
                     <div>客户</div>
                 </a>
-                <a url='/pages/transaction/index' class="f12 d-text-qgray">
+                <a url='/pages/transaction/index?queryType=2' class="f12 d-text-qgray">
                      <div class="icon-box">
                         <span class="iconfont iconshouye_chengjiaoshujurili f20" style='color:#4889f4'></span>
                     </div>
                     <div>成交记录</div>
                 </a>
-                <a url='/pages/chance/index' open-type='switchTab' class="f12 d-text-qgray">
+                <a url='/pages/chance/index?queryType=2' open-type='switchTab' class="f12 d-text-qgray">
                      <div class="icon-box">
                         <span class="iconfont iconqian f20" style='color:#4e89f4'></span>
                     </div>
@@ -104,11 +109,23 @@ export default {
 	onLoad (option) {
 		let userInfo = this.$local.fetch('userInfo') || {}
 		this.phone = userInfo.phone.substring(0, 3) + '****' + userInfo.phone.substring(userInfo.phone.length - 4)
-		this.avatarUrl = userInfo.avatarUrl || 'https://i.loli.net/2017/08/21/599a521472424.jpg'
+		this.avatarUrl = userInfo.avatarUrl
 		this.name = userInfo.name
 		this.positionName = userInfo.positionName
 	},
 	methods: {
+		// 获取并保存用户头像
+		handleUserInfoClick ({ mp }) {
+			// 更新用户头像
+			this.avatarUrl = mp.detail.userInfo.avatarUrl
+			// 保存用户头像
+			this.$api.seeCrmService.organizationalStructureUpdateEmployee({
+				'id': this.$local.fetch('userInfo').employeeId,
+				'avatarUrl': this.avatarUrl
+			}).then((response) => {
+				console.log(response)
+			})
+		},
 		openPop () {
 			this.$refs.popup.open()
 		}
