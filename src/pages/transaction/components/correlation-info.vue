@@ -16,7 +16,7 @@
         <!-- 附件 -->
         <infoFile :query="query"/>
         <!-- 团队成员 -->
-        <infoEmployee :query="query"/>
+        <infoEmployee :query="query" ref='employee'/>
     </div>
 </template>
 

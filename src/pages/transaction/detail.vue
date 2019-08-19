@@ -160,8 +160,11 @@ export default {
 		handleMore ({ target: { index } }) {
 			let fnType = {
 				1: () => {
-					// 转移
-					this.$routing.navigateTo('/pages/index/colleagueChoose')
+					// 变更负责人
+					uni.$once('colleagueChoose', data => {
+						this.updateLeader(data.data.map(item => item.userId)[0])
+					})
+					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
 				},
 				2: () => {
 					// 删除
@@ -178,7 +181,7 @@ export default {
 						})
 				},
 				3: () => {
-					// 变更负责人
+					// 日程
 					uni.$once('updateIndexList', data => {
 						this.$refs.correlationInfo.colleagueChoose()
 					})
@@ -196,6 +199,8 @@ export default {
 				partiType: 0
 			}).then(res => {
 				if (res.code === 200) {
+					this.$refs.correlationInfo.$refs.employee.getEmployeeList()
+					this.getTransactionDetail()
 					// 完成
 				}
 			})
