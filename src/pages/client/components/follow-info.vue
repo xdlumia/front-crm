@@ -31,7 +31,7 @@
                                 <span class="d-cell f12 d-text-gray">{{item.createTime | timeToStr('hh:ii')}}</span>
                                 <span class='note-tag f12 d-text-white' v-show='item.followType'>{{item.followType | dictionary('CRM_GJLX')}}</span>
                             </div>
-                            <div class="note-content mb5" style='white-space: pre-wrap'>
+                            <div class="note-content mb5" style='white-space: pre-wrap;word-break:break-all'>
                                 {{item.content}}
                             </div>
                             <div class='d-flex' v-if='item.files && item.files.length'>
