@@ -198,7 +198,7 @@ export default {
 		} else {
 			this.queryForm.clientId = ''
 		}
-		this.queryForm.queryType = this.$local.getItem('queryType')
+		this.queryForm.queryType = this.$local.getItem('queryType') || 0
 		// uni.$on('updatedate', ({ searchInfo }) => {
 		// 	this.queryForm.clientOrChanceName = searchInfo
 		// 	this.$refs.list.reload()

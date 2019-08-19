@@ -130,7 +130,7 @@ export default {
 		let localtion = this.$local.fetch('localtion') || this.$store.state.localtion
 		this.queryForm.lonSort = localtion.longitude
 		this.queryForm.latSort = localtion.latitude
-		this.queryForm.queryType = this.$local.getItem('queryType')
+		this.queryForm.queryType = this.$local.getItem('queryType') || 0
 		// uni.$once('updatedate', ({ searchInfo }) => {
 		// 	this.queryForm.name = searchInfo
 		// 	this.$refs.list.reload()

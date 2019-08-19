@@ -104,7 +104,7 @@ export default {
 					}
 				})
 			} else {
-				this.$utils.toast.text('请填写完整信息')
+				this.$utils.toast.text('验证码校验失败')
 			}
 		},
 		// 校验验证码validateSmsCode
