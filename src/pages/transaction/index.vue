@@ -174,6 +174,7 @@ export default {
 	onLoad (options) {
 		this.chooseType = options.select || 0
 		this.chooseData = options.id || ''
+		this.queryForm.queryType = options.queryType || 0
 	},
 	computed: {
 		CRM_CJZT () {
