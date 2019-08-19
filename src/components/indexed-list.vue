@@ -85,9 +85,17 @@ export default {
 		isCheckedAllData(val){
 			// this.childEchodata = [...this.echodata]
 			this.isCheckedData = val
+		},
+		searchValue(val){
+			this.getList()
 		}
 	},
 	methods: {
+		getList(){
+			this.$emit('getList',this.searchValue)
+			// console.log(this.searchValue)
+			// console.log()
+		},
 		initPage: function (data) {
 			var that = this
 			that.init(data)
@@ -285,7 +293,6 @@ export default {
 			var that = this
 			uni.getSystemInfo({
 				success: function (res) {
-					console.log(res)
 					var windowHeight = res.windowHeight
 					var temData = that.wxaSortPickerData
 					if (typeof temData === 'undefined') {

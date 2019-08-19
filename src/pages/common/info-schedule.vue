@@ -53,7 +53,6 @@ export default {
 			this.$api.seeCrmService.scheduleQueryRecordListById({ id: this.query.busId, type: this.query.busType }).then(res => {
 				if (res.code === 200) {
 					this.list = res.data || []
-					console.log(this.list, 253452)
 				}
 			})
 		},
@@ -64,7 +63,6 @@ export default {
 			this.$routing.navigateTo(`/pages/index/scheduleAdd?busType=${this.query.busType}&name=${this.query.name}&id=${this.query.busId}`)
 		},
 		colleagueChoose () {
-			console.log('5345')
 			this.scheduleQueryRecordListById()
 		}
 	}

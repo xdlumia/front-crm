@@ -138,12 +138,6 @@ export default {
 		} else {
 			this.getMoreField()
 		}
-
-		// 更多条目回掉
-		uni.$on('moreList', data => {
-			// 获取字段列表
-			this.getMoreField()
-		})
 		// 在客户里边调用成交记录的话，需要将客户id带给销售机会，用来筛选当前客户关联的销售机会
 		// 在机会里边调用成交记录的话，需要取到当前机会的id，用id去查询详情，填充客户名称，并且传到联系人，走正常成交记录流程
 		if (option.busType == 0) { // eslint-disable-line
@@ -167,6 +161,12 @@ export default {
 			this.form.clientName = data.clientName || ''
 		})
 
+		// 更多条目回掉
+		uni.$on('moreList', data => {
+			// 获取字段列表
+			this.getMoreField()
+		})
+
 		// 联系人回调
 		uni.$on('chooseContact', data => {
 			if (data.length > 0) {
@@ -178,6 +178,9 @@ export default {
 				this.form.linkkanNames = nameArr.join(',')
 			}
 		})
+	},
+	onShow () {
+
 	},
 	methods: {
 		// 获取当前详情
@@ -214,6 +217,7 @@ export default {
 			}).then(res => {
 				if (res.code === 200) {
 					this.form.formsFieldValueSaveVos = res.data || []
+					console.log('调接口了奥奥奥')
 				}
 			})
 		},

@@ -9,7 +9,7 @@
             <div class="d-flex mt5">
                 <div class="f16 d-text-gray b ml10 ac w50">同事 </div>
             </div>
-			<indexed-list :isRadio='isRadio' ref="sortPickerList" :isCheckedAllData='isCheckedAllData' @clickData="clickData" :echodata='echodata'></indexed-list>
+			<indexed-list @getList='getSearchList' :isRadio='isRadio' ref="sortPickerList" :isCheckedAllData='isCheckedAllData' @clickData="clickData" :echodata='echodata'></indexed-list>
 
         </div>
         <div style="height:50px;justify-content: space-between;align-items: center;position:fixed;bottom:0;z-index:30;background:#FFF;border-top:1px solid #F2F2F2" class="d-flex wfull">
@@ -76,6 +76,13 @@ export default {
 		}
 	},
 	methods: {
+		getSearchList (val) {
+			let arr = []
+			arr = this.dataArr.filter((item) => {
+				return item.employeeName.includes(val) || item.phone.includes(val)
+			})
+			this.$refs.sortPickerList.initPage(arr)
+		},
 		// 同事列表(公司内部的所有员工)
 		getAlllist () {
 			this.$api.seeCrmService.organizationalStructureColleagues(this.queryform)
@@ -100,6 +107,11 @@ export default {
 		},
 		clickData (data) {
 			this.isCheckedAllData = data
+			let arr = []
+			this.isCheckedAllData.forEach((item) => {
+				arr.push(item.userId)
+			})
+			this.echodata = arr
 		},
 		// 点击确定
 		handleClick () {
