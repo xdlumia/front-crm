@@ -4,7 +4,7 @@
 
 	<div>
 		<div class="page-search-box d-flex" :style="'top: '+ navH">
-			<a url='/pages/common/search?searchType=3' class="search-input d-center d-cell pl10">
+			<a @click="getSearch" class="search-input d-center d-cell pl10">
 				<i-icon type="search" size="20" color='#c5c5c5' /><span class="d-text-qgray f14 ml5">{{queryForm.linkmanNameOrMobile || '搜索联系人姓名,手机号'}}</span>
 			</a>
 		</div>
@@ -35,8 +35,8 @@
         </div>
         <div class="flex-item item-progress" >
           <span v-if="select=='1'" @click="handlerClient(item, index)">
-            <m-checkbox v-if="multiple" v-model="linkIds" :label="item.id"></m-checkbox>
-            <m-radio v-else v-model="linkIds" :label="item.id"></m-radio>
+            <m-checkbox v-if="multiple" v-model="linkIds" disabled :label="item.id"></m-checkbox>
+            <m-radio v-else v-model="linkIds" disabled :label="item.id"></m-radio>
           </span>
           <i v-else @click="callPhone(item.mobile)" class="iconfont f20 d-text-blue iconcall"></i>
         </div>
@@ -69,6 +69,7 @@ let queryType = [
 	{ id: '0', name: '我负责的' },
 	{ id: '1', name: '我参与的' },
 	{ id: '-1', name: '全部' },
+	{ id: '2', name: '我关注的' },
 	{ id: '3', name: '7天未跟进的' },
 	{ id: '4', name: '我下属负责的' },
 	{ id: '5', name: '我下属参与的' }
@@ -136,19 +137,26 @@ export default {
 			this.linkIds = option.id
 		}
 
-		uni.$on('updatedate', ({ searchInfo }) => {
-			this.queryForm.linkmanNameOrMobile = searchInfo
-			this.$refs.list.reload()
-		})
+		// uni.$on('updatedate', ({ searchInfo }) => {
+		// 	this.queryForm.linkmanNameOrMobile = searchInfo
+		// 	this.$refs.list.reload()
+		// })
 	},
 	onReady () {
 		// 公共搜索反馈
-		uni.$on('updatedate', (data) => {
-			this.queryForm.linkmanName = data.searchInfo
-			this.$refs.list.reload()
-		})
+		// uni.$on('updatedate', (data) => {
+		// 	this.queryForm.linkmanName = data.searchInfo
+		// 	this.$refs.list.reload()
+		// })
 	},
 	methods: {
+		getSearch () {
+			uni.$once('updatedate', ({ searchInfo }) => {
+				this.queryForm.linkmanNameOrMobile = searchInfo
+				this.$refs.list.reload()
+			})
+			this.$routing.navigateTo('/pages/common/search?searchType=3')
+		},
 		// 获取列表数据
 		getList (list) {
 			this.list = list

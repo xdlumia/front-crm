@@ -9,6 +9,8 @@
     <div class="hfull d-auto-y" :style="{height:height}">
         <!-- 联系人 -->
         <infoContact :query="query"/>
+        <!-- 销售机会 -->
+         <infoChance :query="query"/>
         <!-- 成交记录 -->
         <infoTransaction :query="query"/>
         <!-- 日程 -->
@@ -16,7 +18,7 @@
         <!-- 附件 -->
         <infoFile :query="query"/>
         <!-- 团队成员 -->
-        <infoEmployee :query="query"/>
+        <infoEmployee ref='employee' :query="query"/>
     </div>
 </template>
 
@@ -26,6 +28,7 @@ import infoTransaction from '@/pages/common/info-transaction' // 成交记录
 import infoSchedule from '@/pages/common/info-schedule' //  日程
 import infoFile from '@/pages/common/info-file' //  附件
 import infoEmployee from '@/pages/common/info-employee' //  团队成员
+import infoChance from '@/pages/common/info-chance' // 机会
 export default {
 	props: ['height', 'query'],
 	components: {
@@ -33,7 +36,8 @@ export default {
 		infoTransaction,
 		infoSchedule,
 		infoFile,
-		infoEmployee
+		infoEmployee,
+		infoChance
 	},
 	data () {
 		return {

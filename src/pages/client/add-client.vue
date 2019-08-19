@@ -187,6 +187,9 @@ export default {
 			for (let key in this.form) {
 				if (key === 'formsFieldValueSaveVos') {
 					this.form.formsFieldValueSaveVos = info.formsFieldValueEntities
+				} else if (key === 'lableBusinessSaveVo') {
+					this.labelNames = info.lableBusinessEntityList.map(item => item.labelName).join(',')
+					this.form.lableBusinessSaveVo.labelIdArray = info.lableBusinessEntityList.map(item => item.id)
 				} else {
 					this.form[key] = info[key]
 				}
@@ -227,7 +230,7 @@ export default {
 			if (this.isRepeat) return
 			await this.$refs.mform.validate()
 			try {
-				let resulte = await this.$api.seeCrmService.clientinfoPageList({
+				let resulte = await this.$api.seeCrmService.clientinfoPagelist({
 					phone: this.form.phone,
 					precisionName: this.form.name,
 					page: 1,
@@ -239,6 +242,7 @@ export default {
 					this.$utils.toast.text('此客户已存在')
 				}
 			} catch (err) {
+				console.log(err)
 				this.$utils.toast.text('此客户已存在')
 			}
 		},

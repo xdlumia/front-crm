@@ -18,7 +18,7 @@
 				<radio-group @change="radioChange">
 					<label class="uni-list-cell uni-list-cell-pd" v-for="(item) in depts" :key="item.id">
 						<view style="width:15%">
-							<radio :value="item.id" :checked="item.id == deptId" />
+							<radio :value="item.id" :checked="item.id == deptId" color="#4788F4" />
 						</view>
 						<view class="fl" style="width:85%">{{item.deptName}}</view>
 					</label>
@@ -43,10 +43,11 @@ export default {
 			current: 0,
 			deptId: 0,
 			depts: [],
-			companyName: '北京凡特仁有限公司'
+			companyName: ''
 		}
 	},
 	onLoad (option) {
+		this.companyName = this.$local.fetch('companyInfo').companyName
 		// 设置默认选中
 		if (option.deptId) {
 			this.deptId = option.deptId

@@ -16,7 +16,7 @@
             <m-form ref="mform" :model="info" :rules="rules" class="uni-pb100">
                 <div class='d-bg-white'>
                     <mPanel title="基本信息" color="#4889f4">
-                        <i-input label="公海名称" v-model='info.name' disabled required />
+                        <i-input label="公海名称" v-model='info.name' required />
 
                         <a url='/pages/index/colleagueChoose'>
                             <i-input label="管理员" v-model='administratorName' placeholder="添加管理员" disabled required>
@@ -27,7 +27,7 @@
                         </a>
 
                         <a url='/pages/application/enterprise-management/organizational-structure'>
-                            <i-input label="公海成员" placeholder="添加成员部门" disabled required>
+                            <i-input label="公海成员" v-model='deptName' placeholder="添加成员部门" disabled required>
                                 <div class="d-center hfull">
                                     <div class="isarrow"></div>
                                 </div>
@@ -150,6 +150,7 @@ export default {
 			scrollTop: 0,
 			id: 0, // 公海池 id
 			administratorName: '', // 管理员回显名称
+			deptName: '', // 公海部门回显名称
 			viewClientId: 0, // 数量名称 id
 			info: {
 				id: '',
@@ -167,7 +168,7 @@ export default {
 			rules: {
 				name: [{
 					required: true,
-					message: '请输入客户名称'
+					message: '请输入公海池名称'
 				}],
 				administratorId: [{
 					required: true,
@@ -191,15 +192,13 @@ export default {
 			this.info.administratorId = data.data[0].id
 			this.administratorName = data.data[0].employeeName
 		})
-	},
-	onShow () {
-		// let pages = getCurrentPages()
-		// let currPage = pages[pages.length - 1]
-		// // 从“选择部门”页面返回的数据
-		// if (currPage.data.backFromOrg) {
-		//     this.info.deptId = currPage.data.deptId
-		//     this.info.deptName = currPage.data.deptName
-		// }
+
+		// 回显选择部门返回的信息
+		uni.$on('backFromOrg', (data) => {
+			let dept = JSON.parse(data)
+			this.info.memberDeptCode = dept.totalCode
+			this.deptName = dept.deptName
+		})
 	},
 	computed: {
 		CRM_GHLX () {
@@ -215,8 +214,8 @@ export default {
 				this.isRetrieve = !!res.data.recycleType
 
 				// 客户数量限制
-				this.viewClientId = res.data.viewClientNum === -1 ? 0 : 1
-
+				this.viewClientId = +res.data.viewClientNum === -1 ? 0 : 1
+				res.data.viewClientNum = +res.data.viewClientNum === -1 ? 0 : res.data.viewClientNum
 				this.info = res.data || {}
 			})
 		},
@@ -238,10 +237,6 @@ export default {
 
 		changeViewClient (id) {
 			this.viewClientId = id
-			//
-			if (id === 0) {
-				this.info.viewClientNum = 0
-			}
 		},
 
 		changeRetrieve (id) {
@@ -255,7 +250,14 @@ export default {
 		//
 		async submit () {
 			await this.$refs.mform.validate()
-			this.$api.seeCrmService.clientpublicpoolUpdate(this.info).then(res => {
+
+			let params = {
+				...this.info
+			}
+
+			params.viewClientNum = +this.viewClientId === 0 ? -1 : 0
+			this.$api.seeCrmService.clientpublicpoolUpdate(params).then(res => {
+				this.$store.dispatch('highseas/getList')
 				this.$routing.navigateBack()
 			})
 		}

@@ -40,7 +40,7 @@
                     <detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
                 </i-tab>
                 <i-tab index="1">
-                    <correlationInfo v-if="Object.keys(detailInfo).length" :query='{busType:3,name:detailInfo.name,busId:detailInfo.id}' :height="'calc(100vh - 217px - 50px - ' + navH + ')'" />
+                    <correlationInfo ref='correlationInfo' v-if="Object.keys(detailInfo).length" :query='{busType:3,name:detailInfo.name,busId:detailInfo.id}' :height="'calc(100vh - 217px - 50px - ' + navH + ')'" />
                 </i-tab>
             </i-tabs>
         </div>
@@ -172,16 +172,17 @@ export default {
 									this.$utils.toast.text('删除成功')
 									setTimeout(() => {
 										this.$routing.navigateBack()
+										uni.$emit('updatetransList', { params: '' })
 									}, 800)
 								})
 						})
 				},
 				3: () => {
 					// 变更负责人
-					uni.$once('colleagueChoose', data => {
-						this.updateLeader(data.data.map(item => item.userId)[0])
+					uni.$once('updateIndexList', data => {
+						this.$refs.correlationInfo.colleagueChoose()
 					})
-					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
+					this.$routing.navigateTo(`/pages/index/scheduleAdd?busType=3&name=${this.detailInfo.name}&id=${this.detailInfo.id}`)
 				}
 			}
 			fnType[index]()
@@ -201,6 +202,9 @@ export default {
 		}
 	},
 	onUnload () {
+		this.moreShow && (this.moreShow = false)
+	},
+	onHide () {
 		this.moreShow && (this.moreShow = false)
 	},
 	computed: {

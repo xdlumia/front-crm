@@ -2,32 +2,31 @@
     <div class='stage-page'>
         <NavBar title='编辑销售阶段' />
         <i-cell-group class="f13">
-            <!-- <dragSort  v-slot="{ row,index }" :list="resultList" @change="onDragSortChange"> -->
-                <div class="stage-cell f12 ac" v-if="!stageList.length" :key="index">暂无数据</div>
-                <div class="stage-cell" v-for="(item,index) of stageListFilter" :key="index">
-                    <i-row>
-                        <i-col span="3">
-                            <p><i class="stage-index">{{index+1}}</i></p>
-                        </i-col>
-                        <i-col span="3">
-                            <span @click="delStage(item)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
-                        </i-col>
-                        <i-col span="4">
-                            <p @click="handlerAction(item)" class="f13">{{item.equityedge}}%</p>
-                        </i-col>
-                        <i-col span="2">
-                            <p @click="handlerAction(item)"><i-icon type="enter" size="20" color="#999" /></p>
-                        </i-col>
-                        <i-col span="10" i-class="col-class">
-                            <i-input class="stage-name" :label-width="0" v-model="item.stageName" placeholder="请输入名称"></i-input>
-                        <!-- <span class="pl5 f13">{{item.stageName}}</span> -->
-                        </i-col>
-                        <i-col span="2" class="ar">
-                            <i class="uni-icon uni-icon-bars f16"></i>
-                        </i-col>
-                    </i-row>
-                </div>
-            <!-- </dragSort> -->
+            <div class="stage-cell f12 ac" v-if="!stageListFilter.length" :key="index">暂无数据</div>
+                <dragSort :list="stageList" @del="delStage" @change="onDragSortChange">
+                    <!-- <div class="stage-cell">
+                        <i-row>
+                            <i-col span="3">
+                                <p><i class="stage-index">{{index+1}}</i></p>
+                            </i-col>
+                            <i-col span="3">
+                                <span @click="delStage(row)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
+                            </i-col>
+                            <i-col span="4">
+                                <p @click="handlerAction(row)" class="f13">{{row.equityedge}}%</p>
+                            </i-col>
+                            <i-col span="2">
+                                <p @click="handlerAction(row)"><i-icon type="enter" size="20" color="#999" /></p>
+                            </i-col>
+                            <i-col span="10" i-class="col-class">
+                                <i-input class="stage-name" :label-width="0" v-model="row.stageName" placeholder="请输入名称"></i-input>
+                            </i-col>
+                            <i-col span="2" class="ar">
+                                <i class="uni-icon uni-icon-bars f16"></i>
+                            </i-col>
+                        </i-row>
+                    </div> -->
+                </dragSort>
         </i-cell-group>
         <i-cell>
             <div class="ac d-text-gray" @click="addStage()">
@@ -65,7 +64,9 @@
 </template>
 
 <script>
+import dragSort from './drag-sort'
 export default {
+	components: { dragSort },
 	data () {
 		return {
 			moreShow: false,
@@ -112,14 +113,11 @@ export default {
 			this.stageList.push({ equityedge: '', stageName: '' })
 		},
 		// 删除阶段列表
-		delStage (row) {
-			row.isDelete = 1 // isDelete 1为删除
+		delStage (data) {
+			this.stageList = data
+			console.log(data)
+			// row.isDelete = 1 // isDelete 1为删除
 		},
-		// onDragSortChange (e) {
-		// 	console.log(e)
-		// 	// frontData 插到谁后面
-		// 	// data 操作的数据
-		// },
 		handlerAction (row) {
 			if (row) {
 				this.tempRowStage = row
@@ -129,6 +127,15 @@ export default {
 		handleMore ({ target: { index } }) {
 			this.tempRowStage.equityedge = this.equityList[index].name.replace('%', '')
 			this.moreShow = !this.moreShow
+		},
+		// 排序事件
+		onDragSortChange (data) {
+			let curr = data.data
+			let frontData = data.frontData
+			let frontDataIndex = this.stageList.findIndex(item => item.id === frontData.id)
+			this.stageList.splice(frontDataIndex + 1, 0, curr)
+			let currIndex = this.stageList.findIndex(item => item.id === curr.id)
+			this.stageList.splice(currIndex, 1)
 		},
 		// 提交表单
 		submit () {

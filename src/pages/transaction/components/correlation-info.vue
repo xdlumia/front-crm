@@ -8,11 +8,11 @@
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
         <!-- 联系人 -->
-        <infoContact :query="query"/>
+        <infoContact :query="query" :isUrl='false'/>
         <!-- 销售机会 -->
-         <infoChance :query="query"/>
+         <infoChance :query="query" :isUrl='false'/>
         <!-- 日程 -->
-        <infoSchedule :query="query"/>
+        <infoSchedule ref="infoSchedule" :query="query"/>
         <!-- 附件 -->
         <infoFile :query="query"/>
         <!-- 团队成员 -->
@@ -25,7 +25,7 @@ import infoContact from '@/pages/common/info-contact' // 联系人
 import infoSchedule from '@/pages/common/info-schedule' //  日程
 import infoFile from '@/pages/common/info-file' //  附件
 import infoEmployee from '@/pages/common/info-employee' //  团队成员
-import infoChance from '@/pages/common/info-chance' //  团队成员
+import infoChance from '@/pages/common/info-chance' // 机会
 export default {
 	props: ['height', 'query'],
 	components: {
@@ -44,6 +44,9 @@ export default {
 	methods: {
 		openDetail (index) {
 			this.$routing.navigateTo('./detail/index')
+		},
+		colleagueChoose () {
+			this.$refs.infoSchedule.colleagueChoose()
 		}
 
 	}

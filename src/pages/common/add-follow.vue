@@ -131,19 +131,19 @@ export default {
 		this.form[this.bus_type[option.busType].field] = option.busId
 
 		// 客户回调
-		uni.$once('chooseClient', data => {
+		uni.$on('chooseClient', data => {
 			this.clientName = data.name
 			this.form.clientId = data.id
 		})
 
 		// 机会回调
-		uni.$once('chooseChance', data => {
+		uni.$on('chooseChance', data => {
 			this.chanceName = data.chanceName
 			this.form.salesFunnelId = data.id
 		})
 
 		// 联系人回调
-		uni.$once('chooseContact', data => {
+		uni.$on('chooseContact', data => {
 			this.linkName = data.linkmanName
 			this.form.linkId = data.id
 		})

@@ -3,8 +3,8 @@ export default {
 	/** 以下是应用生命周期 */
 	// 当uni-app 初始化完成时触发（全局只触发一次）
 	onLaunch: function () {
-		this.$local.save('appid', 'wx19ee978ff0ef382f')
-		this.$local.save('syscode', 'crm')
+		this.$local.setItem('appid', 'wx19ee978ff0ef382f')
+		this.$local.setItem('sysCode', 'crm')
 		// 1.获取用户openid
 		// 用户已经存在则获取token，finger再getUserDetail
 		// 用户不存在则跳转到登录页面
@@ -18,7 +18,7 @@ export default {
 				that.$api.systemService.isBindByWx(
 					{
 						'code': code,
-						'appId': that.$local.fetch('appid')
+						'appId': that.$local.getItem('appid')
 					}
 				).then((response) => {
 					if (response.code === 200) {
@@ -28,7 +28,7 @@ export default {
 									that.$local.setItem('token', response2.data.token)
 									that.$local.setItem('finger', response2.data.finger)
 									// 获取用户详细数据
-									that.$api.bizSystemService.getUserDetail({}, { 'syscode': that.$local.fetch('syscode') }).then((response) => {
+									that.$api.bizSystemService.getUserDetail({}, { 'sysCode': that.$local.getItem('sysCode') }).then((response) => {
 										that.$utils.toast.text(response.msg)
 										if (response.code === 200) {
 											uni.$emit('setUserInfo', response.data)
@@ -40,7 +40,7 @@ export default {
 								}
 							})
 						} else {
-							uni.$emit('loginout')
+							// uni.$emit('loginout')
 						}
 					}
 				})

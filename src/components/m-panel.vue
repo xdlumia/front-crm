@@ -7,7 +7,7 @@
   <div class="panel-section" :style="{'margin-top':top+'px'}">
     <div class="panel-section-title" :style="{'background-color':bg}">
       <h3 v-if="title" :style="{'border-left-color':color}">{{title}}
-        <a v-if="url" :url="url" class="fr">
+        <a v-if='isUrl' :url="url" class="fr" @click="$emit('click')">
           <slot name="add"><i-icon class="fr" type="add" size="24" color="#466bef" /></slot>
         </a>
         <a v-else class="fr">
@@ -43,6 +43,10 @@ export default {
 		},
 		url: {
 			type: String
+		},
+		isUrl: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data () {

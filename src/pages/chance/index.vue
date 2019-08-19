@@ -1,11 +1,6 @@
 <template>
   <div class="chance-bg">
-    <NavBar
-      title="机会"
-      :isSearch="true"
-      :placeholder="queryForm.clientOrChanceName || '输入销售机会名称'"
-      searchType="1"
-    />
+    <NavBar title="机会" :isSearch="true" :placeholder="queryForm.clientOrChanceName || '输入销售机会名称'" searchType='1' @getSearch='getSearch'/>
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData="filterData" @filterSubmit="filterSubmit" ref="filter">
       <filter-diy :stageList="stageList" @submit="diyFilterSubmit" />
@@ -173,6 +168,7 @@ export default {
 			queryForm: {
 				limit: 10,
 				page: 1,
+				clientId: '', // 客户id
 				leaderIds: [], // 负责人id
 				chanceName: '', // 销售机会名称
 				stageIds: [], // 阶段ids
@@ -195,23 +191,23 @@ export default {
 		// this.select = option.select
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
-		// 如果是从客户页面过来的新增成交记录选的机会，要通过客户的busId和busType来筛选,走的是/linkman/queryBusList这个接口，不需要多余参数
+		// 如果是从客户页面过来的新增成交记录选的机会，要通过客户的id来筛选,在这里多加一个参数
 		if (option.clientId) {
-			this.clientId = option.clientId
-			this.queryForm = {
-				page: '',
-				limit: '',
-				busId: option.clientId,
-				busType: 0
-			}
+			this.queryForm.clientId = option.clientId
 			this.$refs.list.reload()
 		} else {
-			this.clientId = ''
+			this.queryForm.clientId = ''
 		}
-		uni.$on('updatedate', ({ searchInfo }) => {
-			this.queryForm.clientOrChanceName = searchInfo
-			this.$refs.list.reload()
-		})
+		// uni.$on('updatedate', ({ searchInfo }) => {
+		// 	this.queryForm.clientOrChanceName = searchInfo
+		// 	this.$refs.list.reload()
+		// 	// 获取销售机会阶段统计
+		// 	this.saleschanceSalesChanceStatistics()
+		// })
+	},
+	onUnload () {
+		// 移除监听事件
+		uni.$off('updatedate')
 	},
 	created () {
 		// this.busId = this.id
@@ -230,6 +226,11 @@ export default {
 		}
 	},
 	methods: {
+		getSearch (data) {
+			this.queryForm.clientOrChanceName = data.searchInfo
+			this.$refs.list.reload()
+			this.saleschanceSalesChanceStatistics()
+		},
 		// 获取列表数据
 		getList (list) {
 			this.list = list

@@ -77,7 +77,7 @@ export default {
 					// fieldValue:'', // '示例：字段值'
 					// }
 				],
-				lableBusinessSaveVo: {
+				lableBusinessSaveVos: {
 					busId: this.busId || '', // 100000,
 					busType: 2, // 业务类型(0客户，1联系人，2机会，3成交,4业务属性)
 					labelIdArray: []
@@ -110,15 +110,16 @@ export default {
 				stageId: [{
 					required: true,
 					message: '请选择阶段'
-				}],
-				reckonFinishTime: [{
-					required: true,
-					message: '请选择日期'
 				}]
 			}
 		}
 	},
 	onLoad (option) {
+		// 客户详情，新增机会
+		if (option.clientId) {
+			this.form.clientName = option.clientName
+			this.form.clientId = option.clientId
+		}
 		// 获取字段列表
 		this.formsfieldconfigQueryList()
 		if (option.id) {
@@ -135,8 +136,9 @@ export default {
 		// 标签回掉
 		uni.$on('moreTags', data => {
 			this.labelNames = data.map(item => item.labelName).join(',')
-			this.form.lableBusinessSaveVo.labelIdArray = data.map(item => item.id)
+			this.form.lableBusinessSaveVos.labelIdArray = data.map(item => item.id)
 		})
+
 		// 更多条目回掉
 		uni.$on('moreList', data => {
 			// 获取字段列表
@@ -154,7 +156,7 @@ export default {
 		async saveChance () {
 			await this.$refs.mform.validate()
 			// 验证机会名称
-			this.$api.seeCrmService.saleschanceVerifyChanceName({ chanceName: this.form.chanceName })
+			this.$api.seeCrmService.saleschanceVerifyChanceName({ chanceName: this.form.chanceName, chanceId: this.busId, clientId: this.form.clientId })
 				.then(res => {
 					if (res.data) {
 						// 如果没有重复提交表单
@@ -202,6 +204,9 @@ export default {
 					for (let key in this.form) {
 						if (key === 'formsFieldValueSaveVos') {
 							this.form.formsFieldValueSaveVos = data.formsFieldValueEntitys
+						} else if (key === 'lableBusinessSaveVos') {
+							this.labelNames = data.lableBusinessEntitys.map(item => item.labelName).join(',')
+							this.form.lableBusinessSaveVos.labelIdArray = data.lableBusinessEntitys.map(item => item.id)
 						} else {
 							this.form[key] = data[key]
 						}

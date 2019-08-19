@@ -11,7 +11,7 @@
         </a>
         <i-input maxlength="32" v-model="form.clientName" disabled label="客户名称" placeholder="请输入"/>
 
-        <a :url="form.salesFunnelId ? (`/pages/contact/index?busType=2&select=1&multiple=1&linkIds=${JSON.stringify(form.linkIds) || '[]'}&busId=${form.salesFunnelId}`) : ''">
+        <a :url="form.salesFunnelId ? (`/pages/contact/index?busType=2&select=1&multiple=1&linkIds=${JSON.stringify(linkIds) || '[]'}&busId=${form.salesFunnelId}`) : ''">
           <i-input label="联系人" disabled v-model="form.linkkanNames" placeholder=" " required>
             <uni-icon type="forward" size="18" color="#999"/>
           </i-input>
@@ -169,7 +169,6 @@ export default {
 
 		// 联系人回调
 		uni.$on('chooseContact', data => {
-			console.log(data)
 			if (data.length > 0) {
 				let nameArr = []
 				data.forEach((item) => {
@@ -185,7 +184,6 @@ export default {
 		getTransactionDetail () {
 			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
 				.then(res => {
-					console.log(res)
 					this.form = res.data || {}
 					if (res.data.formsFieldValueEntityList.length > 0) {
 						this.form.formsFieldValueSaveVos = res.data.formsFieldValueEntityList

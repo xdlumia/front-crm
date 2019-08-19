@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="日程" color="#00BCD4" :url="`/pages/index/scheduleAdd?busType=${query.busType}&name=${query.name}&id=${query.busId}`">
+        <mPanel top="10" title="日程" color="#00BCD4" @click='click' :isUrl='isUrl'>
             <div class="detail-list ac f12 d-text-gray" v-if="list.length < 1">暂无数据</div>
 			<div v-else>
 				<div class="detail-list" v-for="(item,index) in list" :key="index">
@@ -22,7 +22,15 @@
 
 <script>
 export default {
-	props: ['query'],
+	props: {
+		query: {
+			type: Object
+		},
+		isUrl: {
+			type: Boolean,
+			default: true
+		}
+	},
 	components: {
 
 	},
@@ -35,9 +43,7 @@ export default {
 
 	},
 	onReady () {
-		uni.$on('updateIndexList', (data) => {
-			this.scheduleQueryRecordListById()
-		})
+
 	},
 	created () {
 		this.scheduleQueryRecordListById()
@@ -47,8 +53,19 @@ export default {
 			this.$api.seeCrmService.scheduleQueryRecordListById({ id: this.query.busId, type: this.query.busType }).then(res => {
 				if (res.code === 200) {
 					this.list = res.data || []
+					console.log(this.list, 253452)
 				}
 			})
+		},
+		click () {
+			uni.$once('updateIndexList', (data) => {
+				this.scheduleQueryRecordListById()
+			})
+			this.$routing.navigateTo(`/pages/index/scheduleAdd?busType=${this.query.busType}&name=${this.query.name}&id=${this.query.busId}`)
+		},
+		colleagueChoose () {
+			console.log('5345')
+			this.scheduleQueryRecordListById()
 		}
 	}
 }

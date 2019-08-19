@@ -15,7 +15,11 @@
 export default {
 	props: {
 		value: String, // v-model
-		label: String
+		label: String,
+		disabled: {
+			type: Boolean,
+			default: false
+		}
 	},
 	data () {
 		return {
@@ -33,6 +37,7 @@ export default {
 	},
 	methods: {
 		changeRadio () {
+			if (this.disabled) return
 			this.$emit('input', this.label)
 			this.$emit('change', this.label)
 		}
