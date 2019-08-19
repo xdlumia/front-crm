@@ -11,11 +11,12 @@
                 <view :id="item.tag" class="wxaSortPickerTag">{{item.tag}}</view>
                 <view class='wxaSortPickerItem-box'>
                     <block v-for="(child,inde) in item.textArray" :key="inde">
-                            <view class="wxaSortPickerItem" :data-text="child.employeeName" :data-value="child.userId"  @click="wxaSortPickerItemTap(child)">
-                                <uni-icon type='checkbox-filled' :color="childEchodata.includes(child.userId) ? '#1890FF' : '#999'" size='26' />
-                                <!-- <uni-icon v-else type='checkbox-filled' color="'#999'" size='26' /> -->
-                                <span class="ml5">{{child.employeeName}}</span>
-                            </view>
+						<view class="wxaSortPickerItem" :data-text="child.employeeName" :data-value="child.userId"  style="display:flex;align-items: center;height:60px" @click="wxaSortPickerItemTap(child)" >
+							<uni-icon type='checkbox-filled' :color="childEchodata.includes(child.userId) ? '#1890FF' : '#999'" class="mr15" size='26' />
+							<!-- <uni-icon v-else type='checkbox-filled' color="'#999'" size='26' /> -->
+							<m-avatar :url='child.avatarUrl' :text='child.employeeName' :width='38' :height='38'></m-avatar>
+							<span class="ml5">{{child.employeeName}}</span>
+						</view>
                     </block>
                 </view>
             </block>
@@ -33,12 +34,16 @@
 
 <script>
 /* eslint-disable */
+import mAvatar from '@/components/m-avatar'
 export default {
 	props: {
 		phones: Object,
 		isRadio: Boolean,
 		echodata:Array,
 		isCheckedAllData:Array
+	},
+	components: {
+        mAvatar
 	},
 	data () {
 		return {

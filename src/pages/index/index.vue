@@ -72,7 +72,8 @@
         <div v-if='current == 1'>
             <div class="h40 d-flex-level mt10" style="background:#F9F9F9;">
                 <div class="d-flex ml15" style="height: 26px;align-items: center;">
-                    <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar>
+                    <!-- <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar> -->
+                    <m-avatar :url='avatarUrl' :text='userName' :width='24' :height='24'></m-avatar>
                     <a :url="`/pages/index/colleagueChoose?subordinate=1&userId=${userInfo.id}&ids=${userId}`">
                         <span class="d-text-qgray f13 ml5">{{userName}}</span>
                     </a>
@@ -216,6 +217,7 @@
 </template>
 
 <script>
+import mAvatar from '@/components/m-avatar'
 export default {
 	data () {
 		return {
@@ -258,6 +260,7 @@ export default {
 			hour: 3600, // 区分小时还是分钟
 			mint: 60,
 			userId: 1,
+			avatarUrl: '', // 用户头像
 			userName: '',
 			allcolleagues: [], // 有日程的所有时间
 			salesKitForm: {}, // 销售简报
@@ -267,7 +270,7 @@ export default {
 		}
 	},
 	components: {
-		// mpvueEcharts
+		mAvatar
 	},
 	computed: {
 		todayDate () {
@@ -278,6 +281,8 @@ export default {
 		this.userInfo = this.$local.fetch('userInfo') || {}
 		this.userId = this.userInfo.id
 		this.userName = this.userInfo.name
+		this.avatarUrl = this.userInfo.avatarUrl
+		console.log(this.userInfo)
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
 		this.scheduleSelectSalesFunnel()
@@ -294,9 +299,11 @@ export default {
 			if (data.data.length > 0) {
 				this.userId = data.data[0].userId
 				this.userName = data.data[0].employeeName
+				this.avatarUrl = data.data[0].avatarUrl
 			} else {
 				this.userId = this.userInfo.id
 				this.userName = this.userInfo.name
+				this.avatarUrl = this.userInfo.avatarUrl
 			}
 			this.scheduleSelectSalesKit()
 			this.scheduleSelectSalesFunnel()
@@ -314,7 +321,6 @@ export default {
 					this.indexList = res.data || []
 					this.indexList.forEach((item) => {
 						this.allcolleagues.push(this.changeTime(item.startTime))
-						// console.log(this.changeTime(item.startTime))
 						this.selected.push({ date: this.changeTime(item.startTime) })
 					})
 				})
