@@ -111,7 +111,6 @@ export default {
 	},
 	onLoad (option) {
 		// 获取字段列表
-		console.log(option.id)
 		this.formsfieldconfigQueryList()
 		if (option.id) {
 			this.busId = option.id
@@ -139,8 +138,6 @@ export default {
 			// 获取字段列表
 			this.formsfieldconfigQueryList()
 		})
-	},
-	created () {
 	},
 	methods: {
 		// 保存

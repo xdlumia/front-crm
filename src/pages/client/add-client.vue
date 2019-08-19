@@ -242,7 +242,6 @@ export default {
 					this.$utils.toast.text('此客户已存在')
 				}
 			} catch (err) {
-				console.log(err)
 				this.$utils.toast.text('此客户已存在')
 			}
 		},
@@ -270,7 +269,7 @@ export default {
 
 				// 是否同时新建联系人
 				if (this.isSkipContact) {
-					this.$routing.redirectTo(`/pages/contact/add-contact?buyType=0&clientId=${resulte.id || 0}&clientName=${this.form.name}`)
+					this.$routing.redirectTo(`/pages/contact/add-contact?buyType=0&clientId=${resulte.data.id || 0}&clientName=${this.form.name}`)
 				} else {
 					this.$routing.navigateBack()
 				}

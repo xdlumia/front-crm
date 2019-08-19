@@ -57,9 +57,12 @@ export default {
 		},
 		// 退回公海
 		returnPool (sendBackType) {
+			if (!this.id) {
+				return this.$utils.toast.text('请选择公海池')
+			}
+
 			if (+sendBackType === 1 && +this.isSendBackType === 1) {
-				this.$utils.toast.text('该客户已被保留退回')
-				return
+				return this.$utils.toast.text('该客户已被保留退回')
 			}
 			this.$api.seeCrmService.clientinfoSendBackPool({
 				clientId: this.clientId,

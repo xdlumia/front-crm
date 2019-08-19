@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel title="销售机会" color="#FFBA59" @click="click" :isUrl='isUrl'>
+        <mPanel top="10" title="销售机会" color="#FFBA59" @click="click" :isUrl='isUrl'>
 			<div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
             <div v-else class="detail-list uni-flex uni-row pb10" v-for="(item,index) of list" :key="index">
                 <div class="flex-item item-progress mr10">
@@ -50,13 +50,13 @@ export default {
 	onLoad (option) {
 	},
 	created () {
-		this.saleschanceQueryList({ busId: this.query.busId, busType: this.query.busType })
+		this.saleschanceQueryList()
 		this.salesstageQueryList()
 	},
 	methods: {
 		// 获取联系人列表
-		saleschanceQueryList (params) {
-			this.$api.seeCrmService.saleschanceQueryList(params)
+		saleschanceQueryList () {
+			this.$api.seeCrmService.saleschanceQueryList({ busId: this.query.busId, busType: this.query.busType })
 				.then(res => {
 					this.list = res.data || []
 				})
@@ -74,6 +74,7 @@ export default {
 		},
 		click () {
 			uni.$once('addChance', data => {
+				console.log(data)
 				this.saleschanceQueryList()
 			})
 			this.$routing.navigateTo(`/pages/chance/add-chance?clientId=${this.query.busId}&clientName=${this.query.name}`)

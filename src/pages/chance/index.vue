@@ -181,6 +181,12 @@ export default {
 		}
 	},
 	onShow () {
+		let type = +(this.$local.getItem('queryType') || 0) + 1
+		if (type !== 1) {
+			this.$set(this.filterData[0], 'current', queryType[type])
+			this.queryForm.queryType = type - 1
+		}
+
 		this.$refs.list.reload()
 		// 获取销售阶段
 		this.salesstageQueryList()
@@ -198,7 +204,10 @@ export default {
 		} else {
 			this.queryForm.clientId = ''
 		}
-		this.queryForm.queryType = this.$local.getItem('queryType')
+
+		this.salesstageQueryList()
+		// 获取销售机会阶段统计
+		this.saleschanceSalesChanceStatistics()
 		// uni.$on('updatedate', ({ searchInfo }) => {
 		// 	this.queryForm.clientOrChanceName = searchInfo
 		// 	this.$refs.list.reload()
@@ -209,13 +218,6 @@ export default {
 	onUnload () {
 		// 移除监听事件
 		uni.$off('updatedate')
-	},
-	created () {
-		// this.busId = this.id
-		// 获取销售阶段
-		this.salesstageQueryList()
-		// 获取销售机会阶段统计
-		this.saleschanceSalesChanceStatistics()
 	},
 	computed: {
 		api () {

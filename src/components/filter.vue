@@ -61,12 +61,19 @@ export default {
 			filterIndex: 0
 		}
 	},
-	onReady () {
-		let selects = {}
-		this.filterData.forEach(item => {
-			selects[item.prop] = item.current || item.list[0]
-		})
-		this.filterSelect = selects
+	watch: {
+		filterData: {
+			immediate: true,
+			deep: true,
+			handler (data) {
+				console.log(data)
+				let selects = {};
+				(data || []).forEach(item => {
+					selects[item.prop] = item.current || item.list[0]
+				})
+				this.filterSelect = selects
+			}
+		}
 	},
 	methods: {
 		show () {

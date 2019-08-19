@@ -39,7 +39,7 @@
 							<div class="f12 d-text-qgray">退回时间：{{item.sendBackTime | timeToStr('yyyy-mm-dd hh:ii')}}</div>
 							<div class="f12 d-text-qgray">退回次数：{{item.sendBackNum || 0}}</div>
 						</div>
-						<div class="d-center" v-if='!select'>
+						<div class="d-center" v-if='!select || item.sendBackType != 1'>
 							<div class="mr15" @click.stop='receive(item)'>
 								<uni-tag text="领取" type='primary' inverted size='small'></uni-tag>
 							</div>
