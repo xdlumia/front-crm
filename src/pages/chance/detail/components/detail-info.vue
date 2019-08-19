@@ -5,7 +5,7 @@
 -->
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
-        <mPanel title="基本信息" bg="#f8f9fc">
+        <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label-width="120" label="机会名称">{{detailInfo.chanceName || '-'}}</m-list>
             <m-list label-width="120" label="所属部门">{{detailInfo.deptName || '-'}}</m-list>
             <m-list label-width="120" label="客户名称">{{detailInfo.clientName || '-'}}</m-list>
@@ -18,7 +18,7 @@
             <m-list label-width="120" label="来源">{{detailInfo.sourceCode | dictionary('CRM_LY')}}</m-list>
             <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
         </mPanel>
-		<mPanel title="其他信息" bg="#f8f9fc">
+		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
         </mPanel>
     </div>

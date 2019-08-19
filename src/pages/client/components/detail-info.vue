@@ -7,7 +7,7 @@
 -->
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
-        <mPanel title="基本信息" bg="#f8f9fc">
+        <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label="客户名称">{{detailInfo.name || ''}}</m-list>
             <m-list label="所属部门">{{detailInfo.deptName || ''}}</m-list>
             <m-list label="负责人">{{detailInfo.leaderName || ''}}</m-list>
@@ -21,7 +21,7 @@
             <m-list label="销售额（元）">{{detailInfo.totalSalesChanceMoney || ''}}</m-list>
             <m-list v-for='item in basicInfo' :key='item.id' :label="item.fieldName">{{item.fieldValue || ''}}</m-list>
         </mPanel>
-		<mPanel title="联系信息" bg="#f8f9fc">
+		<mPanel title="联系信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label="手机号">{{detailInfo.phone}}</m-list>
             <m-list label="详细地址">{{detailInfo.address}}</m-list>
             <m-list v-for='item in contactInfo' :key='item.id' :label="item.fieldName">{{item.fieldValue || ''}}</m-list>
@@ -30,7 +30,7 @@
             <m-list label="公司网址">{{detailInfo.aaa}}</m-list>
             <m-list label="微博">{{detailInfo.aaa}}</m-list> -->
         </mPanel>
-		<mPanel title="其他信息" bg="#f8f9fc">
+		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label="创建日期">{{detailInfo.createTime | timeToStr('yyyy-mm-dd')}}</m-list>
             <m-list label="最后跟进">{{detailInfo.finallyFollowTime | timeToStr('yyyy-mm-dd')}}</m-list>
             <m-list label="最新修改">{{detailInfo.modifyTime | timeToStr('yyyy-mm-dd')}}</m-list>
