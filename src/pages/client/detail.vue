@@ -58,7 +58,7 @@
 						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="2">
-						<correlationInfo :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name, clientId: detailInfo.id}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+						<correlationInfo ref='info' :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name, clientId: detailInfo.id}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index='3'>
 						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
@@ -324,7 +324,8 @@ export default {
 				partiType: 0
 			}).then(res => {
 				if (res.code === 200) {
-
+					this.$refs.info.$refs.employee.getEmployeeList()
+					this.getDetailInfo()
 				}
 			})
 		},
