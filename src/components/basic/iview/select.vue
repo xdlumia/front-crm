@@ -18,7 +18,7 @@
  */ -->
 <template>
     <picker :disabled="disabled" :value="valueIndex" :range="range" @change='change($event, "upTypeIndex")'>
-		<i-input disabled v-model="valueName" :labelWidth="labelWidth" :label="label" :placeholder="placeholder" :required='required'>
+		<i-input disabled v-model="valueName" :labelWidth="labelWidth" @handleLableClick='handleLableClick' :labelIcon='labelIcon' :label="label" :placeholder="placeholder" :required='required'>
 			<i-icon type="enter" size="16" color="#999" />
 		</i-input>
 	</picker>
@@ -50,12 +50,15 @@ export default {
 		},
 		props:{
 			default:{value:'id',lable:'label'}
-		}
-
+		},
+		labelIcon: {
+			type: Object,
+		},
 	},
 	data () {
 		return {
 			valueName:'',
+			index: ''
 		}
 	},
 	computed:{
@@ -84,6 +87,7 @@ export default {
 				return index ===-1? 0 : index
 			},
 			set(val) {
+				this.index = val
 			}
 		}
 	},
@@ -91,8 +95,9 @@ export default {
 	},
 	methods: {
 		change ({ mp: { detail } }, filed) {
-			let index = detail.value
-			this.valueIndex = index
+			let index = detail.value;
+			if( index == this.index ) return ;
+			this.valueIndex = index;
 			let currData = this.options[index]
 			let label = this.props.label || 'lable'
 			let value = this.props.value || 'value'
@@ -103,6 +108,9 @@ export default {
 				this.valueName = currData[label]
 				this.$emit('input',currData[value])
 			}
+		},
+		handleLableClick(){
+			this.$emit('handleLableClick')
 		}
 	}
 }

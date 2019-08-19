@@ -130,6 +130,7 @@ export default {
 		this.isAdd = option.add || ''
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
+		this.queryForm.queryType = option.queryType || 0
 		if (option.multiple) {
 			this.multiple = option.multiple
 			this.linkIds = JSON.parse(option.linkIds)

@@ -5,6 +5,14 @@
     <div class="detail-panel-item f13">
         <div v-if="type === 'textarea'">
             <div v-if="labelWidth" class="uni-h50 uni-lh50 f13">
+				<uni-icon
+					@click="handleLableClick"
+					class="mr10"
+					:type="labelIcon.type"
+					:color="labelIcon.color"
+					:size="labelIcon.size"
+					v-if='labelIcon'
+				/>
                 <span v-if="required" class="d-text-red">*</span>
                 <label class="d-elip d-text-black">{{label}}</label>
             </div>
@@ -27,6 +35,15 @@
         </div>
         <div v-else class="d-flex f13">
             <div v-if="labelWidth" :style="{width:labelWidth * 2 +'rpx'}" class="uni-h50 uni-lh50">
+				<span @click.stop="handleLableClick">
+					<uni-icon
+						class="mr10"
+						:type="labelIcon.type"
+						:color="labelIcon.color"
+						:size="labelIcon.size"
+						v-if='labelIcon'
+					/>
+				</span>
                 <span v-if="required" class="d-text-red">*</span>
                 <slot name="label"><label class="d-elip d-text-black f13">{{label}}</label></slot>
             </div>
@@ -96,6 +113,9 @@ export default {
 			type: Boolean,
 			default: false
 		},
+		labelIcon: {
+			type: Object,
+		},
 		isSelect:Boolean
 	},
 	methods: {
@@ -113,6 +133,9 @@ export default {
 
 		handleInputBlur (event) {
 			this.$emit('blur', event)
+		},
+		handleLableClick(){
+			this.$emit('handleLableClick')
 		}
     },
     computed: {

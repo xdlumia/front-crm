@@ -37,7 +37,7 @@
                     </div>
                     <div>联系人</div>
                 </a>
-                <a url='/pages/client/index?queryType=2' open-type='switchTab' class="f12 d-text-qgray">
+                <a @click="switchTabTo('client')" class="f12 d-text-qgray">
                      <div class="icon-box">
                         <span class="iconfont iconkehuziliao f16" style='color:#00b17b'></span>
                     </div>
@@ -49,7 +49,7 @@
                     </div>
                     <div>成交记录</div>
                 </a>
-                <a url='/pages/chance/index?queryType=2' open-type='switchTab' class="f12 d-text-qgray">
+                <a @click="switchTabTo('chance')" class="f12 d-text-qgray">
                      <div class="icon-box">
                         <span class="iconfont iconqian f20" style='color:#4e89f4'></span>
                     </div>
@@ -111,9 +111,13 @@ export default {
 		this.phone = userInfo.phone.substring(0, 3) + '****' + userInfo.phone.substring(userInfo.phone.length - 4)
 		this.avatarUrl = userInfo.avatarUrl
 		this.name = userInfo.name
-		this.positionName = userInfo.positionName
+		this.positionName = userInfo.positionName === null ? '' : userInfo.positionName
 	},
 	methods: {
+		switchTabTo (url) {
+			this.$local.setItem('queryType', 2)
+			this.$routing.switchTab('/pages/' + url + '/index')
+		},
 		// 获取并保存用户头像
 		handleUserInfoClick ({ mp }) {
 			// 更新用户头像

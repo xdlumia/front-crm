@@ -8,8 +8,23 @@
 
 		<div class="pb20" v-for='(item, index) in scoreData' :key='index'>
 			<div class='d-bg-white'>
-				<i-select labelWidth='230' :props="{label:'fieldName',value:'id'}" v-model='item.fieldConfigId' label="字段名称一" :options="fieldData" @input='getField($event, index)' />
-				<i-input labelWidth='150' i-class='ar pr5' label="权重" type='number' v-model='item.weight' placeholder="请输入" ><span class='pl5'>%</span></i-input>
+				<i-select
+					labelWidth='230'
+					@handleLableClick='delItem(index)'
+					:labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}'
+					:props="{label:'fieldName',value:'id'}"
+					v-model='item.fieldConfigId' label="字段名称一"
+					:options="fieldData"
+					@input='getField($event, index)'
+				/>
+				<i-input
+					labelWidth='150'
+					:labelIcon='{type: "minus-filled", color: "#fff"}'
+					i-class='ar pr5' label="权重" type='number'
+					v-model='item.weight' placeholder="请输入"
+				>
+					<span class='pl5'>%</span>
+				</i-input>
 			</div>
 			<div class='d-center score-rule pl15 pr15'>
 				<div class="d-cell f13 d-text-black">评分规则条件</div>
@@ -19,19 +34,42 @@
 			<div class="mb5 d-bg-white" v-for='(subItem, subIndex) in item.fieldRuleEntityList' :key='subIndex'>
 
 				<!-- filedType == 0 是填写数字 -->
-				<i-input labelWidth='100' :label=" item.fieldName + '一'" disabled v-if="item.filedType == 1">
-					<div class='d-center' style='width:200px;'>
-						<input type="number" v-model='subItem.minValue' class='input-box f13 d-text-black d-cell' /><span class="ml5 mr5 d-text-qgray">-</span><input type="number" v-model='subItem.maxValue' class='input-box d-text-black f13 d-cell'  />
+				<i-input labelWidth='120' @handleLableClick='delItem(index, subIndex)' :labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}' :label=" item.fieldName + '一'" disabled v-if="item.filedType == 1">
+					<div class='d-center' style='width:180px;'>
+						<input
+							type="number"
+							v-model='subItem.minValue'
+							class='input-box f13 d-text-black d-cell'
+						/>
+							<span class="ml5 mr5 d-text-qgray">-</span>
+							<input type="number" v-model='subItem.maxValue' class='input-box d-text-black f13 d-cell'  />
 					</div>
 				</i-input>
 
 				<!-- filedType == 1 是选择标签 -->
-				<i-select v-if="item.filedType == 3" labelWidth='150' i-class='ar pr20' :props="{label:'fieldName',value:'id'}" :label=" item.fieldName + '一'" :options="subFieldData[index][subIndex]" />
+				<i-select
+					v-if="item.filedType == 3"
+					@handleLableClick='delItem(index, subIndex)'
+					:labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}'
+					labelWidth='150' i-class='ar pr20'
+					v-model='subItem.fieldAccordingTo'
+					:props="{label:'content',value:'code'}"
+					:label=" item.fieldName + '一'"
+					:options="subFieldData[index][subIndex]"
+				/>
 
-				<i-input labelWidth='150' label="计算评分为" type='number' v-model='subItem.fieldGrade' placeholder="请输入" i-class='ar pr20'></i-input>
+				<i-input
+					labelWidth='150'
+					label="计算评分为"
+					:labelIcon='{type: "minus-filled", color: "#fff"}'
+					type='number' v-model='subItem.fieldGrade'
+					placeholder="请输入"
+					i-class='ar pr20'
+				/>
+
 			</div>
 			<div v-if='item.fieldRuleEntityList.length' class='d-bg-white'>
-				<i-input labelWidth='150' label="否则，计算项的评分为" type='number' v-model='subItem.elseFieldGrade' placeholder="请输入" i-class='ar pr20' ></i-input>
+				<i-input labelWidth='200' label="否则，计算项的评分为" :labelIcon='{type: "minus-filled", color: "#fff"}' type='number' v-model='item.elseFieldGrade' placeholder="请输入" i-class='ar pr20' ></i-input>
 			</div>
 		</div>
 
@@ -52,19 +90,7 @@ export default {
 			busType: '',
 			fieldData: [],
 			subFieldData: [],
-			scoreData: [
-				// {
-				// 	busType: '',
-				// 	fieldConfigId: '',
-				// 	fieldDescribe: '',
-				// 	fieldName: '',
-				// 	fieldRuleEntityList: [],
-				// 	filedType: '',
-				// 	userDefinedType: '',
-				// 	weight: '',
-				// 	groupCode: ''
-				// }
-			],
+			scoreData: [],
 			scoreList: [],
 			typeform: {
 				'0': '客户',
@@ -88,6 +114,9 @@ export default {
 				busType
 			})
 			this.fieldData = resulte.data
+			resulte.data.forEach(item => {
+				+item.fieldType === 3 && item.groupCode && this.dictionaryOptions(item.groupCode)
+			})
 			return Promise.resolve()
 		},
 		// 获取列表
@@ -117,7 +146,8 @@ export default {
 				filedType: '',
 				userDefinedType: '',
 				weight: '',
-				groupCode: ''
+				groupCode: '',
+				elseFieldGrade: ''
 			})
 
 			// 添加子段 添加 空数据 用来展示字典数据
@@ -132,31 +162,34 @@ export default {
 
 			let len = this.scoreData[index].fieldRuleEntityList.length
 			this.scoreData[index].fieldRuleEntityList.push({
-				elseFieldGrade: '',
 				fieldAccordingTo: '',
 				fieldGrade: '',
-				fieldName: '',
+				fieldName: this.scoreData[index].fieldName,
 				maxValue: '',
 				minValue: '',
 				sort: len + 1
 			})
 
 			// 设置 当前字段下 字段数据
-			this.setDisCodeData(this.scoreData[index].groupCode, index, len)
+			if (+this.scoreData[index].fieldType === 3) {
+				this.setDisCodeData(this.scoreData[index].groupCode, index, len)
+			}
 		},
 
 		// 选择 字段
 		getField (id, index) {
 			let fieldItem = this.fieldData.filter(item => item.id === id)[0]
-			this.scoreData[index] = {
+			// 字段变化 更新下面的值
+			this.$set(this.scoreData, index, {
 				busType: fieldItem.busType,
 				fieldConfigId: fieldItem.id,
 				// fieldDescribe: '',
 				fieldName: fieldItem.fieldName,
 				fieldRuleEntityList: [],
 				filedType: fieldItem.fieldType,
-				groupCode: fieldItem.groupCode
-			}
+				groupCode: fieldItem.groupCode,
+				userDefinedType: !fieldItem.isOriginal ? 1 : 0
+			})
 		},
 
 		// 添加数据字典数据
@@ -165,15 +198,75 @@ export default {
 			this.$set(this.subFieldData[parentIndex], index, data)
 		},
 
+		delItem (index, subIndex) {
+			if (!subIndex) {
+				this.scoreData.splice(index, 1)
+			} else {
+				this.scoreData[index].fieldRuleEntityList.splice(subIndex, 1)
+			}
+		},
+
 		// 保存方法
 		submit () {
-			let count = this.scoreData.reduce((cu, item) => {
-				return cu + item.weight
-			}, 0)
+			let count = 0
+			const len = this.scoreData.length
+
+			if (!len) return this.$utils.toast.text('请添加字段')
+
+			for (let i = 0; i < len; i++) {
+				const scoreItem = this.scoreData[i]
+
+				count += +scoreItem.weight
+
+				// 判断字段名称
+				if (!scoreItem.fieldConfigId) {
+					return this.$utils.toast.text('请选择字段名称')
+				}
+
+				// 判断权重
+				if (!scoreItem.weight) {
+					return this.$utils.toast.text('请填写权重')
+				}
+
+				// 判断权重值
+				if (+scoreItem.weight < 1 || +scoreItem.weight > 100) {
+					return this.$utils.toast.text('权重值为1~100')
+				}
+
+				// 判断计算评分
+				const subLen = scoreItem.fieldRuleEntityList.length
+
+				for (let subI = 0; subI < subLen; subI++) {
+					const scoreSubItem = this.scoreData[i].fieldRuleEntityList[subI]
+					// 数字 判断
+					if (+scoreItem.filedType === 1) {
+						if (!scoreSubItem.maxValue || !scoreSubItem.minValue) {
+							return this.$utils.toast.text('请填写' + scoreSubItem.fieldName)
+						}
+
+						if (+scoreSubItem.maxValue < +scoreSubItem.minValue) {
+							return this.$utils.toast.text(scoreSubItem.fieldName + '格式不正确')
+						}
+					}
+					// 标签判断
+					if (+scoreItem.filedType === 3) {
+						if (!scoreSubItem.fieldAccordingTo) {
+							return this.$utils.toast.text('请选择' + scoreSubItem.fieldName)
+						}
+					}
+
+					if (!scoreSubItem.fieldGrade) {
+						return this.$utils.toast.text('请填写' + scoreSubItem.fieldName + '计算评分')
+					}
+				}
+
+				if (!scoreItem.elseFieldGrade) {
+					return this.$utils.toast.text('否则项评分不能为空')
+				}
+			}
 
 			if (+count !== 100) {
-				this.$utils.toast.text('权重必须为100%')
-				return
+				return this.$utils.toast.text('权重必须为100%')
 			}
 
 			this.$api.seeCrmService.fieldweightSave({ saveVo: this.scoreData }).then(res => {
