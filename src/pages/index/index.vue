@@ -72,9 +72,8 @@
         <div v-if='current == 1'>
             <div class="h40 d-flex-level mt10" style="background:#F9F9F9;">
                 <div class="d-flex ml15" style="height: 26px;align-items: center;">
-                    <!-- <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="small"></i-avatar> -->
                     <m-avatar :url='avatarUrl' :text='userName' :width='24' :height='24'></m-avatar>
-                    <a :url="`/pages/index/colleagueChoose?subordinate=1&userId=${userInfo.id}&ids=${userId}`">
+                    <a :url="`/pages/index/colleagueChoose?subordinate=1&userId=${userInfo.employeeId}&ids=${userId}`">
                         <span class="d-text-qgray f13 ml5">{{userName}}</span>
                     </a>
                     <uni-icon type="arrowdown" class="pl5 d-text-qgray" size="16"/>
@@ -226,8 +225,8 @@ export default {
 			allTime: [],
 			userInfo: {},
 			timelong: 7,
+			opts: {}, // 传给漏斗图的数据
 			clickDay: '',
-			TabList: [{ name: '今天' }, { name: '仪表盘' }],
 			selected: [],
 			ec: {
 				option: {
@@ -282,7 +281,6 @@ export default {
 		this.userId = this.userInfo.id
 		this.userName = this.userInfo.name
 		this.avatarUrl = this.userInfo.avatarUrl
-		console.log(this.userInfo)
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
 		this.scheduleSelectSalesFunnel()
@@ -347,10 +345,15 @@ export default {
 					let arr = res.data || []
 					arr.forEach((item) => {
 						this.funnelList.push({ value: item.amount, name: item.stageName + ':' + item.amount })
+						// this.funnelList.push({ data: item.amount, name: item.stageName + ':' + item.amount})
 					})
+					// this.funnelList = [{value:5000,name:'阶段1 - 5000'},{value:5000,name:'阶段2 - 5000'},{value:2000,name:'阶段3 - 2000'}]
 					this.ec.option.series[0].data = this.funnelList || []
+					// this.opts.series = this.funnelList
 					this.$nextTick(() => {
-						// this.$refs.echart.init()
+						if (this.$refs.echart) {
+							this.$refs.echart.init()
+						}
 					})
 				})
 		},
