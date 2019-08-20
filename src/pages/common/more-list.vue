@@ -3,8 +3,7 @@
 <template>
 <div class="d-bg-white">
     <NavBar title="添加更多条目"/>
-
-	<scroll-view :style="'height:calc(100vh - ' + navH +' - 48px)'" scroll-y>
+	<scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
 		<p class="pt10 d-text-gray f13 ac" v-if="!fieldList.length">暂无数据</p>
 		<i-cell-group>
 			<i-cell v-for="(item, index) of fieldList" :key="index" :title="item.fieldName">

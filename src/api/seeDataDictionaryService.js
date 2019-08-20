@@ -53,5 +53,12 @@ export default {
 	valueList: {
 		url: '/dictionary/valueList',
 		methods: 'get'
+	},
+	/**
+     * @description 保存客户管理标签的顺序
+     */
+	saveDataDictionaryOrder: {
+		url: '/dictionary/saveDataDictionaryOrder',
+		methods: 'post'
 	}
 }

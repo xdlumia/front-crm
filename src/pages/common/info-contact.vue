@@ -48,11 +48,18 @@ export default {
 	computed: {
 		url () {
 			let linkIds = JSON.stringify(this.contactList.map(item => item.id))
+			/**
+			 * busType ==2 是机会详情
+			 * 在机会详情里添加联系人.使用此机会里的客户id去查询联系人列表
+			 * 所以busType ==2的时候其实是查询联系人列表 那么busType应该传0
+			 */
+			let busType = this.query.busType === 2 ? 0 : this.query.busType
+			let busId = this.query.busType === 2 ? this.query.clientId : this.query.busId
 			return +this.query.busType === 0
 				? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId
 				: this.query.busType === 3// 成交记录不需要加号
 					? ''
-					: '/pages/contact/index?select=1&add=1&multiple=1&linkIds=' + linkIds + ''
+					: '/pages/contact/index?select=1&add=1&multiple=1&busType=' + busType + '&busId=' + busId + '&linkIds=' + linkIds + ''
 		}
 	},
 	created () {
@@ -92,9 +99,11 @@ export default {
 		},
 		// 获取联系人列表
 		linkmanQueryBusList () {
-			this.$api.seeCrmService.linkmanQueryBusList({ busId: this.query.busId, busType: this.query.busType, time: '' })
+			this.$api.seeCrmService.linkmanQueryBusList({ busId: this.query.busId, busType: this.query.busType, clientId: this.query })
 				.then(res => {
-					this.contactList = res.data || []
+					let data = res.data || []
+					this.contactList = data
+					this.$store.commit('chance/setContactList', data)
 				})
 		}
 	},

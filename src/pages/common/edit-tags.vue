@@ -29,8 +29,14 @@
         </div>
       </div>
       <div class="fr mr15">
-        <div class="ac d-text-blue m5 fr">
+        <!-- <div class="ac d-text-blue m5 fr">
           <uni-icon type="bars" size="18" color="#999"/>
+        </div> -->
+				<div class="ac d-text-blue m5 fr" v-if="index != 0" @click="farrowthinup(index,item)">
+          <uni-icon type="arrowthinup" size="22" color="#999"/>
+        </div>
+				<div class="ac d-text-blue m5 fr" v-if="index != (valueList.length-1)" @click="farrowthindown(index,item)">
+          <uni-icon type="arrowthindown" size="22" color="#999"/>
         </div>
       </div>
     </div>
@@ -62,6 +68,7 @@
     <div class="footer-fixed-menu" @click="handelTagName">
       <i-button type="primary" i-class="f16">保 存</i-button>
     </div>
+		<!-- <i-spin fix fullscreen></i-spin> -->
   </div>
 </template>
 <script>
@@ -77,6 +84,7 @@ export default {
 				'2': '机会',
 				'3': '成交记录'
 			},
+			loading: false,
 			isAdd: false, // 新增框是否显示
 			busType: 0,
 			dicCode: '', // 当前标签code
@@ -98,6 +106,23 @@ export default {
 		this.getValueList()
 	},
 	methods: {
+		// 保存客户管理标签的顺序
+		saveDataDictionaryOrder () {
+			this.$api.seeDataDictionaryService.saveDataDictionaryOrder(this.valueList)
+				.then(res => {
+					this.getValueList()
+				})
+		},
+		// 向上移动
+		farrowthinup (index, item) {
+			this.valueList[index] = this.valueList.splice(index - 1, 1, item)[0]
+			this.saveDataDictionaryOrder()
+		},
+		// 向下移动
+		farrowthindown (index, item) {
+			this.valueList[index] = this.valueList.splice(index + 1, 1, item)[0]
+			this.saveDataDictionaryOrder()
+		},
 		// 获取所有标签项
 		getValueList () {
 			this.$api.seeDataDictionaryService.valueList(this.queryform)

@@ -34,7 +34,7 @@
 				<detailInfo v-if="detailInfo.id" :detailInfo="detailInfo" :height="'calc(100vh - 49px - 122px - 50px - ' + navH + ')'"/>
 			</i-tab>
 			<i-tab index="2">
-				<correlationInfo v-if="busId" :query="{busId:busId,busType:1,name:detailInfo.linkmanName,}" :height="'calc(100vh - 49px - 122px - 50px - ' + navH + ')'"/>
+				<correlationInfo ref='info' v-if="busId" :query="{busId:busId,busType:1,name:detailInfo.linkmanName,}" :height="'calc(100vh - 49px - 122px - 50px - ' + navH + ')'"/>
 			</i-tab>
 		</i-tabs>
       <!-- 底部操作按钮 -->
@@ -64,7 +64,7 @@ import detailInfo from './components/detail-info'
 import notesInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './components/correlation-info'
 
-let moreActionsTitle = ['更多操作', '转移', '删除', '复制']
+let moreActionsTitle = ['更多操作', '变更负责人', '删除', '复制']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 
 export default {
@@ -91,13 +91,11 @@ export default {
 		}
 	},
 	onShow () {
-		// 获取联系人列表
-		this.linkmanQueryBusList({ busId: this.busId, busType: 1 })
 	},
 	onLoad (option) {
 		this.busId = option.id
 		// 获取联系人列表 bus_type 0客户，1联系人，2机会，3成交
-		this.linkmanQueryBusList({ busId: this.busId, busType: 1 })
+		// this.linkmanQueryBusList({ busId: this.busId, busType: 1 })
 		// 获取详情
 		this.linkmanInfo(option.id)
 		// 编辑成功刷新列表
@@ -112,6 +110,8 @@ export default {
 			this.$api.seeCrmService.linkmanInfo(null, id)
 				.then(res => {
 					this.detailInfo = res.data || {}
+					this.phoneActions = [{ name: `${this.detailInfo.linkmanName} ${this.detailInfo.mobile}`, phone: this.detailInfo.mobile }]
+					this.phoneActions.unshift({ name: '联系人电话' })
 				})
 		},
 		handlerAction (item) {
@@ -123,17 +123,6 @@ export default {
 		// 标签切换
 		tagsChange ({ index }) {
 			this.currTabIndex = index
-		},
-		// 获取联系人列表
-		linkmanQueryBusList (params) {
-			this.$api.seeCrmService.linkmanQueryBusList(params)
-				.then(res => {
-					let data = res.data || []
-					this.phoneActions = data.map(item => {
-						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
-					})
-					this.phoneActions.unshift({ name: '联系人电话' })
-				})
 		},
 		// 关注状态切换
 		updateAttention (val) {
@@ -154,12 +143,30 @@ export default {
 					})
 			}
 		},
+		// 更新负责人
+		updateLeader (leaderId) {
+			this.$api.seeCrmService.teammemberinfoUpdate({
+				busId: this.busId,
+				busType: 1,
+				leaderId: leaderId,
+				partiType: 0
+			}).then(res => {
+				if (res.code === 200) {
+					this.$refs.info.$refs.employee.getEmployeeList()
+					this.linkmanInfo(this.busId)
+				}
+			})
+		},
 		handleMore ({ target: { index } }) {
 			if (index === 0) return
 			let fnType = {
 				// 转移
 				1: () => {
-					this.$routing.navigateTo(`/pages/index/colleagueChoose?id=${this.busId}`)
+					// 变更负责人
+					uni.$once('colleagueChoose', data => {
+						this.updateLeader(data.data.map(item => item.userId)[0])
+					})
+					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
 				},
 				// 删除
 				2: () => {
