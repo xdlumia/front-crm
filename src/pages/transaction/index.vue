@@ -39,7 +39,7 @@
 
         <div class='highseas-list-view d-relative'>
             <scroll-list
-                :height="'calc(100vh - ' + navH +' - 89px)'"
+                :height="'calc(100vh - ' + navH +' - 129px)'"
                 api="seeCrmService.transactionrecordList"
                 @getList='getTransactionList'
                 :params="queryForm"
@@ -174,7 +174,7 @@ export default {
 		this.chooseData = options.id || ''
 
 		this.queryForm.queryType = options.queryType || 0
-		this.$set(this.filterData[0], 'current', { id: 2, name: '我关注的' })
+		this.$set(this.filterData[0], 'current', { id: 0, name: '我负责的' })
 	},
 	computed: {
 		CRM_CJZT () {

@@ -8,9 +8,9 @@
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
 			<m-list label="负责人">{{detailInfo.leaderName || ''}}</m-list>
-            <m-list label="创建日期">{{detailInfo.createTime | timeToStr('yyyy-mm-dd')}}</m-list>
+            <m-list label="创建日期">{{detailInfo.createTime | timeToStr('yyyy-mm-dd hh:ii')}}</m-list>
             <m-list label="创建人">{{detailInfo.creatorName || ''}}</m-list>
-            <m-list label="最后修改日">{{detailInfo.modifyTime | timeToStr('yyyy-mm-dd')}}</m-list>
+            <m-list label="最后修改日">{{detailInfo.modifyTime | timeToStr('yyyy-mm-dd hh:ii')}}</m-list>
         </mPanel>
     </div>
 </template>
