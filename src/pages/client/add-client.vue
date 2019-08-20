@@ -206,7 +206,8 @@ export default {
 		getMoreField () {
 			this.$api.seeCrmService.formsfieldconfigQueryList({
 				busType: 0,
-				isEnabled: 0
+				isEnabled: 0,
+				isOriginal: 0
 			}).then(res => {
 				if (res.code === 200) {
 					this.form.formsFieldValueSaveVos = res.data || []

@@ -46,7 +46,7 @@
                                 </div>
                                 <div v-show='item.nextTime'>
                                     <uni-tag size='small' circle>
-                                        下次通话时间：{{item.nextTime | timeToStr('yyyy-mm-dd')}}
+                                        下次通话时间：{{item.nextTime | timeToStr('yyyy-mm-dd hh:ii')}}
                                     </uni-tag>
                                 </div>
                             </div>

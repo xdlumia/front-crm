@@ -133,11 +133,7 @@ export default {
 			moreShow: false, // 更多按钮 选项
 			phoneShow: false, // 打电话选项
 			moreActions: [], // 更多按钮
-			phoneActions: [
-				{
-					name: '联系人电话'
-				}
-			],
+			phoneActions: [],
 			tabBars: [
 				{
 					title: '跟进记录'
@@ -255,7 +251,7 @@ export default {
 					let phones = data.map(item => {
 						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
 					})
-					this.phoneActions.push(...phones)
+					this.phoneActions = [{ name: '联系人电话' }, ...phones]
 				})
 		},
 		// 更多 点击事件

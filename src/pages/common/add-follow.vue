@@ -40,17 +40,18 @@
 					</i-input>
 				</a> -->
 
-                <picker-date :required='false' v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期" />
+                <!-- <picker-date :required='false' v-model="form.nextTime" label="下次联系时间" placeholder="请选择日期" /> -->
 
-				<!-- <ruiDatePicker
+				<ruiDatePicker
                     fields="minute"
                     start="2010-00-00 00:00"
                     end="2030-12-30 23:59"
                     @change="startTimeChange"
-					v-model='form.nextTime'
                 >
-                    <i-input disabled label="下次联系时间" v-model="form.nextTime" placeholder="请选择日期" :required='false'></i-input>
-                </ruiDatePicker> -->
+                    <i-input disabled label="下次联系时间" v-model="form.nextTime" placeholder="请选择日期" required>
+						<i class="iconfont f16 iconshouye_chengjiaoshujurili" style="color: #5a5a5a;"></i>
+					</i-input>
+                </ruiDatePicker>
 
 				<i-select
                     v-model="form.intention"
@@ -75,10 +76,11 @@
 </template>
 <script>
 import mUpload from '@/components/m-upload'
-
+import ruiDatePicker from '@/components/basic/uni/rattenking-dtpicker/rattenking-dtpicker.vue'
 export default {
 	components: {
-		mUpload
+		mUpload,
+		ruiDatePicker
 	},
 	data () {
 		return {
@@ -149,9 +151,9 @@ export default {
 		})
 	},
 	methods: {
-		// startTimeChange (val) {
-		// 	this.form.nextTime = val
-		// },
+		startTimeChange (val) {
+			this.form.nextTime = val
+		},
 		async followupSave () {
 			await this.$refs.mform.validate()
 
