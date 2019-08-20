@@ -55,7 +55,7 @@
 					v-model='subItem.fieldAccordingTo'
 					:props="{label:'content',value:'code'}"
 					:label=" item.fieldName + '一'"
-					:options="subFieldData[index][subIndex]"
+					:options="subFieldData[index]"
 				/>
 
 				<i-input
@@ -127,9 +127,7 @@ export default {
 				// 设置 数据
 				res.data.forEach((item, index) => {
 					this.$set(this.subFieldData, index, [])
-					item.fieldRuleEntityList.forEach((subItem, subIndex) => {
-						this.setDisCodeData(subItem.fieldAccordingTo, index, subIndex)
-					})
+					this.setDisCodeData(item.groupCode, index)
 				})
 
 				this.scoreData = res.data
@@ -193,9 +191,9 @@ export default {
 		},
 
 		// 添加数据字典数据
-		setDisCodeData (code, parentIndex, index) {
+		setDisCodeData (code, parentIndex) {
 			let data = this.dictionaryOptions(code)
-			this.$set(this.subFieldData[parentIndex], index, data)
+			this.$set(this.subFieldData, parentIndex, data)
 		},
 
 		delItem (index, subIndex) {
