@@ -200,6 +200,9 @@ export default {
 			this.info.memberDeptCode = dept.totalCode
 			this.deptName = dept.deptName
 			this.deptId = dept.id
+
+			this.info.administratorId = ''
+			this.administratorName = ''
 		})
 	},
 	computed: {
@@ -207,7 +210,18 @@ export default {
 			return this.dictionaryOptions('CRM_GHLX')
 		}
 	},
+	// /organizationalStructure/getEmployeeDetail/{id}
 	methods: {
+		getEmployeeName (id) {
+			this.$api.seeCrmService.organizationalStructureGetEmployeeDetail(null, id).then(res => {
+				if (+res.code === 200) {
+					this.administratorName = res.data.employeeName
+					this.deptName = res.data.deptName
+					this.deptId = res.data.deptId
+					this.info.administratorId = res.data.id
+				}
+			})
+		},
 		chooseManage () {
 			if (!this.info.memberDeptCode && !this.deptId) {
 				return this.$utils.toast.text('请选择公海成员')
@@ -224,6 +238,8 @@ export default {
 				// 客户数量限制
 				this.viewClientId = +res.data.viewClientNum === -1 ? 0 : 1
 				res.data.viewClientNum = +res.data.viewClientNum === -1 ? 0 : res.data.viewClientNum
+				res.data.administratorId && this.getEmployeeName(res.data.administratorId)
+
 				this.info = res.data || {}
 			})
 		},
@@ -239,6 +255,7 @@ export default {
 				this.info.followRecycleDaysNum = ''
 			}
 		},
+
 		handleScroll (top) {
 			this.scrollTop = top || 0
 		},

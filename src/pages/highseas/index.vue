@@ -153,7 +153,15 @@ export default {
 		//
 		handlerClient (item, index) {
 			if (!this.select) {
-				this.$routing.navigateTo('/pages/client/detail?source=1&id=' + item.id + '&poolId=' + this.pool.id)
+				this.$api.seeCrmService.getclientlogCheckClientInfoNum({
+					clientId: item.id,
+					leaderId: this.$store.state.userInfo.id || '',
+					poolId: this.pool.id,
+					sendBackType: item.sendBackType
+				}).then(res => {
+					console.log(res)
+					this.$routing.navigateTo('/pages/client/detail?source=1&id=' + item.id + '&poolId=' + this.pool.id)
+				})
 				return
 			}
 
