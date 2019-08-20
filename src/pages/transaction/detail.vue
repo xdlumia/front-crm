@@ -1,5 +1,6 @@
 <template>
     <div class="client-detail-page">
+		<template v-if='!loading'>
         <NavBar title='成交详情' />
         <!-- 顶部信息 -->
 
@@ -53,7 +54,9 @@
                 <i-icon type='more' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">更多</span>
             </div>
         </div>
+		</template>
 
+		<i-spin fix fullscreen v-else></i-spin>
         <!-- 更多 action -->
         <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" @click="handleMore" />
 
@@ -75,6 +78,7 @@ export default {
 	},
 	data () {
 		return {
+			loading: true,
 			detailId: '',
 			moreShow: false,
 			phoneShow: false,
@@ -114,6 +118,7 @@ export default {
 			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
 				.then(res => {
 					this.detailInfo = res.data || {}
+					this.loading = false
 				})
 		},
 		// 成交状态编辑

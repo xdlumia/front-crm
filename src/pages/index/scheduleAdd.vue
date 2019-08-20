@@ -7,8 +7,11 @@
         <NavBar :title="handelTypeForm[handelType]" />
         <scroll-view scroll-y style="height:calc(100vh - 115px)">
             <m-form ref="acheduleForm" class="uni-pb100" :model="acheduleForm" :rules="rules">
-                <div class="d-bg-schedule"></div>
-                    <i-input :disabled='!isadd && !ishandel' maxlength='32' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
+				<div v-if="isadd" class="d-bg-schedule"></div>
+                <div v-else class="d-bg-schedule f14" style="height:40px;line-height:40px;color:rgba(72, 137, 244, 0.776470588235294)">
+					<span class="ml15">该日程于{{acheduleForm.createTime | timeToStr('yy-mm-dd')}}由{{acheduleForm.creatorName}}创建</span>
+				</div>
+				<i-input :disabled='!isadd && !ishandel' maxlength='32' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
                 <div class="d-bg-schedule"></div>
 
                 <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
@@ -228,6 +231,7 @@ export default {
 		})
 	},
 	methods: {
+		// 查询日程详情
 		getScheduleInfo (id) {
 			this.$api.seeCrmService.scheduleInfo(null, id)
 				.then(res => {
@@ -241,6 +245,7 @@ export default {
 					this.transactionData = { name: this.acheduleForm.transactionRecordName || '', id: this.acheduleForm.transactionRecordId || '' }// 成交记录
 					this.chanceData = { name: this.acheduleForm.salesFunnelName || '', id: this.acheduleForm.salesFunnelId || '' }// 销售机会
 					this.highseasData = { name: this.acheduleForm.seaPoolName || '', id: this.acheduleForm.seaPoolId || '' }// 公海池
+					console.log(this.acheduleForm)
 				})
 		},
 		changeTime (time) {
