@@ -12,7 +12,8 @@
         <view class="uni-flex uni-column">
             <view class="flex-item flex-item-V uni-flex uni-row bb pt10">
                     <view class="flex-item ml10">
-                    <image class="ba" style="height: 51px;width: 51px;" :src='pic'></image>
+                    <!-- <image class="ba" style="height: 51px;width: 51px;" :src='pic'></image> -->
+                    <mAvatar :text='name' :url='pic'></mAvatar>
                     </view>
                     <view class="flex-item ml10">
                         <view class="m5 f14">{{name}}</view>
@@ -37,7 +38,11 @@
     </view>
 </template>
 <script>
+import mAvatar from '@/components/m-avatar'
 export default {
+	components: {
+		mAvatar
+	},
 	data () {
 		return {
 			id: 0,
@@ -52,7 +57,7 @@ export default {
 	onLoad (option) {
 		if (option.item) {
 			let item = JSON.parse(option.item)
-			this.pic = item.pic ? item.pic : '/static/img/index.png'
+			this.pic = item.pic
 			this.name = item.name
 			this.phone = item.phone
 			this.inviter = item.inviter

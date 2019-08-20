@@ -65,7 +65,7 @@
                 <i-cell title="我的客服" is-link></i-cell>
             </button>
             <i-cell title="推荐给好友" is-link @click='openPop'></i-cell>
-            <i-cell title="客服电话" value='1810474315' @click="callPhone('181811111111')"></i-cell>
+            <i-cell title="客服电话" value='010-80755370' @click="callPhone('010-80755370')"></i-cell>
         </i-cell-group>
 
         <uni-popup ref="popup" type='bottom' custom>
@@ -120,14 +120,17 @@ export default {
 		},
 		// 获取并保存用户头像
 		handleUserInfoClick ({ mp }) {
-			// 更新用户头像
-			this.avatarUrl = mp.detail.userInfo.avatarUrl
 			// 保存用户头像
 			this.$api.seeCrmService.organizationalStructureUpdateEmployee({
 				'id': this.$local.fetch('userInfo').employeeId,
 				'avatarUrl': this.avatarUrl
 			}).then((response) => {
-				console.log(response)
+				if (response.code === 200) {
+					// 更新用户头像
+					this.avatarUrl = mp.detail.userInfo.avatarUrl
+				} else {
+					this.$utils.toast.text(response.msg)
+				}
 			})
 		},
 		openPop () {

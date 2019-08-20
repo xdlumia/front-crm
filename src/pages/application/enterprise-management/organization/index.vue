@@ -32,7 +32,8 @@
             </view>
             <view class="flex-item flex-item-V bb mt10 p10 d-flex-lr" >
                <i class="iconfont f28 iconxinjian fl d-text-blue"></i>
-               <button  class="pl5 fl d-text-cgray ml0" style="border: none;" open-type="getUserInfo" @getuserinfo="invite" plain="true">邀请同事加入</button >
+               <!-- <button  class="pl5 fl d-text-cgray ml0" style="border: none;" open-type="getUserInfo" @getuserinfo="invite" plain="true">邀请同事加入</button > -->
+               <button  class="pl5 fl d-text-cgray ml0" style="border: none;" @click="invite" plain="true">邀请同事加入</button >
             </view>
             <view class="flex-item flex-item-V" style="height: 50px;background: #F9F9F9;"></view>
             <view class="flex-item flex-item-V bt pt10 pb10 wfull" style="position: fixed;bottom: 0;background-color: rgba(255,255,255,1)">
@@ -143,7 +144,7 @@ export default {
 		// 邀请成员加入
 		invite (data) {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/organization/invite/index?avatarUrl=' + data.detail.userInfo.avatarUrl
+				url: '/pages/application/enterprise-management/organization/invite/index?avatarUrl=' + this.$local.fetch('userInfo').avatarUrl
 			})
 		},
 		// 编辑员工

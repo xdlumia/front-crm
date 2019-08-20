@@ -1,58 +1,59 @@
 <template>
     <div>
-        <div class="form-row d-center">
-            <div class="f14 d-text-black form-row-item form-row-label">
-                <label class="d-text-red">*</label>姓名
-            </div>
-            <div class="d-cell mr10 form-row-item">
-                <input type="text" v-model="form.linkmanName" class='f12 d-text-gray' placeholder="请填写正确姓名">
-            </div>
-        </div>
+		<m-form ref="mform" :model="form" :rules="rules">
+			<div class="form-row d-center">
+				<div class="f14 d-text-black form-row-item form-row-label">
+					<label class="d-text-red">*</label>姓名
+				</div>
+				<div class="d-cell mr10 form-row-item">
+					<input type="text" v-model="form.linkmanName" class='f12 d-text-gray' placeholder="请填写正确姓名">
+				</div>
+			</div>
+			<div class="form-row d-center">
+				<div class="f14 d-text-black form-row-item form-row-label">
+					<label class="d-text-red">*</label>手机号
+				</div>
+				<div class="d-cell pr10 form-row-item">
+					<input type="number" maxlength='11' v-model="form.linkmanPhone" @blur="clearValidateCode" class='f12 d-text-gray' placeholder="请填写手机号">
+				</div>
+				<div class="mr10 form-row-item hfull d-center ml10 bl">
+					<div v-if="show" class='phone-code-btn d-text-blue f14 ac' @click="getValidateCode">获取验证码</div>
+					<div v-if="!show" class='d-text-blue f14 ac'>{{count}} s后可重新获取</div>
+				</div>
+			</div>
+			<div class="form-row d-center">
+				<div class="f14 d-text-black form-row-item form-row-label">
+					<label class="d-text-red">*</label>验证码
+				</div>
+				<div class="d-cell mr10 form-row-item">
+					<input type="number" class='f12 d-text-gray' v-model="vilidateCode" placeholder="请填写短信验证码" @blur="checkValidateCode">
+				</div>
+			</div>
 
-        <div class="form-row d-center">
-            <div class="f14 d-text-black form-row-item form-row-label">
-                <label class="d-text-red">*</label>手机号
-            </div>
-            <div class="d-cell pr10 form-row-item">
-                <input type="number" maxlength='11' v-model="form.linkmanPhone" class='f12 d-text-gray' placeholder="请填写手机号">
-            </div>
-            <div class="mr10 form-row-item hfull d-center ml10 bl">
-                <div v-if="show" class='phone-code-btn d-text-blue f14 ac' @click="getValidateCode">获取验证码</div>
-                <div v-if="!show" class='d-text-blue f14 ac'>{{count}} s后可重新获取</div>
-            </div>
-        </div>
-        <div class="form-row d-center">
-            <div class="f14 d-text-black form-row-item form-row-label">
-                <label class="d-text-red">*</label>验证码
-            </div>
-            <div class="d-cell mr10 form-row-item">
-                <input type="number" class='f12 d-text-gray' v-model="vilidateCode" placeholder="请填写短信验证码" @blur="checkValidateCode">
-            </div>
-        </div>
+			<div class="form-row d-center">
+				<div class="f14 d-text-black form-row-item form-row-label">
+					<label class="d-text-red">*</label>企业名称
+				</div>
+				<div class="d-cell mr10 form-row-item">
+					<input type="text" class='f12 d-text-gray' v-model="form.companyName" placeholder="请填写正确的企业名称">
+				</div>
+			</div>
 
-        <div class="form-row d-center">
-            <div class="f14 d-text-black form-row-item form-row-label">
-                <label class="d-text-red">*</label>企业名称
-            </div>
-            <div class="d-cell mr10 form-row-item">
-                <input type="text" class='f12 d-text-gray' v-model="form.companyName" placeholder="请填写正确的企业名称">
-            </div>
-        </div>
-
-        <div class="form-row d-center">
-            <div class="f14 d-text-black form-row-item form-row-label">
-                企业规模
-            </div>
-            <div class="d-cell mr10 form-row-item">
-                <input type="text" class='f12 d-text-gray' v-model="form.scale" placeholder="请填写正确的企业规模">
-            </div>
-        </div>
+			<div class="form-row d-center">
+				<div class="f14 d-text-black form-row-item form-row-label">
+					企业规模
+				</div>
+				<div class="d-cell mr10 form-row-item">
+					<input type="text" class='f12 d-text-gray' v-model="form.scale" placeholder="请填写正确的企业规模">
+				</div>
+			</div>
+		</m-form>
 
         <div class="f12 d-text-gray p5 mt20">
             <i-icon size="18" color="#999" type='prompt_fill' />请完善信息，我们会尽快核实信息，为您开通30天免费试用账号
         </div>
 
-        <div class="phone-fixed d-text-white d-fixed d-center" @click="callPhone(servicePhone)">
+        <div class="phone-fixed d-text-white d-fixed d-center" @click="callPhone()">
             <span class="iconfont iconcall f22"></span>
         </div>
 
@@ -82,18 +83,41 @@ export default {
 			validateOk: false,
 			show: true,
 			count: 60,
-			timer: null
+			timer: null,
+			// 校验规则
+			rules: {
+				linkmanName: [{
+					required: true,
+					message: '请输入联系人姓名'
+				}],
+				linkmanPhone: [{
+					required: true,
+					message: '请输入联系人电话'
+				}],
+				companyName: [{
+					required: true,
+					message: '请输入企业名称'
+				}]
+			}
 		}
 	},
 	methods: {
+		// 拨打客服电话
+		callPhone () {
+			uni.makePhoneCall({
+				phoneNumber: '010-80755370' // 仅为示例
+			})
+		},
 		// 提交申请
-		submitApply () {
+		async submitApply () {
 			// 转换时间
 			let now = new Date()
 			this.form.setStartTime = now.getTime()
 			this.form.setEndTime = new Date(this.form.setStartTime)
 			this.form.setEndTime = parseInt(this.form.setStartTime) + 30 * 24 * 60 * 60 * 1000
 			this.form.applicantName = this.form.linkmanName
+
+			await this.$refs.mform.validate()
 
 			if (this.validateOk) {
 				this.$api.systemService.applyCompany(this.form).then((response) => {
@@ -106,6 +130,10 @@ export default {
 			} else {
 				this.$utils.toast.text('验证码校验失败')
 			}
+		},
+		// 修改手机号清除输入的验证码
+		clearValidateCode () {
+			this.vilidateCode = ''
 		},
 		// 校验验证码validateSmsCode
 		checkValidateCode () {

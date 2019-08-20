@@ -27,8 +27,8 @@ export default {
 	},
 	onLoad () {
 		// 获取意见反馈列表
-		let sysCode = this.$local.getItem('sysCode')
-		this.$api.systemService.getHandbookMenuListPublish({ 'sysCode': sysCode }).then((response) => {
+		// let sysCode = this.$local.getItem('sysCode')
+		this.$api.systemService.getHandbookMenuListPublish({ 'sysCode': 'crm' }).then((response) => {
 			if (response.code === 200) {
 				this.helps = response.data
 			} else {

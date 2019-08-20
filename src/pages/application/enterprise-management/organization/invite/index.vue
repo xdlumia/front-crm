@@ -33,33 +33,34 @@
     </view>
 </template>
 <script>
-import local from '@/utils/localStorage'
-let company = local.fetch('companyInfo')
-let user = local.fetch('userInfo')
 export default {
 	data () {
 		return {
-			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode,
+			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html',
 			image: 'src/assets/img/logo.png',
 			shareText: '团队邀请',
-			avatarUrl: ''
+			avatarUrl: '',
+			company: {},
+			user: {}
 		}
 	},
 	onShareAppMessage () {
 		return {
 			title: this.shareText ? this.shareText : '欢迎体验',
-			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode,
+			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + this.user.name + '&companyName=' + this.company.companyName + '&companyCode=' + this.company.companyCode,
 			imageUrl: this.image ? this.image : 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/app/share-logo@3.png'
 		}
 	},
 	onLoad (option) {
+		this.company = this.$local.fetch('companyInfo')
+		this.user = this.$local.fetch('userInfo')
 		this.avatarUrl = option.avatarUrl || ''
-		this.link += '&avatarUrl=' + this.avatarUrl
+		this.link = this.link + '?inviter=' + this.user.name + '&companyName=' + this.company.companyName + '&companyCode=' + this.company.companyCode + '&avatarUrl=' + this.avatarUrl
 	},
 	methods: {
 		share () {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + user.name + '&companyName=' + company.companyName + '&companyCode=' + company.companyCode + '&avatarUrl=' + this.avatarUrl
+				url: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + this.user.name + '&companyName=' + this.company.companyName + '&companyCode=' + this.company.companyCode + '&avatarUrl=' + this.avatarUrl
 			})
 		},
 		copyToClip () {

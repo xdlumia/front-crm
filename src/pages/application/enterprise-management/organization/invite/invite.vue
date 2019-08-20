@@ -45,7 +45,7 @@
 		<!-- 提交按钮 -->
 		<i-row class="m10">
 			<i-col span="24" i-class="col-class">
-				<button  class="wfull ac f16 h40 d-bg-blue" style="line-height: 40px" open-type="getUserInfo" @getuserinfo="submitApply">提交申请</button>
+				<button  class="wfull ac f16 h40 d-bg-blue" style="line-height: 40px"  @click="submitApply">提交申请</button>
 			</i-col>
 		</i-row>
 	</view>
@@ -82,13 +82,6 @@ export default {
 		})
 	},
 	methods: {
-		// 获取用户信息
-		// handleUserInfoClick(data){
-		// 	if(data){
-		// 		this.avatarUrl = data.detail.userInfo.avatarUrl
-		// 	}
-		// 	this.submitApply()
-		// },
 		// 提交申请
 		submitApply ({ mp }) {
 			if (this.validateOk) {
@@ -97,8 +90,7 @@ export default {
 					'phone': this.phone,
 					'applyReason': this.applyReason,
 					'companyCode': this.companyCode,
-					'inviter': this.inviter,
-					'photo': mp.detail.avatarUrl || this.avatarUrl
+					'inviter': this.inviter
 				}).then((response) => {
 					if (response.code === 200) {
 						uni.redirectTo({

@@ -16,13 +16,13 @@
 			<view class="uni-flex uni-column" v-for="(item) in teamDatas" :key="item.id">
 				<view class="flex-item flex-item-V uni-flex uni-row pt15 pl15 pr15" style="height:72px">
 					<view class="flex-item width15 p10">
-						<image class="ba d-circle" style="height: 51px;width: 51px;" :src='item.photo'></image>
+						<!-- <image class="ba d-circle" style="height: 51px;width: 51px;" :src='item.photo'></image> -->
+						<mAvatar :text='item.name' :url='item.photo'></mAvatar>
 					</view>
 					<view class="flex-item width40" @click="info(item)">
 						<view class="f14">{{item.name}}</view>
 						<view class="d-text-qgray">来源</view>
 						<view>由<span style="color:#5081F5;">{{item.inviter}}</span>邀请加入</view>
-
 					</view>
 					<view class="flex-item width45 d-center" style="margin: 40px 0;">
 						<button v-if="item.isAgree == 1" class="fl ml5 d-text-cgray">
@@ -46,9 +46,10 @@
 </template>
 
 <script>
+import mAvatar from '@/components/m-avatar'
 export default {
 	components: {
-
+		mAvatar
 	},
 	data () {
 		return {
