@@ -12,7 +12,7 @@
 		<!-- 头部 -->
 		<i-row class="m10">
 			<i-col span="4" i-class="col-class">
-				<img class="avatar-img" :src='avatarUrl' style="border-radius: 5px;" />
+				<mAvatar :text='inviter' :url='avatarUrl' height="30" width="30"></mAvatar>
 			</i-col>
 			<i-col span="4" i-class="col-class">
 				<span class="b" ref="inviter">
@@ -31,8 +31,8 @@
 		</i-row>
 		<div style="border: 0.3px solid #f2f2f2;height:0"></div>
 		<!-- 表单 -->
-		<i-panel :rules="rules">
-			<i-input v-model="name" label ="真实姓名" autofocus placeholder="真实姓名" prop="name" />
+		<i-panel>
+			<i-input v-model="name" label ="真实姓名" placeholder="真实姓名" prop="name" />
 			<i-input v-model="phone"  type="number" label ="手机号码" placeholder="请输入手机号" prop="phone" maxlength="11" />
 			<div class="d-center bb">
 				<div class="d-cell"><input class="pt10 pb10 pl20" type="number" v-model="validateCode" prop="validateCode" placeholder="请输入验证码" @blur="checkValidateCode"/></div>
@@ -52,7 +52,11 @@
   </view>
 </template>
 <script>
+import mAvatar from '@/components/m-avatar'
 export default {
+	components: {
+		mAvatar
+	},
 	data () {
 		return {
 			name: '',
@@ -77,13 +81,23 @@ export default {
 		this.companyCode = option.companyCode
 
 		this.avatarUrl = option.avatarUrl
-
-		uni.$on('handleClick', function (data) {
-		})
 	},
 	methods: {
 		// 提交申请
-		submitApply ({ mp }) {
+		submitApply () {
+			if (!this.name) {
+				this.$utils.toast.text('请填写真实姓名')
+				return false
+			}
+			if (!this.phone) {
+				this.$utils.toast.text('请填写手机号')
+				return false
+			}
+			if (!this.validateCode) {
+				this.$utils.toast.text('请填写验证码')
+				return false
+			}
+
 			if (this.validateOk) {
 				this.$api.seeCrmService.userapplicationinformationSave({
 					'name': this.name,
@@ -101,7 +115,7 @@ export default {
 					}
 				})
 			} else {
-				this.$utils.toast.text('请填写完整信息')
+				this.$utils.toast.text('验证码校验失败')
 			}
 		},
 		// 校验验证码validateSmsCode

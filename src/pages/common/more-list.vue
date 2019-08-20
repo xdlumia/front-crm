@@ -42,7 +42,8 @@ export default {
 			busType: option.busType,
 			isEnabled: option.isEnabled,
 			limit: 20,
-			page: 1
+			page: 1,
+			isOriginal: 0
 		}
 
 		this.formsfieldconfigQueryList(params)

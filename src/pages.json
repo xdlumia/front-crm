@@ -28,8 +28,7 @@
 		{
 			"path": "pages/client/index",
 			"style": {
-				"navigationBarTitleText": "客户",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "客户"
 			}
 		},
 		{
@@ -78,8 +77,7 @@
 		{
 			"path": "pages/chance/index",
 			"style": {
-				"navigationBarTitleText": "机会",
-				"enablePullDownRefresh":true
+				"navigationBarTitleText": "机会"
 			}
 		},
 		{
@@ -121,15 +119,13 @@
 		{
 			"path": "pages/common/more-list",
 			"style": {
-				"navigationBarTitleText": "更多条目",
-				"enablePullDownRefresh":true
+				"navigationBarTitleText": "更多条目"
 			}
 		},
 		{
 			"path": "pages/common/more-tags",
 			"style": {
-				"navigationBarTitleText": "添加更多标签",
-				"enablePullDownRefresh":true
+				"navigationBarTitleText": "添加更多标签"
 			}
 		},
 		{
@@ -141,14 +137,12 @@
 		{
 			"path": "pages/contact/index",
 			"style": {
-				"navigationBarTitleText": "联系人",
-				"enablePullDownRefresh":true
+				"navigationBarTitleText": "联系人"
 			}
 		},{
 			"path": "pages/contact/add-contact",
 			"style": {
-				"navigationBarTitleText": "新建联系人",
-				"enablePullDownRefresh":true
+				"navigationBarTitleText": "新建联系人"
 			}
 		},
 		{
@@ -330,8 +324,7 @@
 		{
 			"path":"pages/highseas/index",
 			"style":{
-				"navigationBarTitleText":"公海池",
-				"enablePullDownRefresh":true
+				"navigationBarTitleText":"公海池"
 			}
 		},
 		{

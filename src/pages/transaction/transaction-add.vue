@@ -213,11 +213,12 @@ export default {
 		getMoreField () {
 			this.$api.seeCrmService.formsfieldconfigQueryList({
 				busType: 3,
-				isEnabled: 0
+				isEnabled: 0,
+				isOriginal: 0
 			}).then(res => {
 				if (res.code === 200) {
-					this.form.formsFieldValueSaveVos = res.data || []
-					console.log('调接口了奥奥奥')
+					this.$set(this.form, 'formsFieldValueSaveVos', res.data || [])
+					this.$forceUpdate()
 				}
 			})
 		},

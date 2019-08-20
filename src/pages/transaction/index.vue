@@ -39,7 +39,7 @@
 
         <div class='highseas-list-view d-relative'>
             <scroll-list
-                :height="'calc(100vh - ' + navH +' - 40px - 49px)'"
+                :height="'calc(100vh - ' + navH +' - 129px)'"
                 api="seeCrmService.transactionrecordList"
                 @getList='getTransactionList'
                 :params="queryForm"
@@ -88,8 +88,6 @@ export default {
 	data () {
 		return {
 			queryForm: {
-				page: 1,
-				limit: 15,
 				totalAmountMin: '', // 总金额最小值
 				totalAmountMax: '', // 总金额最大值
 				name: '', // 名称
@@ -176,7 +174,7 @@ export default {
 		this.chooseData = options.id || ''
 
 		this.queryForm.queryType = options.queryType || 0
-		this.$set(this.filterData[0], 'current', { id: 2, name: '我关注的' })
+		this.$set(this.filterData[0], 'current', { id: 0, name: '我负责的' })
 	},
 	computed: {
 		CRM_CJZT () {
@@ -214,8 +212,6 @@ export default {
 		},
 		clear () {
 			this.queryForm = {
-				page: 1,
-				limit: 15,
 				name: '', // 名称
 				totalAmountMin: '', // 总金额最小值
 				totalAmountMax: '', // 总金额最大值

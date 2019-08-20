@@ -166,8 +166,6 @@ export default {
 			currStage: 0,
 			clientId: '', // 客户id，代表从客户详情新增成交记录来的
 			queryForm: {
-				limit: 10,
-				page: 1,
 				clientId: '', // 客户id
 				leaderIds: [], // 负责人id
 				chanceName: '', // 销售机会名称
