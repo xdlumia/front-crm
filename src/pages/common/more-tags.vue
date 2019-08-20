@@ -12,19 +12,6 @@
         placeholder="来源"
         label="标签名称">
         </i-input>
-		<!-- <dragSort :list="tagList" v-slot={row}>
-			<i-input
-			:label-width="30"
-			v-model="row.labelName"
-			placeholder="请输入选项名称"
-			@focus="focusChange(row,index)">
-				<div slot="label"  @click="deleteMoreList(row.labelName)" class="uni-icon uni-icon-minus-filled f18 d-text-red"></div>
-				<span class="d-block ar" style="width:90px;">
-					<i @click="clear(row,index)" v-if="row.focus" class="uni-icon uni-icon-clear mr10 f18 d-text-qgray"></i>
-					<i class="uni-icon uni-icon-bars f18 ml10"></i>
-				</span>
-			</i-input>
-		</dragSort> -->
         <i-input
         :label-width="isEdit?30:0"
         :disabled="!isEdit"
@@ -37,7 +24,12 @@
             <m-checkbox :max="5" v-if="!isEdit" v-model="selCheked"  :label="item.id" />
             <span v-if="isEdit" class="d-block ar" style="width:90px;">
                 <i @click="clear(item,index)" v-if="item.focus" class="uni-icon uni-icon-clear mr10 f18 d-text-qgray"></i>
-                <i class="uni-icon uni-icon-bars f18 ml10"></i>
+                <span v-if="index != 0" @click="farrowthinup(index,item)">
+					<uni-icon type="arrowthinup" size="22" color="#999"/>
+				</span>
+				<span class="d-text-blue ml5" v-if="index != (tagList.length-1)" @click="farrowthindown(index,item)">
+					<uni-icon type="arrowthindown" size="22" color="#999"/>
+				</span>
             </span>
         </i-input>
         <i-cell>
@@ -82,6 +74,14 @@ export default {
 		this.lableinfoList()
 	},
 	methods: {
+		// 向上移动
+		farrowthinup (index, item) {
+			this.tagList[index] = this.tagList.splice(index - 1, 1, item)[0]
+		},
+		// 向下移动
+		farrowthindown (index, item) {
+			this.tagList[index] = this.tagList.splice(index + 1, 1, item)[0]
+		},
 		submitForm () {
 			// 如果是当前是编辑状态保存标签列表
 			if (this.isEdit) {

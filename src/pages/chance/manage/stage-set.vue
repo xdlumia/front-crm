@@ -11,17 +11,22 @@
 					<i-col span="3">
 						<span @click="delStage(item)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
 					</i-col>
-					<i-col span="4">
+					<i-col span="3">
 						<p @click="handlerAction(item)" class="f13">{{item.equityedge}}%</p>
 					</i-col>
 					<i-col span="2">
 						<p @click="handlerAction(item)"><i-icon type="enter" size="20" color="#999" /></p>
 					</i-col>
-					<i-col span="10" i-class="col-class">
+					<i-col span="9" i-class="col-class">
 						<i-input class="stage-name" :label-width="0" v-model="item.stageName" placeholder="请输入名称"></i-input>
 					</i-col>
-					<i-col span="2" class="ar">
-						<i class="uni-icon uni-icon-bars f16" @click="dragorder(index)"></i>
+					<i-col span="4" class="ar">
+						<span v-if="index != 0" @click="farrowthinup(index,item)">
+							<uni-icon type="arrowthinup" size="22" color="#999"/>
+						</span>
+						<span class="d-text-blue ml5" v-if="index != (stageList.length-1)" @click="farrowthindown(index,item)">
+							<uni-icon type="arrowthindown" size="22" color="#999"/>
+						</span>
 					</i-col>
 				</i-row>
 			</div>
@@ -102,6 +107,14 @@ export default {
 		dragorder (index) {
 			this.stageList.splice(index + 2, 0, this.stageList[index])
 			this.stageList.splice(index, 1)
+		},
+		// 向上移动
+		farrowthinup (index, item) {
+			this.stageList[index] = this.stageList.splice(index - 1, 1, item)[0]
+		},
+		// 向下移动
+		farrowthindown (index, item) {
+			this.stageList[index] = this.stageList.splice(index + 1, 1, item)[0]
 		},
 		// 获取阶段列表
 		equityedgeList () {
