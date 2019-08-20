@@ -42,6 +42,10 @@ let mutations = {
 
 	setLocation (state, data) {
 		state.localtion = data
+	},
+
+	setavatarUrl (state, data) {
+		state.userInfo.avatarUrl = data
 	}
 }
 

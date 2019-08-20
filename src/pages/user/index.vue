@@ -128,6 +128,7 @@ export default {
 				if (response.code === 200) {
 					// 更新用户头像
 					this.avatarUrl = mp.detail.userInfo.avatarUrl
+					this.$store.commit('setavatarUrl', this.avatarUrl)
 				} else {
 					this.$utils.toast.text(response.msg)
 				}
