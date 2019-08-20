@@ -12,7 +12,8 @@
 		<!-- 头部 -->
 		<i-row class="m10">
 			<i-col span="4" i-class="col-class">
-				<img class="avatar-img" :src='avatarUrl' style="border-radius: 5px;" />
+				<!-- <img class="avatar-img" :src='avatarUrl' style="border-radius: 5px;" /> -->
+				<mAvatar :text='inviter' :url='avatarUrl' height="30" width="30"></mAvatar>
 			</i-col>
 			<i-col span="4" i-class="col-class">
 				<span class="b" ref="inviter">
@@ -52,7 +53,11 @@
   </view>
 </template>
 <script>
+import mAvatar from '@/components/m-avatar'
 export default {
+	components: {
+		mAvatar
+	},
 	data () {
 		return {
 			name: '',
@@ -101,7 +106,7 @@ export default {
 					}
 				})
 			} else {
-				this.$utils.toast.text('请填写完整信息')
+				this.$utils.toast.text('验证码校验失败')
 			}
 		},
 		// 校验验证码validateSmsCode
