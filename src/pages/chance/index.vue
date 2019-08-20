@@ -34,7 +34,7 @@
     <scroll-list
       class="d-absolute wfull"
       :style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
-      :height="`calc(100vh - ${navH} - 39px - 65px + 35px)`"
+      :height="`calc(100vh - ${navH} - 39px - 90px + 45px)`"
       :api="api"
       :params="queryForm"
       @getList="getList"

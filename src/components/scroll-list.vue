@@ -107,7 +107,7 @@ export default {
 				if (this.pager.loading) return
 				try {
 					this.pager.loading = true
-					uni.showLoading('加载中')
+					// uni.showLoading('加载中')
 					if (params.page === 1) {
 						this.list = []
 					}
@@ -127,7 +127,7 @@ export default {
 				} catch (error) {
 					this.topLoading = false
 				}
-				uni.hideLoading()
+				// uni.hideLoading()
 			})
 		},
 		// 重新请求
