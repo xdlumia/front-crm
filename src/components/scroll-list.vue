@@ -9,15 +9,26 @@
     <NavBar title="首页"  />
  */ -->
 <template>
-  <div class="down-search-section-list" :style="{height:height}">
-	<slot />
+      <scroll-view
+        scroll-y
+        @scrolltolower="getNextPage"
+        @touchstart="touchstart"
+        @touchend="touchend"
+        @scroll="scroll"
+        class="down-search-section-list"
+        :style="{height:height}"
+    >
+    <div v-show="topLoading">
+        <i-load-more :loading="topLoading" tip="加载中" />
+    </div>
+    <slot />
     <div class="no-data-msg" v-if="pager.isLoaded&&!list.length">暂无数据</div>
     <i-load-more
       :tip="(pager.noMore&&!pager.loading)?'没有更多了':'加载中'"
       :loading="pager.loading"
       v-if="pager.loading||(pager.noMore&&list.length)"
     />
-  </div>
+  </scroll-view>
 </template>
 
 <script>
@@ -41,6 +52,9 @@ export default {
 	},
 	data () {
 		return {
+			topLoading: false,
+			isRefresh: true,
+			startPageY: 0,
 			list: [],
 			queryParams: { page: 1, limit: 15 },
 			pager: {
@@ -62,9 +76,30 @@ export default {
 			return this.api.split('.')[1]
 		}
 	},
-	onLoad (option) {},
-	created () {},
+
 	methods: {
+		scroll ({ mp }) {
+			let scrollTop = mp.detail.scrollTop
+			if (scrollTop > 15) {
+				this.isRefresh = false
+			} else {
+				this.isRefresh = true
+			}
+		},
+
+		touchstart ({ mp }) {
+			if (!this.isRefresh) return
+			this.startPageY = mp.changedTouches[0].pageY
+		},
+
+		touchend ({ mp }) {
+			if (!this.isRefresh || !this.startPageY) return
+			let endPageY = mp.changedTouches[0].pageY
+			if (endPageY - this.startPageY >= 100) {
+				this.topLoading = true
+				this.reload()
+			}
+		},
 		// 初始化接口数据
 		_getList () {
 			let params = Object.assign({}, this.queryParams, this.params)
@@ -86,10 +121,11 @@ export default {
 					this.pager.noMore = pagers === curr
 					this.pager.loading = false
 					this.pager.isLoaded = true
+					this.topLoading = false
 					this.$forceUpdate()
 					this.$emit('getList', this.list)
 				} catch (error) {
-					console.error(error)
+					this.topLoading = false
 				}
 				uni.hideLoading()
 			})
@@ -105,6 +141,7 @@ export default {
 			})
 		},
 		getNextPage () {
+			console.log(!this.pager.noMore, this.pager.loading)
 			if (this.pager.loading) return
 			if (!this.pager.noMore) {
 				this.queryParams.page++
@@ -129,19 +166,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.down-search-section-list {
-	position: relative;
-	&::before {
-		content: "松手刷新";
-		position: absolute;
-		top: -36px;
-		width: 100%;
-		left: 0;
-		color: #9e9e9e;
-		font-size: 12px;
-		text-align: center;
-	}
-}
+// .down-search-section-list {
+// 	position: relative;
+// 	&::before {
+// 		content: "松手刷新";
+// 		position: absolute;
+// 		top: -36px;
+// 		width: 100%;
+// 		left: 0;
+// 		color: #9e9e9e;
+// 		font-size: 12px;
+// 		text-align: center;
+// 	}
+// }
 
 /* 无数据提示样式 */
 .no-data-msg {

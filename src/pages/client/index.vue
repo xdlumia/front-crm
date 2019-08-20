@@ -14,7 +14,7 @@
 		<div class='client-list-view d-relative'>
 
 			<scroll-list
-				:height="'calc(100vh - ' + navH +' - 40px)'"
+				:height="'calc(100vh - ' + navH +' - 40px - 48px)'"
 				api="seeCrmService.clientinfoPagelist"
 				:params="queryForm"
 				@getList='getList'
@@ -23,7 +23,7 @@
 					<div class="d-cell">
 						<div class="d-flex f14 mb5">
 							<div class="d-text-black d-cell d-elip">{{item.name}}</div>
-							<div class='d-text-cgray' v-if='!isSelect'>{{item.makeBargainCode || ''}}</div>
+							<div class='d-text-cgray' v-if='!isSelect'>{{item.makeBargainCode == 1 ? '已成交' : item.makeBargainCode == 2 ? '多次成交' : '未成交'}}</div>
 						</div>
 						<div class="d-flex client-tags">
 							<div class="iconfont iconqian f16 d-text-blue mr10" v-if='salesType === 1'></div>

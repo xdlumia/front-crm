@@ -18,14 +18,6 @@
                     <mPanel title="基本信息" color="#4889f4" :isUrl='false'>
                         <i-input label="公海名称" v-model='info.name' required />
 
-                        <a url='/pages/index/colleagueChoose'>
-                            <i-input label="管理员" v-model='administratorName' placeholder="添加管理员" disabled required>
-                                <div class="d-center hfull">
-                                    <div class="isarrow"></div>
-                                </div>
-                            </i-input>
-                        </a>
-
                         <a url='/pages/application/enterprise-management/organizational-structure'>
                             <i-input label="公海成员" v-model='deptName' placeholder="添加成员部门" disabled required>
                                 <div class="d-center hfull">
@@ -33,6 +25,14 @@
                                 </div>
                             </i-input>
                         </a>
+
+                        <div @click='chooseManage'>
+                            <i-input label="管理员" v-model='administratorName' placeholder="添加管理员" disabled required>
+                                <div class="d-center hfull">
+                                    <div class="isarrow"></div>
+                                </div>
+                            </i-input>
+                        </div>
 
                         <div class='pl15 p15'>
                             <div class='uni-h50 uni-lh50'>
@@ -152,6 +152,7 @@ export default {
 			administratorName: '', // 管理员回显名称
 			deptName: '', // 公海部门回显名称
 			viewClientId: 0, // 数量名称 id
+			deptId: 0, // 部门id
 			info: {
 				id: '',
 				name: '',
@@ -198,6 +199,7 @@ export default {
 			let dept = JSON.parse(data)
 			this.info.memberDeptCode = dept.totalCode
 			this.deptName = dept.deptName
+			this.deptId = dept.id
 		})
 	},
 	computed: {
@@ -206,6 +208,12 @@ export default {
 		}
 	},
 	methods: {
+		chooseManage () {
+			if (!this.info.memberDeptCode && !this.deptId) {
+				return this.$utils.toast.text('请选择公海成员')
+			}
+			this.$routing.navigateTo('/pages/index/colleagueChoose?deptId=' + this.deptId)
+		},
 		getDetailInfo (id) {
 			this.$api.seeCrmService.clientpublicpoolInfo(null, id).then(res => {
 				//
