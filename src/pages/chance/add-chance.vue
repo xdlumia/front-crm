@@ -3,7 +3,7 @@
 <template>
 <div class="d-bg-white">
     <NavBar :title="`${titleType}销售机会`"/>
-    <scroll-view scroll-y style="height:calc(100vh - 120px)">
+    <scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
 			<a url="/pages/client/choose-client">
@@ -183,12 +183,12 @@ export default {
 			if (this.editType === '1') {
 				api = 'saleschanceUpdate'
 			}
+			// eslint-disable-next-line no-unused-vars
 			let params = JSON.parse(JSON.stringify(this.form))
-			console.log(this.form)
-			params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
-				return { busId: this.busId, busType: 2, fieldConfigId: item.id, fieldValue: item.fieldValue }
+			params = params.formsFieldValueSaveVos.map(item => {
+				return { busId: this.busId, fieldType: item.fieldType, busType: 2, fieldConfigId: item.id, fieldValue: item.fieldValue }
 			})
-			this.$api.seeCrmService[api](params)
+			this.$api.seeCrmService[api](this.form)
 				.then(res => {
 					if (res.code !== 200) return
 					if (this.editType === '2') {
@@ -222,15 +222,16 @@ export default {
 		formsfieldconfigQueryList () {
 			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '0' })
 				.then(res => {
-					this.fieldList = res.data || []
-					this.fieldList.forEach(item => {
+					let data = res.data || []
+					data.forEach(item => {
 						this.form.formsFieldValueSaveVos = this.form.formsFieldValueSaveVos || []
 						let i = this.form.formsFieldValueSaveVos.findIndex(v => item.id === v.id)
 						if (i !== -1) {
 							item.fieldValue = this.form.formsFieldValueSaveVos[i].fieldValue
 						}
 					})
-					this.form.formsFieldValueSaveVos = this.fieldList
+					this.$set(this.form, 'formsFieldValueSaveVos', data)
+					// this.form.formsFieldValueSaveVos = this.fieldList
 				})
 		},
 		// 获取销售阶段

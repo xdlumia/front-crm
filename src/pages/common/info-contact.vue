@@ -90,11 +90,13 @@ export default {
 					this.linkmanQueryBusList()
 				})
 		},
-		// 获取联系人列表
+		// 获取联系人列表ß
 		linkmanQueryBusList () {
 			this.$api.seeCrmService.linkmanQueryBusList({ busId: this.query.busId, busType: this.query.busType, time: '' })
 				.then(res => {
-					this.contactList = res.data || []
+					let data = res.data || []
+					this.contactList = data
+					this.$store.commit('chance/setContactList', data)
 				})
 		}
 	},

@@ -138,20 +138,16 @@ export default {
 			detailInfo: {},
 			moreShow: false,
 			phoneShow: false,
-			moreActions: moreActions,
-			phoneActions: []
+			moreActions: moreActions
+			// phoneActions: []
 		}
 	},
 	onShow () {
-		// 获取联系人列表
-		this.linkmanQueryBusList({ busId: this.busId, busType: 2 })
 	},
 	onLoad (option) {
 		this.busId = option.id
 		// 获取详情
 		this.saleschanceInfo(option.id)
-		// 获取联系人列表
-		this.linkmanQueryBusList({ busId: option.id, busType: 2 })
 		// 编辑成功刷新列表
 		uni.$on('addChance', data => {
 			// 获取详情
@@ -159,6 +155,19 @@ export default {
 		})
 	},
 	created () {
+	},
+	computed: {
+		phoneActions () {
+			let data = this.$store.state.chance.contactList
+			let list = data.map(item => {
+				return {
+					name: `${item.linkmanName} ${item.mobile}`,
+					phone: item.mobile
+				}
+			})
+			list.unshift({ name: '联系人电话' })
+			return list
+		}
 	},
 	methods: {
 		// 查询机会详情
@@ -190,19 +199,6 @@ export default {
 				this.stageList = data
 				// 刷新列表
 				this.$refs.steps._updateDataChange()
-			})
-		},
-		// 获取联系人列表
-		linkmanQueryBusList (params) {
-			this.$api.seeCrmService.linkmanQueryBusList(params).then(res => {
-				let data = res.data || []
-				this.phoneActions = data.map(item => {
-					return {
-						name: `${item.linkmanName} ${item.mobile}`,
-						phone: item.mobile
-					}
-				})
-				this.phoneActions.unshift({ name: '联系人电话' })
 			})
 		},
 		// 标签切换

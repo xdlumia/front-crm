@@ -91,13 +91,11 @@ export default {
 		}
 	},
 	onShow () {
-		// 获取联系人列表
-		this.linkmanQueryBusList({ busId: this.busId, busType: 1 })
 	},
 	onLoad (option) {
 		this.busId = option.id
 		// 获取联系人列表 bus_type 0客户，1联系人，2机会，3成交
-		this.linkmanQueryBusList({ busId: this.busId, busType: 1 })
+		// this.linkmanQueryBusList({ busId: this.busId, busType: 1 })
 		// 获取详情
 		this.linkmanInfo(option.id)
 		// 编辑成功刷新列表
@@ -112,6 +110,8 @@ export default {
 			this.$api.seeCrmService.linkmanInfo(null, id)
 				.then(res => {
 					this.detailInfo = res.data || {}
+					this.phoneActions = [{ name: `${this.detailInfo.linkmanName} ${this.detailInfo.mobile}`, phone: this.detailInfo.mobile }]
+					this.phoneActions.unshift({ name: '联系人电话' })
 				})
 		},
 		handlerAction (item) {
@@ -125,16 +125,16 @@ export default {
 			this.currTabIndex = index
 		},
 		// 获取联系人列表
-		linkmanQueryBusList (params) {
-			this.$api.seeCrmService.linkmanQueryBusList(params)
-				.then(res => {
-					let data = res.data || []
-					this.phoneActions = data.map(item => {
-						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
-					})
-					this.phoneActions.unshift({ name: '联系人电话' })
-				})
-		},
+		// linkmanQueryBusList (params) {
+		// 	this.$api.seeCrmService.linkmanQueryBusList(params)
+		// 		.then(res => {
+		// 			let data = res.data || []
+		// 			this.phoneActions = data.map(item => {
+		// 				return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
+		// 			})
+		// 			this.phoneActions.unshift({ name: '联系人电话' })
+		// 		})
+		// },
 		// 关注状态切换
 		updateAttention (val) {
 			// 是否关注（0-未关注，1-已关注）
