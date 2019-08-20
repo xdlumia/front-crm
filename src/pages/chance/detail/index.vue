@@ -51,7 +51,7 @@
             <span slot="step">{{index+1}}</span>
           </i-step>
         </i-steps>
-        <p class="f12 d-text-gray">
+        <p class="f12 d-text-gray mt5">
           <i class="uni-icon uni-icon-info-filled f12 mr5"></i> 点击商机阶段，商机阶段变更
         </p>
       </div>
