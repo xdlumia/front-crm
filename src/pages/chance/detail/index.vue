@@ -188,7 +188,8 @@ export default {
 				this.phoneActions = data.map(item => {
 					return {
 						name: `${item.linkmanName} ${item.mobile}`,
-						phone: item.mobile
+						phone: item.mobile,
+						phone1: item.mobile
 					}
 				})
 				this.phoneActions.unshift({ name: '联系人电话' })
