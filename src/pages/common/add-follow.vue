@@ -104,6 +104,10 @@ export default {
 				content: [{
 					required: true,
 					message: '请输跟进内容'
+				}],
+				nextTime: [{
+					required: true,
+					message: '请选择下次联系时间'
 				}]
 			}
 		}
@@ -157,9 +161,12 @@ export default {
 		async followupSave () {
 			await this.$refs.mform.validate()
 
-			let params = {}
+			let params = {
+				...this.form
+			}
 			params.fileAddress = this.fileAddress.map(item => item.filePath)
-			this.$api.seeCrmService.followupSave({ ...this.form, ...params })
+			params.nextTime = new Date(params.nextTime).getTime()
+			this.$api.seeCrmService.followupSave(params)
 				.then(res => {
 					// 返回上一页
 					this.$routing.navigateBack()
