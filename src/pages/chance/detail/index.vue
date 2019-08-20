@@ -173,7 +173,7 @@ export default {
 		salesstageQueryList () {
 			this.$api.seeCrmService.salesstageQueryList().then(res => {
 				let data = res.data || []
-				let index = data.findIndex(item.id === this.detailInfo.stageId)
+				let index = data.findIndex(item => item.id === this.detailInfo.stageId)
 				this.stageActive = index
 				this.detailInfo.stageName = data[index].stageName
 				this.stageList = data
