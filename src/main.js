@@ -44,11 +44,8 @@ import iTab from './components/basic/iview/tab'
 
 // uni UI component
 import uniIcon from './components/basic/uni/uni-icon/uni-icon'
-import uniLoadMore from './components/basic/uni/uni-load-more/uni-load-more'
 import uniPopup from './components/basic/uni/uni-popup/uni-popup'
 import uniSwipeAction from './components/basic/uni/uni-swipe-action/uni-swipe-action'
-import uniParse from './components/basic/uni/uParse/src/wxParse.vue'
-import uniFab from './components/basic/uni/uni-fab/uni-fab'
 import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
 import uniTag from './components/basic/uni/uni-tag/uni-tag'
 // import dragSort from './components/basic/uni/drag-sort'
@@ -109,11 +106,8 @@ Vue.component('iTabs', iTabs)
 
 // uni UI component
 Vue.component('uniIcon', uniIcon)
-Vue.component('uniLoadMore', uniLoadMore)
 Vue.component('uniPopup', uniPopup)
 Vue.component('uniSwipeAction', uniSwipeAction)
-Vue.component('uniParse', uniParse)
-Vue.component('uniFab', uniFab)
 Vue.component('uniCalendar', uniCalendar)
 Vue.component('uniTag', uniTag)
 

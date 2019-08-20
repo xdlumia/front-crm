@@ -171,7 +171,7 @@ export default {
 			})
 
 			// 设置 当前字段下 字段数据
-			if (+this.scoreData[index].fieldType === 3) {
+			if (+this.scoreData[index].filedType === 3) {
 				this.setDisCodeData(this.scoreData[index].groupCode, index, len)
 			}
 		},
@@ -199,7 +199,7 @@ export default {
 		},
 
 		delItem (index, subIndex) {
-			if (!subIndex) {
+			if (typeof subIndex === 'undefined') {
 				this.scoreData.splice(index, 1)
 			} else {
 				this.scoreData[index].fieldRuleEntityList.splice(subIndex, 1)
@@ -209,9 +209,9 @@ export default {
 		// 保存方法
 		submit () {
 			let count = 0
-			const len = this.scoreData.length
 
-			if (!len) return this.$utils.toast.text('请添加字段')
+			const len = this.scoreData.length
+			// if (!len) return this.$utils.toast.text('请添加字段')
 
 			for (let i = 0; i < len; i++) {
 				const scoreItem = this.scoreData[i]
@@ -235,6 +235,10 @@ export default {
 
 				// 判断计算评分
 				const subLen = scoreItem.fieldRuleEntityList.length
+
+				if (!subLen) {
+					return this.$utils.toast.text('请添加评分规则')
+				}
 
 				for (let subI = 0; subI < subLen; subI++) {
 					const scoreSubItem = this.scoreData[i].fieldRuleEntityList[subI]
@@ -265,7 +269,7 @@ export default {
 				}
 			}
 
-			if (+count !== 100) {
+			if (len && +count !== 100) {
 				return this.$utils.toast.text('权重必须为100%')
 			}
 
