@@ -37,7 +37,7 @@
 
 					<div class="d-center d-text-gray">
 						<div class="d-cell f13"><span class="b">销售机会金额：</span> <span style='color: #FF9900'>{{detailInfo.totalSalesChanceMoney}}元</span></div>
-						<div class="d-cell f13"><span class="b">成交金额: </span>： <span style='color: #FF9900'>{{detailInfo.bargainSum}}元</span></div>
+						<div class="d-cell f13"><span class="b">成交金额: </span> <span style='color: #FF9900'>{{detailInfo.bargainSum}}元</span></div>
 					</div>
 				</template>
 				<template v-if='source'>

@@ -19,12 +19,18 @@
             <!-- <m-list label="客户身份">{{detailInfo.aaa}}</m-list>
             <m-list label="客户积分">{{detailInfo.aaa}}</m-list> -->
             <m-list label="销售额（元）">{{detailInfo.totalSalesChanceMoney || ''}}</m-list>
-            <m-list v-for='item in basicInfo' :key='item.id' :label="item.fieldName">{{item.fieldValue || ''}}</m-list>
+            <div v-for='item in basicInfo' :key='item.id' >
+                <m-list :label="item.fieldName" v-if="item.fieldType == 3">{{item.fieldValue | dictionary(item.groupCode || '')}}</m-list>
+                <m-list :label="item.fieldName" v-else>{{(item.fieldValue) || ""}}</m-list>
+            </div>
         </mPanel>
 		<mPanel title="联系信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label="手机号">{{detailInfo.phone}}</m-list>
             <m-list label="详细地址">{{detailInfo.address}}</m-list>
-            <m-list v-for='item in contactInfo' :key='item.id' :label="item.fieldName">{{item.fieldValue || ''}}</m-list>
+            <div v-for='item in contactInfo' :key='item.id' >
+                <m-list :label="item.fieldName" v-if="item.fieldType == 3">{{item.fieldValue | dictionary(item.groupCode || '')}}</m-list>
+                <m-list :label="item.fieldName" v-else>{{(item.fieldValue) || ""}}</m-list>
+            </div>
             <!-- <m-list label="邮政编码">{{detailInfo.aaa}}</m-list>
             <m-list label="传真">{{detailInfo.aaa}}</m-list>
             <m-list label="公司网址">{{detailInfo.aaa}}</m-list>

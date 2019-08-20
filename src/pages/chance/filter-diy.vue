@@ -3,11 +3,10 @@
         <scroll-view class='diy-filter' :style='"height: calc(100vh - "+ navH + " - 40px)"' scroll-y>
             <filter-plane title='负责人'>
                 <div class="pb5">
-                    <div class='f13 d-text-blue mb10' v-if='!principal.length' @click='addPrincipal'>无筛选项,点击添加 <i-icon type='enter' size='13' color='#4889F4' /></div>
-                    <div class="d-flex" v-if='principal.length'>
-                        <div class='ac'>
-                            <i-avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size='large'></i-avatar>
-                            <div class='f14 mt5'>荒寂</div>
+                    <div class="d-flex">
+                        <div class='ac' @click='chooseLeader'>
+                            <m-avatar :url='avatarUrl' :text='userName' :width='40' :height='40' />
+                            <div class='f14 mt5'>{{userName}}</div>
                         </div>
                     </div>
                 </div>
@@ -24,6 +23,8 @@
 </template>
 <script>
 import FilterPlane from '@/components/filter-plane'
+import mAvatar from '@/components/m-avatar'
+
 let dateList = [
 	{ code: '0', content: '本周' },
 	{ code: '1', content: '本季' },
@@ -37,7 +38,8 @@ let dateList = [
 export default {
 	props: ['stageList', 'form'],
 	components: {
-		FilterPlane
+		FilterPlane,
+		mAvatar
 	},
 	data () {
 		return {
@@ -46,13 +48,19 @@ export default {
 			filterData: {
 				stageIds: [], // 销售阶段
 				transationTime: '', // 预计成交日期
-				sourceCode: []
-			}
+				sourceCode: [],
+				leaderId: ''
+			},
+			userInfo: {},
+			userName: '',
+			avatarUrl: ''
 		}
 	},
 	created () {
-	},
-	watch: {
+		this.userInfo = this.$local.fetch('userInfo') || {}
+		this.filterData.leaderId = this.userInfo.id
+		this.userName = this.userInfo.name
+		this.avatarUrl = this.userInfo.avatarUrl
 	},
 	computed: {
 		stageLists () {
@@ -60,10 +68,19 @@ export default {
 		}
 	},
 	methods: {
-		addPrincipal () {
-			this.principal.push({
-				name: '荒寂'
+		chooseLeader () {
+			uni.$once('colleagueChoose', data => {
+				if (data.data.length > 0) {
+					this.filterData.leaderId = data.data[0].userId
+					this.userName = data.data[0].employeeName
+					this.avatarUrl = data.data[0].avatarUrl
+				} else {
+					this.filterData.leaderId = this.userInfo.id
+					this.userName = this.userInfo.name
+					this.avatarUrl = this.userInfo.avatarUrl
+				}
 			})
+			this.$routing.navigateTo(`/pages/index/colleagueChoose?subordinate=1&userId=${this.filterData.leaderId}&ids=${this.filterData.leaderId}`)
 		},
 		clear () {
 			Object.assign(this.filterData, this.$options.data().filterData)

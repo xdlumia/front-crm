@@ -21,6 +21,7 @@
 </template>
 <script>
 import FilterPlane from '@/components/filter-plane'
+
 let dateList = [
 	{ code: '0', content: '本周' },
 	{ code: '5', content: '本月' },

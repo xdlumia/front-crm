@@ -141,7 +141,6 @@ export default {
 			})
 		},
 		getNextPage () {
-			console.log(!this.pager.noMore, this.pager.loading)
 			if (this.pager.loading) return
 			if (!this.pager.noMore) {
 				this.queryParams.page++

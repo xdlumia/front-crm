@@ -32,25 +32,25 @@
             <div class="f14 d-text-black">我的关注</div>
             <div class="d-center attention-item-box ac pl10 pr10 pb10">
                 <a url='/pages/contact/index?queryType=2' class="f12 d-text-qgray">
-                    <div class="icon-box">
+                    <div class="icon-box d-center">
                         <i-icon type="like_fill" color="#ff5533" size="26" />
                     </div>
                     <div>联系人</div>
                 </a>
                 <a @click="switchTabTo('client')" class="f12 d-text-qgray">
-                     <div class="icon-box">
+                     <div class="icon-box d-center">
                         <span class="iconfont iconkehuziliao f16" style='color:#00b17b'></span>
                     </div>
                     <div>客户</div>
                 </a>
                 <a url='/pages/transaction/index?queryType=2' class="f12 d-text-qgray">
-                     <div class="icon-box">
+                     <div class="icon-box d-center">
                         <span class="iconfont iconshouye_chengjiaoshujurili f20" style='color:#4889f4'></span>
                     </div>
                     <div>成交记录</div>
                 </a>
                 <a @click="switchTabTo('chance')" class="f12 d-text-qgray">
-                     <div class="icon-box">
+                     <div class="icon-box d-center">
                         <span class="iconfont iconqian f20" style='color:#4e89f4'></span>
                     </div>
                     <div>销售机会</div>
@@ -175,7 +175,7 @@ export default {
         .icon-box{
             display: inline-block;
             width: 22px;
-            height: 22px;
+            height: 30px;
         }
     }
 
