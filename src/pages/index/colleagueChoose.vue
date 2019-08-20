@@ -71,6 +71,8 @@ export default {
 			this.userId = option.userId
 			// this.getAlllist()
 			this.getChildrenEmployee()
+		} else if (option.deptId) { // 客户根据部门id查询部门下的所有人员
+			this.getDeptEmployee(option.deptId)
 		} else {
 			this.getAlllist()
 		}
@@ -94,6 +96,14 @@ export default {
 		// 获取下属人员列表（包括自己）)
 		getChildrenEmployee () {
 			this.$api.seeCrmService.organizationalStructureGetChildrenEmployee({ employeeId: this.userId })
+				.then(res => {
+					this.dataArr = res.data || []
+					this.init()
+				})
+		},
+		// 客户根据部门id查询部门下的所有人员
+		getDeptEmployee (id) {
+			this.$api.seeCrmService.organizationalStructureChildrenEmployees({ deptId: id })
 				.then(res => {
 					this.dataArr = res.data || []
 					this.init()
