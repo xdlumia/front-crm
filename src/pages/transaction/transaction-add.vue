@@ -217,8 +217,8 @@ export default {
 				isOriginal: 0
 			}).then(res => {
 				if (res.code === 200) {
-					this.form.formsFieldValueSaveVos = res.data || []
-					console.log('调接口了奥奥奥')
+					this.$set(this.form, 'formsFieldValueSaveVos', res.data || [])
+					this.$forceUpdate()
 				}
 			})
 		},
