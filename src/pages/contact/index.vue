@@ -114,8 +114,6 @@ export default {
 			// 查询vo
 			queryForm: {
 				name: '',
-				limit: 10,
-				page: 1,
 				busId: '', // 业务id
 				linkmanName: '', // 联系人名称
 				linkmanNameOrMobile: '', // 姓名或手机号
