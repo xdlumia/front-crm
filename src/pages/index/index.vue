@@ -73,9 +73,9 @@
             <div class="h40 d-flex-level mt10" style="background:#F9F9F9;">
                 <div class="d-flex ml15" style="height: 26px;align-items: center;">
                     <m-avatar :url='avatarUrl' :text='userName' :width='24' :height='24'></m-avatar>
-                    <a :url="`/pages/index/colleagueChoose?subordinate=1&userId=${userInfo.employeeId}&ids=${userId}`">
+                    <div @click="getColleagueChoose">
                         <span class="d-text-qgray f13 ml5">{{userName}}</span>
-                    </a>
+                    </div>
                     <uni-icon type="arrowdown" class="pl5 d-text-qgray" size="16"/>
                 </div>
                 <div class="mr15" style="height:26px;line-height:26px">
@@ -293,22 +293,27 @@ export default {
 		this.getTodayDate()
 	},
 	onLoad (option) {
-		// 选择的当前人
-		uni.$on('colleagueChoose', data => {
-			if (data.data.length > 0) {
-				this.userId = data.data[0].userId
-				this.userName = data.data[0].employeeName
-				this.avatarUrl = data.data[0].avatarUrl
-			} else {
-				this.userId = this.userInfo.id
-				this.userName = this.userInfo.name
-				this.avatarUrl = this.userInfo.avatarUrl
-			}
-			this.scheduleSelectSalesKit()
-			this.scheduleSelectSalesFunnel()
-		})
+
 	},
 	methods: {
+		// 点击切换人员
+		getColleagueChoose () {
+			// 选择的当前人
+			uni.$once('colleagueChoose', data => {
+				if (data.data.length > 0) {
+					this.userId = data.data[0].userId
+					this.userName = data.data[0].employeeName
+					this.avatarUrl = data.data[0].avatarUrl
+				} else {
+					this.userId = this.userInfo.id
+					this.userName = this.userInfo.name
+					this.avatarUrl = this.userInfo.avatarUrl
+				}
+				this.scheduleSelectSalesKit()
+				this.scheduleSelectSalesFunnel()
+			})
+			this.$routing.navigateTo(`/pages/index/colleagueChoose?subordinate=1&userId=${this.userInfo.employeeId}&ids=${this.userId}`)
+		},
 		// 获取日程列表
 		getIndexList () {
 			this.$api.seeCrmService.scheduleList({

@@ -281,7 +281,10 @@ export default {
 		// 保存日程
 		async fsubmit () {
 			await this.$refs.acheduleForm.validate()
-
+			if (Date.parse(this.acheduleForm.startTime) > Date.parse(this.acheduleForm.endTime)) {
+				this.$utils.toast.text('结束时间必须大于开始时间！')
+				return
+			}
 			this.acheduleForm.clientId = this.clientData.id || ''
 			this.acheduleForm.linkId = this.contactData.id || ''
 			this.acheduleForm.salesFunnelId = this.chanceData.id || ''

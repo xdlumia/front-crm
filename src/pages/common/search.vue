@@ -16,7 +16,7 @@
                         <div class="hfull d-center pl30 ml5 search-box-right">
                             <div>
                                 <i-icon type="search" size="18" color='#999' class="b searchicon"/>
-                                <input v-model='searchInfo' class="wfull searchname" type="text" :placeholder="searchNameForm[busType]">
+                                <input v-model='searchInfo' @confirm="searchData" class="wfull searchname" type="text" :placeholder="searchNameForm[busType]">
                             </div>
                         </div>
                     </div>

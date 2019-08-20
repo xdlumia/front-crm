@@ -10,16 +10,16 @@
         <mPanel top="10" title="团队成员" color="#1890FF" @click="click">
             <div class="detail-list ac f12 d-text-gray" v-if="!list.length && !Object.keys(leader).length">暂无数据</div>
 			<div class="detail-list d-flex-lr bb" v-if='leader.rmEmployeeEntity'>
-				<image class="detail-list-img" :data-name="leader.rmEmployeeEntity.employeeName" src="" alt=""></image>
-				<p>
+				<m-avatar :url='leader.rmEmployeeEntity.avatarUrl' :text='leader.rmEmployeeEntity.employeeName' :width='44' :height='44'></m-avatar>
+				<p class="ml5">
 					<b class="f16">{{leader.rmEmployeeEntity.employeeName}}</b>
 					<span class="f12 d-text-qgray">负责人</span>
 				</p>
 			</div>
 			<div v-for='item in list' :key='item.id' >
 				<div class="detail-list d-flex-lr bb">
-					<image class="detail-list-img" :data-name="item.rmEmployeeEntity.employeeName" src="" alt=""></image>
-					<p>
+					<m-avatar :url='item.rmEmployeeEntity.avatarUrl' :text='item.rmEmployeeEntity.employeeName' :width='44' :height='44'></m-avatar>
+					<p class="ml5">
 						<b class="f16">{{item.rmEmployeeEntity.employeeName}}</b>
 						<span class="f12 d-text-qgray">参与人</span>
 					</p>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import mAvatar from '@/components/m-avatar'
 export default {
 	props: {
 		query: {
@@ -40,6 +41,9 @@ export default {
 			type: Boolean,
 			default: true
 		}
+	},
+	components: {
+		mAvatar
 	},
 	data () {
 		return {

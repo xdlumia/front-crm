@@ -132,14 +132,13 @@ export default {
 		},
 		// 获取联系人列表
 		linkmanQueryList (params) {
-			this.phoneActions = [{ name: '联系人电话' }]
 			this.$api.seeCrmService.linkmanQueryBusList(params)
 				.then(res => {
 					let data = res.data || []
 					let phones = data.map(item => {
 						return { name: `${item.linkmanName} ${item.mobile}`, phone: item.mobile }
 					})
-					this.phoneActions.push(...phones)
+					this.phoneActions = [{ name: '联系人电话' }, ...phones]
 				})
 		},
 		// 拨打电话
