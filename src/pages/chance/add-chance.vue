@@ -217,7 +217,10 @@ export default {
 		formsfieldconfigQueryList () {
 			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '0' })
 				.then(res => {
-					// this.fieldList = res.data || []
+					this.fieldList = res.data || []
+					this.fieldList.forEach(item => {
+
+					})
 					this.form.formsFieldValueSaveVos = res.data || []
 				})
 		},

@@ -186,7 +186,7 @@ export default {
 			this.$set(this.filterData[0], 'current', queryType[type])
 			this.queryForm.queryType = type - 1
 		}
-
+		this.salesstagemessageCheckisMsgUser()
 		this.$refs.list.reload()
 		// 获取销售阶段
 		this.salesstageQueryList()
@@ -195,6 +195,7 @@ export default {
 		this.$forceUpdate()
 	},
 	onLoad (option) {
+		this.salesstagemessageCheckisMsgUser()
 		// this.select = option.select
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
@@ -317,7 +318,8 @@ export default {
 					if (res.data) {
 						uni.showToast({
 							title: `管理员更改了销售阶段，请重新选择`,
-							icon: 'none'
+							icon: 'none',
+							duration: 4000
 						})
 					}
 				})
