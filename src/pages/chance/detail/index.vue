@@ -165,6 +165,14 @@ export default {
 		saleschanceInfo (id) {
 			this.$api.seeCrmService.saleschanceInfo(null, id).then(res => {
 				this.detailInfo = res.data || {}
+				if (+this.detailInfo.isMsg === 1) {
+					uni.showToast({
+						title: `商机阶段发生变更，原商机阶段为${this.detailInfo.salesStageEntity.stageName}`,
+						icon: 'none',
+						duration: 4000,
+						position: 'top'
+					})
+				}
 				// 获取销售阶段
 				this.salesstageQueryList()
 			})
@@ -175,7 +183,10 @@ export default {
 				let data = res.data || []
 				let index = data.findIndex(item => item.id === this.detailInfo.stageId)
 				this.stageActive = index
-				this.detailInfo.stageName = data[index].stageName
+				if (index !== -1) {
+					this.detailInfo.stageName = data[index].stageName
+				}
+
 				this.stageList = data
 				// 刷新列表
 				this.$refs.steps._updateDataChange()

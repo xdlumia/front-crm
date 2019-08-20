@@ -310,10 +310,21 @@ export default {
 			// 刷新列表
 			this.$refs.list.reload()
 		},
+		salesstagemessageCheckisMsgUser () {
+			let userId = this.$local.fetch('userInfo').id
+			this.$api.seeCrmService.salesstagemessageCheckisMsgUser(null, userId)
+				.then(res => {
+					if (res.data) {
+						uni.showToast({
+							title: `管理员更改了销售阶段，请重新选择`,
+							icon: 'none'
+						})
+					}
+				})
+		},
 		// 获取销售统计
 		saleschanceSalesChanceStatistics () {
-			this.$api.seeCrmService
-				.saleschanceSalesChanceStatistics(this.queryForm)
+			this.$api.seeCrmService.saleschanceSalesChanceStatistics(this.queryForm)
 				.then(res => {
 					let data = res.data || {}
 					this.stageSts.totalCount = data.totalCount
