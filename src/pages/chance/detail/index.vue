@@ -69,7 +69,7 @@
         </i-tab>
         <i-tab index="2">
           <!-- 相关信息 -->
-          <correlationInfo v-if="detailInfo.clientId" :query="{busId:busId,busType:2,name:detailInfo.chanceName,clientId:detailInfo.clientId,chanceId:busId}"
+          <correlationInfo ref="info" v-if="detailInfo.clientId" :query="{busId:busId,busType:2,name:detailInfo.chanceName,clientId:detailInfo.clientId,chanceId:busId}"
           :height="'calc(100vh - 49px - 50px - 121px - 96px - ' + navH + ')'" />
         </i-tab>
       </i-tabs>
@@ -113,7 +113,7 @@
 import detailInfo from './components/detail-info'
 import followInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './components/correlation-info'
-let moreActionsTitle = ['更多操作', '复制', '转移给他人', '删除', '日程']
+let moreActionsTitle = ['更多操作', '复制', '变更负责人', '删除', '日程']
 let moreActions = moreActionsTitle.map(item => ({ name: item }))
 export default {
 	components: {
@@ -213,6 +213,20 @@ export default {
 					// console.log('阶段更改成功')
 				})
 		},
+		// 更新负责人
+		updateLeader (leaderId) {
+			this.$api.seeCrmService.teammemberinfoUpdate({
+				busId: this.busId,
+				busType: 1,
+				leaderId: leaderId,
+				partiType: 0
+			}).then(res => {
+				if (res.code === 200) {
+					this.$refs.info.$refs.employee.getEmployeeList()
+					this.linkmanInfo(this.busId)
+				}
+			})
+		},
 		// 关注状态切换
 		updateAttention (val) {
 			// 是否关注（0-未关注，1-已关注）
@@ -250,9 +264,11 @@ export default {
 				},
 				// 转移
 				2: () => {
-					this.$routing.navigateTo(
-						`/pages/index/colleagueChoose?id=${this.detailInfo.id}`
-					)
+					// 变更负责人
+					uni.$once('colleagueChoose', data => {
+						this.updateLeader(data.data.map(item => item.userId)[0])
+					})
+					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
 				},
 				// 删除
 				3: () => {
