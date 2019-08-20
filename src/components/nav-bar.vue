@@ -30,7 +30,7 @@
                         <slot />
                     </div>
 
-                    <a @click="getSearch" class="search-box ac" v-else>
+                    <a @click="getSearch" class="search-box ac d-center" v-else>
                         <div style="margin-top:-6rpx" class="d-inline" v-if='!keyword'>
                             <i-icon type="search" size="18" color='#c5c5c5' />
                         </div>
@@ -70,7 +70,7 @@ export default {
 			titleBarHeight: 0
 		}
 	},
-	onReady () {
+	created () {
 		let { systemInfo } = this.$store.state
 		let titleBarHeight = 0
 		if (systemInfo.model.indexOf('iPhone') !== -1) {
@@ -167,10 +167,9 @@ export default {
 
 .search-box{
     border-radius: 100px;
-    border: 1px solid #d9d9d9;
+    border: .5px solid #d9d9d9;
     background: #f7f7f7;
     height: 62rpx;
-    line-height: 62rpx;
 }
 
 </style>
