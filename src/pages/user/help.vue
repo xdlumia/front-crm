@@ -21,7 +21,7 @@ export default {
 	},
 	data () {
 		return {
-			phone: '4001869000',
+			phone: '010-80755370',
 			helps: []
 		}
 	},
