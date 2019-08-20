@@ -27,7 +27,7 @@
 		<div class='highseas-list-view d-relative' v-if='queryForm.poolId'>
 			<scroll-list
 				ref='list'
-				:height="'calc(100vh - ' + navH +' - 40px - 49px)'"
+				:height="'calc(100vh - ' + navH +' - 40px - 49px - 45px)'"
 				api="seeCrmService.clientinfoPagelist"
 				:params="queryForm"
 				@getList='getList'
@@ -53,19 +53,18 @@
 					</div>
                 </div>
 			</scroll-list>
+		</div>
+		<div class="footer-fixed-menu d-center d-bg-white" v-if="!select">
+			<a :url="'/pages/client/add-client?poolId=' + pool.id" class="d-cell al">
+				<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
+			</a>
+			<a url='./setting' class="d-cell ar">
+				<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理</span>
+			</a>
+		</div>
 
-			<div class="footer-fixed-menu d-center d-bg-white" v-if="!select">
-				<a :url="'/pages/client/add-client?poolId=' + pool.id" class="d-cell al">
-					<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
-				</a>
-				<a url='./setting' class="d-cell ar">
-					<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理</span>
-				</a>
-			</div>
-
-			<div class="footer-fixed-menu" v-if='select'>
-				<i-button type="primary" i-class="f16" @click='submitChooseData'>确定</i-button>
-			</div>
+		<div class="footer-fixed-menu" v-if='select'>
+			<i-button type="primary" i-class="f16" @click='submitChooseData'>确定</i-button>
 		</div>
     </div>
 </template>

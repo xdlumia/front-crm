@@ -220,7 +220,7 @@ export default {
 		},
 		// 获取表单字典配置列表
 		formsfieldconfigQueryList () {
-			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '0' })
+			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '0', isOriginal: 0 })
 				.then(res => {
 					this.fieldList = res.data || []
 					this.fieldList.forEach(item => {

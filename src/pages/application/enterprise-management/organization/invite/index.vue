@@ -37,7 +37,7 @@ export default {
 	data () {
 		return {
 			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html',
-			image: 'src/assets/img/logo.png',
+			image: '/assets/img/logo.png',
 			shareText: '团队邀请',
 			avatarUrl: '',
 			company: {},
@@ -47,8 +47,9 @@ export default {
 	onShareAppMessage () {
 		return {
 			title: this.shareText ? this.shareText : '欢迎体验',
-			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + this.user.name + '&companyName=' + this.company.companyName + '&companyCode=' + this.company.companyCode,
-			imageUrl: this.image ? this.image : 'https://img-cdn-qiniu.dcloud.net.cn/uniapp/app/share-logo@3.png'
+			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + this.user.name + '&companyName=' + this.company.companyName + '&companyCode=' + this.company.companyCode + '&avatarUrl=' + this.avatarUrl,
+			imageUrl: '/assets/img/logo.png',
+			desc: this.user.name + '邀请你加入' + this.company.companyName
 		}
 	},
 	onLoad (option) {
