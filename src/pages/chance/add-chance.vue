@@ -33,7 +33,7 @@
             <i-input v-model="form.note" label="备注" placeholder="点击填写" type="textarea" />
 			<p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
 				<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<i-input v-if='item.fieldType == 1' type='number' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<i-input v-if='item.fieldType == 1' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
 				<picker-date v-if='item.fieldType == 2' v-model="item.fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
 				<i-select
 				v-if='item.fieldType == 3'
@@ -41,7 +41,7 @@
 				:props="{label:'content',value:'code'}"
 				:label="item.fieldName"
 				placeholder="请选择"
-				:options="dictionaryOptions(item.groupCode)"/>
+				:options="dictionaryOptions(item.groupCode || '')"/>
 			</p>
         </m-form>
         <a url="/pages/common/more-list?busType=2&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
@@ -120,13 +120,17 @@ export default {
 			this.form.clientName = option.clientName
 			this.form.clientId = option.clientId
 		}
-		// 获取字段列表
-		this.formsfieldconfigQueryList()
+
 		if (option.id) {
 			this.busId = option.id
 			this.editType = option.editType
 			// 获取详情
 			this.saleschanceInfo(this.busId)
+		}
+		// 编辑和复制从详情里获取 新增的时候才调取字段列表
+		if (!option.editType) {
+			// 获取字段列表
+			this.formsfieldconfigQueryList()
 		}
 		// 客户回调
 		uni.$on('chooseClient', data => {
@@ -180,6 +184,7 @@ export default {
 				api = 'saleschanceUpdate'
 			}
 			let params = JSON.parse(JSON.stringify(this.form))
+			console.log(this.form)
 			params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
 				return { busId: this.busId, busType: 2, fieldConfigId: item.id, fieldValue: item.fieldValue }
 			})
@@ -215,10 +220,17 @@ export default {
 		},
 		// 获取表单字典配置列表
 		formsfieldconfigQueryList () {
-			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '0' })
+			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 2, isEnabled: '0', isOriginal: 0 })
 				.then(res => {
-					// this.fieldList = res.data || []
-					this.form.formsFieldValueSaveVos = res.data || []
+					this.fieldList = res.data || []
+					this.fieldList.forEach(item => {
+						this.form.formsFieldValueSaveVos = this.form.formsFieldValueSaveVos || []
+						let i = this.form.formsFieldValueSaveVos.findIndex(v => item.id === v.id)
+						if (i !== -1) {
+							item.fieldValue = this.form.formsFieldValueSaveVos[i].fieldValue
+						}
+					})
+					this.form.formsFieldValueSaveVos = this.fieldList
 				})
 		},
 		// 获取销售阶段

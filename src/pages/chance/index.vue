@@ -166,8 +166,6 @@ export default {
 			currStage: 0,
 			clientId: '', // 客户id，代表从客户详情新增成交记录来的
 			queryForm: {
-				limit: 10,
-				page: 1,
 				clientId: '', // 客户id
 				leaderIds: [], // 负责人id
 				chanceName: '', // 销售机会名称
@@ -186,7 +184,7 @@ export default {
 			this.$set(this.filterData[0], 'current', queryType[type])
 			this.queryForm.queryType = type - 1
 		}
-
+		this.salesstagemessageCheckisMsgUser()
 		this.$refs.list.reload()
 		// 获取销售阶段
 		this.salesstageQueryList()
@@ -195,6 +193,7 @@ export default {
 		this.$forceUpdate()
 	},
 	onLoad (option) {
+		this.salesstagemessageCheckisMsgUser()
 		// this.select = option.select
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
@@ -310,10 +309,22 @@ export default {
 			// 刷新列表
 			this.$refs.list.reload()
 		},
+		salesstagemessageCheckisMsgUser () {
+			let userId = this.$local.fetch('userInfo').id
+			this.$api.seeCrmService.salesstagemessageCheckisMsgUser(null, userId)
+				.then(res => {
+					if (res.data) {
+						uni.showToast({
+							title: `管理员更改了销售阶段，请重新选择`,
+							icon: 'none',
+							duration: 4000
+						})
+					}
+				})
+		},
 		// 获取销售统计
 		saleschanceSalesChanceStatistics () {
-			this.$api.seeCrmService
-				.saleschanceSalesChanceStatistics(this.queryForm)
+			this.$api.seeCrmService.saleschanceSalesChanceStatistics(this.queryForm)
 				.then(res => {
 					let data = res.data || {}
 					this.stageSts.totalCount = data.totalCount

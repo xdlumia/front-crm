@@ -66,7 +66,6 @@ export default {
 			immediate: true,
 			deep: true,
 			handler (data) {
-				console.log(data)
 				let selects = {};
 				(data || []).forEach(item => {
 					selects[item.prop] = item.current || item.list[0]

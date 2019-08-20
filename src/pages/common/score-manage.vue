@@ -271,7 +271,7 @@ export default {
 				return this.$utils.toast.text('权重必须为100%')
 			}
 
-			this.$api.seeCrmService.fieldweightSave({ saveVoList: this.scoreData }).then(res => {
+			this.$api.seeCrmService.fieldweightSave({ saveVo: this.scoreData }).then(res => {
 				// console.log(res)
 				this.$routing.navigateBack()
 			})

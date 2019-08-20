@@ -7,12 +7,15 @@
         <NavBar :title="handelTypeForm[handelType]" />
         <scroll-view scroll-y style="height:calc(100vh - 115px)">
             <m-form ref="acheduleForm" class="uni-pb100" :model="acheduleForm" :rules="rules">
-                <div class="d-bg-schedule"></div>
-                    <i-input :disabled='!isadd && !ishandel' maxlength='32' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
+				<div v-if="isadd" class="d-bg-schedule"></div>
+                <div v-else class="d-bg-schedule f14" style="height:40px;line-height:40px;color:rgba(72, 137, 244, 0.776470588235294)">
+					<span class="ml15">该日程于{{acheduleForm.createTime | timeToStr('yy-mm-dd')}}由{{acheduleForm.creatorName}}创建</span>
+				</div>
+				<i-input :disabled='!isadd && !ishandel' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
                 <div class="d-bg-schedule"></div>
 
                 <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
-                    <i-input label="位置" :disabled='!isadd && !ishandel' maxlength='32' v-model="acheduleForm.address" placeholder="点击输入" class='wfull'/>
+                    <i-input label="位置" :disabled='!isadd && !ishandel' maxlength='45' v-model="acheduleForm.address" placeholder="点击输入" class='wfull'/>
                     <div v-if="isadd || ishandel" @click="chooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
                         <i-icon type="coordinates" size="22" color="#999" />
                     </div>
@@ -53,34 +56,26 @@
                     <i-input disabled label="参与人" v-model="acheduleForm.particiNames" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
                 </a>
                 <div class="d-bg-schedule"></div>
-                <!-- <a url='/pages/index/affiliated'>
-                    <i-select
-                        v-model="tixIndex"
-                        disabled
-                        :props="{label:'name',value:'id'}"
-                        label="关联业务"
-                        placeholder="请选择"
-                        required
-                        :options="tixData">
-                    </i-select>
-                </a> -->
+
                 <i-cell-group>
-                    <a :url="(isadd || ishandel) ? `/pages/client/choose-client?id=${clientData.id}` : ''">
-                        <i-input disabled label="客户" v-model="clientData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+					<!-- 新增和编辑状态跳转选择页面  回显状态直接跳转各个页面的详情 -->
+                    <a v-if="(isadd || ishandel) || clientData.id" :url="(isadd || ishandel) ? `/pages/client/choose-client?id=${clientData.id}` : `/pages/client/detail?id=${clientData.id}`">
+                        <i-input disabled label="客户" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="clientData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
                     </a>
-                    <a :url="(isadd || ishandel) ? `/pages/contact/index?select=1&id=${contactData.id}` : ''">
-                        <i-input disabled label="联系人" v-model="contactData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    <a v-if="(isadd || ishandel) || contactData.id" :url="(isadd || ishandel) ? `/pages/contact/index?select=1&id=${contactData.id}` : `/pages/contact/detail/index?id=${contactData.id}`">
+                        <i-input disabled label="联系人" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="contactData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
                     </a>
-                    <a :url="(isadd || ishandel) ? `/pages/chance/choose-chance?&id=${chanceData.id}` : ''">
-                        <i-input disabled label="销售机会" v-model="chanceData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    <a v-if="(isadd || ishandel) || chanceData.id" :url="(isadd || ishandel) ? `/pages/chance/choose-chance?&id=${chanceData.id}` : `/pages/chance/detail/index?id=${chanceData.id}`">
+                        <i-input disabled label="销售机会" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="chanceData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
                     </a>
-                    <a :url="(isadd || ishandel) ? `/pages/transaction/index?select=1&id=${transactionData.id}` : ''">
-                        <i-input disabled label="成交记录" v-model="transactionData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    <a v-if="(isadd || ishandel) || transactionData.id" :url="(isadd || ishandel) ? `/pages/transaction/index?select=1&id=${transactionData.id}` : `/pages/transaction/detail?id=${transactionData.id}`">
+                        <i-input disabled label="成交记录" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="transactionData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
                     </a>
-                    <a :url="(isadd || ishandel) ? `/pages/highseas/index?select=1&id=${highseasData.id}` : ''">
-                        <i-input disabled label="客户公海池" v-model="highseasData.name" placeholder=" "><uni-icon type='forward' size='18' color='#999' /></i-input>
+                    <a v-if="(isadd || ishandel) || highseasData.id" :url="(isadd || ishandel) ? `/pages/highseas/index?select=1&id=${highseasData.id}` : `/pages/client/detail?id=${highseasData.id}`">
+                        <i-input disabled label="客户公海池" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="highseasData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
                     </a>
                 </i-cell-group>
+
             </m-form>
         </scroll-view>
         <div class="footer-fixed-menu">
@@ -150,6 +145,7 @@ export default {
 			isadd: true, // 是新增还是编辑
 			ishandel: false, // 切换编辑和回显状态
 			tixIndex: '',
+			userInfo: {},
 			handelTypeForm: {
 				'0': '新建日程',
 				'1': '日程详情',
@@ -174,6 +170,9 @@ export default {
 	computed: {
 	},
 	created () {
+		this.userInfo = this.$local.fetch('userInfo') || {}
+		this.acheduleForm.participants = this.userInfo.id
+		this.acheduleForm.particiNames = this.userInfo.name
 	},
 	onLoad (option) {
 		if (option.scheId) { // 详情
@@ -228,6 +227,7 @@ export default {
 		})
 	},
 	methods: {
+		// 查询日程详情
 		getScheduleInfo (id) {
 			this.$api.seeCrmService.scheduleInfo(null, id)
 				.then(res => {
@@ -241,6 +241,7 @@ export default {
 					this.transactionData = { name: this.acheduleForm.transactionRecordName || '', id: this.acheduleForm.transactionRecordId || '' }// 成交记录
 					this.chanceData = { name: this.acheduleForm.salesFunnelName || '', id: this.acheduleForm.salesFunnelId || '' }// 销售机会
 					this.highseasData = { name: this.acheduleForm.seaPoolName || '', id: this.acheduleForm.seaPoolId || '' }// 公海池
+					console.log(this.acheduleForm)
 				})
 		},
 		changeTime (time) {
