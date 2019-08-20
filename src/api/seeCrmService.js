@@ -599,6 +599,12 @@ export default {
 		'mock': true,
 		'methods': 'post'
 	},
+	// 修改员工头像
+	organizationalStructureUpdateAvatar: {
+		'url': '/organizationalStructure/updateAvatar',
+		'mock': true,
+		'methods': 'post'
+	},
 	/* =============组织架构end=========== */
 
 	/* =============海报管理start=========== */

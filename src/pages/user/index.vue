@@ -121,9 +121,9 @@ export default {
 		// 获取并保存用户头像
 		handleUserInfoClick ({ mp }) {
 			// 保存用户头像
-			this.$api.seeCrmService.organizationalStructureUpdateEmployee({
+			this.$api.seeCrmService.organizationalStructureUpdateAvatar({
 				'id': this.$local.fetch('userInfo').employeeId,
-				'avatarUrl': this.avatarUrl
+				'avatarUrl': mp.detail.userInfo.avatarUrl
 			}).then((response) => {
 				if (response.code === 200) {
 					// 更新用户头像
