@@ -1,7 +1,7 @@
 <template>
     <div>
         <scroll-view class='diy-filter' :style='"height: calc(100vh - "+ navH + " - 40px)"' scroll-y>
-            <filter-plane title='负责人'>
+            <filter-plane title='销售机会负责人'>
                 <div class="pb5">
                     <div class="d-flex">
                         <div class='ac' @click='chooseLeader'>
