@@ -53,8 +53,8 @@ export default {
 	computed: {
 		currValue () {
 			// eslint-disable-next-line vue/no-side-effects-in-computed-properties
-			this.valueName = filters.timeToStr(this.value, 'y-m-d')
-			return filters.timeToStr(this.value, 'y-m-d')
+			this.valueName = filters.timeToStr(+this.value, 'y-m-d')
+			return filters.timeToStr(+this.value, 'y-m-d')
 		}
 	},
 	created () {

@@ -154,6 +154,10 @@ export default {
 			this.saleschanceInfo(this.busId)
 		})
 	},
+	onUnload () {
+		// 移除监听事件
+		uni.$off('addChance')
+	},
 	created () {
 	},
 	computed: {
@@ -272,11 +276,10 @@ export default {
 				},
 				// 删除
 				3: () => {
-					this.$utils
-						.showModal()
+					this.$utils.showModal()
 						.then(() => {
 							this.$api.seeCrmService
-								.linkmanDelete({ id: this.id })
+								.linkmanDelete({ id: this.busId })
 								.then(res => {
 									this.$routing.navigateTo(`/pages/chance/index`)
 								})

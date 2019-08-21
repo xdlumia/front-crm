@@ -13,7 +13,8 @@
 					@handleLableClick='delItem(index)'
 					:labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}'
 					:props="{label:'fieldName',value:'id'}"
-					v-model='item.fieldConfigId' label="字段名称一"
+					v-model='item.fieldConfigId'
+					label="字段名称一"
 					:options="fieldData"
 					@input='getField($event, index)'
 				/>
@@ -122,7 +123,7 @@ export default {
 		// 获取列表
 		getWeightList (busType) {
 			this.$api.seeCrmService.fieldweightList({
-				busType: busType
+				busType
 			}).then(res => {
 				// 设置 数据
 				res.data.forEach((item, index) => {
@@ -177,6 +178,8 @@ export default {
 		// 选择 字段
 		getField (id, index) {
 			let fieldItem = this.fieldData.filter(item => item.id === id)[0]
+
+			if (!fieldItem) return
 			// 字段变化 更新下面的值
 			this.$set(this.scoreData, index, {
 				busType: fieldItem.busType,
@@ -207,7 +210,6 @@ export default {
 		// 保存方法
 		submit () {
 			let count = 0
-
 			const len = this.scoreData.length
 			// if (!len) return this.$utils.toast.text('请添加字段')
 
@@ -239,7 +241,10 @@ export default {
 				}
 
 				for (let subI = 0; subI < subLen; subI++) {
-					const scoreSubItem = this.scoreData[i].fieldRuleEntityList[subI]
+					const scoreSubList = this.scoreData[i].fieldRuleEntityList
+
+					const scoreSubItem = scoreSubList[subI]
+
 					// 数字 判断
 					if (+scoreItem.filedType === 1) {
 						if (!scoreSubItem.maxValue || !scoreSubItem.minValue) {
@@ -248,6 +253,9 @@ export default {
 
 						if (+scoreSubItem.maxValue < +scoreSubItem.minValue) {
 							return this.$utils.toast.text(scoreSubItem.fieldDescribe + '格式不正确')
+						}
+						if (scoreSubList[subI - 1] && (+scoreSubItem.minValue <= +scoreSubList[subI - 1].maxValue)) {
+							return this.$utils.toast.text(scoreSubItem.fieldDescribe + '格式不正确1')
 						}
 					}
 					// 标签判断
