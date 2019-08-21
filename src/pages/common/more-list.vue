@@ -63,14 +63,6 @@ export default {
 		},
 		// 保存字段
 		saveField () {
-			// 选中的参数isEnabled=0  没选中=1
-			// this.fieldList.forEach(item => {
-			// 	if (this.selList.includes(item.id)) {
-			// 		item.isEnabled = 0
-			// 	} else {
-			// 		item.isEnabled = 1
-			// 	}
-			// })
 			this.$api.seeCrmService.formsfieldconfigUpdateBatch({ busType: this.busType, ids: this.selList })
 				.then(res => {
 					if (res.code !== 200) return

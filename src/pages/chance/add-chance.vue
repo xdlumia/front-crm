@@ -33,7 +33,7 @@
             <i-input v-model="editForm.note" label="备注" placeholder="点击填写" type="textarea" />
 			<p v-for="(item,index) of editForm.formsFieldValueSaveVos" :key="index">
 				<i-input v-if='item.fieldType == 0' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<i-input v-if='item.fieldType == 1' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<i-input v-if='item.fieldType == 1' type='number' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
 				<picker-date v-if='item.fieldType == 2' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
 				<i-select
 				v-if='item.fieldType == 3'
@@ -192,7 +192,7 @@ export default {
 			// eslint-disable-next-line no-unused-vars
 			let params = JSON.parse(JSON.stringify(this.editForm))
 			params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
-				return { busId: this.busId, fieldType: item.fieldType, busType: 2, fieldConfigId: item.id, fieldValue: item.fieldValue }
+				return { busId: this.busId, fieldType: item.fieldType, busType: 2, fieldConfigId: item.fieldConfigId, fieldValue: item.fieldValue }
 			})
 			this.$api.seeCrmService[api](params)
 				.then(res => {
@@ -230,8 +230,9 @@ export default {
 				.then(res => {
 					let data = res.data || []
 					data.forEach(item => {
-						this.editForm.formsFieldValueSaveVos = this.editForm.formsFieldValueSaveVos || []
-						let i = this.editForm.formsFieldValueSaveVos.findIndex(v => item.id === v.id)
+						item.fieldConfigId = item.id
+						delete item.id
+						let i = this.editForm.formsFieldValueSaveVos.findIndex(v => item.fieldConfigId === v.fieldConfigId)
 						if (i !== -1) {
 							item.fieldValue = this.editForm.formsFieldValueSaveVos[i].fieldValue
 						}

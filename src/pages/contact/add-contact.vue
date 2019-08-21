@@ -13,23 +13,28 @@
 			</a>
             <i-input v-model="form.mobile" label="手机" maxlength='11' placeholder="请填写" required />
             <i-select v-model="form.roleCode" :props="{label:'content',value:'code'}" label="联系人角色" :options="dictionaryOptions('CRM_LXR_JS')"/>
-            <i-input v-model="form.position" label="职位" placeholder="请填写"/>
+			<i-select
+				v-model="form.position"
+				:props="{label:'content',value:'code'}"
+				label="职位"
+				placeholder="请选择"
+				:options="dictionaryOptions('CRM_LXR_ZW')"/>
             <i-input v-model="form.phone" label="电话" placeholder="请填写"/>
             <i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
             <i-input v-model="form.address" label="地址" placeholder="请填写"/>
 			<i-input v-model="deptName" label="所属部门" placeholder="请填写"/>
             <i-input v-model="form.note" label="备注" placeholder="备注" type="textarea" />
             <p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
-				<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<i-input v-if='item.fieldType == 1' type='number' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<picker-date v-if='item.fieldType == 2' v-model="item.fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+				<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
 				<i-select
 				v-if='item.fieldType == 3'
 				v-model="form.fieldValue"
 				:props="{label:'content',value:'code'}"
-				:label="item.fieldName"
+				:label="form.formsFieldValueSaveVos[index].fieldName"
 				placeholder="请选择"
-				:options="dictionaryOptions(item.groupCode)"/>
+				:options="dictionaryOptions(item.groupCode || '')"/>
 			</p>
         </m-form>
         <a url="/pages/common/more-list?busType=1&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
@@ -100,27 +105,22 @@ export default {
 			}
 		}
 	},
-	onShow () {
-		if (this.busId) {
-			// 获取详情
-			this.linkmanInfo(this.busId)
-		} else {
-			// 获取字段列表
-			this.formsfieldconfigQueryList()
-		}
-	},
 	onLoad (option) {
-		// 获取字段列表
-		this.formsfieldconfigQueryList()
+		if (option.clientId && option.clientName) {
+			this.form.clientName = option.clientName
+			this.form.clientId = option.clientId
+		}
 		if (option.id) {
 			this.busId = option.id
 			this.editType = option.editType
 			this.form.id = option.id
+			// 获取详情
+			this.linkmanInfo(this.busId)
 		}
-
-		if (option.clientId && option.clientName) {
-			this.form.clientName = option.clientName
-			this.form.clientId = option.clientId
+		// 编辑和复制从详情里获取 新增的时候才调取字段列表
+		if (!option.editType) {
+			// 获取字段列表
+			this.formsfieldconfigQueryList()
 		}
 
 		// 客户回调
@@ -139,6 +139,12 @@ export default {
 			this.formsfieldconfigQueryList()
 		})
 	},
+	onUnload () {
+		// this.$store.commit('client/setClientInfo', {})
+		uni.$off('moreTags')
+		uni.$off('chooseClient')
+		uni.$off('moreList')
+	},
 	methods: {
 		// 保存
 		async submitForm () {
@@ -150,7 +156,7 @@ export default {
 			}
 			let params = JSON.parse(JSON.stringify(this.form))
 			params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
-				return { busId: this.busId, busType: 1, fieldConfigId: item.id, fieldValue: item.fieldValue }
+				return { busId: this.busId, busType: 1, fieldConfigId: item.fieldConfigId, fieldValue: item.fieldValue }
 			})
 			this.$api.seeCrmService[api](params)
 				.then(res => {
@@ -183,7 +189,16 @@ export default {
 		formsfieldconfigQueryList () {
 			this.$api.seeCrmService.formsfieldconfigQueryList({ busType: 1, isEnabled: '0', isOriginal: 0 })
 				.then(res => {
-					this.form.formsFieldValueSaveVos = res.data || []
+					let data = res.data || []
+					data.forEach(item => {
+						item.fieldConfigId = item.id
+						delete item.id
+						let i = this.form.formsFieldValueSaveVos.findIndex(v => item.fieldConfigId === v.fieldConfigId)
+						if (i !== -1) {
+							item.fieldValue = this.form.formsFieldValueSaveVos[i].fieldValue
+						}
+					})
+					this.$set(this.form, 'formsFieldValueSaveVos', data)
 				})
 		}
 	},
