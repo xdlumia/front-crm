@@ -276,11 +276,10 @@ export default {
 				},
 				// 删除
 				3: () => {
-					this.$utils
-						.showModal()
+					this.$utils.showModal()
 						.then(() => {
 							this.$api.seeCrmService
-								.linkmanDelete({ id: this.id })
+								.linkmanDelete({ id: this.busId })
 								.then(res => {
 									this.$routing.navigateTo(`/pages/chance/index`)
 								})
