@@ -30,6 +30,12 @@ export default {
 								if (response2.code === 200) {
 									that.$local.setItem('token', response2.data.token)
 									that.$local.setItem('finger', response2.data.finger)
+									// 调用角色权限列表，刷新后端缓存
+									that.$api.bizSystemService.getUserResource({}, that.$local.getItem('sysCode')).then((response) => {
+										if (response.code !== 200) {
+											that.$utils.toast.text(response.msg)
+										}
+									})
 									// 获取用户详细数据
 									that.$api.bizSystemService.getUserDetail({}, { 'sysCode': that.$local.getItem('sysCode') }).then((response) => {
 										that.$utils.toast.text(response.msg)

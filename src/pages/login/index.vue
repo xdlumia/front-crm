@@ -74,8 +74,6 @@ export default {
 						if (response.data.bind) { // 直接登录
 							// 登录
 							that.thirdpartyAuthorizationLogin()
-							// 保存头像
-							that.updateAvatar()
 						} else { // 尝试绑定
 							// 获取手机号
 							that.$api.seeCrmService.wgwGetPhoneNumber(that.form).then((response) => {
@@ -91,8 +89,6 @@ export default {
 									).then((response) => {
 										if (response.code === 200) { // 绑定成功，直接登录
 											that.thirdpartyAuthorizationLogin()
-											// 保存头像
-											that.updateAvatar()
 										} else {
 											this.$utils.toast.text('请前往申请开通页面')
 										}
@@ -106,17 +102,6 @@ export default {
 				})
 			}
 		},
-		// 更新头像
-		updateAvatar () {
-			this.$api.seeCrmService.organizationalStructureUpdateEmployee(
-				{
-					'id': this.$local.fetch('userInfo').employeeId,
-					'avatarUrl': this.form.avatarUrl
-				}
-			).then((response) => {
-
-			})
-		},
 		// 直接登录
 		thirdpartyAuthorizationLogin () {
 			let that = this
@@ -124,6 +109,12 @@ export default {
 				if (response2.code === 200) {
 					that.$local.setItem('token', response2.data.token)
 					that.$local.setItem('finger', response2.data.finger)
+					// 调用角色权限列表，刷新后端缓存
+					this.$api.bizSystemService.getUserResource({}, 'crm').then((response) => {
+						if (response.code !== 200) {
+							that.$utils.toast.text(response.msg)
+						}
+					})
 					// 获取用户详细数据
 					that.$api.bizSystemService.getUserDetail({}, { 'sysCode': 'crm' }).then((response) => {
 						that.$utils.toast.text(response.msg)
