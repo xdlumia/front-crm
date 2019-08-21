@@ -16,14 +16,14 @@
                     </view>
                 </div>
                 <div class="d-center lh35 bt mt15">
-                    <a class='d-cell d-flex'>
+                    <div class=' d-flex'>
                         <span class='d-cell d-text-gray'>我的微信名片</span>
-                        <span>{{name}}</span>
+                        <span class="pl5">{{name}}</span>
                         <span class="ml5 mr5 d-text-cgray">|</span>
-                    </a>
-                    <a class='d-cell d-flex'>
+                    </div>
+                    <div class='d-cell d-flex'>
                         <span class='d-cell d-text-gray'>{{positionName}}</span>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
