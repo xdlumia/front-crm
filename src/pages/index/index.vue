@@ -278,17 +278,16 @@ export default {
 		}
 	},
 	created () {
+		this.userInfo = this.$local.fetch('userInfo') || {}
+		this.userId = this.userInfo.id
+		this.userName = this.userInfo.name
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
 		this.scheduleSelectSalesFunnel()
 	},
 	onShow () {
 		let data = this.$store.state.userInfo
-		this.userInfo = this.$local.fetch('userInfo') || {}
-		this.userId = this.userInfo.id
-		this.userName = this.userInfo.name
 		this.avatarUrl = data.avatarUrl ? data.avatarUrl : this.userInfo.avatarUrl
-
 		this.getIndexList()
 		this.changeTime()
 		this.getDates()
