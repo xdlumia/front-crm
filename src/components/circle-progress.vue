@@ -20,11 +20,11 @@ export default {
 	props: {
 		// 阶段最大值
 		max: {
-			default: 4,
+			default: 0,
 			type: Number
 		},
 		progress: {
-			default: 2,
+			default: 0,
 			type: Number
 		},
 		width: {
