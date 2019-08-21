@@ -54,7 +54,7 @@
 					labelWidth='150' i-class='ar pr20'
 					v-model='subItem.fieldAccordingTo'
 					:props="{label:'content',value:'code'}"
-					:label=" item.fieldName + '一'"
+					:label=" item.fieldDescribe + '一'"
 					:options="subFieldData[index]"
 				/>
 
@@ -154,15 +154,16 @@ export default {
 		// 添加 子项字段
 		addChildField (index) {
 			// 添加子项先判断是否选择了 字段
-			if (!this.scoreData[index].fieldName) {
+			if (!this.scoreData[index].fieldDescribe) {
 				return this.$utils.toast.text('请先选择字段')
 			}
-
+			console.log(this.scoreData[index])
 			let len = this.scoreData[index].fieldRuleEntityList.length
 			this.scoreData[index].fieldRuleEntityList.push({
 				fieldAccordingTo: '',
 				fieldGrade: '',
-				fieldName: this.scoreData[index].fieldName,
+				fieldName: this.scoreData[index].fieldCode || this.scoreData[index].fieldName || '',
+				fieldDescribe: this.scoreData[index].fieldName,
 				maxValue: '',
 				minValue: '',
 				sort: len + 1
@@ -181,8 +182,9 @@ export default {
 			this.$set(this.scoreData, index, {
 				busType: fieldItem.busType,
 				fieldConfigId: fieldItem.id,
-				// fieldDescribe: '',
-				fieldName: fieldItem.fieldName,
+				fieldDescribe: fieldItem.fieldName, // 描述
+				// fieldCode: fieldItem.fieldCode || fieldItem.fieldName || '',
+				fieldName: fieldItem.fieldCode || fieldItem.fieldName || '',
 				fieldRuleEntityList: [],
 				filedType: fieldItem.fieldType,
 				groupCode: fieldItem.groupCode,

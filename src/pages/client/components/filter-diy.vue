@@ -10,8 +10,8 @@
         <scroll-view class='diy-filter' :style='"height: calc(100vh - "+ navH + " - 40px)"' scroll-y>
             <filter-plane title='负责人'>
                 <div class="pb5">
-                    <!-- <div class='f13 d-text-blue mb10' v-if='!principal.length' @click='addPrincipal'>无筛选项,点击添加 <i-icon type='enter' size='13' color='#4889F4' /></div> -->
-                    <div class="d-flex">
+                    <div class='f13 d-text-blue mb10' v-if='!filterData.leaderId' @click='chooseLeader'>无筛选项,点击添加 <i-icon type='enter' size='13' color='#4889F4' /></div>
+                    <div class="d-flex" v-if="filterData.leaderId">
                         <div class='ac' @click='chooseLeader'>
                             <m-avatar :url='avatarUrl' :text='userName' :width='40' :height='40' />
                             <div class='f14 mt5'>{{userName}}</div>
@@ -75,12 +75,6 @@ export default {
 			userName: '',
 			avatarUrl: ''
 		}
-	},
-	created () {
-		this.userInfo = this.$local.fetch('userInfo') || {}
-		this.filterData.leaderId = this.userInfo.id
-		this.userName = this.userInfo.name
-		this.avatarUrl = this.userInfo.avatarUrl
 	},
 	computed: {
 		CRM_KHJB () {
