@@ -260,6 +260,7 @@ export default {
 			hour: 3600, // 区分小时还是分钟
 			mint: 60,
 			userId: 1,
+			popaic: '',
 			avatarUrl: '', // 用户头像
 			userName: '',
 			allcolleagues: [], // 有日程的所有时间
@@ -278,16 +279,16 @@ export default {
 		}
 	},
 	created () {
-		this.userInfo = this.$local.fetch('userInfo') || {}
+		this.userInfo = this.$store.state.userInfo || this.$local.fetch('userInfo') || {}
 		this.userId = this.userInfo.id
 		this.userName = this.userInfo.name
+		this.avatarUrl = this.userInfo.avatarUrl
+	},
+	onShow () {
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
 		this.scheduleSelectSalesFunnel()
-	},
-	onShow () {
-		let data = this.$store.state.userInfo
-		this.avatarUrl = data.avatarUrl ? data.avatarUrl : this.userInfo.avatarUrl
+
 		this.getIndexList()
 		this.changeTime()
 		this.getDates()
