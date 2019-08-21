@@ -1,7 +1,7 @@
 <template>
     <div>
         <scroll-view class='diy-filter' :style='"height: calc(100vh - "+ navH + " - 40px)"' scroll-y>
-            <filter-plane title='负责人'>
+            <filter-plane title='销售机会负责人'>
                 <div class="pb5">
                     <div class='f13 d-text-blue mb10' v-if='!filterData.leaderId' @click='chooseLeader'>无筛选项,点击添加 <i-icon type='enter' size='13' color='#4889F4' /></div>
                     <div class="d-flex" v-if="filterData.leaderId">

@@ -27,66 +27,79 @@
 <script>
 export default {
 	props: {
-		value:'',
-		options:{
-			required: true,
-			type:Array,
+		value: {
+			required: true
 		},
-		disabled:Boolean,
+		options: {
+			required: true,
+			type: Array
+		},
+		disabled: Boolean,
 		label: {
 			type: String,
-			default:'默认label'
+			default: '默认label'
 		},
 		labelWidth: {
 			default: '100'
 		},
-		required:{
+		required: {
 			type: Boolean,
 			default: false
 		},
-		placeholder:{
-			type:String,
-			default:'请选择'
+		placeholder: {
+			type: String,
+			default: '请选择'
 		},
-		props:{
-			default:{value:'id',lable:'label'}
+		props: {
+			default: { value: 'id', lable: 'label' }
 		},
 		labelIcon: {
-			type: Object,
-		},
+			type: Object
+		}
 	},
 	data () {
 		return {
-			valueName:'',
+			valueName: '',
 			index: ''
 		}
 	},
-	computed:{
-		range(){
+	computed: {
+		range () {
 			let label = this.props.label || 'lable'
-			if(typeof this.options[0] == 'string'){
-				return this.options.map(item=>item)
-			}else{
-				return this.options.map(item=>item[label])
+			if (typeof this.options[0] === 'string') {
+				return this.options.map(item => item)
+			} else {
+				return this.options.map(item => item[label])
 			}
 		},
-		valueIndex:{
-			get(val) {
+		valueIndex: {
+			get (val) {
 				let label = this.props.label || 'lable'
 				let value = this.props.value || 'value'
 				let index = ''
-				if(typeof this.options[0] === 'string'){
-					index = this.options.findIndex(item=>item === this.value)
+				// 如果是数组
+				if (typeof this.options[0] === 'string') {
+					index = this.options.findIndex(item => item === this.value)
 					let currData = this.options[index] || ''
+					// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 					this.valueName = currData || ''
-				}else{
-					index = this.options.findIndex(item=>item[value] === this.value)
+					// 如果name值没有获取到可能是删除了当前value对应的name值 那么也清空value值重新选择
+					if (!this.valueName) {
+						this.$emit('input', '')
+					}
+				} else {
+					// 如果是数组对象
+					index = this.options.findIndex(item => item[value] === this.value)
 					let currData = this.options[index] || {}
+					// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 					this.valueName = currData[label] || ''
+					if (!this.valueName) {
+						this.$emit('input', '')
+					}
 				}
-				return index ===-1? 0 : index
+				return index === -1 ? 0 : index
 			},
-			set(val) {
+			set (val) {
 				this.index = val
 			}
 		}
@@ -95,21 +108,21 @@ export default {
 	},
 	methods: {
 		change ({ mp: { detail } }, filed) {
-			let index = detail.value;
-			if( index == this.index ) return ;
-			this.valueIndex = index;
+			let index = detail.value
+			if (index === this.index) return
+			this.valueIndex = index
 			let currData = this.options[index]
 			let label = this.props.label || 'lable'
 			let value = this.props.value || 'value'
-			if(typeof this.options[0] === 'string'){
+			if (typeof this.options[0] === 'string') {
 				this.valueName = currData
-				this.$emit('input',currData)
-			}else{
+				this.$emit('input', currData)
+			} else {
 				this.valueName = currData[label]
-				this.$emit('input',currData[value])
+				this.$emit('input', currData[value])
 			}
 		},
-		handleLableClick(){
+		handleLableClick () {
 			this.$emit('handleLableClick')
 		}
 	}
