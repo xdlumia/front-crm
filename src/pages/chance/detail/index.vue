@@ -278,8 +278,7 @@ export default {
 				3: () => {
 					this.$utils.showModal()
 						.then(() => {
-							this.$api.seeCrmService
-								.linkmanDelete({ id: this.busId })
+							this.$api.seeCrmService.saleschanceLogicDelete({ id: this.busId })
 								.then(res => {
 									this.$routing.navigateTo(`/pages/chance/index`)
 								})
