@@ -34,7 +34,7 @@
 			<div class="mb5 d-bg-white" v-for='(subItem, subIndex) in item.fieldRuleEntityList' :key='subIndex'>
 
 				<!-- filedType == 0 是填写数字 -->
-				<i-input labelWidth='120' @handleLableClick='delItem(index, subIndex)' :labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}' :label=" item.fieldName + '一'" disabled v-if="item.filedType == 1">
+				<i-input labelWidth='120' @handleLableClick='delItem(index, subIndex)' :labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}' :label=" item.fieldDescribe + '一'" disabled v-if="item.filedType == 1">
 					<div class='d-center' style='width:180px;'>
 						<input
 							type="number"
@@ -157,13 +157,12 @@ export default {
 			if (!this.scoreData[index].fieldDescribe) {
 				return this.$utils.toast.text('请先选择字段')
 			}
-			console.log(this.scoreData[index])
 			let len = this.scoreData[index].fieldRuleEntityList.length
 			this.scoreData[index].fieldRuleEntityList.push({
 				fieldAccordingTo: '',
 				fieldGrade: '',
-				fieldName: this.scoreData[index].fieldCode || this.scoreData[index].fieldName || '',
-				fieldDescribe: this.scoreData[index].fieldName,
+				fieldName: this.scoreData[index].fieldCode || '',
+				fieldDescribe: this.scoreData[index].fieldDescribe,
 				maxValue: '',
 				minValue: '',
 				sort: len + 1
@@ -183,8 +182,7 @@ export default {
 				busType: fieldItem.busType,
 				fieldConfigId: fieldItem.id,
 				fieldDescribe: fieldItem.fieldName, // 描述
-				// fieldCode: fieldItem.fieldCode || fieldItem.fieldName || '',
-				fieldName: fieldItem.fieldCode || fieldItem.fieldName || '',
+				fieldName: fieldItem.fieldCode || '',
 				fieldRuleEntityList: [],
 				filedType: fieldItem.fieldType,
 				groupCode: fieldItem.groupCode,
@@ -245,22 +243,22 @@ export default {
 					// 数字 判断
 					if (+scoreItem.filedType === 1) {
 						if (!scoreSubItem.maxValue || !scoreSubItem.minValue) {
-							return this.$utils.toast.text('请填写' + scoreSubItem.fieldName)
+							return this.$utils.toast.text('请填写' + scoreSubItem.fieldDescribe)
 						}
 
 						if (+scoreSubItem.maxValue < +scoreSubItem.minValue) {
-							return this.$utils.toast.text(scoreSubItem.fieldName + '格式不正确')
+							return this.$utils.toast.text(scoreSubItem.fieldDescribe + '格式不正确')
 						}
 					}
 					// 标签判断
 					if (+scoreItem.filedType === 3) {
 						if (!scoreSubItem.fieldAccordingTo) {
-							return this.$utils.toast.text('请选择' + scoreSubItem.fieldName)
+							return this.$utils.toast.text('请选择' + scoreSubItem.fieldDescribe)
 						}
 					}
 
 					if (!scoreSubItem.fieldGrade) {
-						return this.$utils.toast.text('请填写' + scoreSubItem.fieldName + '计算评分')
+						return this.$utils.toast.text('请填写' + scoreSubItem.fieldDescribe + '计算评分')
 					}
 				}
 
@@ -272,9 +270,9 @@ export default {
 			if (len && +count !== 100) {
 				return this.$utils.toast.text('权重必须为100%')
 			}
-
+			this.$utils.showLoading('保存中')
 			this.$api.seeCrmService.fieldweightSave({ saveVo: this.scoreData }).then(res => {
-				// console.log(res)
+				this.$utils.hideLoading()
 				this.$routing.navigateBack()
 			})
 		}
