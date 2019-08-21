@@ -11,7 +11,7 @@
                 <div v-else class="d-bg-schedule f14" style="height:40px;line-height:40px;color:rgba(72, 137, 244, 0.776470588235294)">
 					<span class="ml15">该日程于{{acheduleForm.createTime | timeToStr('yy-mm-dd')}}由{{acheduleForm.creatorName}}创建</span>
 				</div>
-				<i-input :disabled='!isadd && !ishandel' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
+				<i-input :disabled='!isadd && !ishandel' maxlength='10000' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
                 <div class="d-bg-schedule"></div>
 
                 <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
