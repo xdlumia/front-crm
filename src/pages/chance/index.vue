@@ -49,7 +49,7 @@
         <div class="flex-item item-progress">
           <circleProgress
             width="45px"
-            :max="stageList.length"
+            :max="stageListMax"
             :progress="(stageList.findIndex(row => row.id == item.stageId)+1)"
           />
         </div>
@@ -225,6 +225,9 @@ export default {
 		uni.$off('updatedate')
 	},
 	computed: {
+		stageListMax () {
+			return this.stageList.length
+		},
 		api () {
 			return !this.isSelect
 				? 'seeCrmService.saleschanceQueryPageList'
