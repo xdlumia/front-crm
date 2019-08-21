@@ -14,7 +14,7 @@
 					<label class="d-text-red">*</label>手机号
 				</div>
 				<div class="d-cell pr10 form-row-item">
-					<input type="number" maxlength='11' v-model="form.linkmanPhone" @blur="clearValidateCode" class='f12 d-text-gray' placeholder="请填写手机号">
+					<input type="number" maxlength='11' v-model="form.linkmanPhone" @change="clearValidateCode" class='f12 d-text-gray' placeholder="请填写手机号">
 				</div>
 				<div class="mr10 form-row-item hfull d-center ml10 bl">
 					<div v-if="show" class='phone-code-btn d-text-blue f14 ac' @click="getValidateCode">获取验证码</div>
@@ -133,7 +133,7 @@ export default {
 		},
 		// 修改手机号清除输入的验证码
 		clearValidateCode () {
-			this.vilidateCode = ''
+			this.validateOk = false
 		},
 		// 校验验证码validateSmsCode
 		checkValidateCode () {

@@ -14,11 +14,11 @@
                     <i-cell class="fl wfull al" title="通过微信邀请" is-link></i-cell>
                 </button>
             </view>
-            <view>
+            <!-- <view>
                 <button class="wfull" style="padding-left:0" @click="share">
                     <i-cell class="fl wfull al" title="测试分享页面" is-link></i-cell>
                 </button>
-            </view>
+            </view> -->
             <view class="flex-item flex-item-V h10 d-bg-gray pl15" style="color: #999999;">发送链接给微信好友，微信群</view>
             <view class="flex-item flex-item-V pl15 mt15 mb15">
                 <view class="fl width60">
@@ -37,7 +37,7 @@ export default {
 	data () {
 		return {
 			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html',
-			image: '/assets/img/logo.png',
+			image: 'logo.png',
 			shareText: '团队邀请',
 			avatarUrl: '',
 			company: {},
@@ -48,7 +48,7 @@ export default {
 		return {
 			title: this.shareText ? this.shareText : '欢迎体验',
 			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + this.user.name + '&companyName=' + this.company.companyName + '&companyCode=' + this.company.companyCode + '&avatarUrl=' + this.avatarUrl,
-			imageUrl: '/assets/img/logo.png',
+			imageUrl: '../../assets/img/logo.png',
 			desc: this.user.name + '邀请你加入' + this.company.companyName
 		}
 	},
