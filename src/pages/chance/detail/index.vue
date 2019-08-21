@@ -154,6 +154,10 @@ export default {
 			this.saleschanceInfo(this.busId)
 		})
 	},
+	onUnload () {
+		// 移除监听事件
+		uni.$off('addChance')
+	},
 	created () {
 	},
 	computed: {

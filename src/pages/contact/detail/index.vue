@@ -104,6 +104,10 @@ export default {
 			this.linkmanInfo(option.id)
 		})
 	},
+	onUnload () {
+		// 移除监听事件
+		uni.$off('addContact')
+	},
 	methods: {
 		// 查询联系人详情
 		linkmanInfo (id) {

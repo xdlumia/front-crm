@@ -53,16 +53,6 @@ export default {
 	},
 	methods: {
 	},
-	// // 监听用户下拉动作，一般用于下拉刷新
-	// onPullDownRefresh  () {
-	// 	this.$refs.list.reload()
-	// 	wx.vibrateShort()
-	// 	wx.stopPullDownRefresh()
-	// },
-	// // 页面上拉触底事件的处理函数
-	// onReachBottom () {
-	// 	this.$refs.list.getNextPage()
-	// },
 	created () {}
 }
 </script>
