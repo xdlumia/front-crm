@@ -19,7 +19,12 @@
             <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
-			<div class="pt5 pb5 d-text-gray ac f14" v-if="!detailInfo.formsFieldValueEntitys.length">暂无数据</div>
+			<div>
+				<m-list label="创建日期">{{detailInfo.createTime | timeToStr('y-m-d h:i')}}</m-list>
+				<m-list label="最后跟进">{{detailInfo.followUpTime | timeToStr('y-m-d h:i')}}</m-list>
+				<m-list label="最新修改">{{detailInfo.modifyTime | timeToStr('y-m-d h:i')}}</m-list>
+				<m-list label="修改人">{{detailInfo.modifyName}}</m-list>
+			</div>
             <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
         </mPanel>
     </div>

@@ -2,14 +2,14 @@
     <div class='stage-page'>
         <NavBar title='编辑销售阶段' />
         <i-cell-group class="f13">
-            <div class="stage-cell f12 ac" v-if="!stageListFilter.length" :key="index">暂无数据</div>
-			<div class="stage-cell" v-for="(item, index) in stageListFilter" :key="index">
+            <div class="stage-cell f12 ac" v-if="!stageList.length" :key="index">暂无数据</div>
+			<div class="stage-cell" v-for="(item, index) in stageList" :key="index">
 				<i-row>
 					<i-col span="3">
 						<p><i class="stage-index">{{index+1}}</i></p>
 					</i-col>
 					<i-col span="3">
-						<span @click="delStage(item)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
+						<span @click="delStage(item,index)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
 					</i-col>
 					<i-col span="3">
 						<p @click="handlerAction(item)" class="f13">{{item.equityedge}}%</p>
@@ -77,6 +77,7 @@ export default {
 		return {
 			moreShow: false,
 			stageList: [],
+			stageListDelete: [],
 			equityList: [],
 			tempRowStage: {},
 			resultList: [
@@ -93,21 +94,10 @@ export default {
 	computed: {
 		// 计算拖动按钮高度
 		currentListLength () {
-			return this.stageListFilter.length
-		},
-		// 过滤删除的数据
-		stageListFilter: {
-			get () {
-				return this.stageList.filter(item => !item.isDelete)
-			},
-			set () {}
+			return this.stageList.length
 		}
 	},
 	methods: {
-		dragorder (index) {
-			this.stageList.splice(index + 2, 0, this.stageList[index])
-			this.stageList.splice(index, 1)
-		},
 		// 向上移动
 		farrowthinup (index, item) {
 			this.stageList[index] = this.stageList.splice(index - 1, 1, item)[0]
@@ -128,20 +118,25 @@ export default {
 		salesstageQueryList () {
 			this.$api.seeCrmService.salesstageQueryList()
 				.then(res => {
-					this.stageList = res.data || []
+					let data = res.data || []
+					// 未删除的数据
+					this.stageList = data.filter(item => !item.isDelete)
+					this.stageListDelete = data.filter(item => item.isDelete)
 				})
 		},
 		// 添加阶段
 		addStage () {
-			if (this.stageListFilter.length >= 5) {
+			if (this.stageList.length >= 5) {
 				uni.showToast({ title: '最大只能添加5条', icon: 'none' })
 				return
 			}
 			this.stageList.push({ equityedge: '', stageName: '' })
 		},
 		// 删除阶段列表
-		delStage (row) {
+		delStage (row, index) {
 			row.isDelete = 1 // isDelete 1为删除
+			this.stageList.splice(index, 1)
+			this.stageListDelete.push(row)
 		},
 		handlerAction (row) {
 			if (row) {
@@ -156,22 +151,24 @@ export default {
 		// 提交表单
 		submit () {
 			// 验证
-			for (let i = 0; i < this.stageListFilter.length; i++) {
-				if (!this.stageListFilter[i].stageName || !this.stageListFilter[i].equityedge) {
+			for (let i = 0; i < this.stageList.length; i++) {
+				if (!this.stageList[i].stageName || !this.stageList[i].equityedge) {
 					this.$utils.toast.text('阶段赢率和名称是必填项')
 					return
 				}
-				if (this.stageListFilter[i + 1] && +this.stageListFilter[i].equityedge >= +this.stageListFilter[i + 1].equityedge) {
+				if (this.stageList[i + 1] && +this.stageList[i].equityedge >= +this.stageList[i + 1].equityedge) {
 					this.$utils.toast.text('阶段赢率是递增关系')
 					return
 				}
 			}
 			// 修改排序
-			this.stageListFilter.forEach((item, index) => {
+			this.stageList.forEach((item, index) => {
 				item.positionNum = index + 1
 			})
+			// 组合没删除的数据和已删除的数据
+			let params = [...this.stageList, ...this.stageListDelete]
 			// 调用保存接口
-			this.$api.seeCrmService.salesstageUpdateBatch(this.stageList)
+			this.$api.seeCrmService.salesstageUpdateBatch(params)
 				.then(res => {
 					if (res.code !== 200) return
 					// 返回上一页
