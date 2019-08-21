@@ -214,8 +214,7 @@ export default {
 					data.forEach(item => {
 						console.log(item)
 						this.form.formsFieldValueSaveVos = this.form.formsFieldValueSaveVos || []
-						let i = this.form.formsFieldValueSaveVos.findIndex(v => item.id === v.id)
-						console.log(i)
+						let i = this.form.formsFieldValueSaveVos.findIndex(v => item.id === v.fieldConfigId)
 						if (i !== -1) {
 							item.fieldValue = this.form.formsFieldValueSaveVos[i].fieldValue
 						}

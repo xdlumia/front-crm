@@ -58,7 +58,6 @@ export default {
 	},
 	// 当 uni-app 启动，或从后台进入前台显示
 	onShow: function () {
-		console.log(this.$store.state)
 	},
 	// 当 uni-app 从前台进入后台
 	onHide: function () {

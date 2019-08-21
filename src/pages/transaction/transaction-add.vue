@@ -56,9 +56,9 @@
 						/>
 					</div>
 				</div>
-      <a url="/pages/common/more-list?busType=3&isEnabled=-1" class="ac d-text-gray lh40 d-block">
+      <div @click="getMoreList" class="ac d-text-gray lh40 d-block">
         <i-icon type="add" size="18" color="#999"/>添加更多条目
-      </a>
+      </div>
       <div class="footer-fixed-menu">
         <i-button @click="fsubmit" type="primary" i-class="f16">保 存</i-button>
       </div>
@@ -161,12 +161,6 @@ export default {
 			this.form.clientName = data.clientName || ''
 		})
 
-		// 更多条目回掉
-		uni.$on('moreList', data => {
-			// 获取字段列表
-			this.getMoreField()
-		})
-
 		// 联系人回调
 		uni.$on('chooseContact', data => {
 			if (data.length > 0) {
@@ -182,14 +176,27 @@ export default {
 	onShow () {
 
 	},
+	watch: {
+	},
 	methods: {
+		// 点击更多条目
+		getMoreList () {
+			// 更多条目回掉
+			uni.$once('moreList', data => {
+				// 获取字段列表
+				this.getMoreField()
+			})
+			this.$routing.navigateTo('/pages/common/more-list?busType=3&isEnabled=-1')
+		},
 		// 获取当前详情
 		getTransactionDetail () {
 			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
 				.then(res => {
 					this.form = res.data || {}
 					if (res.data.formsFieldValueEntityList.length > 0) {
-						this.form.formsFieldValueSaveVos = res.data.formsFieldValueEntityList
+						this.$set(this.form, 'formsFieldValueSaveVos', res.data.formsFieldValueEntityList || [])
+					} else {
+						this.form.formsFieldValueSaveVos = []
 					}
 					this.linkmanQueryList({ busId: this.form.id, busType: 3 })
 				})
@@ -217,7 +224,15 @@ export default {
 				isOriginal: 0
 			}).then(res => {
 				if (res.code === 200) {
-					this.$set(this.form, 'formsFieldValueSaveVos', res.data || [])
+					let data = res.data || []
+					data.forEach(item => {
+						this.form.formsFieldValueSaveVos = this.form.formsFieldValueSaveVos || []
+						let i = this.form.formsFieldValueSaveVos.findIndex(v => item.id === v.fieldConfigId)
+						if (i !== -1) {
+							item.fieldValue = this.form.formsFieldValueSaveVos[i].fieldValue
+						}
+					})
+					this.$set(this.form, 'formsFieldValueSaveVos', data || [])
 					this.$forceUpdate()
 				}
 			})
