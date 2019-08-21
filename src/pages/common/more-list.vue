@@ -54,11 +54,7 @@ export default {
 			this.$api.seeCrmService.formsfieldconfigQueryList(params)
 				.then(res => {
 					this.fieldList = res.data || []
-					this.selList = this.fieldList.map(item => {
-						if (item.isEnabled === 0) {
-							return item.id
-						}
-					})
+					this.selList = this.fieldList.filter(item => item.isEnabled === 0).map(item => item.id)
 				})
 		},
 		// 重置选中字段
