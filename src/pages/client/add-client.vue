@@ -210,7 +210,18 @@ export default {
 				isOriginal: 0
 			}).then(res => {
 				if (res.code === 200) {
-					this.form.formsFieldValueSaveVos = res.data || []
+					let data = res.data || []
+					data.forEach(item => {
+						console.log(item)
+						this.form.formsFieldValueSaveVos = this.form.formsFieldValueSaveVos || []
+						let i = this.form.formsFieldValueSaveVos.findIndex(v => item.id === v.id)
+						console.log(i)
+						if (i !== -1) {
+							item.fieldValue = this.form.formsFieldValueSaveVos[i].fieldValue
+						}
+					})
+
+					this.form.formsFieldValueSaveVos = data
 				}
 			})
 		},
@@ -258,9 +269,9 @@ export default {
 					...this.form
 				}
 
-				!this.id && (params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
+				params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
 					return { busId: this.busId, busType: 0, fieldConfigId: item.fieldConfigId || item.id, fieldValue: item.fieldValue }
-				}))
+				})
 
 				// 判断是 公海池新建 还是 客户列表新建
 				params.belongType = this.form.poolId ? 1 : 0

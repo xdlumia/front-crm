@@ -4,40 +4,40 @@
 <div class="d-bg-white">
     <NavBar :title="`${titleType}销售机会`"/>
     <scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
-        <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
-            <i-input v-model="form.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
+        <m-form ref="mform" class="uni-pb100" :model="editForm" :rules="rules">
+            <i-input v-model="editForm.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
 			<a url="/pages/client/choose-client">
-				<i-input disabled v-model="form.clientName" label="客户名称" placeholder="请填写客户名称" required>
+				<i-input disabled v-model="editForm.clientName" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
             <i-input v-model="deptName" label="所属部门" placeholder="请选择所属部门" required />
-            <i-input v-model="form.salesMoney" label="销售金额" placeholder="请填写销售金额" required />
+            <i-input v-model="editForm.salesMoney" label="销售金额" placeholder="请填写销售金额" required />
             <i-select
-                v-model="form.stageId"
+                v-model="editForm.stageId"
                 :props="{label:'stageName',value:'id'}"
                 label="销售阶段"
                 placeholder="请选择销售阶段"
                 required
                 :options="stageList">
             </i-select>
-            <picker-date v-model="form.reckonFinishTime" label="预计成交日期" placeholder="请选择日期">
+            <picker-date v-model="editForm.reckonFinishTime" label="预计成交日期" placeholder="请选择日期">
             </picker-date>
-            <i-select v-model="form.tradeCode" :props="{label:'content',value:'code'}" label="行业" :options="dictionaryOptions('CRM_KH_HY')"/>
-            <i-select v-model="form.sourceCode" :props="{label:'content',value:'code'}" label="来源" :options="dictionaryOptions('CRM_LY')"/>
+            <i-select v-model="editForm.tradeCode" :props="{label:'content',value:'code'}" label="行业" :options="dictionaryOptions('CRM_KH_HY')"/>
+            <i-select v-model="editForm.sourceCode" :props="{label:'content',value:'code'}" label="来源" :options="dictionaryOptions('CRM_LY')"/>
 			<a url="/pages/common/more-tags?busType=2">
 				<i-input disabled v-model="labelNames" label="标签" placeholder="请选择">
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
-            <i-input v-model="form.note" label="备注" placeholder="点击填写" type="textarea" />
-			<p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
-				<i-input v-if='item.fieldType == 0' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<i-input v-if='item.fieldType == 1' v-model="item.fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<picker-date v-if='item.fieldType == 2' v-model="item.fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+            <i-input v-model="editForm.note" label="备注" placeholder="点击填写" type="textarea" />
+			<p v-for="(item,index) of editForm.formsFieldValueSaveVos" :key="index">
+				<i-input v-if='item.fieldType == 0' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<i-input v-if='item.fieldType == 1' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<picker-date v-if='item.fieldType == 2' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
 				<i-select
 				v-if='item.fieldType == 3'
-				v-model="form.fieldValue"
+				v-model="editForm.formsFieldValueSaveVos[index].fieldValue"
 				:props="{label:'content',value:'code'}"
 				:label="item.fieldName"
 				placeholder="请选择"
@@ -64,7 +64,7 @@ export default {
 			fieldList: [], // 自定义字段列表
 			labelNames: '', // 标签名称组合
 			deptName: this.$local.fetch('deptInfo').deptName,
-			form: {
+			editForm: {
 				id: '', // 主键id
 				chanceName: '', // '示例：机会名称',
 				clientId: '', // 客户id
@@ -117,8 +117,8 @@ export default {
 	onLoad (option) {
 		// 客户详情，新增机会
 		if (option.clientId) {
-			this.form.clientName = option.clientName
-			this.form.clientId = option.clientId
+			this.editForm.clientName = option.clientName
+			this.editForm.clientId = option.clientId
 		}
 
 		if (option.id) {
@@ -134,13 +134,13 @@ export default {
 		}
 		// 客户回调
 		uni.$on('chooseClient', data => {
-			this.form.clientName = data.name
-			this.form.clientId = data.id
+			this.editForm.clientName = data.name
+			this.editForm.clientId = data.id
 		})
 		// 标签回掉
 		uni.$on('moreTags', data => {
 			this.labelNames = data.map(item => item.labelName).join(',')
-			this.form.lableBusinessSaveVos.labelIdArray = data.map(item => item.id)
+			this.editForm.lableBusinessSaveVos.labelIdArray = data.map(item => item.id)
 		})
 
 		// 更多条目回掉
@@ -148,6 +148,12 @@ export default {
 			// 获取字段列表
 			this.formsfieldconfigQueryList()
 		})
+	},
+	onUnload () {
+		// this.$store.commit('client/setClientInfo', {})
+		uni.$off('moreTags')
+		uni.$off('chooseClient')
+		uni.$off('moreList')
 	},
 	created () {
 		// 获取销售阶段
@@ -160,7 +166,7 @@ export default {
 		async saveChance () {
 			await this.$refs.mform.validate()
 			// 验证机会名称
-			this.$api.seeCrmService.saleschanceVerifyChanceName({ chanceName: this.form.chanceName, chanceId: this.busId, clientId: this.form.clientId })
+			this.$api.seeCrmService.saleschanceVerifyChanceName({ chanceName: this.editForm.chanceName, chanceId: this.busId, clientId: this.editForm.clientId })
 				.then(res => {
 					if (res.data) {
 						// 如果没有重复提交表单
@@ -184,11 +190,11 @@ export default {
 				api = 'saleschanceUpdate'
 			}
 			// eslint-disable-next-line no-unused-vars
-			let params = JSON.parse(JSON.stringify(this.form))
-			params = params.formsFieldValueSaveVos.map(item => {
+			let params = JSON.parse(JSON.stringify(this.editForm))
+			params.formsFieldValueSaveVos = params.formsFieldValueSaveVos.map(item => {
 				return { busId: this.busId, fieldType: item.fieldType, busType: 2, fieldConfigId: item.id, fieldValue: item.fieldValue }
 			})
-			this.$api.seeCrmService[api](this.form)
+			this.$api.seeCrmService[api](params)
 				.then(res => {
 					if (res.code !== 200) return
 					if (this.editType === '2') {
@@ -206,14 +212,14 @@ export default {
 			this.$api.seeCrmService.saleschanceInfo(null, id)
 				.then(res => {
 					let data = res.data || {}
-					for (let key in this.form) {
+					for (let key in this.editForm) {
 						if (key === 'formsFieldValueSaveVos') {
-							this.form.formsFieldValueSaveVos = data.formsFieldValueEntitys
+							this.editForm.formsFieldValueSaveVos = data.formsFieldValueEntitys
 						} else if (key === 'lableBusinessSaveVos') {
 							this.labelNames = data.lableBusinessEntitys.map(item => item.labelName).join(',')
-							this.form.lableBusinessSaveVos.labelIdArray = data.lableBusinessEntitys.map(item => item.id)
+							this.editForm.lableBusinessSaveVos.labelIdArray = data.lableBusinessEntitys.map(item => item.id)
 						} else {
-							this.form[key] = data[key]
+							this.editForm[key] = data[key]
 						}
 					}
 				})
@@ -224,13 +230,13 @@ export default {
 				.then(res => {
 					let data = res.data || []
 					data.forEach(item => {
-						this.form.formsFieldValueSaveVos = this.form.formsFieldValueSaveVos || []
-						let i = this.form.formsFieldValueSaveVos.findIndex(v => item.id === v.id)
+						this.editForm.formsFieldValueSaveVos = this.editForm.formsFieldValueSaveVos || []
+						let i = this.editForm.formsFieldValueSaveVos.findIndex(v => item.id === v.id)
 						if (i !== -1) {
-							item.fieldValue = this.form.formsFieldValueSaveVos[i].fieldValue
+							item.fieldValue = this.editForm.formsFieldValueSaveVos[i].fieldValue
 						}
 					})
-					this.$set(this.form, 'formsFieldValueSaveVos', data)
+					this.$set(this.editForm, 'formsFieldValueSaveVos', data)
 					// this.form.formsFieldValueSaveVos = this.fieldList
 				})
 		},

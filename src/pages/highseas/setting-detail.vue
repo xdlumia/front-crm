@@ -280,7 +280,7 @@ export default {
 				...this.info
 			}
 
-			params.viewClientNum = +this.viewClientId === 0 ? -1 : 0
+			params.viewClientNum = +this.viewClientId === 0 ? -1 : params.viewClientNum
 			this.$api.seeCrmService.clientpublicpoolUpdate(params).then(res => {
 				this.$store.dispatch('highseas/getList')
 				this.$routing.navigateBack()
