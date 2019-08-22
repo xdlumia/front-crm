@@ -170,6 +170,7 @@ export default {
 					uni.$once('colleagueChoose', data => {
 						this.updateLeader(data.data.map(item => item.userId)[0])
 					})
+					this.moreShow = false
 					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
 				},
 				// 删除
