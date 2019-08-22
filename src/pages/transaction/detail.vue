@@ -8,9 +8,9 @@
             <div class="uni-flex uni-row pt10 mb5">
                 <div class="flex-item d-elip wfull f16 d-text-black">{{detailInfo.name || ''}}</div>
                 <div class="flex-item datail-handle d-flex">
-                    <a :url="`/pages/transaction/transaction-add?type=edit&id=${detailId}`">
+                    <div @click="detailClick">
                         <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
-                    </a>
+                    </div>
 					<span @click="changeWatchful">
 						<i-icon type="like_fill" size="20" class="ml15" :color="!detailInfo.isWatchful ? '#999' : '#ff5533'" />
 					</span>
@@ -113,6 +113,13 @@ export default {
 	onReady () {
 	},
 	methods: {
+		detailClick () {
+			uni.$once('updatetransList', data => {
+				this.$refs.correlationInfo.$refs.infoContact.linkmanQueryBusList()
+				this.$refs.correlationInfo.$refs.infoChance.saleschanceQueryList()
+			})
+			this.$routing.navigateTo(`/pages/transaction/transaction-add?type=edit&id=${this.detailId}`)
+		},
 		// 请求成交记录详情
 		getTransactionDetail () {
 			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
