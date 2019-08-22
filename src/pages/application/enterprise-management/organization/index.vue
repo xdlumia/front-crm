@@ -24,7 +24,7 @@
                     <view class="fl width20">
 						<mAvatat :text='item.employeeName' :url='item.avatarUrl'></mAvatat>
                     </view>
-                    <view class="fl width20 pl10 mt15">{{item.employeeName}}</view>
+                    <view class="fl width33 pl10 mt15">{{item.employeeName}}</view>
                     <view v-if="item.roleNames" class="fl ac ml10 pl5 pr5 mt15 d-text-blue" style="border: 1px solid #457FF5;border-radius: 5px;">
                         {{item.roleNames.split(',')[0]}}
                     </view>
