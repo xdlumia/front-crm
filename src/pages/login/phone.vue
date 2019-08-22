@@ -77,8 +77,10 @@ export default {
 		getUserDetail (sysCode) {
 			// 调用角色权限列表，刷新后端缓存
 			this.$api.bizSystemService.getUserResource({}, sysCode).then((response) => {
-				if (response.code !== 200) {
-					that.$utils.toast.text(response.msg)
+				if (response.code === 200) {
+					this.$local.save('sourceList', response.data)
+				} else {
+					this.$utils.toast.text(response.msg)
 				}
 			})
 			this.$api.bizSystemService.getUserDetail({}, { 'sysCode': sysCode }).then((response) => {
@@ -153,7 +155,7 @@ export default {
         width: 104px;
         height: 25px;
         border-radius: 5px;
-        border: 1px dashed #4889F4;
+        border: 1px solid  #4889F4;
         line-height: 25px;
     }
 

@@ -15,7 +15,7 @@
                         </button>
                     </view>
                 </div>
-                <div class="d-center lh35 bt mt15">
+                <div class="d-center lh35 bt pt5 pb5">
                     <div class=' d-flex'>
                         <span class='d-cell d-text-gray'>我的微信名片</span>
                         <span class="pl5">{{name}}</span>

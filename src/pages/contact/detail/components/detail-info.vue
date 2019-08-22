@@ -9,6 +9,7 @@
             <m-list label="姓名">{{detailInfo.linkmanName}}</m-list>
             <m-list label="负责人">{{detailInfo.leaderName}}</m-list>
             <m-list label="公司名称">{{detailInfo.clientName}}</m-list>
+            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
         </mPanel>
 		<mPanel title="联系信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label="手机">{{detailInfo.mobile}}</m-list>

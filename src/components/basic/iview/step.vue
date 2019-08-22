@@ -5,7 +5,7 @@
             <div class="i-step-ico" v-else>
                 <slot name="step"><i-icon i-class="i-step-ico-in" :type="stepIcoClass"></i-icon></slot>
             </div>
-            <div class="i-step-line" v-if="index !== len - 1"></div>
+            <div class="i-step-line" v-if="len!=1 && index !== len - 1"></div>
         </div>
         <div class="i-step-item-main">
             <div class="i-step-item-title" v-if="title">

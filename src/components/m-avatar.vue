@@ -9,7 +9,7 @@
 <template>
     <view>
 		<image v-if="url" class="ba  d-circle" :style="{width:width+'px',height:height+'px'}" :src='url'></image>
-        <view v-else class="ba d-circle d-bg-blue d-center" :style="{width:width+'px',height:height+'px'}">{{this.text.substring(this.text.length -2)}}</view>
+        <view v-else class="ba d-circle d-bg-blue d-center" :style="{width:width+'px',height:height+'px'}">{{this.text.substring(this.text.length - nameLength)}}</view>
     </view>
 </template>
 
@@ -27,6 +27,9 @@ export default {
 		},
 		height: {
 			default: '50'
+		},
+		nameLength: {
+			default: 2
 		}
 	},
 	data () {

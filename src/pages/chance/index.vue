@@ -34,7 +34,7 @@
     <scroll-list
       class="d-absolute wfull"
       :style="{top:`calc(${navH} + 39px + 65px + 35px)`}"
-      :height="`calc(100vh - ${navH} - 39px - 90px + 45px)`"
+      :height="`calc(100vh - ${navH} - 39px - 90px - 45px)`"
       :api="api"
       :params="queryForm"
       @getList="getList"
@@ -81,7 +81,7 @@
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建机会</span>
       </a>
-      <a class="d-cell ar" url="./manage/index">
+      <a class="d-cell ar" url="./manage/index" v-if="authorityButtons.includes('crm_chance_001')">
         <i-icon type="setup" size="18" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">管理机会</span>
       </a>
@@ -96,28 +96,15 @@
 import Filter from '@/components/filter'
 import FilterDiy from './filter-diy'
 // 筛选数据
-// let queryType = [
-// 	{ id: '-1', name: '全部' },
-// 	{ id: '0', name: '我负责的' },
-// 	{ id: '4', name: '我下属的' },
-// 	{ id: '2', name: '我关注的' },
-// 	{ id: '3', name: '7天未跟进' }
-// ]
-// 筛选数据
 let queryType = [
-	'全部客户',
-	'我负责的',
-	'我参与的',
-	'我关注的',
-	'7天未跟进的',
-	'我下属负责的',
-	'我下属参与的'
-].map((item, index) => {
-	return {
-		name: item,
-		id: index - 1
-	}
-})
+	{ id: '-1', name: '全部' },
+	{ id: '0', name: '我负责的' },
+	{ id: '1', name: '我参与的' },
+	{ id: '2', name: '我关注的' },
+	{ id: '3', name: '7天未跟进' },
+	{ id: '4', name: '我下属负责的' },
+	{ id: '5', name: '我下属参与的' }
+]
 // 列表排序数据
 let sortType = [
 	{ id: 'a.follow_up_time', name: '最新跟进时间' },

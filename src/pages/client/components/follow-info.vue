@@ -153,6 +153,7 @@ export default {
 					content: content
 				})
 				if (resulte.code === 200) {
+					this.$emit('updateFollow')
 					this.getFollowup(1)
 					this.followContent = ''
 				}

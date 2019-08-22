@@ -43,7 +43,7 @@
         </div>
       </div>
 	</div>
-	<a url='/pages/contact/add-contact' class="pl5 d-bg-white pt10 pb10"  v-if="select && isAdd">
+	<a :url="`/pages/contact/add-contact?clientName=${clientName}&clientId=${clientId}`" class="pl15 d-bg-white pt10 pb10"  v-if="select && isAdd">
 		<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建联系人</span>
 	</a>
     </scroll-list>
@@ -54,7 +54,7 @@
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建联系人</span>
       </a>
-      <a class="d-cell ar" url="/pages/contact/manage/index">
+      <a class="d-cell ar" url="/pages/contact/manage/index" v-if="authorityButtons.includes('crm_linkman_001')">
         <i-icon type="setup" size="18" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">管理联系人</span>
       </a>
@@ -96,6 +96,8 @@ export default {
 			select: '', // 是否选择
 			multiple: '', // 是否多选
 			linkIds: [], // 联系人ids 当为选择页面的时候选中的id
+			clientName: '',
+			clientId: '',
 
 			list: [], // 联系人列表
 			chooseRowIndex: '', // 选中行数据的下标
@@ -132,6 +134,11 @@ export default {
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
 		this.queryForm.queryType = option.queryType || 0
+		if (option.clientName) {
+			// 如果传过来的值有客户名称 那么busId 是客户id
+			this.clientName = option.clientName || ''
+			this.clientId = option.busId || ''
+		}
 
 		this.$set(this.filterData[0], 'current', queryType[+option.queryType + 1])
 

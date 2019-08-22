@@ -56,8 +56,8 @@
             </div>
             <div class="hfull d-flex mationInfo-middle">
                     <view class="formType wfull" @click="openPopup">
-                        <div class="d-text-black f13 ml5 fl hfull" style="width:52px;line-height:60px">表单类型</div>
-                        <div style="display:flex;justify-content: space-between;align-items: center;width:92px;" class="fl hfull">
+                        <div class="d-text-black f13 ml5 fl hfull" style="width:55px;line-height:60px">表单类型</div>
+                        <div style="display:flex;justify-content: space-between;align-items: center;min-width:60px;max-width:60px;" class="fl hfull">
                             <div class="f12 pl5 d-elip" style="color:#999">{{tagName ? (msgName+'/'+tagName) : msgName || '请选择'}}</div>
                             <uni-icon type='arrowright' size='16' color='#696969' />
                         </div>

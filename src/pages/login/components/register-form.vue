@@ -201,7 +201,7 @@ export default {
         width: 104px;
         height: 25px;
         border-radius: 5px;
-        border: 1px dashed #4889F4;
+        border: 1px solid  #4889F4;
         line-height: 25px;
     }
 

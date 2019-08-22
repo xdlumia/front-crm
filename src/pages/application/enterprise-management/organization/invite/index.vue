@@ -19,27 +19,25 @@
                     <i-cell class="fl wfull al" title="测试分享页面" is-link></i-cell>
                 </button>
             </view> -->
-            <view class="flex-item flex-item-V h10 d-bg-gray pl15" style="color: #999999;">发送链接给微信好友，微信群</view>
+            <view class="flex-item flex-item-V h10 d-bg-gray pl15 pt5 pb5" style="color: #999999;">发送链接给微信好友，微信群</view>
             <view class="flex-item flex-item-V pl15 mt15 mb15">
                 <view class="fl width60">
-                    <input class="ba p1 h10" placeholder="链接" :value="link" />
+                    <input class="ba p1 h10 f12" placeholder="链接" :value="link" />
                 </view>
                 <view class="fl width30 ml10" style="padding-top:3px">
-                    <button type="primary" plain="true" class="f12" style="color:#0080FF ; border-color: #0080FF;border-style:dashed; " @tap="copyToClip">复制链接</button>
+                    <button type="primary" plain="true" style="color:#0080FF ; border-color: #0080FF;border-style:dashed; " @tap="copyToClip">复制链接</button>
                 </view>
             </view>
-            <view class="flex-item flex-item-V h10 d-bg-gray pl15" style="color: #999999;">通过链接邀请，点击复制链接，发送给企业成员</view>
+            <view class="flex-item flex-item-V h10 d-bg-gray pl15 pt15 pb15" style="color: #999999;">通过链接邀请，点击复制链接，发送给企业成员</view>
         </view>
     </view>
 </template>
 <script>
-// require imgUrl from "../assets/test.png"
-// import logo from '@/assets/img/logo.png'
 export default {
 	data () {
 		return {
-			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html',
-			image: require('../../../../../assets/img/logo.png'),
+			link: 'http://39.105.103.188:1443/index.html',
+			image: '',
 			shareText: '团队邀请',
 			avatarUrl: '',
 			company: {},
@@ -50,7 +48,7 @@ export default {
 		return {
 			title: this.shareText ? this.shareText : '欢迎体验',
 			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + this.user.name + '&companyName=' + this.company.companyName + '&companyCode=' + this.company.companyCode + '&avatarUrl=' + this.avatarUrl,
-			imageUrl: this.image,
+			imageUrl: '/static/img/logo.png',
 			desc: this.user.name + '邀请你加入' + this.company.companyName
 		}
 	},

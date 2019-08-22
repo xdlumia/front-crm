@@ -22,18 +22,18 @@
           </div>
         </div>
         <div class="f12">
-          客户名称:
+          客户名称：
           <a
             :url="`/pages/client/detail?id=${detailInfo.clientId}`"
             class="d-elip d-text-blue d-inline d-middle"
             style="width:50%"
           >{{detailInfo.clientName}}</a>
         </div>
-        <div class="f12">负责人: {{detailInfo.leaderName || '-'}}</div>
+        <div class="f12">负责人： {{detailInfo.leaderName || '-'}}</div>
         <div class="f12">
-          销售金额(元): {{detailInfo.salesMoney || '-'}}
+          销售金额(元):{{detailInfo.salesMoney || '-'}}
           <span class="fr">
-            预计成交日期
+            预计成交日期：
             <time
               class="d-inline d-text-blue f12"
             >{{detailInfo.reckonFinishTime | timeToStr('y-m-d')}}</time>
@@ -62,14 +62,14 @@
       <i-tabs :current="currTabIndex" :tabList="tabBars" @change="tagsChange">
         <i-tab index="0">
           <!-- 跟进: -->
-          <followInfo v-if="busId" :query='{salesFunnelId: busId, busId:busId,busType:2,}' :height="'calc(100vh - 49px - 121px - 50px - 96px - 46px - ' + navH + ')'" />
+          <followInfo @updateFollow="updateFollow()" v-if="busId" :query='{salesFunnelId: busId, busId:busId,busType:2,}' :height="'calc(100vh - 49px - 121px - 50px - 96px - 46px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="1">
           <detailInfo :detailInfo="detailInfo" :height="'calc(100vh - 49px - 50px - 121px - 96px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="2">
           <!-- 相关信息 -->
-          <correlationInfo ref="info" v-if="detailInfo.clientId" :query="{busId:busId,busType:2,name:detailInfo.chanceName,clientId:detailInfo.clientId,chanceId:busId}"
+          <correlationInfo ref="info" v-if="detailInfo.clientId" :query="{busId:busId,busType:2,name:detailInfo.chanceName,clientId:detailInfo.clientId,clientName:detailInfo.clientName,chanceId:busId}"
           :height="'calc(100vh - 49px - 50px - 121px - 96px - ' + navH + ')'" />
         </i-tab>
       </i-tabs>
@@ -153,10 +153,14 @@ export default {
 			// 获取详情
 			this.saleschanceInfo(this.busId)
 		})
+		uni.$on('updateFollow', () => {
+			this.saleschanceInfo(this.busId)
+		})
 	},
 	onUnload () {
 		// 移除监听事件
 		uni.$off('addChance')
+		uni.$off('updateFollow')
 	},
 	created () {
 	},
@@ -174,6 +178,9 @@ export default {
 		}
 	},
 	methods: {
+		updateFollow () {
+			this.saleschanceInfo(this.busId)
+		},
 		// 查询机会详情
 		saleschanceInfo (id) {
 			this.$api.seeCrmService.saleschanceInfo(null, id).then(res => {
@@ -211,6 +218,7 @@ export default {
 		},
 		// 阶段更换
 		setpHandle (row, index) {
+			this.detailInfo.stageName = row.stageName
 			this.stageActive = index
 			this.$api.seeCrmService.saleschanceUpdatelStagePrope({ id: this.detailInfo.id, stageId: row.id })
 				.then(res => {
