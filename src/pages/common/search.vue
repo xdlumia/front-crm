@@ -5,35 +5,49 @@
 <template>
     <div class='nav'>
         <div class='wfull' :style="{ height: `${statusHeight + titleBarHeight}rpx`}"></div>
-            <div class='nav-fixed'>
-                <div class='status' :style="{height: `${statusHeight}rpx`}"></div>
-                <div class='navbar' :style="{height: `${titleBarHeight}rpx`}">
+		<div class='nav-fixed d-relative'>
+			<div class='status' :style="{height: `${statusHeight}rpx`}"></div>
+			<div class='navbar' :style="{height: `${titleBarHeight}rpx`}">
 
-                    <div class="tools-box d-flex">
-                        <navigator open-type='navigateBack' class="d-center tools-item">
-                            <i-icon type="return" size="18" color='#333' class="b searchiconleft"/>
-                        </navigator>
-                        <div class="hfull d-center pl30 ml5 search-box-right">
-                            <div>
-                                <i-icon type="search" size="18" color='#999' class="b searchicon"/>
-                                <input v-model='searchInfo' @confirm="searchData" class="wfull searchname" type="text" :placeholder="searchNameForm[busType]">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				<div class="tools-box d-flex d-relative">
+					<navigator open-type='navigateBack' class="d-center tools-item">
+						<i-icon type="return" size="20" color='#333' class="b searchiconleft"/>
+					</navigator>
+					<div @click="isSearch = true" v-if="!isSearch" class="hfull d-center ml5 search-box-right">
+						<div style="display:flex;align-items: center;justify-content: space-between;">
+							<i-icon type="search" size="16" color='#999' class="b searchicon"/>
+							<span class="f12" style="color:rgba(0, 0, 0, 0.647058823529412)">{{searchNameForm[busType]}}</span>
+						</div>
+					</div>
+					<div v-if="isSearch" class="hfull wfull d-center ml5 search-box-right">
+						<input v-model='searchInfo' @confirm="searchData" class="wfull searchname f12" type="search" :placeholder="searchNameForm[busType]">
+						<span @click="isSearch = false,searchInfo = ''" style="position:absolute;right:10px;z-index:999">
+							<i-icon type="delete" size="16" color='#999' class="b searchicon"/>
+						</span>
+					</div>
+				</div>
+			</div>
 
-                <div class="search-jl">
-                <span class="d-text-black ml15 mt15">历史搜索</span>
-                <span @click="deleteSearchList()" class="d-text-blue f13 mr15 mt15">清除</span>
-            </div>
-            <div class="search-history p15" style="padding-top: 10px;" v-if="searchHistoryList.length > 0">
-                <div class="d-bg-white p1 searchistory mr5 mb5" v-for="(item,index) in searchHistoryList" :key="index">
-                    <span style="color: #666;" class="pl5 pr5" @click="clickToSearch(item)">{{item}}</span>
-                    <uni-icon @click="deleteSearchList(index)" class="fr" type='closeempty' color="#999" size='20'/>
-                </div>
-            </div>
-             <i-button @click="searchData">搜索</i-button>
-        </div>
+			<div class="search-jl">
+				<span class="d-text-black ml15 mt15">历史搜索</span>
+				<span @click="deleteSearchList()" class="d-text-blue f13 mr15 mt15">清除</span>
+			</div>
+			<div class="search-history p15" style="padding-top: 10px;" v-if="searchHistoryList.length > 0">
+				<div class="d-bg-white p1 searchistory mr5 mb5" v-for="(item,index) in searchHistoryList" :key="index">
+					<span style="color: #666;" class="pl5 pr5" @click="clickToSearch(item)">{{item}}</span>
+					<uni-icon @click="deleteSearchList(index)" class="fr" type='closeempty' color="#999" size='20'/>
+				</div>
+			</div>
+			<div v-if="isSearch" style="width:100%;background:#FFF;z-index:999;" :style="{top:`${statusHeight + titleBarHeight}rpx`}" class="hfull d-absolute">
+				<div @click="clickToSearch(item)" style="justify-content: space-between;height:40px;border-bottom:1px solid #EBEBEB;display:flex;align-items: center;color:#666" v-for="(item,index) in searchHistoryList" :key="index">
+					<span>
+						<i-icon type="search" size="16" color='#999' class="b searchicon ml15"/>
+						<span class="ml10">{{item}}</span>
+					</span>
+					<uni-icon type='arrowthinup' class="fr mr15" color="#000" style="transform:rotate(-30deg);" size='20'/>
+				</div>
+			</div>
+		</div>
 
     </div>
 </template>
@@ -60,6 +74,7 @@ export default {
 	},
 	data () {
 		return {
+			isSearch: false,
 			statusHeight: 0,
 			titleBarHeight: 0,
 			searchInfo: '',
@@ -219,8 +234,8 @@ export default {
     .p1{padding:1px}
     .search-box-right{flex:1;border-left:1px solid #DBDBDB;border-radius:20px;background:#F7F7F7;position:relative;}
     .searchname{height:40rpx;padding-left:60rpx}
-    .searchicon{position:absolute;left:18rpx;top:-2rpx}
-    .searchiconleft{position:absolute;top:-3rpx}
+    .searchicon{line-height:1}
+    .searchiconleft{position:absolute;line-height:1}
     .searchistory{border: 1px solid #EBEBEB;border-radius: 7px;}
 </style>
 <style>

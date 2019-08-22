@@ -59,21 +59,21 @@
 
                 <i-cell-group>
 					<!-- 新增和编辑状态跳转选择页面  回显状态直接跳转各个页面的详情 -->
-                    <a v-if="(isadd || ishandel) || clientData.id" :url="(isadd || ishandel) ? `/pages/client/choose-client?id=${clientData.id}` : `/pages/client/detail?id=${clientData.id}`">
+                    <div @click="getClient" v-if="(isadd || ishandel) || clientData.id" >
                         <i-input disabled label="客户" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="clientData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
-                    </a>
-                    <a v-if="(isadd || ishandel) || contactData.id" :url="(isadd || ishandel) ? `/pages/contact/index?select=1&id=${contactData.id}` : `/pages/contact/detail/index?id=${contactData.id}`">
+                    </div>
+                    <div @click="getContact" v-if="(isadd || ishandel) || contactData.id">
                         <i-input disabled label="联系人" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="contactData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
-                    </a>
-                    <a v-if="(isadd || ishandel) || chanceData.id" :url="(isadd || ishandel) ? `/pages/chance/choose-chance?&id=${chanceData.id}` : `/pages/chance/detail/index?id=${chanceData.id}`">
+                    </div>
+                    <div @click="getChance" v-if="(isadd || ishandel) || chanceData.id">
                         <i-input disabled label="销售机会" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="chanceData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
-                    </a>
-                    <a v-if="(isadd || ishandel) || transactionData.id" :url="(isadd || ishandel) ? `/pages/transaction/index?select=1&id=${transactionData.id}` : `/pages/transaction/detail?id=${transactionData.id}`">
+                    </div>
+                    <div @click="getTransaction" v-if="(isadd || ishandel) || transactionData.id">
                         <i-input disabled label="成交记录" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="transactionData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
-                    </a>
-                    <a v-if="(isadd || ishandel) || highseasData.id" :url="(isadd || ishandel) ? `/pages/highseas/index?select=1&id=${highseasData.id}` : `/pages/client/detail?id=${highseasData.id}`">
+                    </div>
+                    <div @click="getHighseas" v-if="(isadd || ishandel) || highseasData.id">
                         <i-input disabled label="客户公海池" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="highseasData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
-                    </a>
+                    </div>
                 </i-cell-group>
 
             </m-form>
@@ -247,6 +247,51 @@ export default {
 		changeTime (time) {
 			return new Date(time).getFullYear() + '-' + (new Date(time).getMonth() + 1) + '-' + new Date(time).getDate() + ' ' + new Date(time).getHours() + ':' + new Date(time).getMinutes()
 		},
+		// 点击客户
+		getClient () {
+			let url = (this.isadd || this.ishandel) ? `/pages/client/choose-client?id=${this.clientData.id}` : `/pages/client/detail?id=${this.clientData.id}`
+			if(this.acheduleForm.clientIsDelete != 1){// eslint-disable-line
+				this.$routing.navigateTo(url)
+			} else {
+				this.$utils.toast.text('该客户已删除！')
+			}
+		},
+		// 点击联系人
+		getContact () {
+			let url = (this.isadd || this.ishandel) ? `/pages/contact/index?select=1&id=${this.contactData.id}` : `/pages/contact/detail/index?id=${this.contactData.id}`
+			if(this.acheduleForm.linkIsDelete != 1){// eslint-disable-line
+				this.$routing.navigateTo(url)
+			} else {
+				this.$utils.toast.text('该联系人已删除！')
+			}
+		},
+		// 点击机会
+		getChance () {
+			let url = (this.isadd || this.ishandel) ? `/pages/chance/choose-chance?&id=${this.chanceData.id}` : `/pages/chance/detail/index?id=${this.chanceData.id}`
+			if(this.acheduleForm.salesFunnelIsDelete != 1){// eslint-disable-line
+				this.$routing.navigateTo(url)
+			} else {
+				this.$utils.toast.text('该机会已删除！')
+			}
+		},
+		// 点击成交记录
+		getTransaction () {
+			let url = (this.isadd || this.ishandel) ? `/pages/transaction/index?select=1&id=${this.transactionData.id}` : `/pages/transaction/detail?id=${this.transactionData.id}`
+			if(this.acheduleForm.transactionIsDelete != 1){// eslint-disable-line
+				this.$routing.navigateTo(url)
+			} else {
+				this.$utils.toast.text('该成交记录已删除！')
+			}
+		},
+		// 点击公海池
+		getHighseas () {
+			let url = (this.isadd || this.ishandel) ? `/pages/highseas/index?select=1&id=${this.highseasData.id}` : `/pages/client/detail?id=${this.highseasData.id}`
+			if(this.acheduleForm.seaPoolIsDelete != 1){// eslint-disable-line
+				this.$routing.navigateTo(url)
+			} else {
+				this.$utils.toast.text('该公海池已删除！')
+			}
+		},
 		// 删除
 		deleteInfo () {
 			this.$utils.showModal('确定删除当前日程？')
@@ -254,7 +299,6 @@ export default {
 					this.$api.seeCrmService.scheduleLogicDelete({ id: this.scheId })
 						.then(res => {
 							this.$routing.navigateBack()
-							// uni.$emit('updateIndexList', { params: '' })
 						})
 				})
 		},
@@ -291,7 +335,6 @@ export default {
 			this.acheduleForm.salesFunnelId = this.chanceData.id || ''
 			this.acheduleForm.transactionRecordId = this.transactionData.id || ''
 			this.acheduleForm.seaPoolId = this.highseasData.id || ''
-
 			this.acheduleForm.startTime = Date.parse(this.acheduleForm.startTime)
 			this.acheduleForm.endTime = Date.parse(this.acheduleForm.endTime)
 			if (this.isadd) {
@@ -316,7 +359,6 @@ export default {
 					that.acheduleForm.address = data.address
 					that.acheduleForm.lon = data.longitude
 					that.acheduleForm.lat = data.latitude
-					// console.log(data)
 				}
 			})
 		}
