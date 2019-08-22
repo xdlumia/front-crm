@@ -58,6 +58,7 @@ export default {
 			this.$api.seeCrmService.transactionrecordQueryRecordListById({ id: this.query.busId, type: this.query.busType }).then(res => {
 				if (res.code === 200) {
 					this.list = res.data || []
+					this.$forceUpdate()
 				}
 			})
 		},
