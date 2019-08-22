@@ -300,21 +300,23 @@ export default {
 	methods: {
 		// 点击切换人员
 		getColleagueChoose () {
-			// 选择的当前人
-			uni.$once('colleagueChoose', data => {
-				if (data.data.length > 0) {
-					this.userId = data.data[0].userId
-					this.userName = data.data[0].employeeName
-					this.avatarUrl = data.data[0].avatarUrl
-				} else {
-					this.userId = this.userInfo.id
-					this.userName = this.userInfo.name
-					this.avatarUrl = this.userInfo.avatarUrl
-				}
-				this.scheduleSelectSalesKit()
-				this.scheduleSelectSalesFunnel()
-			})
-			this.$routing.navigateTo(`/pages/index/colleagueChoose?subordinate=1&userId=${this.userInfo.employeeId}&ids=${this.userId}`)
+			if (this.authorityButtons.includes('crm_index_008')) {
+				// 选择的当前人
+				uni.$once('colleagueChoose', data => {
+					if (data.data.length > 0) {
+						this.userId = data.data[0].userId
+						this.userName = data.data[0].employeeName
+						this.avatarUrl = data.data[0].avatarUrl
+					} else {
+						this.userId = this.userInfo.id
+						this.userName = this.userInfo.name
+						this.avatarUrl = this.userInfo.avatarUrl
+					}
+					this.scheduleSelectSalesKit()
+					this.scheduleSelectSalesFunnel()
+				})
+				this.$routing.navigateTo(`/pages/index/colleagueChoose?subordinate=1&userId=${this.userInfo.employeeId}&ids=${this.userId}`)
+			}
 		},
 		// 获取日程列表
 		getIndexList () {
