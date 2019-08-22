@@ -134,7 +134,6 @@ export default {
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
 		this.queryForm.queryType = option.queryType || 0
-		console.log(option)
 		if (option.clientName) {
 			// 如果传过来的值有客户名称 那么busId 是客户id
 			this.clientName = option.clientName || ''
