@@ -24,9 +24,9 @@
         <div class="f12">
           客户名称:
           <a
-            :url="`/pages/client/detail?id=${detailInfo.id}`"
-            class="d-elip d-text-blue"
-            style="display:inline"
+            :url="`/pages/client/detail?id=${detailInfo.clientId}`"
+            class="d-elip d-text-blue d-inline d-middle"
+            style="width:50%"
           >{{detailInfo.clientName}}</a>
         </div>
         <div class="f12">负责人: {{detailInfo.leaderName || '-'}}</div>
