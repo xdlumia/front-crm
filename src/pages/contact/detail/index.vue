@@ -28,7 +28,7 @@
       <!-- tabs切换组件 -->
       <i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
 			<i-tab index="0">
-				<notesInfo v-if="busId" :query="{linkId: busId}" :height="'calc(100vh - 49px - 40px - 122px - 50px - ' + navH + ')'"/>
+				<notesInfo  @updateFollow="updateFollow()" v-if="busId" :query="{linkId: busId}" :height="'calc(100vh - 49px - 40px - 122px - 50px - ' + navH + ')'"/>
 			</i-tab>
 			<i-tab index="1">
 				<detailInfo v-if="detailInfo.id" :detailInfo="detailInfo" :height="'calc(100vh - 49px - 122px - 50px - ' + navH + ')'"/>
@@ -103,12 +103,19 @@ export default {
 			// 获取详情
 			this.linkmanInfo(option.id)
 		})
+		uni.$on('updateFollow', () => {
+			this.linkmanInfo(this.busId)
+		})
 	},
 	onUnload () {
 		// 移除监听事件
 		uni.$off('addContact')
+		uni.$off('updateFollow')
 	},
 	methods: {
+		updateFollow () {
+			this.linkmanInfo(this.busId)
+		},
 		// 查询联系人详情
 		linkmanInfo (id) {
 			this.$api.seeCrmService.linkmanInfo(null, id)
