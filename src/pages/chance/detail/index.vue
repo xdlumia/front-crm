@@ -24,9 +24,9 @@
         <div class="f12">
           客户名称:
           <a
-            :url="`/pages/client/detail?id=${detailInfo.id}`"
-            class="d-elip d-text-blue"
-            style="display:inline"
+            :url="`/pages/client/detail?id=${detailInfo.clientId}`"
+            class="d-elip d-text-blue d-inline d-middle"
+            style="width:50%"
           >{{detailInfo.clientName}}</a>
         </div>
         <div class="f12">负责人: {{detailInfo.leaderName || '-'}}</div>
@@ -221,13 +221,13 @@ export default {
 		updateLeader (leaderId) {
 			this.$api.seeCrmService.teammemberinfoUpdate({
 				busId: this.busId,
-				busType: 1,
+				busType: 2,
 				leaderId: leaderId,
 				partiType: 0
 			}).then(res => {
 				if (res.code === 200) {
 					this.$refs.info.$refs.employee.getEmployeeList()
-					this.linkmanInfo(this.busId)
+					this.saleschanceInfo(this.busId)
 				}
 			})
 		},
@@ -266,12 +266,13 @@ export default {
 						`/pages/chance/add-chance?id=${this.detailInfo.id}&editType=2`
 					)
 				},
-				// 转移
+				// 变更负责人
 				2: () => {
 					// 变更负责人
 					uni.$once('colleagueChoose', data => {
 						this.updateLeader(data.data.map(item => item.userId)[0])
 					})
+					this.moreShow = false
 					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
 				},
 				// 删除
@@ -279,9 +280,9 @@ export default {
 					this.$utils.showModal()
 						.then(() => {
 							this.$api.seeCrmService.saleschanceLogicDelete({ id: this.busId })
-								.then(res => {
-									this.$routing.navigateTo(`/pages/chance/index`)
-								})
+							setTimeout(() => {
+								this.$routing.switchTab('/pages/chance/index')
+							}, 1000)
 						})
 						.catch(() => {})
 				},

@@ -83,19 +83,12 @@ export default {
 					let currData = this.options[index] || ''
 					// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 					this.valueName = currData || ''
-					// 如果name值没有获取到可能是删除了当前value对应的name值 那么也清空value值重新选择
-					if (!this.valueName) {
-						this.$emit('input', '')
-					}
 				} else {
 					// 如果是数组对象
 					index = this.options.findIndex(item => item[value] === this.value)
 					let currData = this.options[index] || {}
 					// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 					this.valueName = currData[label] || ''
-					if (!this.valueName) {
-						this.$emit('input', '')
-					}
 				}
 				return index === -1 ? 0 : index
 			},
@@ -117,9 +110,16 @@ export default {
 			if (typeof this.options[0] === 'string') {
 				this.valueName = currData
 				this.$emit('input', currData)
+				// 如果name值没有获取到可能是删除了当前value对应的name值 那么也清空value值重新选择
+				if (!this.valueName) {
+					this.$emit('input', '')
+				}
 			} else {
 				this.valueName = currData[label]
 				this.$emit('input', currData[value])
+				if (!this.valueName) {
+					this.$emit('input', '')
+				}
 			}
 		},
 		handleLableClick () {
