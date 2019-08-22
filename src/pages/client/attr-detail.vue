@@ -20,7 +20,7 @@
                 </div>
 
                 <div v-if='detail.videoArray && detail.videoArray.length'>
-                    <video class='attr-img' v-for='(videoItem, videoIndex) in detail.videoArray' :src='videoItem.fileUrl' :key='videoIndex' ></video>
+                    <video class='a-img' v-for='(videoItem, videoIndex) in detail.videoArray' :src='videoItem.fileUrl' :key='videoIndex' ></video>
                 </div>
 
 				<u-parse v-if='detail.text' :content="detail.text" />
@@ -92,5 +92,6 @@ export default {
     .a-img{
         width: 100%;
         height: 189px;
-    }
+	}
+
 </style>

@@ -72,6 +72,9 @@ export default {
 				})
 				this.filterSelect = selects
 			}
+		},
+		filterShow (val) {
+			val ? uni.hideTabBar() : uni.showTabBar()
 		}
 	},
 	methods: {
