@@ -114,7 +114,9 @@ export default {
 					that.$local.setItem('finger', response2.data.finger)
 					// 调用角色权限列表，刷新后端缓存
 					this.$api.bizSystemService.getUserResource({}, 'crm').then((response) => {
-						if (response.code !== 200) {
+						if (response.code === 200) {
+							that.$local.save('sourceList', response.data)
+						} else {
 							that.$utils.toast.text(response.msg)
 						}
 					})

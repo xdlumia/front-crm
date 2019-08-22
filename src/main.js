@@ -157,7 +157,6 @@ uni.$on('setUserInfo', (data) => {
 	local.save('companyInfo', data.companyEntity)
 	local.save('deptInfo', data.rmDeptEntity)
 	local.save('roleInfo', data.rmRoleEntities)
-	local.save('sourceList', data.sourceList)
 	local.setItem('token', data.token)
 	local.setItem('finger', data.finger)
 	store.commit('setUserInfo', data)
