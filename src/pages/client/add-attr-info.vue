@@ -14,7 +14,7 @@
                 标题:
             </div>
             <div class="d-cell mr10 form-row-item">
-                <input type="text" v-model='form.headline' class='f12 d-text-black' placeholder="请填写标题" maxlength='20'>
+                <input type="text" v-model='form.headline' class='f12 d-text-black' placeholder="请填写标题" maxlength='20' style='padding-top:2px'>
             </div>
         </div>
 
@@ -23,10 +23,13 @@
                 视频:
             </div>
             <div class="d-cell mr10 form-row-item" >
-                <video v-if='videoArray && videoArray[0]' class='attr-img' :src="videoArray[0].fileUrl" enable-danmu danmu-btn controls></video>
+                <video v-if='videoArray && videoArray[0]' class='attr-video' :src="videoArray[0].fileUrl" enable-danmu danmu-btn controls></video>
             </div>
-            <div class='b' @click='chooseVideo'>
+            <div class='b' @click='chooseVideo' v-if='!videoArray.length'>
                 <uni-icon type='plus' size='16' color='#1890FF' />
+            </div>
+			<div class='b' @click='delVideo' v-else>
+                <uni-icon type='minus' size='16' color='red' />
             </div>
         </div>
 
@@ -47,13 +50,13 @@
         </div>
 
         <div class="form-row d-flex">
-            <div class="f14 d-text-black form-row-item form-row-label mr10">
+            <div class="f14 d-text-black form-row-item form-row-label mr10" style='min-width: 35px;'>
                 文件:
             </div>
             <div class="d-cell mr10 form-row-item">
                 <div class="d-center mb10" v-for='(item, index) in fileArray' :key='index'>
                     <div class='iconfont iconadjunct f12 d-text-gray mr5'></div>
-                    <span class="d-cell f12 d-text-gray">{{item.filelName}}</span>
+                    <span class="d-cell f12 d-text-gray  d-elip">{{item.filelName}}</span>
                     <div @click='delFile(index)'>
                         <uni-icon type='minus' size='16' color='red' />
                     </div>
@@ -95,7 +98,8 @@ export default {
 					ops: []
 				}
 			},
-			fileArray: [] // 文件对象
+			fileArray: [], // 文件对象
+			videoArray: []
 		}
 	},
 
@@ -123,7 +127,7 @@ export default {
 			params.fileArray = this.fileArray
 			// 富文本 内容
 			params.text = this.content.html
-
+			params.videoArray = this.videoArray || []
 			try {
 				let resulte = await this.$api.seeCrmService.clientinfoSaveClientbusiness({ ...this.form, ...params })
 				if (resulte.code === 200) {
@@ -140,24 +144,28 @@ export default {
 
 		// 插入视频
 		chooseVideo () {
-			try {
-				uni.chooseVideo({
-					count: 1,
-					sourceType: ['camera', 'album'],
-					success: async (res) => {
+			uni.chooseVideo({
+				count: 1,
+				sourceType: ['camera', 'album'],
+				success: async (res) => {
+					try {
 						this.$utils.showLoading('视频上传中')
 						let { fileName, filePath } = await this.upload(res.tempFilePath)
 						this.videoArray = [{
 							filelName: fileName,
 							fileUrl: filePath
 						}]
+					} catch (err) {
+						this.$utils.toast.text('视频上传失败')
+					} finally {
+						this.$utils.hideLoading()
 					}
-				})
-			} catch (err) {
-				this.$utils.toast.text('视频上传失败')
-			} finally {
-				this.$utils.hideLoading()
-			}
+				}
+			})
+		},
+
+		delVideo () {
+			this.videoArray = []
 		},
 
 		// 插入图片
@@ -308,6 +316,11 @@ export default {
 
     .ql-container{
        height: 300px;
-    }
+	}
+
+	.attr-video{
+		width: 230px;
+		height: 140px;
+	}
 
 </style>

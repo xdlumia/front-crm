@@ -8,7 +8,7 @@
     <NavBar title="首页"  />
  */ -->
 <template>
-    <span @click="changeChecked" class='radio-box d-inline' :class="{active:isChecked}"></span>
+    <span @click.stop="changeChecked" class='radio-box d-inline' :class="{active:isChecked}"></span>
 </template>
 
 <script>

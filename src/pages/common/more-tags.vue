@@ -12,7 +12,7 @@
         placeholder="来源"
         label="标签名称">
         </i-input>
-		<div @click="selClick(item)" v-for="(item, index) in tagList" :key="index">
+		<div @click.stop="selClick(item)" v-for="(item, index) in tagList" :key="index">
 			<i-input
 			:label-width="isEdit?30:0"
 			:disabled="!isEdit"

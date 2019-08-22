@@ -17,6 +17,7 @@
 		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label="最后跟进">{{detailInfo.followUpTime | timeToStr}}</m-list>
             <m-list label="最新修改">{{detailInfo.modifyTime | timeToStr}}</m-list>
+            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
         </mPanel>
     </div>
 </template>

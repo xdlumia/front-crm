@@ -26,7 +26,7 @@
 							<div class='d-text-cgray' v-if='!isSelect'>{{item.makeBargainCode == 1 ? '已成交' : item.makeBargainCode == 2 ? '多次成交' : '未成交'}}</div>
 						</div>
 						<div class="d-flex client-tags">
-							<div class="iconfont iconqian f16 d-text-blue mr10" v-if='salesType === 1'></div>
+							<div class="iconfont iconqian f16 d-text-blue mr10" v-if='item.salesType === 1'></div>
 							<div class="c-tag f12 mr10" v-show='item.gradeCode'>{{item.gradeCode | dictionary('CRM_KHJB')}}</div>
 							<div class="c-tag f12 mr10">{{item.score || 0}}分</div>
 							<div class="c-tag f12 mr10">{{item.createTime|timeToStr('yyyy-mm-dd')}}</div>
