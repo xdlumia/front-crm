@@ -33,13 +33,11 @@
     </view>
 </template>
 <script>
-// require imgUrl from "../assets/test.png"
-// import logo from '@/assets/img/logo.png'
 export default {
 	data () {
 		return {
-			link: 'file:///H:/客户管理/front/single-invite-page/single-invite-page.html',
-			image: require('../../../../../assets/img/logo.png'),
+			link: 'http://39.105.103.188:1443/index.html',
+			image: '',
 			shareText: '团队邀请',
 			avatarUrl: '',
 			company: {},
@@ -50,7 +48,7 @@ export default {
 		return {
 			title: this.shareText ? this.shareText : '欢迎体验',
 			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + this.user.name + '&companyName=' + this.company.companyName + '&companyCode=' + this.company.companyCode + '&avatarUrl=' + this.avatarUrl,
-			imageUrl: this.image,
+			imageUrl: '/static/img/logo.png',
 			desc: this.user.name + '邀请你加入' + this.company.companyName
 		}
 	},
