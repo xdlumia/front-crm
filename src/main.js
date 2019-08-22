@@ -205,7 +205,7 @@ let generateButtonCodes = (authorityBtn, arr) => {
 Vue.mixin({
 	computed: {
 		authorityButtons () {
-			let authorityBtn = local.fetch('sourceList')
+			let authorityBtn = local.fetch('sourceList') || []
 			return generateButtonCodes(authorityBtn)
 		},
 		navH () {
