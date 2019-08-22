@@ -12,26 +12,26 @@
         placeholder="来源"
         label="标签名称">
         </i-input>
-        <i-input
-        :label-width="isEdit?30:0"
-        :disabled="!isEdit"
-        v-model="item.labelName"
-        v-for="(item, index) in tagList"
-        :key="index"
-        placeholder="请输入选项名称"
-        @focus="focusChange(item,index)">
-            <div slot="label" v-show="isEdit" @click="deleteMoreList(item.labelName)" class="uni-icon uni-icon-minus-filled f18 d-text-red"></div>
-            <m-checkbox :max="5" v-if="!isEdit" v-model="selCheked"  :label="item.id" />
-            <span v-if="isEdit" class="d-block ar" style="width:90px;">
-                <i @click="clear(item,index)" v-if="item.focus" class="uni-icon uni-icon-clear mr10 f18 d-text-qgray"></i>
-                <span v-if="index != 0" @click="farrowthinup(index,item)">
-					<uni-icon type="arrowthinup" size="22" color="#999"/>
+		<div @click="selClick(item)" v-for="(item, index) in tagList" :key="index">
+			<i-input
+			:label-width="isEdit?30:0"
+			:disabled="!isEdit"
+			v-model="item.labelName"
+			placeholder="请输入选项名称"
+			@focus="focusChange(item,index)">
+				<div slot="label" v-show="isEdit" @click="deleteMoreList(item.labelName)" class="uni-icon uni-icon-minus-filled f18 d-text-red"></div>
+				<m-checkbox :max="5" v-if="!isEdit" v-model="selCheked"  :label="item.id" />
+				<span v-if="isEdit" class="d-block ar" style="width:90px;">
+					<i @click="clear(item,index)" v-if="item.focus" class="uni-icon uni-icon-clear mr10 f18 d-text-qgray"></i>
+					<span v-if="index != 0" @click="farrowthinup(index,item)">
+						<uni-icon type="arrowthinup" size="22" color="#999"/>
+					</span>
+					<span class="d-text-blue ml5" v-if="index != (tagList.length-1)" @click="farrowthindown(index,item)">
+						<uni-icon type="arrowthindown" size="22" color="#999"/>
+					</span>
 				</span>
-				<span class="d-text-blue ml5" v-if="index != (tagList.length-1)" @click="farrowthindown(index,item)">
-					<uni-icon type="arrowthindown" size="22" color="#999"/>
-				</span>
-            </span>
-        </i-input>
+			</i-input>
+		</div>
         <i-cell>
             <p @click="moreAdd">
                 <uni-icon type='plus-filled' size='18' color='#4889F4' />
@@ -74,6 +74,14 @@ export default {
 		this.lableinfoList()
 	},
 	methods: {
+		selClick (row) {
+			if (this.selCheked.includes(row.id)) {
+				// 点击当前行 已经选中的取消
+				this.selCheked.splice(this.selCheked.indexOf(row.id), 1)
+			} else {
+				this.selCheked.push(row.id)
+			}
+		},
 		// 向上移动
 		farrowthinup (index, item) {
 			this.tagList[index] = this.tagList.splice(index - 1, 1, item)[0]

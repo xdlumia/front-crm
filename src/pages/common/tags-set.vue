@@ -76,8 +76,10 @@ export default {
 			tagsList: [] // 所有标签项
 		}
 	},
+	onShow () {
+		this.$refs.list.reload()
+	},
 	onLoad (option) {
-		// console.log(option)
 		this.queryForm.busType = option.busType
 	},
 	methods: {

@@ -28,7 +28,7 @@
 					</i-input>
 				</a>
 
-				<a :url="'/pages/chance/choose-chance?busId=' + form.busId + '&busType=' + form.busType"  v-if='form.busType == 0'>
+				<a :url="'/pages/chance/choose-chance?busId=' + form.busId + '&busType=' + form.busType +'&clientId=' + form.busId "  v-if='form.busType == 0'>
 					<i-input disabled v-model="chanceName" label="销售机会" placeholder="请选择销售机会">
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>

@@ -30,9 +30,9 @@
 				<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
 				<i-select
 				v-if='item.fieldType == 3'
-				v-model="form.fieldValue"
+				v-model="form.formsFieldValueSaveVos[index].fieldValue"
 				:props="{label:'content',value:'code'}"
-				:label="form.formsFieldValueSaveVos[index].fieldName"
+				:label="item.fieldName"
 				placeholder="请选择"
 				:options="dictionaryOptions(item.groupCode || '')"/>
 			</p>

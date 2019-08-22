@@ -19,7 +19,7 @@
             <!-- <m-list label="客户身份">{{detailInfo.aaa}}</m-list>
             <m-list label="客户积分">{{detailInfo.aaa}}</m-list> -->
             <m-list label="销售额（元）">{{detailInfo.totalSalesChanceMoney || ''}}</m-list>
-            <div v-for='item in basicInfo' :key='item.id' >
+            <div v-for='item in basicInfo' :key='item.id'>
                 <m-list :label="item.fieldName" v-if="item.fieldType == 3">{{item.fieldValue | dictionary(item.groupCode || '')}}</m-list>
                 <m-list :label="item.fieldName" v-else>{{(item.fieldValue) || ""}}</m-list>
             </div>

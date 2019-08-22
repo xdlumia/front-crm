@@ -53,6 +53,7 @@
 </div>
 </template>
 <script>
+import { setTimeout } from 'timers'
 export default {
 	components: {
 	},
@@ -127,7 +128,7 @@ export default {
 			// 获取详情
 			this.saleschanceInfo(this.busId)
 		}
-		// 编辑和复制从详情里获取 新增的时候才调取字段列表
+		// 编辑和复制从详情里获取 新增的时候才调取字段列表  editType ==1 编辑 2复制
 		if (!option.editType) {
 			// 获取字段列表
 			this.formsfieldconfigQueryList()
@@ -166,7 +167,12 @@ export default {
 		async saveChance () {
 			await this.$refs.mform.validate()
 			// 验证机会名称
-			this.$api.seeCrmService.saleschanceVerifyChanceName({ chanceName: this.editForm.chanceName, chanceId: this.busId, clientId: this.editForm.clientId })
+			let params = {
+				chanceName: this.editForm.chanceName,
+				chanceId: this.editType === '1' ? this.busId : '',
+				clientId: this.editForm.clientId
+			}
+			this.$api.seeCrmService.saleschanceVerifyChanceName(params)
 				.then(res => {
 					if (res.data) {
 						// 如果没有重复提交表单
@@ -198,7 +204,9 @@ export default {
 				.then(res => {
 					if (res.code !== 200) return
 					if (this.editType === '2') {
-						this.$routing.navigateTo(`/pages/chance/index`)
+						setTimeout(() => {
+							this.$routing.switchTab('/pages/chance/index')
+						}, 1000)
 					} else {
 						// 编辑成功emit给返回页
 						uni.$emit('addChance')

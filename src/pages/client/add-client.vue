@@ -22,7 +22,7 @@
 
 					<i-input label="所属部门" v-model="deptInfo.deptName" disabled required />
 
-                    <i-input v-model="form.address" label="详细地址" maxlength='32' placeholder="请填写详细地址"  type="number">
+                    <i-input v-model="form.address" label="详细地址" maxlength='100' placeholder="请填写详细地址">
                         <div @click="chooseMap" class="ml15 ac hfull pl15 d-center" style="border-left: 1px solid #F2F2F2;">
                             <i-icon type="coordinates" size="22" color="#999" />
                         </div>
@@ -212,7 +212,6 @@ export default {
 				if (res.code === 200) {
 					let data = res.data || []
 					data.forEach(item => {
-						console.log(item)
 						this.form.formsFieldValueSaveVos = this.form.formsFieldValueSaveVos || []
 						let i = this.form.formsFieldValueSaveVos.findIndex(v => item.id === v.fieldConfigId)
 						if (i !== -1) {
