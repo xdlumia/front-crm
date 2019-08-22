@@ -1,9 +1,9 @@
 <template>
     <div class="user-info-page hfull">
         <NavBar title="帮助中心" />
-
-        <u-parse v-if='content' :content="content" />
-
+        <view class="p15">
+            <u-parse v-if='content' :content="content" />
+        </view>
     </div>
 </template>
 
