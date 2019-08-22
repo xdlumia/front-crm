@@ -2,8 +2,8 @@
     <div>
         <NavBar title="首页" />
         <div class="d-flex mt5">
-            <div @click="current = 0,clickDay = todayDate" class="f16 d-text-gray b ml10 ac w50" :class="current == 0 ? 'brblur' : ''">今天</div>
-            <div @click="current = 1,clickDay = todayDate" class="f16 d-text-gray b ml10 ac w50" :class="current == 1 ? 'brblur' : ''">仪表盘 </div>
+            <div @click="current = 0,clickDay = todayDate" class="f16 d-text-gray b ml15 ac" :class="current == 0 ? 'brblur' : ''">今天</div>
+            <div @click="current = 1,clickDay = todayDate" class="f16 d-text-gray b ml15 ac" :class="current == 1 ? 'brblur' : ''">仪表盘 </div>
         </div>
 
         <!-- 今天 -->
@@ -11,7 +11,7 @@
             <!--显示本周-->
 
             <div v-if="timelong == 7">
-                <div class="d-text-black ml15 mt10" @click='timelong = 30,clickDay = todayDate'>{{todayDate}}
+                <div class="d-text-black ml15" style="margin-top:8px" @click='timelong = 30,clickDay = todayDate'>{{todayDate}}
                     <uni-icon type="arrowdown" class="pl5" size="18"/>
                 </div>
                 <div class="d-flex mt15">
@@ -72,11 +72,11 @@
         <div v-if='current == 1'>
             <div class="h40 d-flex-level mt10" style="background:#F9F9F9;">
                 <div class="d-flex ml15" style="height: 26px;align-items: center;">
-                    <m-avatar :url='avatarUrl' :text='userName' :width='24' :height='24'></m-avatar>
+                    <m-avatar :nameLength='1' :url='avatarUrl' :text='userName' :width='24' :height='24'></m-avatar>
                     <div @click="getColleagueChoose">
                         <span class="d-text-qgray f13 ml5">{{userName}}</span>
                     </div>
-                    <uni-icon type="arrowdown" class="pl5 d-text-qgray" size="16"/>
+                    <uni-icon color='#999' type="arrowdown" class="pl5 d-text-qgray" size="16"/>
                 </div>
                 <div class="mr15" style="height:26px;line-height:26px">
                      <i class="iconfont f16 iconshouye_chengjiaoshujurili" style="color: #B9C5CF;"></i>
@@ -87,14 +87,14 @@
             <div style="height: 250px;">
                 <div class="h50" style="line-height: 50px;">
                     <i class="iconfont f13 icontongyekehuguanli ml15" style="color: #54D1C7;"></i>
-                    <span class="b ml10">销售简报</span>
+                    <span class="b ml10 f13">销售简报</span>
                 </div>
                 <div class="d-flex flexconm h200">
                     <div class="flexalone d-flex mt5">
                         <div class="whalf">
                             <div class="d-flex iconbox">
                                 <div class="borright flexcenter d-flex" style="width: 50px;">
-                                    <i class="iconfont f24 iconwode lh30 d-gray"></i>
+                                    <i class="iconfont f24 kehuquan lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
                                     <span class="f18 d-text-black">{{salesKitForm.clientCount}}</span><span class="mt10 ml5 d-gray"> 个</span>
@@ -107,7 +107,7 @@
                         <div class="whalf">
                             <div class="d-flex iconbox">
                                 <div class="borright flexcenter d-flex" style="width: 50px;">
-                                    <i class="iconfont f24 iconduoren lh30 d-gray"></i>
+                                    <i class="iconfont f24 lianxirenquan lh30 d-gray"></i>
                                 </div>
                                 <div class="whalf flexcenter d-flex f14">
                                     <span class="f18 d-text-black">{{salesKitForm.linkCount}}</span><span class="mt10 ml5 d-gray"> 个</span>
@@ -178,9 +178,9 @@
             </div>
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
-                <div class="h50" style="line-height: 50px;">
-                    <i class="iconfont f24 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
-                    <span class="b ml5">销售漏斗</span><span class="f12 b">( 商机金额 )</span>
+                <div class="h50" style="align-items: center">
+                    <i class="iconfont f20 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
+                    <span class="b ml5 f13">销售漏斗</span><span class="f13 b">( 商机金额 )</span>
                 </div>
                 <div class="wfull" style="height:200px;">
                    <view class="echartsBox">
@@ -191,12 +191,12 @@
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
                 <div class="h50" style="line-height: 50px;">
-                    <i class="iconfont f20 iconpaihangbang ml10" style="color: #FECC00;"></i>
-                    <span class="b">排行榜</span><span class="f12 b">( 全公司 )</span>
+                    <i class="iconfont f16 iconpaihangbang ml10" style="color: #FECC00;"></i>
+                    <span class="b f13">排行榜</span><span class="f13 b">( 全公司 )</span>
                 </div>
                 <div>
                     <div class="d-flex">
-                        <div style="width: 70px;" class="ml15"><span class="f12 d-hui">排行榜</span></div>
+                        <div style="width: 70px;" class="ml15"><span class="f12 d-hui">排名</span></div>
                         <div style="width: 120px;"><span class="f12 d-hui">前十名</span></div>
                         <div><span class="f12 d-hui">新建成交金额（元）</span></div>
                     </div>
@@ -209,7 +209,7 @@
 
                 </div>
             </div>
-            <div class="mt15" style="height: 10px;background: #F1F1F1;"></div>
+            <!-- <div class="mt15" style="height: 10px;background: #F1F1F1;"></div> -->
         </div>
 
     </div>
@@ -275,7 +275,7 @@ export default {
 	},
 	computed: {
 		todayDate () {
-			return (new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate())
+			return (new Date().getFullYear() + '年' + (new Date().getMonth() + 1) + '月')
 		}
 	},
 	created () {
@@ -351,8 +351,8 @@ export default {
 				.then(res => {
 					this.funnelList = []
 					let arr = res.data || []
-					arr.forEach((item) => {
-						this.funnelList.push({ value: item.amount, name: item.stageName + ':' + item.amount })
+					arr.forEach((item, index) => {
+						this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount })
 					})
 					// this.funnelList = [{value:2000,name:'阶段1 - 5000'},{value:5000,name:'阶段2 - 5000'},{value:2000,name:'阶段3 - 2000'}]
 					this.ec.option.series[0].data = this.funnelList || []
@@ -416,4 +416,8 @@ export default {
 .iconbox{height: 30px;width: 108px;box-sizing: border-box;}
 .echartsBox {width: 100%;height: 100%;}
 .ec-canvas{width: 100%;height: 200px;}
+
+</style>
+<style>
+.detail-panel-item{border-bottom:1px solid #FFF !important;}
 </style>
