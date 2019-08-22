@@ -37,7 +37,7 @@
 
 					<div class="d-center d-text-gray">
 						<div class="d-cell f13"><span class="b">销售机会金额：</span> <span style='color: #FF9900'>{{detailInfo.totalSalesChanceMoney}}元</span></div>
-						<div class="d-cell f13"><span class="b">成交金额: </span> <span style='color: #FF9900'>{{detailInfo.bargainSum}}元</span></div>
+						<div class="d-cell f13"><span class="b">成交金额：</span> <span style='color: #FF9900'>{{detailInfo.bargainSum}}元</span></div>
 					</div>
 				</template>
 				<template v-if='source'>
@@ -52,7 +52,7 @@
 			<div class="">
 				<i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
 					<i-tab index="0">
-						<followInfo :query='{clientId: detailInfo.id}' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
+						<followInfo :query='{clientId: detailInfo.id, busId: detailInfo.id, busType: 0,}' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
 					</i-tab>
 					<i-tab index="1">
 						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />

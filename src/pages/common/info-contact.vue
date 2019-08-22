@@ -11,7 +11,7 @@
 			<div class="detail-list ac f12 d-text-gray" v-if="!contactList.length">暂无数据</div>
             <div class="detail-list" v-for="(item,index) of contactList" :key="index">
                 <div class="list-title">
-                    <title>{{item.linkmanName}}</title> <span class="d-text-qgray">{{item.position}}</span>
+                    <title>{{item.linkmanName}}</title> <span class="d-text-qgray">{{item.position | dictionary('CRM_LXR_ZW')}}</span>
                     <span @click="callPhone(item.mobile)" class="fr iconfont iconcall f18 d-text-gray" ></span>
                 </div>
                 <p class="f12 d-elip d-text-qgray">{{item.clientName}}</p>

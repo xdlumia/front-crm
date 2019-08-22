@@ -62,7 +62,7 @@
       <i-tabs :current="currTabIndex" :tabList="tabBars" @change="tagsChange">
         <i-tab index="0">
           <!-- 跟进: -->
-          <followInfo v-if="busId" :query='{salesFunnelId: busId}' :height="'calc(100vh - 49px - 121px - 50px - 96px - 46px - ' + navH + ')'" />
+          <followInfo v-if="busId" :query='{salesFunnelId: busId, busId:busId,busType:2,}' :height="'calc(100vh - 49px - 121px - 50px - 96px - 46px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="1">
           <detailInfo :detailInfo="detailInfo" :height="'calc(100vh - 49px - 50px - 121px - 96px - ' + navH + ')'" />
