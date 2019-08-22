@@ -54,7 +54,7 @@
         <uni-icon type="plus" size="16" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">新建联系人</span>
       </a>
-      <a class="d-cell ar" url="/pages/contact/manage/index">
+      <a class="d-cell ar" url="/pages/contact/manage/index" v-if="authorityButtons.includes('crm_linkman_001')">
         <i-icon type="setup" size="18" color="#1890FF" />
         <span class="ml5 f13 d-text-gray">管理联系人</span>
       </a>

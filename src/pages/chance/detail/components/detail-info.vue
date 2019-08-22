@@ -17,6 +17,8 @@
             <m-list label-width="120" label="行业">{{detailInfo.tradeCode | dictionary('CRM_KH_HY')}}</m-list>
             <m-list label-width="120" label="来源">{{detailInfo.sourceCode | dictionary('CRM_LY')}}</m-list>
             <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
+            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
+
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
 			<div>
@@ -32,9 +34,8 @@
 					{{detailInfo.modifyTime | timeToStr('y-m-d h:i')}}
 					<uni-tag class="fr" text="时间" size="small" type="primary"></uni-tag>
 				</m-list>
-				<m-list label="修改人">{{detailInfo.modifyName}}</m-list>
+				<m-list label="修改人">{{detailInfo.modifierName}}</m-list>
 			</div>
-            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
         </mPanel>
     </div>
 </template>
