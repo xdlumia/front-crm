@@ -229,8 +229,15 @@ Vue.mixin({
 			} catch (err) {
 				return Promise.reject(new Error(err))
 			}
+		},
+		preImg (img, imgs) {
+			uni.previewImage({
+				current: img, // 当前显示图片的http链接
+				urls: imgs || [img] // 需要预览的图片http链接列表
+			})
 		}
 	}
+
 })
 
 const app = new Vue({

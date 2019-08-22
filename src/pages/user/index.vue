@@ -140,11 +140,19 @@ export default {
 			this.$refs.popup.open()
 		}
 	},
-	created () {
+	onHide () {
+		try {
+			this.$refs.popup.hide()
+		} catch (err) {
 
+		}
 	},
 	onShareAppMessage () {
-
+		return {
+			title: 'test title',
+			imageUrl: '/static/img/share.jpg',
+			path: '' // 这里的 path 是页面 url，而不是小程序路由
+		}
 	}
 }
 </script>

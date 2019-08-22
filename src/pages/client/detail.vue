@@ -7,6 +7,7 @@
 -->
 <template>
     <div class="client-detail-page">
+
 		<template v-if='!loading'>
 			<NavBar title='客户详情' searchType='0' />
 			<!-- 顶部信息 -->
@@ -28,8 +29,8 @@
 
 				<template v-if="!source">
 					<div class="d-center d-text-gray mb5">
-						<div class="d-cell f13">成交状态： <span class='d-text-blue'>{{detailInfo.makeBargainCode | dictionary('CRM_CJZT')}}</span></div>
-						<div class="d-cell f13">负责人： <span>{{detailInfo.leaderName}}</span></div>
+						<div class="d-cell f13">成交状态： <span class='d-text-blue'>{{detailInfo.makeBargainCode == 1 ? '已成交' : item.makeBargainCode == 2 ? '多次成交' : '未成交'}}</span></div>
+						<div class="d-cell f13">负责人： <span>{{detailInfo.leaderName || ''}}</span></div>
 					</div>
 					<div class='d-text-gray f13 mb5'>
 						最后跟进时间： <span>{{detailInfo.finallyFollowTime | timeToStr('yyyy-mm-dd')}}</span>
@@ -67,7 +68,7 @@
 			</div>
 
 			<div class="footer-fixed-menu d-center d-bg-white">
-				<a :url="'/pages/common/add-follow?busId='+ id +'&busType=0'" class="d-cell al">
+				<a :url="'/pages/common/add-follow?busId='+ id +'&busType=0'" class="d-cell" :class='!sendBackType ? "ac" : "al"'>
 					<span class='iconfont icontianjiajihua f16' style='color:#696969'></span><span class="ml5 f13  d-text-gray">添加跟进</span>
 				</a>
 				<div class="d-cell ac d-center" @click="handlerAction('phoneShow')">
@@ -167,7 +168,7 @@ export default {
 	},
 	computed: {
 		sendBackType () {
-			return +detailInfo.sendBackType !== 1
+			return +this.detailInfo.sendBackType !== 1
 		}
 	},
 	methods: {

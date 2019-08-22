@@ -35,7 +35,7 @@
                                 {{item.content}}
                             </div>
                             <div class='d-flex' v-if='item.files && item.files.length'>
-                                <img class="note-img" mode='aspectFit' v-for='imgItem in item.files' :key='imgItem.id' :src="imgItem.fileUrl" />
+                                <img class="note-img" @click="preImg(imgItem.fileUrl)" mode='aspectFill'  v-for='imgItem in item.files' :key='imgItem.id' :src="imgItem.fileUrl" />
                             </div>
                             <div class="mb5" v-show='item.linkName' v-if="!query.linkId">
                                 <uni-tag size='small' :text="'关联联系人：' + item.linkName" circle />
