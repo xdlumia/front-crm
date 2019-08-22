@@ -175,6 +175,7 @@ export default {
 			}
 			this.chooseDataIndex = index
 			this.chooseData = item.id
+			console.log(this.chooseDataIndex)
 		},
 
 		// 确定选中
@@ -183,6 +184,7 @@ export default {
 				this.$utils.toast.text('请选择客户')
 				return
 			}
+			console.log(this.list[this.chooseDataIndex])
 			let { id, name } = this.list[this.chooseDataIndex]
 			uni.$emit('chooseClient', { id, name })
 
