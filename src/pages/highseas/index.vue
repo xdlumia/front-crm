@@ -102,18 +102,21 @@ export default {
 					prop: 'queryType',
 					current: {
 						name: '全部客户',
-						id: -1
+						id: 6
 					},
 					list: [
 						{
 							name: '全部客户',
-							id: -1
+							id: 6
 						}, {
 							name: '我负责的客户',
-							id: 0
+							id: 7
 						}, {
 							name: '我关注的客户',
-							id: 2
+							id: 8
+						}, {
+							name: '其他人的客户',
+							id: 9
 						}
 					]
 				},
@@ -143,6 +146,9 @@ export default {
 			this.queryForm[item.prop] = selects[item.prop].id
 		})
 		this.filterSelect = selects
+	},
+	onShow () {
+		this.$refs.list.reload()
 	},
 	computed: {
 		pool () {

@@ -75,7 +75,7 @@ export default {
 					this.avatarUrl = this.userInfo.avatarUrl
 				}
 			})
-			this.$routing.navigateTo(`/pages/index/colleagueChoose?subordinate=1&userId=${this.filterData.leaderId}&ids=${this.filterData.leaderId}`)
+			this.$routing.navigateTo(`/pages/index/colleagueChoose?subordinate=1&userId=${this.$store.state.userInfo.id || ''}&ids=${this.filterData.leaderId}`)
 		},
 		clear () {
 			Object.assign(this.filterData, this.$options.data().filterData)

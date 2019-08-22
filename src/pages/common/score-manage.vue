@@ -265,12 +265,12 @@ export default {
 						}
 					}
 
-					if (!scoreSubItem.fieldGrade) {
+					if (scoreSubItem.fieldGrade === '') {
 						return this.$utils.toast.text('请填写' + scoreSubItem.fieldDescribe + '计算评分')
 					}
 				}
 
-				if (!scoreItem.elseFieldGrade) {
+				if (scoreItem.elseFieldGrade === '') {
 					return this.$utils.toast.text('否则项评分不能为空')
 				}
 			}
