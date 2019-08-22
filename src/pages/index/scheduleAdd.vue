@@ -235,7 +235,6 @@ export default {
 					this.acheduleForm.particiNames = this.acheduleForm.participantNames ? this.acheduleForm.participantNames.join(',') : ''
 					this.acheduleForm.startTime = this.changeTime(this.acheduleForm.startTime)
 					this.acheduleForm.endTime = this.changeTime(this.acheduleForm.endTime)
-
 					this.clientData = { name: this.acheduleForm.clientName || '', id: this.acheduleForm.clientId || '' }// 客户，
 					this.contactData = { name: this.acheduleForm.linkName || '', id: this.acheduleForm.linkId || '' }// 联系人
 					this.transactionData = { name: this.acheduleForm.transactionRecordName || '', id: this.acheduleForm.transactionRecordId || '' }// 成交记录

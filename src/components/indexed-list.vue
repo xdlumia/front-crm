@@ -338,7 +338,7 @@ export default {
         padding: 0 32upx;
     }
     .wxaSortPickerItem-box{
-        background-color: #fff;
+        background-color: #f9f9f9;
         padding: 0 32upx;
     }
     .wxaSortPickerItem{

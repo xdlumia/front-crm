@@ -3,16 +3,12 @@
  * @param label 选择同事
  */ -->
 <template>
-    <div>
+    <div style="background-color: #f9f9f9;">
         <NavBar title="首页" />
         <div>
-            <div class="d-flex mt5">
-                <div class="f16 d-text-gray b ml10 ac w50">同事 </div>
-            </div>
 			<indexed-list @getList='getSearchList' :isRadio='isRadio' ref="sortPickerList" :isCheckedAllData='isCheckedAllData' @clickData="clickData" :echodata='echodata'></indexed-list>
-
         </div>
-        <div style="height:50px;justify-content: space-between;align-items: center;position:fixed;bottom:0;z-index:30;background:#FFF;border-top:1px solid #F2F2F2" class="d-flex wfull">
+        <div style="height:50px;justify-content: space-between;align-items: center;position:fixed;bottom:0;z-index:30;background:#F8F8FA;border-top:1px solid #F2F2F2" class="d-flex wfull">
                 <div class="d-text-blue ml15 d-elip">已选择：<span v-for="(item,index) in isCheckedAllData" :key="index" class="ml5">{{item.employeeName}}</span></div>
                 <i-button class="mr15" @click="handleClick" type="primary" size='small'>确定</i-button>
         </div>
