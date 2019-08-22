@@ -59,7 +59,7 @@ export default {
 				? '/pages/contact/add-contact?clientName=' + this.query.name + '&clientId=' + this.query.busId
 				: this.query.busType === 3// 成交记录不需要加号
 					? ''
-					: '/pages/contact/index?select=1&add=1&multiple=1&busType=' + busType + '&busId=' + busId + '&linkIds=' + linkIds + ''
+					: '/pages/contact/index?select=1&add=1&multiple=1&busType=' + busType + '&busId=' + busId + '&linkIds=' + linkIds + '&clientName=' + this.query.clientName + ''
 		}
 	},
 	created () {

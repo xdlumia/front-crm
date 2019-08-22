@@ -6,7 +6,7 @@
 	<scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
 		<p class="pt10 d-text-gray f13 ac" v-if="!fieldList.length">暂无数据</p>
 		<i-cell-group>
-			<i-cell  @click="selClick(item)" v-for="(item, index) of fieldList" :key="index" :title="item.fieldName">
+			<i-cell  @click="selClick($event,item)" v-for="(item, index) of fieldList" :key="index" :title="item.fieldName">
 				<m-checkbox v-model="selList" slot="footer" :label="item.id" />
 			</i-cell>
 		</i-cell-group>
@@ -61,7 +61,7 @@ export default {
 		resetField () {
 			this.selList = []
 		},
-		selClick (row) {
+		selClick (e, row) {
 			if (this.selList.includes(row.id)) {
 				// 点击当前行 已经选中的取消
 				this.selList.splice(this.selList.indexOf(row.id), 1)
