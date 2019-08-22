@@ -300,7 +300,7 @@ export default {
 	methods: {
 		// 点击切换人员
 		getColleagueChoose () {
-			if (this.authorityButtons.includes('crm_index_008')) {
+			if (this.authorityButtons.includes('crm_index_001')) {
 				// 选择的当前人
 				uni.$once('colleagueChoose', data => {
 					if (data.data.length > 0) {
