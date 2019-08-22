@@ -148,7 +148,11 @@ export default {
 		this.filterSelect = selects
 	},
 	onShow () {
-		this.$refs.list.reload()
+		try {
+			this.$refs.list.reload()
+		} catch (err) {
+
+		}
 	},
 	computed: {
 		pool () {
