@@ -99,6 +99,9 @@ export default {
 							})
 						}
 					}
+					// else{
+					// 	this.$utils.toast.text('请前往申请开通页面或使用手机号登录')
+					// }
 				})
 			}
 		},

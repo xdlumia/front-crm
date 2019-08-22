@@ -78,10 +78,12 @@ export default {
 		}
 	},
 	onLoad (option) {
+		this.init()
 		if (option.deptId) {
 			this.deptId = option.deptId
+		} else {
+			this.deptId = this.$local.fetch('deptInfo').id
 		}
-		this.init()
 		if (option.hierarchy) {
 			this.hierarchy = option.hierarchy
 		}

@@ -120,19 +120,21 @@ export default {
 		},
 		// 获取并保存用户头像
 		handleUserInfoClick ({ mp }) {
-			// 保存用户头像
-			this.$api.seeCrmService.organizationalStructureUpdateAvatar({
-				'id': this.$local.fetch('userInfo').employeeId,
-				'avatarUrl': mp.detail.userInfo.avatarUrl
-			}).then((response) => {
-				if (response.code === 200) {
-					// 更新用户头像
-					this.avatarUrl = mp.detail.userInfo.avatarUrl
-					this.$store.commit('setavatarUrl', this.avatarUrl)
-				} else {
-					this.$utils.toast.text(response.msg)
-				}
-			})
+			if (mp.detail.encryptedData && mp.detail.iv) {
+				// 保存用户头像
+				this.$api.seeCrmService.organizationalStructureUpdateAvatar({
+					'id': this.$local.fetch('userInfo').employeeId,
+					'avatarUrl': mp.detail.userInfo.avatarUrl
+				}).then((response) => {
+					if (response.code === 200) {
+						// 更新用户头像
+						this.avatarUrl = mp.detail.userInfo.avatarUrl
+						this.$store.commit('setavatarUrl', this.avatarUrl)
+					} else {
+						this.$utils.toast.text(response.msg)
+					}
+				})
+			}
 		},
 		openPop () {
 			this.$refs.popup.open()

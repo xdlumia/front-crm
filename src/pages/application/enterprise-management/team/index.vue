@@ -14,7 +14,7 @@
 				@getList='getList'
 				ref='teamDatas'>
 			<view class="uni-flex uni-column" v-for="(item) in teamDatas" :key="item.id">
-				<view class="flex-item flex-item-V uni-flex uni-row pt15 pl15 pr15" style="height:72px">
+				<view class="flex-item flex-item-V uni-flex uni-row pt15 pl15 pr15">
 					<view class="flex-item width15 p10">
 						<!-- <image class="ba d-circle" style="height: 51px;width: 51px;" :src='item.photo'></image> -->
 						<mAvatar :text='item.name' :url='item.photo'></mAvatar>
