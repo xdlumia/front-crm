@@ -9,6 +9,7 @@
  */ -->
 <template>
     <span @click.stop="changeRadio" class='radio-box d-inline' :class="{active:isChecked}"></span>
+    <!-- <span class='radio-box d-inline' :class="{active:isChecked}"></span> -->
 </template>
 
 <script>

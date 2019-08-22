@@ -75,6 +75,10 @@ export default {
 	},
 	methods: {
 		selClick (row) {
+			if (!this.selCheked.includes(row.id) && !this.selCheked.includes(row.id) && this.selCheked.length >= 5) {
+				uni.showToast({ title: `最大只能选择5条`, icon: 'none' })
+				return
+			}
 			if (this.selCheked.includes(row.id)) {
 				// 点击当前行 已经选中的取消
 				this.selCheked.splice(this.selCheked.indexOf(row.id), 1)
