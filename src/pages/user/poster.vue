@@ -16,7 +16,7 @@ export default {
 	data () {
 		return {
 			style: {},
-			imgUrl: 'http://oss-a-develop.oss-cn-beijing.aliyuncs.com/1016/crm/1565774770370/883890ed-c7d2-48b7-9bd5-4768163b8742.jpg'
+			imgUrl: ''
 		}
 	},
 	onLoad () {
@@ -24,7 +24,9 @@ export default {
 	},
 	methods: {
 		getImg () {
-			this.$api.seeCrmService.posterGet().then(res => {
+			this.$api.seeCrmService.posterGet({
+				userAvatar: this.$store.state.userInfo.avatarUrl || this.$local.fetch('userInfo').avatarUrl || ''
+			}).then(res => {
 				if (res.code === 200) {
 					this.imgUrl = res.data || ''
 				}
