@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import '@/static/IPconfig'
 
 import Vue from 'vue'
@@ -191,9 +192,22 @@ App.mpType = 'app'
 Vue.prototype.$store = store
 Vue.use(Vuex)
 Vue.use(globalConfig)
-
+let generateButtonCodes = (authorityBtn, arr) => {
+	return authorityBtn.reduce((arr, current) => {
+		arr.push.apply(arr, current.buttonsCode)
+		current.code && (arr.push(current.code))
+			if (current.children) {
+			generateButtonCodes(current.children, arr)
+		}
+		return arr
+	}, arr || [])
+}
 Vue.mixin({
 	computed: {
+		authorityButtons () {
+			let authorityBtn = local.fetch('sourceList')
+			return generateButtonCodes(authorityBtn)
+		},
 		navH () {
 			return local.fetch('navH') + 'rpx'
 		},
