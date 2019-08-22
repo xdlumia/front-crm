@@ -19,16 +19,16 @@
                     <i-cell class="fl wfull al" title="测试分享页面" is-link></i-cell>
                 </button>
             </view> -->
-            <view class="flex-item flex-item-V h10 d-bg-gray pl15" style="color: #999999;">发送链接给微信好友，微信群</view>
+            <view class="flex-item flex-item-V h10 d-bg-gray pl15 pt5 pb5" style="color: #999999;">发送链接给微信好友，微信群</view>
             <view class="flex-item flex-item-V pl15 mt15 mb15">
                 <view class="fl width60">
-                    <input class="ba p1 h10" placeholder="链接" :value="link" />
+                    <input class="ba p1 h10 f12" placeholder="链接" :value="link" />
                 </view>
                 <view class="fl width30 ml10" style="padding-top:3px">
-                    <button type="primary" plain="true" class="f12" style="color:#0080FF ; border-color: #0080FF;border-style:dashed; " @tap="copyToClip">复制链接</button>
+                    <button type="primary" plain="true" style="color:#0080FF ; border-color: #0080FF;border-style:dashed; " @tap="copyToClip">复制链接</button>
                 </view>
             </view>
-            <view class="flex-item flex-item-V h10 d-bg-gray pl15" style="color: #999999;">通过链接邀请，点击复制链接，发送给企业成员</view>
+            <view class="flex-item flex-item-V h10 d-bg-gray pl15 pt15 pb15" style="color: #999999;">通过链接邀请，点击复制链接，发送给企业成员</view>
         </view>
     </view>
 </template>
