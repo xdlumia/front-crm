@@ -21,7 +21,10 @@
 				<i-input
 					labelWidth='150'
 					:labelIcon='{type: "minus-filled", color: "#fff"}'
-					i-class='ar pr5' label="权重" type='number'
+					i-class='ar pr5'
+					label="权重"
+					type='number'
+					maxlength='3'
 					v-model='item.weight' placeholder="请输入"
 				>
 					<span class='pl5'>%</span>
@@ -41,9 +44,10 @@
 							type="number"
 							v-model='subItem.minValue'
 							class='input-box f13 d-text-black d-cell'
+							maxlength='3'
 						/>
 							<span class="ml5 mr5 d-text-qgray">-</span>
-							<input type="number" v-model='subItem.maxValue' class='input-box d-text-black f13 d-cell'  />
+							<input type="number" v-model='subItem.maxValue' maxlength='3' class='input-box d-text-black f13 d-cell'  />
 					</div>
 				</i-input>
 
@@ -65,12 +69,13 @@
 					:labelIcon='{type: "minus-filled", color: "#fff"}'
 					type='number' v-model='subItem.fieldGrade'
 					placeholder="请输入"
+					maxlength='3'
 					i-class='ar pr20'
 				/>
 
 			</div>
 			<div v-if='item.fieldRuleEntityList.length' class='d-bg-white'>
-				<i-input labelWidth='200' label="否则，计算项的评分为" :labelIcon='{type: "minus-filled", color: "#fff"}' type='number' v-model='item.elseFieldGrade' placeholder="请输入" i-class='ar pr20' ></i-input>
+				<i-input labelWidth='200' maxlength='3' label="否则，计算项的评分为" :labelIcon='{type: "minus-filled", color: "#fff"}' type='number' v-model='item.elseFieldGrade' placeholder="请输入" i-class='ar pr20' ></i-input>
 			</div>
 		</div>
 
@@ -233,8 +238,16 @@ export default {
 					return this.$utils.toast.text('权重值为1~100')
 				}
 
+				if (this.scoreData[i - 1] && +scoreItem.fieldConfigId === +this.scoreData[i - 1].fieldConfigId) {
+					return this.$utils.toast.text('不能重复选择字段')
+				}
+
 				// 判断计算评分
 				const subLen = scoreItem.fieldRuleEntityList.length
+
+				if (!subLen) {
+					return this.$utils.toast.text('请添加评分规则')
+				}
 
 				if (!subLen) {
 					return this.$utils.toast.text('请添加评分规则')

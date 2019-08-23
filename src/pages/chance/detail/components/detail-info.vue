@@ -17,8 +17,11 @@
             <m-list label-width="120" label="行业">{{detailInfo.tradeCode | dictionary('CRM_KH_HY')}}</m-list>
             <m-list label-width="120" label="来源">{{detailInfo.sourceCode | dictionary('CRM_LY')}}</m-list>
             <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
-            <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list>
-
+			<div v-for='item in detailInfo.formsFieldValueEntitys' :key='item.id'>
+                <m-list label-width="120" :label="item.fieldName" v-if="item.fieldType == 3">{{item.fieldValue | dictionary(item.groupCode || '')}}</m-list>
+                <m-list label-width="120" :label="item.fieldName" v-else>{{item.fieldValue || "-"}}</m-list>
+            </div>
+            <!-- <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list> -->
         </mPanel>
 		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
 			<div>
