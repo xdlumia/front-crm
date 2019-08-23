@@ -14,7 +14,7 @@
 					:labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}'
 					:props="{label:'fieldName',value:'id'}"
 					v-model='item.fieldConfigId'
-					label="字段名称一"
+					:label="'字段名称-' + index"
 					:options="fieldData"
 					@input='getField($event, index)'
 				/>

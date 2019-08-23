@@ -53,7 +53,7 @@
 			<div class="">
 				<i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
 					<i-tab index="0">
-						<followInfo :query='{clientId: detailInfo.id, busId: detailInfo.id, busType: 0,}' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ' + ' + infoH + ')'" />
+						<followInfo :query='{clientId: detailInfo.id, busId: detailInfo.id, busType: 0,}' @updateFollow='updateFollow' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ' + ' + infoH + ')'" />
 					</i-tab>
 					<i-tab index="1">
 						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ' + ' + infoH + ')'" />
@@ -339,6 +339,9 @@ export default {
 				sendBackType: this.detailInfo.sendBackType,
 				leaderId: leaderId
 			})
+		},
+		updateFollow () {
+			this.detailInfo.finallyFollowTime = new Date().getTime()
 		}
 	},
 	onHide () {

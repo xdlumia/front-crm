@@ -4,14 +4,14 @@
 <div class="d-bg-white">
     <NavBar title="添加更多标签"/>
 	<scroll-view style="height:calc(100vh - 115px)" scroll-y>
-        <i-input
+        <!-- <i-input
         v-model="labelTitle"
         v-if="isEdit"
         disabled
         class="mb10"
         placeholder="来源"
         label="标签名称">
-        </i-input>
+        </i-input> -->
 		<div @click.stop="selClick(item)" v-for="(item, index) in tagList" :key="index">
 			<i-input
 			:label-width="isEdit?30:0"
