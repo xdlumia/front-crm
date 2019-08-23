@@ -27,7 +27,7 @@
 					maxlength='3'
 					v-model='item.weight' placeholder="请输入"
 				>
-					<span class='pl5'>%</span>
+					<div class='pl5 d-center'>%</div>
 				</i-input>
 			</div>
 			<div class='d-center score-rule pl15 pr15'>

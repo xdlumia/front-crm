@@ -1,6 +1,6 @@
 <template>
   <div class="chance-bg">
-    <NavBar title="机会" :isSearch="true" placeholder="输入销售机会名称" :keyword='queryForm.clientOrChanceName' searchType='1' @getSearch='getSearch'/>
+    <NavBar title="机会" :isSearch="true" placeholder="搜索销售机会名称" :keyword='queryForm.clientOrChanceName' searchType='1' @getSearch='getSearch'/>
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData="filterData" @filterSubmit="filterSubmit" ref="filter">
       <filter-diy :stageList="stageList" @submit="diyFilterSubmit" />

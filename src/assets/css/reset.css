@@ -40,6 +40,9 @@ button {
 button::-moz-focus-inner {
     border-color: transparent !important;
 }
+input{
+    padding-top: 2px;
+}
 /*微信去除border专用*/
 button::after{ border: none; }
 .button-hover{

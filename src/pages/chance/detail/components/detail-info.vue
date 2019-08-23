@@ -45,19 +45,14 @@
 
 <script>
 export default {
-	props: ['height', 'detailInfo'],
-	components: {
-		// mPager
-	},
-	data () {
-		return {
+	props: {
+		height: {
+			type: String
+		},
+		detailInfo: {
+			type: Object
 		}
-	},
-	onLoad (option) {
-	},
-	methods: {
-	},
-	created () {}
+	}
 }
 </script>
 

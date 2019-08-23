@@ -66,14 +66,28 @@ export default {
 	},
 	created () {
 		this.$nextTick(() => {
-			this.detailInfo.formsFieldValueEntities.forEach(item => {
-				if (item.isContact === 1) {
-					this.contactInfo.push(item)
-				} else {
-					this.basicInfo.push(item)
-				}
-			})
+			this.filterInfo()
 		})
+	},
+	methods: {
+		filterInfo () {
+			let contactInfo = []
+			let basicInfo = []
+			this.detailInfo.formsFieldValueEntities.forEach(item => {
+				(+item.isContact === 1 ? contactInfo : basicInfo).push(item)
+			})
+			this.basicInfo = basicInfo
+			this.contactInfo = contactInfo
+			this.$forceUpdate()
+		}
+	},
+	watch: {
+		detailInfo: {
+			deep: true,
+			handler (val) {
+				this.filterInfo()
+			}
+		}
 	}
 }
 </script>
