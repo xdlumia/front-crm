@@ -75,6 +75,9 @@ export default {
 	},
 	methods: {
 		selClick (row) {
+			// 如果是编辑的时候不能选择
+			if (this.isEdit) return
+
 			if (!this.selCheked.includes(row.id) && !this.selCheked.includes(row.id) && this.selCheked.length >= 5) {
 				uni.showToast({ title: `最大只能选择5条`, icon: 'none' })
 				return
@@ -97,13 +100,18 @@ export default {
 		submitForm () {
 			// 如果是当前是编辑状态保存标签列表
 			if (this.isEdit) {
-				let tagParams = []
+				// let tagParams = []
 				for (let item of this.tagList) {
 					if (!item.labelName) {
 						uni.showToast({ title: '标签名称没有填写', icon: 'none' })
 						return
 					}
-					tagParams.push({ busType: this.busType, id: item.id || '', labelName: item.labelName })
+				}
+				let tagParams = {
+					busType: this.busType,
+					saveVoArray: this.tagList.map(item => {
+						return { busType: this.busType, id: item.id || '', labelName: item.labelName }
+					})
 				}
 				this.$api.seeCrmService.lableinfoSave(tagParams)
 					.then(res => {

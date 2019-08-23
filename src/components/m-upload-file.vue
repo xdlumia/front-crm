@@ -36,6 +36,8 @@ export default {
 		...mapActions(['checkOssTicket']),
 		chooseFile () {
 			wx.chooseMessageFile({
+			// wx.uploadFile({
+				url: 'http://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
 				count: 1,
 				type: 'file',
 				success: res => {
@@ -44,6 +46,7 @@ export default {
 							title: '文件上传中...',
 							mask: true
 						})
+						console.log(res)
 						this.upload(res.tempFiles, 0)
 					} catch (err) {
 						uni.hideLoading()
