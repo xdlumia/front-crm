@@ -63,7 +63,6 @@
                     </div>
                 </div>
             </div>
-            <div class="mt20" style="height: 10px;background: #F9F9F9;"></div>
         </div>
     </div>
 </template>

@@ -448,5 +448,5 @@ export default {
 
 </style>
 <style>
-.detail-panel-item{border-bottom:1px solid #FFF !important;}
+.detail-panel-item{border-bottom:none !important;}
 </style>

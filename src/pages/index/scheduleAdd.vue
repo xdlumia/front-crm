@@ -15,8 +15,8 @@
                 <div class="d-bg-schedule"></div>
 
                 <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
-                    <i-input label="位置" :disabled='!isadd && !ishandel' maxlength='45' v-model="acheduleForm.address" placeholder="点击输入" class='wfull'/>
-                    <div v-if="isadd || ishandel" @click="chooseMap" class="ml15 ac" style="border-left: 1px solid #F2F2F2;line-height: 48px;width:100px;">
+                    <i-input label="位置" :disabled='!isadd && !ishandel' maxlength='45' v-model="acheduleForm.address" placeholder="点击输入" style="flex:1" class='wfull'/>
+                    <div v-if="isadd || ishandel" @click="chooseMap" class="ac" style="border-left: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;line-height: 48px;width:100px;">
                         <i-icon type="coordinates" size="22" color="#999" />
                     </div>
                 </div>
