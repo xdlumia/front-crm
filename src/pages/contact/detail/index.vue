@@ -13,7 +13,7 @@
             <a class="d-inline" :url="`/pages/contact/add-contact?id=${detailInfo.id}&editType=1`"><i-icon type="brush" size="18" class="ml5" color="#1890FF" /></a>
 			<span @click="updateAttention(detailInfo.isWatchful)">
               <i-icon
-                :type="detailInfo.isWatchful?'like_fill':'like'"
+                type="like_fill"
                 size="20"
                 class="ml15"
                 :color="detailInfo.isWatchful?'#FF5533':'#999'"

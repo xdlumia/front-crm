@@ -55,11 +55,11 @@
 			</scroll-list>
 		</div>
 		<div class="footer-fixed-menu d-center d-bg-white" v-if="!select">
-			<a :url="'/pages/client/add-client?poolId=' + pool.id" class="d-cell al">
-				<uni-icon type='plus' size='16' color='#1890FF' /><span class="ml5 f13  d-text-gray">新建客户</span>
-			</a>
+			<div  class="d-cell al" @click='addClient'>
+				<uni-icon type='plus' size='16' color='#666' /><span class="ml5 f13  d-text-gray">新建客户</span>
+			</div>
 			<a url='./setting' class="d-cell ar">
-				<i-icon type='setup' size='18' color='#1890FF' /><span class="ml5 f13  d-text-gray">管理</span>
+				<i-icon type='setup' size='18' color='#666' /><span class="ml5 f13  d-text-gray">管理</span>
 			</a>
 		</div>
 
@@ -160,6 +160,12 @@ export default {
 		}
 	},
 	methods: {
+		addClient () {
+			if (!this.pool.id) {
+				return this.$utils.toast.text('还没有客户公海')
+			}
+			this.$routing.navigateTo(`/pages/client/add-client?poolId=${this.pool.id || ''}`)
+		},
 		//
 		handlerClient (item, index) {
 			if (!this.select) {

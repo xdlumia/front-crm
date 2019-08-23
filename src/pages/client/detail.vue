@@ -53,16 +53,16 @@
 			<div class="">
 				<i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
 					<i-tab index="0">
-						<followInfo :query='{clientId: detailInfo.id, busId: detailInfo.id, busType: 0,}' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ')'" />
+						<followInfo :query='{clientId: detailInfo.id, busId: detailInfo.id, busType: 0,}' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ' + ' + infoH + ')'" />
 					</i-tab>
 					<i-tab index="1">
-						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ' + ' + infoH + ')'" />
 					</i-tab>
 					<i-tab index="2">
-						<correlationInfo ref='info' :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name, clientId: detailInfo.id}' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+						<correlationInfo ref='info' :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name, clientId: detailInfo.id}' :sendBackType='detailInfo.sendBackType' :height="'calc(100vh  - 217px - 50px - ' + navH + ' + ' + infoH+ ')'" />
 					</i-tab>
 					<i-tab index='3'>
-						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 217px - 100px - ' + navH + ')'" />
+						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 217px - 100px - ' + navH + ' + ' + infoH + ')'" />
 					</i-tab>
 				</i-tabs>
 			</div>
@@ -169,6 +169,10 @@ export default {
 	computed: {
 		sendBackType () {
 			return +this.detailInfo.sendBackType !== 1
+		},
+		infoH () {
+			return !this.source ? '0px' : '48px'
+			// return '48px'
 		}
 	},
 	methods: {

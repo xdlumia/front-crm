@@ -7,8 +7,8 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="附件" color="#4889f4">
-			<span slot="add">
+        <mPanel top="10" title="附件" color="#4889f4" :isUrl="isUrl">
+			<span slot="add" v-if='isUrl'>
 				<upload-file @success="uploadSuccess">
 					<i-icon type="add" size="24" color="#466bef"></i-icon>
 				</upload-file>
@@ -24,7 +24,15 @@
 <script>
 import uploadFile from '@/components/m-upload-file'
 export default {
-	props: ['query'],
+	props: {
+		query: {
+			type: Object
+		},
+		isUrl: {
+			type: Boolean,
+			default: true
+		}
+	},
 	components: {
 		uploadFile
 	},
@@ -36,6 +44,7 @@ export default {
 	onLoad (option) {
 	},
 	created () {
+		console.log(this.isUrl)
 		this.fileinfoQueryList()
 	},
 	methods: {

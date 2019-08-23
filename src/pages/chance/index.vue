@@ -78,11 +78,11 @@
     <!-- 客户 -->
     <div class="footer-fixed-menu d-center d-bg-white bt" v-if="!isSelect">
       <a class="d-cell al" url="/pages/chance/add-chance">
-        <uni-icon type="plus" size="16" color="#1890FF" />
+        <uni-icon type="plus" size="16" color="#666" />
         <span class="ml5 f13 d-text-gray">新建机会</span>
       </a>
       <a class="d-cell ar" url="./manage/index" v-if="authorityButtons.includes('crm_chance_001')">
-        <i-icon type="setup" size="18" color="#1890FF" />
+        <i-icon type="setup" size="18" color="#666" />
         <span class="ml5 f13 d-text-gray">管理机会</span>
       </a>
     </div>

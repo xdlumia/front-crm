@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="团队成员" color="#1890FF" @click="click">
+        <mPanel top="10" title="团队成员" color="#1890FF" @click="click" :isUrl='isUrl'>
             <div class="detail-list ac f12 d-text-gray" v-if="!list.length && !Object.keys(leader).length">暂无数据</div>
 			<div class="detail-list d-flex-lr bb" v-if='leader.rmEmployeeEntity'>
 				<m-avatar :url='leader.rmEmployeeEntity.avatarUrl' :text='leader.rmEmployeeEntity.employeeName' :width='44' :height='44'></m-avatar>

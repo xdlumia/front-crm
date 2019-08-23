@@ -13,7 +13,7 @@
             </a>
             <span @click="updateAttention(detailInfo.isWatchful)">
               <i-icon
-                :type="detailInfo.isWatchful?'like_fill':'like'"
+                type="like_fill"
                 size="20"
                 class="ml15"
                 :color="detailInfo.isWatchful?'#FF5533':'#999'"
