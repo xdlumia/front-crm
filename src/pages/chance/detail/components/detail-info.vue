@@ -37,7 +37,7 @@
 					{{detailInfo.modifyTime | timeToStr('y-m-d h:i')}}
 					<uni-tag class="fr" text="时间" size="small" type="primary"></uni-tag>
 				</m-list>
-				<m-list label="修改人">{{detailInfo.modifierName}}</m-list>
+				<m-list label="修改人">{{detailInfo.modifierName || '-'}}</m-list>
 			</div>
         </mPanel>
     </div>
