@@ -117,7 +117,7 @@ export default {
 						this.loading = false
 					}
 
-					this.$forceUpdate()
+					// this.$forceUpdate()
 				}
 			} catch (err) {
 				this.list = []

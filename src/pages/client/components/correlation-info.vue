@@ -8,17 +8,17 @@
 <template>
     <div class="hfull d-auto-y" :style="{height:height}">
         <!-- 联系人 -->
-        <infoContact :query="query"/>
+        <infoContact :query="query" :isUrl='isUrl' />
         <!-- 销售机会 -->
-         <infoChance :query="query"/>
+         <infoChance :query="query" :isUrl='isUrl' />
         <!-- 成交记录 -->
-        <infoTransaction :query="query"/>
+        <infoTransaction :query="query" :isUrl='isUrl' />
         <!-- 日程 -->
-        <infoSchedule :query="query"/>
+        <infoSchedule :query="query" :isUrl='isUrl' />
         <!-- 附件 -->
-        <infoFile :query="query"/>
+        <infoFile :query="query" :isUrl='isUrl' />
         <!-- 团队成员 -->
-        <infoEmployee ref='employee' :query="query"/>
+        <infoEmployee ref='employee' :query="query" :isUrl='isUrl' />
     </div>
 </template>
 
@@ -30,7 +30,7 @@ import infoFile from '@/pages/common/info-file' //  附件
 import infoEmployee from '@/pages/common/info-employee' //  团队成员
 import infoChance from '@/pages/common/info-chance' // 机会
 export default {
-	props: ['height', 'query'],
+	props: ['height', 'query', 'sendBackType'],
 	components: {
 		infoContact,
 		infoTransaction,
@@ -44,6 +44,11 @@ export default {
 		}
 	},
 	onLoad (option) {
+	},
+	computed: {
+		isUrl () {
+			return +this.sendBackType !== 1
+		}
 	},
 	methods: {
 		openDetail (index) {

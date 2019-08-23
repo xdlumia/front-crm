@@ -85,5 +85,6 @@ export default {
         line-height: 39px;
         text-align: center;
          float: right;
+         display: none;
     }
 </style>

@@ -184,7 +184,11 @@ export default {
 				this.$utils.toast.text('请选择客户')
 				return
 			}
-			console.log(this.list[this.chooseDataIndex])
+
+			if (!this.chooseDataIndex && this.chooseData) {
+				this.chooseDataIndex = this.list.findIndex(item => +item.id === +this.chooseData)
+			}
+
 			let { id, name } = this.list[this.chooseDataIndex]
 			uni.$emit('chooseClient', { id, name })
 
