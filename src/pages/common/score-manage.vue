@@ -44,10 +44,10 @@
 							type="number"
 							v-model='subItem.minValue'
 							class='input-box f13 d-text-black d-cell'
-							maxlength='3'
+							maxlength='15'
 						/>
 							<span class="ml5 mr5 d-text-qgray">-</span>
-							<input type="number" v-model='subItem.maxValue' maxlength='3' class='input-box d-text-black f13 d-cell'  />
+							<input type="number" v-model='subItem.maxValue' maxlength='15' class='input-box d-text-black f13 d-cell'  />
 					</div>
 				</i-input>
 

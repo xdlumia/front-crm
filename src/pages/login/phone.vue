@@ -10,7 +10,7 @@
                        <label class="d-text-red">*</label>手机号
                    </div>
                    <div class="d-cell mr10 form-row-item">
-                       <input type="number" maxlength='11' v-model="form.phone" class='f12 d-text-gray' placeholder="请填写手机号">
+                       <input type="number" maxlength='11' v-model="form.phone" class='f12 d-text-gray form-input' placeholder="请填写手机号">
                    </div>
                    <div class="pr10 form-row-item hfull d-center pl10 bl">
                        <div v-if="show" class='phone-code-btn d-text-blue f14 ac' @click="getValidateCode">获取验证码</div>
@@ -22,7 +22,7 @@
                        <label class="d-text-red">*</label>验证码
                    </div>
                    <div class="d-cell mr10 form-row-item">
-                       <input type="number" class='f12 d-text-gray' v-model="form.code" placeholder="请填写短信验证码">
+                       <input type="number" class='f12 d-text-gray form-input' v-model="form.code" placeholder="请填写短信验证码">
                    </div>
                </div>
 
@@ -157,7 +157,11 @@ export default {
         border-radius: 5px;
         border: 1px solid  #4889F4;
         line-height: 25px;
-    }
+	}
+
+	.form-input{
+		padding-top: 0
+	}
 
     .login-btn {
         padding: 80px 40px 0
