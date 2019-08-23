@@ -294,6 +294,6 @@ export default {
         .btn-item{
             line-height: 49px;
         }
-    }
+	}
 
 </style>
