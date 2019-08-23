@@ -35,9 +35,9 @@
           </div>
         </div>
         <div class="flex-item item-progress" >
-          <span v-if="select=='1'" @click="handlerClient(item, index)">
-            <m-checkbox v-if="multiple" v-model="linkIds" disabled :label="item.id"></m-checkbox>
-            <m-radio v-else v-model="linkIds" disabled :label="item.id"></m-radio>
+          <span v-if="select=='1'" @click.stop="handlerClient(item, index)">
+            <m-checkbox v-if="multiple" v-model="linkIds"  :label="item.id"></m-checkbox>
+            <m-radio v-else v-model="linkIds"  :label="item.id"></m-radio>
           </span>
           <i v-else @click="callPhone(item.mobile)" class="iconfont f20 d-text-blue iconcall"></i>
         </div>
