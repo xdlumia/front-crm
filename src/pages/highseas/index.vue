@@ -8,8 +8,8 @@
 <template>
     <div class="highseas-page">
         <NavBar :title='select ? "公海池" : ""'>
-			<a :url="'./choose-highseas?poolId=' + pool.id" class='d-center f16' v-if='!select'>
-				{{pool.name || ''}}<i-icon type="unfold" size='18' color='#000' />
+			<a :url="'./choose-highseas?poolId=' + pool.id" class='d-center f16'  v-if='!select'>
+				<span class="d-elip" style="max-width:calc(100% - 20px);">{{pool.name || ''}}</span><i-icon type="unfold" size='18' color='#000' />
 			</a>
 		</NavBar>
         <div>

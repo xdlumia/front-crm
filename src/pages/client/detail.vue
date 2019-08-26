@@ -288,7 +288,7 @@ export default {
 				},
 				5: () => {
 					// 更多日程
-					this.$routing.navigateTo('/pages/index/scheduleAdd?busId=' + this.id + '&busType=0&name=' + this.detailInfo.name)
+					this.$routing.navigateTo('/pages/index/scheduleAdd?busId=' + this.id + '&busType=0&name=' + this.detailInfo.name + '&id=' + this.detailInfo.id)
 				},
 				6: () => {
 					// 分配

@@ -79,6 +79,10 @@ let sortType = ['最新跟进', '最新创建', '离我最近', '最高成交'].
 
 export default {
 	props: {
+		busId: {
+			type: [String, Number],
+			default: ''
+		},
 		// 是否为 选择 客户
 		isSelect: {
 			type: Boolean,
@@ -115,7 +119,6 @@ export default {
 			list: [], // 列表数据
 			chooseDataIndex: '', // 已选择的索引
 			chooseData: '' // 已选择的数据
-
 		}
 	},
 	onLoad () {
@@ -176,7 +179,6 @@ export default {
 			}
 			this.chooseDataIndex = index
 			this.chooseData = item.id
-			console.log(this.chooseDataIndex)
 		},
 
 		// 确定选中
@@ -199,6 +201,9 @@ export default {
 	watch: {
 		'form.name' () {
 			this.$refs.list.reload()
+		},
+		busId (val) {
+			this.chooseData = val
 		}
 	}
 }
