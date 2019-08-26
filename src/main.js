@@ -73,7 +73,6 @@ import mForm from './components/m-form'
 import uParse from './components/parse/parse.vue' // 富文本
 import './components/parse/parse.css' // 富文本
 // 自定义头部
-
 Vue.config.productionTip = false
 Vue.prototype.$store = store
 // uni UI component

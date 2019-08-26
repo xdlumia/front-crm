@@ -4,7 +4,7 @@
 * @date 2019年7月299日
 -->
 <template>
-    <div class="hfull d-auto-y" :style="{height:height}">
+    <div class="hfull d-auto-y ipx" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label-width="120" label="姓名">{{detailInfo.linkmanName}}</m-list>
             <m-list label-width="120" label="负责人">{{detailInfo.leaderName}}</m-list>
