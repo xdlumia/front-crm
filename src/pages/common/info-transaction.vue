@@ -53,12 +53,14 @@ export default {
 	onReady () {
 
 	},
+	created () {
+		this.transactionrecordQueryRecordListById()
+	},
 	methods: {
 		transactionrecordQueryRecordListById () {
 			this.$api.seeCrmService.transactionrecordQueryRecordListById({ id: this.query.busId, type: this.query.busType }).then(res => {
 				if (res.code === 200) {
 					this.list = res.data || []
-					this.$forceUpdate()
 				}
 			})
 		},
@@ -68,10 +70,8 @@ export default {
 			})
 			this.$routing.navigateTo(`/pages/transaction/transaction-add?busType=${this.query.busType}&name=${this.query.name}&id=${this.query.busId}`)
 		}
-	},
-	created () {
-		this.transactionrecordQueryRecordListById()
 	}
+
 }
 </script>
 
