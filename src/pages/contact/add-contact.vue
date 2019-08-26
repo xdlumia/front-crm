@@ -3,7 +3,7 @@
 <template>
 <div class="d-bg-white">
     <NavBar  :title="`${titleType}联系人`"/>
-    <scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
+    <scroll-view scroll-y class="ipx" :style="'height:calc(100vh - ' + navH +' - 50px)'">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.linkmanName" label="姓名" placeholder="请填写" required />
             <a :url="`/pages/client/choose-client?id=${form.clientId}`">

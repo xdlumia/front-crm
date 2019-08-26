@@ -1,5 +1,5 @@
 <template>
-    <div class="d-auto-y" style="height:calc( 100vh - 350px )">
+    <div class="d-auto-y ipx" style="height:calc( 100vh - 350px )">
         <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
             <m-list  label-width="120" label="主题">{{detailInfo.name || '-'}}</m-list>
             <m-list  label-width="120" label="客户">{{detailInfo.clientName || '-'}}</m-list>

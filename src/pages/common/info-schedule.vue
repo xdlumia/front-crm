@@ -14,7 +14,7 @@
 					<!-- d-elip  -->
 					<p class="f13 d-text-gray">{{item.content || ''}}</p>
 					<p class="f12 d-elip d-text-gray">{{item.startTime | timeToStr('yyyy-mm-dd hh:ii')}} 至 {{item.endTime | timeToStr('yyyy-mm-dd hh:ii')}}</p>
-					<p class="f12 d-elip d-text-blue" style="background-colr:#efefef"><i-icon type="coordinates" size="18" color="#4788F4" />{{item.address || ''}}</p>
+					<p class="f12 d-elip d-text-blue" v-if="item.address" style="background-colr:#efefef"><i-icon type="coordinates" size="18" color="#4788F4" />{{item.address || ''}}</p>
 				</div>
 			</div>
         </mPanel>

@@ -6,7 +6,7 @@
 **/
 -->
 <template>
-    <div class="hfull d-auto-y" :style="{height:height}">
+    <div class="hfull d-auto-y ipx" :style="{height:height}">
         <!-- 联系人 -->
         <infoContact :query="query" :isUrl='false' ref='infoContact'/>
         <!-- 销售机会 -->

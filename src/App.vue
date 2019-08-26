@@ -83,7 +83,9 @@ export default {
     left: 0;
     width: 100%;
     box-sizing: border-box;
-    z-index: 3;
+	z-index: 3;
+	padding-bottom: constant(safe-area-inset-bottom); /* 兼容 iOS < 11.2 */
+	padding-bottom: env(safe-area-inset-bottom); /* 兼容 iOS >= 11.2 */
     .d-cell{
         padding: 10px 15px;
     }

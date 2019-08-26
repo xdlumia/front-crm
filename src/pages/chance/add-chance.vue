@@ -3,7 +3,7 @@
 <template>
 <div class="d-bg-white">
     <NavBar :title="`${titleType}销售机会`"/>
-    <scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
+    <scroll-view class="ipx" scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
         <m-form ref="mform" class="uni-pb100" :model="editForm" :rules="rules">
             <i-input v-model="editForm.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
 			<a :url="`/pages/client/choose-client?id=${editForm.clientId}`">

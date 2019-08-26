@@ -42,7 +42,7 @@
             <!--日程列表-->
             <div v-for="(item,index) in indexList" :key="index">
                 <a :url="`/pages/index/scheduleAdd?scheId=${item.id}`" v-if="changeTime(item.startTime) == clickDay" style="border: 1px solid #e4e4e4;border-left: none;border-right: none;">
-                    <div class="p10 wfull">
+                    <div class="p10 wfull ml5">
                         <div class="wfull d-flex">
                             <div class="d-flex cirle-blue" style="margin-top: 7px;">
                             </div>
@@ -275,7 +275,7 @@ export default {
 	},
 	computed: {
 		todayDate () {
-			return (new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate())
+			return (new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate())
 		},
 		thisDate () {
 			return (new Date().getFullYear() + '年' + (new Date().getMonth() + 1) + '月')
@@ -298,34 +298,6 @@ export default {
 		this.getTodayDate()
 	},
 	onLoad (option) {
-		let that = this
-		// 接收真客户传来的openid登录系统
-		if (option.openid) {
-			that.$api.systemService.thirdpartyAuthorizationLogin({ 'userKey': option.openid }).then((response2) => {
-				if (response2.code === 200) {
-					that.$local.setItem('token', response2.data.token)
-					that.$local.setItem('finger', response2.data.finger)
-					// 调用角色权限列表，刷新后端缓存
-					that.$api.bizSystemService.getUserResource({}, that.$local.getItem('sysCode')).then((response) => {
-						if (response.code === 200) {
-							that.$local.save('sourceList', response.data)
-						} else {
-							that.$utils.toast.text(response.msg)
-						}
-					})
-					// 获取用户详细数据
-					that.$api.bizSystemService.getUserDetail({}, { 'sysCode': that.$local.getItem('sysCode') }).then((response) => {
-						that.$utils.toast.text(response.msg)
-						if (response.code === 200) {
-							uni.$emit('setUserInfo', response.data)
-							// that.$routing.switchTab('/pages/index/index')
-						}
-					})
-				} else {
-					that.$utils.toast.text(response.msg)
-				}
-			})
-		}
 	},
 	methods: {
 		// 点击切换人员
@@ -366,7 +338,7 @@ export default {
 					this.indexList = res.data || []
 					this.indexList.forEach((item) => {
 						this.allcolleagues.push(this.changeTime(item.startTime))
-						this.selected.push({ date: this.changeTime(item.startTime) })
+						this.selected.push({ date: this.getSelectedDate(item.startTime) })
 					})
 				})
 		},
@@ -404,17 +376,20 @@ export default {
 		},
 		// 日历的点击
 		confirm (value) {
-			this.clickDay = value.fulldate
+			this.clickDay = value.fulldate.replace(/-/g, '/')
 		},
 		// 进来默认获取今天日期
 		getTodayDate () {
-			this.clickDay = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
+			this.clickDay = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate()
 		},
 		handleChange () {
 
 		},
 		// 将时间戳转换成年月日
 		changeTime (time) {
+			return new Date(time).getFullYear() + '/' + (new Date(time).getMonth() + 1) + '/' + new Date(time).getDate()
+		},
+		getSelectedDate (time) {
 			return new Date(time).getFullYear() + '-' + (new Date(time).getMonth() + 1) + '-' + new Date(time).getDate()
 		},
 		getDates () {
@@ -424,7 +399,7 @@ export default {
 			var dates = []
 			for (var i = 0; i < 7; i++) {
 				let param = new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 7) % 7))
-				dates.push({ dayTime: param.getDate(), otherTime: param.getFullYear() + '-' + (param.getMonth() + 1) + '-' + param.getDate() })
+				dates.push({ dayTime: param.getDate(), otherTime: param.getFullYear() + '/' + (param.getMonth() + 1) + '/' + param.getDate() })
 			}
 			this.allTime = [...dates]
 		},

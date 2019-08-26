@@ -12,7 +12,6 @@
 <script>
 import WxCanvas from '@/static/wx-canvas'
 import * as echarts from '@/static/echarts'
-
 let ctx = null
 export default {
 	props: {
