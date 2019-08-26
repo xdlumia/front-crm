@@ -111,7 +111,7 @@ export default {
     border-bottom: 1px solid #e4e4e4;
     padding: 12rpx 20rpx;
     box-sizing: border-box;
-
+    background: #fff;
     .at-icon{
         line-height: 1.2;
         vertical-align: 0
@@ -156,7 +156,6 @@ export default {
     width: 100%;
     left: 0;
     top: 0;
-    background: #fff;
     z-index: 9999;
 }
 
