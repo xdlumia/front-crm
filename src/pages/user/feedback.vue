@@ -54,10 +54,11 @@ export default {
 			this.feedbackForm.companyCode = companyInfo.companyCode
 			this.handPicUrls()
 			this.$api.systemService.saveCustomerFeedback(this.feedbackForm).then((response) => {
-				this.$utils.toast.text(response.msg)
 				if (response.code === 200) {
 					this.$utils.toast.text('反馈成功')
-					this.$routing.navigateBack()
+					setTimeout(() => {
+						this.$routing.navigateBack()
+					}, 800)
 				} else {
 					this.$utils.toast.text('反馈失败')
 				}

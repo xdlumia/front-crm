@@ -24,16 +24,16 @@
 						<view class="d-text-qgray">来源</view>
 						<view>由<span style="color:#5081F5;">{{item.inviter}}</span>邀请加入</view>
 					</view>
-					<view class="flex-item width45 d-center" style="margin: 40px 0;">
-						<button v-if="item.isAgree == 1" class="fl ml5 d-text-cgray">
+					<view class="flex-item width45 d-center">
+						<button v-if="item.isAgree == 1" class="fl pl10 pr10 d-text-cgray">
 							已同意
 						</button>
 						<button v-else type="primary"
 						size="8px" plain="true"
-						class="fl ml5"
+						class="fl pl10 pr10 "
 						style="color: #4889F4;border-color: #4889F4;"
 						@tap="agreeApply(item)">同意</button>
-						<button type="warn" size="8px" plain="true" class="fl ml5" @click="deleteApply(item.id)">删除</button>
+						<button type="warn" size="8px" plain="true" class="fl pl10 pr10" @click="deleteApply(item.id)">删除</button>
 					</view>
 				</view>
 				<view class="flex-item flex-item-V bb pb10" style="padding-left: 23%;padding-right: 6%;">

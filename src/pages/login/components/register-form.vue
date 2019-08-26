@@ -77,7 +77,8 @@ export default {
 				setEndTime: '', // 服务结束时间（开始时间加上30天）
 				applyFromCode: 'crm', // 服务申请来源
 				sysCode: 'crm', // 系统编码
-				applicantName: ''// 申请人名称码
+				applicantName: '', // 申请人名称码
+				applyNotes: ''// 备注
 			},
 			vilidateCode: '', // 验证码
 			validateOk: false,
@@ -116,6 +117,7 @@ export default {
 			this.form.setEndTime = new Date(this.form.setStartTime)
 			this.form.setEndTime = parseInt(this.form.setStartTime) + 30 * 24 * 60 * 60 * 1000
 			this.form.applicantName = this.form.linkmanName
+			this.form.applyNotes = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日申请客户管理套餐免费试用30天'
 
 			await this.$refs.mform.validate()
 

@@ -298,34 +298,6 @@ export default {
 		this.getTodayDate()
 	},
 	onLoad (option) {
-		let that = this
-		// 接收真客户传来的openid登录系统
-		if (option.openid) {
-			that.$api.systemService.thirdpartyAuthorizationLogin({ 'userKey': option.openid }).then((response2) => {
-				if (response2.code === 200) {
-					that.$local.setItem('token', response2.data.token)
-					that.$local.setItem('finger', response2.data.finger)
-					// 调用角色权限列表，刷新后端缓存
-					that.$api.bizSystemService.getUserResource({}, that.$local.getItem('sysCode')).then((response) => {
-						if (response.code === 200) {
-							that.$local.save('sourceList', response.data)
-						} else {
-							that.$utils.toast.text(response.msg)
-						}
-					})
-					// 获取用户详细数据
-					that.$api.bizSystemService.getUserDetail({}, { 'sysCode': that.$local.getItem('sysCode') }).then((response) => {
-						that.$utils.toast.text(response.msg)
-						if (response.code === 200) {
-							uni.$emit('setUserInfo', response.data)
-							// that.$routing.switchTab('/pages/index/index')
-						}
-					})
-				} else {
-					that.$utils.toast.text(response.msg)
-				}
-			})
-		}
 	},
 	methods: {
 		// 点击切换人员
