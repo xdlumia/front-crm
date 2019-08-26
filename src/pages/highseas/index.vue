@@ -43,7 +43,7 @@
 							<div class="mr15" @click.stop='receive(item)'>
 								<uni-tag text="领取" type='primary' inverted size='small'></uni-tag>
 							</div>
-							<div @click.stop='handlerAllocation(item, index)' class="mr10">
+							<div @click.stop='handlerAllocation(item, index)' class="mr10" v-if="authorityButtons.includes('crm_public_pool_001')">
 								<uni-tag text="分配" type='primary' inverted size='small'></uni-tag>
 							</div>
 						</div>
@@ -55,10 +55,10 @@
 			</scroll-list>
 		</div>
 		<div class="footer-fixed-menu d-center d-bg-white" v-if="!select">
-			<div  class="d-cell al" @click='addClient'>
+			<div  class="d-cell al" @click='addClient' :class="authorityButtons.includes('crm_public_pool_002') ? 'al' : 'ac'">
 				<uni-icon type='plus' size='16' color='#666' /><span class="ml5 f13  d-text-gray">新建客户</span>
 			</div>
-			<a url='./setting' class="d-cell ar">
+			<a url='./setting' class="d-cell ar" v-if="authorityButtons.includes('crm_public_pool_002')">
 				<i-icon type='setup' size='18' color='#666' /><span class="ml5 f13  d-text-gray">管理</span>
 			</a>
 		</div>

@@ -42,10 +42,10 @@
 				<a url='/pages/client/add-client' class="d-cell al">
 					<uni-icon type='plus' size='16' color='#666' /><span class="ml5 f13  d-text-gray">新建客户</span>
 				</a>
-				<a url='/pages/highseas/index' class="d-cell ac">
-					<span class="iconfont iconrenzheng f16"></span><span class="ml5 f13  d-text-gray">到公海池</span>
+				<a url='/pages/highseas/index' class="d-cell " :class="authorityButtons.includes('crm_main_001') ? 'ac' : 'ar'">
+					<span class="iconfont iconrenzheng f16"></span><span class="mlthis.5 f13  d-text-gray">到公海池</span>
 				</a>
-				<a url='./manage/index' class="d-cell ar">
+				<a url='./manage/index' class="d-cell ar" v-if="authorityButtons.includes('crm_main_001')">
 					<i-icon type='setup' size='18' color='#666' /><span class="ml5 f13  d-text-gray">管理</span>
 				</a>
 			</div>
@@ -144,6 +144,7 @@ export default {
 		// 移除监听事件
 		uni.$off('updatedate')
 	},
+
 	methods: {
 		getSearch (data) {
 			this.queryForm.name = data.searchInfo
