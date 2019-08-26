@@ -60,11 +60,11 @@
 
             <!--新建日程-->
             <div class="d-flex mt10 mb15" style="justify-content: center;">
-                <a url="/pages/index/scheduleAdd">
+                <div @click="scheduleAdd">
                     <div class="ac" style="width: 131px;height: 37px;border: 1px solid #457FF5;line-height: 37px;border-radius: 50px;color: #457FF5;">
                         <span>新建日程</span>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
 
@@ -319,6 +319,13 @@ export default {
 				})
 				this.$routing.navigateTo(`/pages/index/colleagueChoose?subordinate=1&userId=${this.userInfo.employeeId}&ids=${this.userId}`)
 			}
+		},
+		// 点击新建日程
+		scheduleAdd () {
+			uni.$once('updateIndexList', data => {
+				this.getIndexList()
+			})
+			this.$routing.navigateTo('/pages/index/scheduleAdd')
 		},
 		// 获取日程列表
 		getIndexList () {

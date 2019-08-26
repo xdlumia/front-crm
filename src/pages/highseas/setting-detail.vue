@@ -157,10 +157,10 @@ export default {
 				id: '',
 				name: '',
 				recycleType: '', // 客户自动回收(0-关闭,1-打开)
+				memberDeptCode: '', // 公海部门成员
 				administratorId: '', // 管理员
 				getClientType: '', // 连续领取规则
 				getClientNumMax: '', // 领取客户上限
-				memberDeptCode: '', // 公海部门成员
 				bargainRecycleDaysNum: '', // 未成交自动回收天数
 				followRecycleDaysNum: '', // 未跟进自动回收天数
 				type: 'CRM_GHLX-1', // 公海类型
@@ -171,13 +171,13 @@ export default {
 					required: true,
 					message: '请输入公海池名称'
 				}],
-				administratorId: [{
-					required: true,
-					message: '请选择管理员'
-				}],
 				memberDeptCode: [{
 					required: true,
 					message: '请选择公海成员'
+				}],
+				administratorId: [{
+					required: true,
+					message: '请选择管理员'
 				}],
 				type: [{
 					required: true,

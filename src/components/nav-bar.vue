@@ -12,7 +12,7 @@
     <div class='nav'>
         <div class='wfull' :style="{ height: `${statusHeight + titleBarHeight}rpx`}"></div>
         <div class='nav-fixed'>
-            <div class='status' :style="{height: `${statusHeight}rpx`}"></div>
+            <div class='status d-bg-white' :style="{height: `${statusHeight}rpx`}"></div>
             <div class='navbar' :style="{height: `${titleBarHeight}rpx`}">
 
                 <div class="tools-box d-center" v-if="pages > 1">

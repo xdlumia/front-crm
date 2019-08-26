@@ -6,7 +6,7 @@
     <scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
             <i-input v-model="form.linkmanName" label="姓名" placeholder="请填写" required />
-            <a url="/pages/client/choose-client">
+            <a :url="`/pages/client/choose-client?id=${form.clientId}`">
 				<i-input disabled v-model="form.clientName" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
