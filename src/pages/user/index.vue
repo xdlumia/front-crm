@@ -149,9 +149,9 @@ export default {
 	},
 	onShareAppMessage () {
 		return {
-			title: 'test title',
+			title: '智能推送客户',
 			imageUrl: '/static/img/share.jpg',
-			path: '' // 这里的 path 是页面 url，而不是小程序路由
+			path: '/pages/login/index' // 这里的 path 是页面 url，而不是小程序路由
 		}
 	}
 }
