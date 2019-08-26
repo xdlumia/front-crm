@@ -37,25 +37,25 @@
      <i-input maxlength="32" v-model="deptInfo.deptName" disabled label="所属部门" placeholder="请输入"/>
         <picker-date v-model="form.signDate" label="签约日期" placeholder="请选择日期"></picker-date>
       </m-form>
-			<div class="pt10 pl15 pr15 d-bg-white bb">
-					<div class='f13 mb10 d-text-black'>备注</div>
-					<textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
+		<div class='d-bg-white pb10'>
+			<div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
+				<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+				<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+				<i-select
+					v-if='item.fieldType == 3'
+					v-model="form.formsFieldValueSaveVos[index].fieldValue"
+					:props="{label:'content',value:'code'}"
+					:label="item.fieldName"
+					placeholder="请选择"
+					:options="dictionaryOptions(item.groupCode || '')"
+				/>
 			</div>
-			<div class='d-bg-white pb10'>
-					<div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
-						<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-						<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-						<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
-						<i-select
-							v-if='item.fieldType == 3'
-							v-model="form.formsFieldValueSaveVos[index].fieldValue"
-							:props="{label:'content',value:'code'}"
-							:label="item.fieldName"
-							placeholder="请选择"
-							:options="dictionaryOptions(item.groupCode || '')"
-						/>
-					</div>
-				</div>
+		</div>
+		<div class="pt10 pl15 pr15 d-bg-white bb">
+				<div class='f13 mb10 d-text-black'>备注</div>
+				<textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
+		</div>
       <div @click="getMoreList" class="ac d-text-gray lh40 d-block">
         <i-icon type="add" size="18" color="#999"/>添加更多条目
       </div>
