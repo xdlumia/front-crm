@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="wfull">
         <NavBar title="首页" />
         <div class="d-flex mt5">
             <div @click="current = 0,clickDay = todayDate" class="f16 d-text-gray b ml15 ac" :class="current == 0 ? 'brblur' : ''">今天</div>
@@ -42,7 +42,7 @@
             <!--日程列表-->
             <div v-for="(item,index) in indexList" :key="index">
                 <a :url="`/pages/index/scheduleAdd?scheId=${item.id}`" v-if="changeTime(item.startTime) == clickDay" style="border: 1px solid #e4e4e4;border-left: none;border-right: none;">
-                    <div class="p10 wfull ml5">
+                    <div class="p10 ml5" style="box-sizing: border-box;">
                         <div class="wfull d-flex">
                             <div class="d-flex cirle-blue" style="margin-top: 7px;">
                             </div>
