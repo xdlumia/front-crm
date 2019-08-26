@@ -71,7 +71,7 @@
           </i-row>
         </div>
         <div class="flex-item d-flex" style="width:50px;align-items: center;" v-if="isSelect">
-          <m-radio v-model="id" :label="item.id"></m-radio>
+          <m-radio v-model="id" disabled :label="item.id"></m-radio>
         </div>
       </div>
     </scroll-list>
@@ -130,7 +130,6 @@ export default {
 		return {
 			// 销售机会列表
 			list: [],
-			chooseRowIndex: '', // radio选中的下标
 			id: this.busId, // 当为选择页面的时候选中的id
 			filterData: [
 				{
@@ -238,7 +237,6 @@ export default {
 			if (!this.isSelect) {
 				this.$routing.navigateTo('/pages/chance/detail/index?id=' + row.id)
 			} else {
-				this.chooseRowIndex = index
 				this.id = row.id
 			}
 		},
@@ -248,7 +246,8 @@ export default {
 				this.$utils.toast.text('请选择机会')
 				return
 			}
-			let row = this.list[this.chooseRowIndex]
+			let index = this.list.findIndex(item => item.id === this.id)
+			let row = this.list[index]
 			uni.$emit('chooseChance', row)
 
 			this.$routing.navigateBack()
