@@ -55,7 +55,15 @@
                             <span class="ml15">培训助手</span>
                         </div>
                     </div>
-                    <div class="flexalone flexcenter">
+                    <div v-if="authorityButtons.includes('crm_enterprise')" class="flexalone flexcenter">
+                        <a url='/pages/application/enterprise-management/index' style='width: 100px;'>
+                        <div style='width: 100px;' class="lineCenter">
+                            <i class="iconfont f20 iconduoren" style="color: #4D7FF5;"></i>
+                            <span class="ml15">企业管理</span>
+                        </div>
+                        </a>
+                    </div>
+                    <div v-else class="flexalone flexcenter">
                         <a url='/pages/application/enterprise-management/index' style='width: 100px;'>
                         <div style='width: 100px;' class="lineCenter">
                             <i class="iconfont f20 iconduoren" style="color: #4D7FF5;"></i>

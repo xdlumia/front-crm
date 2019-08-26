@@ -98,10 +98,16 @@ export default {
 								}
 							})
 						}
+					} else {
+						this.$utils.toast.text(response.msg)
+						// 重新获取code
+						uni.login({
+							provider: 'weixin',
+							success: function (loginRes) {
+								this.form.code = loginRes.code
+							}
+						})
 					}
-					// else{
-					// 	this.$utils.toast.text('请前往申请开通页面或使用手机号登录')
-					// }
 				})
 			}
 		},
