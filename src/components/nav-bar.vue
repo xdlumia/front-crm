@@ -81,19 +81,6 @@ export default {
 		}
 	},
 	created () {
-		// let haveBack;
-		// if (getCurrentPages().length === 1) { // 当只有一个页面时，并且是从分享页进入
-		//     haveBack = false;
-		// } else {
-		//     haveBack = true;
-		// }
-		// this.setData({
-		//     haveBack: haveBack, // 获取是否是通过分享进入的小程序
-		//     statusBarHeight: statusBarHeight,
-		//     navbarHeight: headerPosi.bottom + btnPosi.bottom, // 胶囊bottom + 胶囊实际bottom
-		//     navbarBtn: btnPosi
-		// })
-
 		/**
          * wx.getMenuButtonBoundingClientRect() 坐标信息以屏幕左上角为原点
          * 菜单按键宽度： 87

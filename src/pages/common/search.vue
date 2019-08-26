@@ -4,12 +4,10 @@
  */ -->
 <template>
     <div class='nav'>
-        <div class='wfull' :style="{ height: `${statusHeight + titleBarHeight}rpx`}"></div>
-		<div class='nav-fixed d-relative'>
-			<div class='status' :style="{height: `${statusHeight}rpx`}"></div>
-			<div class='navbar' :style="{height: `${titleBarHeight}rpx`}">
-
-				<div class="tools-box d-flex d-relative">
+		<div class='wfull' :style="{ height: `${navHeight - statusBarHeight}px`, 'padding-top': `${statusBarHeight}px` }"></div>
+        <div class='nav-fixed'>
+            <div class='navbar' :style="{ height: `${navHeight}px`, 'padding-top': `${statusBarHeight}px`}">
+				<div class="tools-box d-flex d-relative d-center" :style="{ height: `${navbarBtn.height}px`, 'margin-top': `${navbarBtn.top}px`, 'margin-left': `${navbarBtn.right}px`,'margin-right': `${navbarBtn.left}px`}">
 					<navigator open-type='navigateBack' class="d-center tools-item">
 						<i-icon type="return" size="20" color='#333' class="b searchiconleft"/>
 					</navigator>
@@ -26,29 +24,27 @@
 						</span>
 					</div>
 				</div>
-			</div>
-
-			<div class="search-jl">
-				<span class="d-text-black ml15 mt15">历史搜索</span>
-				<span @click="deleteSearchList()" class="d-text-blue f13 mr15 mt15">清除</span>
-			</div>
-			<div class="search-history p15" style="padding-top: 10px;" v-if="searchHistoryList.length > 0">
-				<div class="d-bg-white p1 searchistory mr5 mb5" v-for="(item,index) in searchHistoryList" :key="index">
-					<span style="color: #666;" class="pl5 pr5" @click="clickToSearch(item)">{{item}}</span>
-					<uni-icon @click="deleteSearchList(index)" class="fr" type='closeempty' color="#999" size='20'/>
+				<div class="search-jl">
+					<span class="d-text-black ml15 mt15">历史搜索</span>
+					<span @click="deleteSearchList()" class="d-text-blue f13 mr15 mt15">清除</span>
 				</div>
-			</div>
-			<div v-if="isSearch" style="width:100%;background:#FFF;z-index:999;" :style="{top:`${statusHeight + titleBarHeight}rpx`}" class="hfull d-absolute">
-				<div @click="clickToSearch(item)" style="justify-content: space-between;height:40px;border-bottom:1px solid #EBEBEB;display:flex;align-items: center;color:#666" v-for="(item,index) in searchHistoryList" :key="index">
-					<span>
-						<i-icon type="search" size="16" color='#999' class="b searchicon ml15"/>
-						<span class="ml10">{{item}}</span>
-					</span>
-					<uni-icon type='arrowthinup' class="fr mr15" color="#000" style="transform:rotate(-30deg);" size='20'/>
+				<div class="search-history p15" style="padding-top: 10px;" v-if="searchHistoryList.length > 0">
+					<div class="d-bg-white p1 searchistory mr5 mb5" v-for="(item,index) in searchHistoryList" :key="index">
+						<span style="color: #666;" class="pl5 pr5" @click="clickToSearch(item)">{{item}}</span>
+						<uni-icon @click="deleteSearchList(index)" class="fr" type='closeempty' color="#999" size='20'/>
+					</div>
 				</div>
-			</div>
-		</div>
-
+				<div v-if="isSearch" style="width:100%;background:#FFF;z-index:999;" :style="{top:`${statusHeight + titleBarHeight}rpx`}" class="hfull d-absolute">
+					<div @click="clickToSearch(item)" style="justify-content: space-between;height:40px;border-bottom:1px solid #EBEBEB;display:flex;align-items: center;color:#666" v-for="(item,index) in searchHistoryList" :key="index">
+						<span>
+							<i-icon type="search" size="16" color='#999' class="b searchicon ml15"/>
+							<span class="ml10">{{item}}</span>
+						</span>
+						<uni-icon type='arrowthinup' class="fr mr15" color="#000" style="transform:rotate(-30deg);" size='20'/>
+					</div>
+				</div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -75,8 +71,9 @@ export default {
 	data () {
 		return {
 			isSearch: false,
-			statusHeight: 0,
-			titleBarHeight: 0,
+			statusBarHeight: 0,
+			navHeight: 0,
+			navbarBtn: {},
 			searchInfo: '',
 			searchHistoryList: [],
 			searchForm: {
@@ -102,23 +99,33 @@ export default {
 		this.busType = option.searchType
 	},
 	onReady () {
-		let { systemInfo } = this.$store.state
-		let titleBarHeight = 0
-		if (systemInfo.model.indexOf('iPhone') !== -1) {
-			titleBarHeight = 88
-		} else {
-			titleBarHeight = 96
+		/**
+         * wx.getMenuButtonBoundingClientRect() 坐标信息以屏幕左上角为原点
+         * 菜单按键宽度： 87
+         * 菜单按键高度： 32
+         * 菜单按键左边界坐标： 278
+         * 菜单按键上边界坐标： 26
+         * 菜单按键右边界坐标： 365
+         * 菜单按键下边界坐标： 58
+         */
+		const { systemInfo } = this.$store.state
+		console.log(systemInfo)
+		const headerPosi = systemInfo.menuInfo // 胶囊位置信息
+		let statusBarHeight = systemInfo.statusBarHeight
+
+		let btnPosi = { // 胶囊实际位置，坐标信息不是左上角原点
+			height: headerPosi.height,
+			width: headerPosi.width,
+			top: headerPosi.top - statusBarHeight, // 胶囊top - 状态栏高度
+			bottom: headerPosi.bottom - headerPosi.height - statusBarHeight, // 胶囊bottom - 胶囊height - 状态栏height （胶囊实际bottom 为距离导航栏底部的长度）
+			right: systemInfo.screenWidth - headerPosi.right, // 屏幕宽度 - 胶囊right
+			left: systemInfo.screenWidth - headerPosi.left
 		}
 
-		this.titleBarHeight = titleBarHeight
-		this.statusHeight = systemInfo.statusBarHeight * 2
-		this.$local.save('navH', +this.titleBarHeight + +this.statusHeight)
-
-		this.searchForm = this.$local.fetch('searchForm') || {}
-		if (Object.keys(this.searchForm).length > 0) {
-			this.searchHistoryList = this.searchForm[this.optionType] || []
-		}
-		// console.log(this.searchForm)
+		this.navHeight = headerPosi.bottom + btnPosi.bottom
+		this.navbarBtn = btnPosi
+		this.statusBarHeight = systemInfo.statusBarHeight
+		this.$local.save('navH', +this.navHeight)
 	},
 	computed: {
 		isBack () {
@@ -190,8 +197,6 @@ export default {
 }
 
 .tools-box{
-    width: 530rpx;
-    height: 62rpx;
     border: 1px solid #e4e4e4;
     border-radius: 100px;
     position: relative;
