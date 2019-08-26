@@ -120,7 +120,7 @@ export default {
 		this.navHeight = headerPosi.bottom + btnPosi.bottom
 		this.navbarBtn = btnPosi
 		this.statusBarHeight = systemInfo.statusBarHeight
-		this.$local.save('navH', +this.navHeight * 2)
+		this.$local.save('navH', +this.navHeight)
 	},
 	computed: {
 		isBack () {

@@ -6,7 +6,7 @@
 **/
 -->
 <template>
-    <div class="hfull d-auto-y" :style="{height:height}">
+    <div class="hfull d-auto-y ipx" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label-width="120" label="客户名称">{{detailInfo.name || '-'}}</m-list>
             <m-list label-width="120" label="所属部门">{{detailInfo.deptName || '-'}}</m-list>

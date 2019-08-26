@@ -212,7 +212,7 @@ Vue.mixin({
 			return generateButtonCodes(authorityBtn)
 		},
 		navH () {
-			return local.fetch('navH') + 'rpx'
+			return local.fetch('navH') + 'px'
 		},
 		deptInfo () {
 			return this.$local.fetch('deptInfo') || {}
