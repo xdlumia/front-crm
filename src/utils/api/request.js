@@ -39,7 +39,8 @@ Api.interceptors.request.use(async config => {
 })
 
 Api.interceptors.response.use(async (response, promise) => {
-	let res = response.data
+	let res = response.data || {}
+	res.msg = res.msg.replace(/<\/?.+?>/g, '')
 	// uni.hideLoading()
 	if (+response.data.code === 402 || +response.data.code === 403) {
 		uni.$emit('loginout')
