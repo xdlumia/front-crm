@@ -62,23 +62,6 @@
                             <uni-icon type='arrowright' size='16' color='#696969' />
                         </div>
                     </view>
-                    <uni-popup ref="popup" type="bottom" style="height:303px">
-                        <div style="width:100%;height:50px;line-height:50px;border-bottom:1px solid #f2f2f2;color:333" class="f13 ac">选择表单类型</div>
-                        <div style="height:204px;display:flex">
-                            <div class="hfull d-auto-y" style="flex:1;border-right:1px solid #f2f2f2">
-                                <div @click="getmsgName(item)" v-for="(item,index) in msgArr" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
-                                    {{item.name}}
-                                </div>
-                            </div>
-                            <div v-if='msgid == 3' class="hfull d-auto-y" style="width:270px">
-                                <div @click="gettagName(item)" v-for="(item,index) in tagAllList" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
-                                    {{item.labelName}}
-                                </div>
-                            </div>
-                        </div>
-                        <div @click="closePopup" style="width:100%;height:50px;line-height:50px;border-top:3px solid #E4E4E4;color:333" class="f13 ac">取消</div>
-                    </uni-popup>
-
             </div>
 
             <div style="calc(100vw - 310px)" class="hfull flexcenter">
@@ -87,6 +70,23 @@
                 </div>
             </div>
         </div>
+
+		<uni-popup ref="popup" type="bottom" style="height:303px;z-index='999'">
+			<div style="width:100%;height:50px;line-height:50px;border-bottom:1px solid #f2f2f2;color:333" class="f13 ac">选择表单类型</div>
+			<div style="height:204px;display:flex">
+				<div class="hfull d-auto-y" style="flex:1;border-right:1px solid #f2f2f2">
+					<div @click="getmsgName(item)" v-for="(item,index) in msgArr" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
+						{{item.name}}
+					</div>
+				</div>
+				<div v-if='msgid == 3' class="hfull d-auto-y" style="width:270px">
+					<div @click="gettagName(item)" v-for="(item,index) in tagAllList" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
+						{{item.labelName}}
+					</div>
+				</div>
+			</div>
+			<div @click="closePopup" style="width:100%;height:50px;line-height:50px;border-top:3px solid #E4E4E4;color:333" class="f13 ac">取消</div>
+		</uni-popup>
 
         <div class="moreinfo" @click="moreAdd">
             <div class="ml15">

@@ -94,7 +94,8 @@ export default {
 				limit: 15
 			},
 			tagId: '',
-			valueList: []
+			valueList: [],
+			closure: true
 		}
 	},
 	onLoad (option) {
@@ -108,9 +109,11 @@ export default {
 	methods: {
 		// 保存客户管理标签的顺序
 		saveDataDictionaryOrder () {
+			this.closure = false
 			this.$api.seeDataDictionaryService.saveDataDictionaryOrder(this.valueList)
 				.then(res => {
-					this.getValueList()
+					// this.getValueList()
+					this.closure = true
 				})
 		},
 		// 向上移动

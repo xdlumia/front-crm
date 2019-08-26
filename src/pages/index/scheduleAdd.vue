@@ -29,7 +29,7 @@
                     end="2030-12-30 23:59"
                     @change="startTimeChange"
                 >
-                    <i-input disabled label="开始" v-model="acheduleForm.startTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
+                    <i-input disabled label="开始" v-model="acheduleForm.startTimeOnle" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
                 </ruiDatePicker>
 
                 <ruiDatePicker
@@ -39,7 +39,7 @@
                     end="2030-12-30 23:59"
                     @change="endTimeChange"
                 >
-                    <i-input disabled label="结束" v-model="acheduleForm.endTime" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
+                    <i-input disabled label="结束" v-model="acheduleForm.endTimeOnle" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
                 </ruiDatePicker>
 
                 <i-select
@@ -103,6 +103,8 @@ export default {
 				address: '', // 详细地址
 				lon: '', // 经度
 				lat: '', // 纬度
+				startTimeOnle: '',
+				endTimeOnle: '',
 				startTime: '', // 开始时间
 				endTime: '', // 结束时间
 				remindSecond: '', // 提醒时间（秒）
@@ -121,11 +123,11 @@ export default {
 					required: true,
 					message: '请输入主题'
 				}],
-				startTime: [{
+				startTimeOnle: [{
 					required: true,
 					message: '请选择开始时间'
 				}],
-				endTime: [{
+				endTimeOnle: [{
 					required: true,
 					message: '请选择结束时间'
 				}],
@@ -233,8 +235,8 @@ export default {
 				.then(res => {
 					this.acheduleForm = res.data || {}
 					this.acheduleForm.particiNames = this.acheduleForm.participantNames ? this.acheduleForm.participantNames.join(',') : ''
-					this.acheduleForm.startTime = this.changeTime(this.acheduleForm.startTime)
-					this.acheduleForm.endTime = this.changeTime(this.acheduleForm.endTime)
+					this.acheduleForm.startTimeOnle = this.changeTime(this.acheduleForm.startTime)
+					this.acheduleForm.endTimeOnle = this.changeTime(this.acheduleForm.endTime)
 					this.clientData = { name: this.acheduleForm.clientName || '', id: this.acheduleForm.clientId || '' }// 客户，
 					this.contactData = { name: this.acheduleForm.linkName || '', id: this.acheduleForm.linkId || '' }// 联系人
 					this.transactionData = { name: this.acheduleForm.transactionRecordName || '', id: this.acheduleForm.transactionRecordId || '' }// 成交记录
@@ -305,18 +307,18 @@ export default {
 
 		},
 		startTimeChange (val) {
-			this.acheduleForm.startTime = val
+			this.acheduleForm.startTimeOnle = val
 		},
 		endTimeChange (val) {
-			if (val.split(' ')[0] !== this.acheduleForm.startTime.split(' ')[0]) {
+			if (val.split(' ')[0] !== this.acheduleForm.startTimeOnle.split(' ')[0]) {
 				this.$utils.toast.text('结束时间与开始时间只能是同一天！')
 				return
 			}
-			if (Date.parse(this.acheduleForm.startTime) > Date.parse(val)) {
+			if (Date.parse(this.acheduleForm.startTimeOnle) > Date.parse(val)) {
 				this.$utils.toast.text('结束时间必须大于开始时间！')
 				return
 			}
-			this.acheduleForm.endTime = val
+			this.acheduleForm.endTimeOnle = val
 		},
 		tixChange ({ mp: { detail } }, filed) {
 			let index = detail.value
@@ -325,17 +327,18 @@ export default {
 		// 保存日程
 		async fsubmit () {
 			await this.$refs.acheduleForm.validate()
-			if (Date.parse(this.acheduleForm.startTime) > Date.parse(this.acheduleForm.endTime)) {
+			if (Date.parse(this.acheduleForm.startTimeOnle) > Date.parse(this.acheduleForm.endTimeOnle)) {
 				this.$utils.toast.text('结束时间必须大于开始时间！')
 				return
 			}
+			// let startTimeOnle =
 			this.acheduleForm.clientId = this.clientData.id || ''
 			this.acheduleForm.linkId = this.contactData.id || ''
 			this.acheduleForm.salesFunnelId = this.chanceData.id || ''
 			this.acheduleForm.transactionRecordId = this.transactionData.id || ''
 			this.acheduleForm.seaPoolId = this.highseasData.id || ''
-			this.acheduleForm.startTime = Date.parse(this.acheduleForm.startTime)
-			this.acheduleForm.endTime = Date.parse(this.acheduleForm.endTime)
+			this.acheduleForm.startTime = Date.parse(this.acheduleForm.startTimeOnle)
+			this.acheduleForm.endTime = Date.parse(this.acheduleForm.endTimeOnle)
 			if (this.isadd) {
 				this.$api.seeCrmService.scheduleSave(this.acheduleForm)
 					.then(res => {
