@@ -10,27 +10,32 @@
  */ -->
 <template>
     <div class='nav'>
-        <div class='wfull' :style="{ height: `${statusHeight + titleBarHeight}rpx`}"></div>
+        <div class='wfull' :style="{ height: `${navHeight - statusBarHeight}px`, 'padding-top': `${statusBarHeight}px` }"></div>
         <div class='nav-fixed'>
-            <div class='status d-bg-white' :style="{height: `${statusHeight}rpx`}"></div>
-            <div class='navbar' :style="{height: `${titleBarHeight}rpx`}">
-
-                <div class="tools-box d-center" v-if="pages > 1">
-                    <navigator open-type='navigateBack' class="d-center tools-item">
-                        <i-icon type="return" size="24" color='#000' />
-                    </navigator>
-                    <navigator url='/pages/index/index' open-type='switchTab' class="d-center tools-item">
-                        <i-icon type="homepage" size="24" color='#000' />
-                    </navigator>
+            <!-- <div class='status d-bg-white' :style="{height: `${statusBarHeight}rpx`}"></div> -->
+            <div class='navbar' :style="{ height: `${navHeight}px`, 'padding-top': `${statusBarHeight}px`}">
+                <div class="d-inline">
+                    <div class="tools-box d-center" :class="!isHome ? 'noline' : ''" :style="{ height: `${navbarBtn.height}px`, 'margin-top': `${navbarBtn.top}px`, 'margin-left': `${navbarBtn.right}px`}" v-if="pages > 1">
+                        <div class="tools-item">
+                            <navigator open-type='navigateBack' class="d-center">
+                                <i-icon type="return" size="24" color='#000' />
+                            </navigator>
+                        </div>
+                        <div class="tools-item" v-if="isHome">
+                            <navigator url='/pages/index/index' open-type='switchTab' class="d-center">
+                                <i-icon type="homepage" size="24" color='#000' />
+                            </navigator>
+                        </div>
+                    </div>
                 </div>
 
-                <div class='nav-title f16 d-text-black wfull'>
-                    <div class="ac d-elip b f16" v-if="!isSearch">
+                <div class='nav-title f16 d-text-black wfull' :style="{ height: `${navbarBtn.height}px`, 'top': `${navbarBtn.top + statusBarHeight}px`, 'padding-right': `${navbarBtn.left}px`}">
+                    <div class="ac d-elip b f16" v-if="!isSearch" :style="{'text-indent': `${navbarBtn.left}px`, 'line-height':  `${navbarBtn.height}px`}">
                         {{title}}
                         <slot />
                     </div>
 
-                    <a @click="getSearch" class="search-box ac d-center" v-else>
+                    <a @click="getSearch" class="search-box ac d-center" v-else :style="{ height: `${navbarBtn.height}px`, 'margin-left': '70px', 'margin-right': '10px'  }">
                         <div style="margin-top:-6rpx" class="d-inline" v-if='!keyword'>
                             <i-icon type="search" size="18" color='#c5c5c5' />
                         </div>
@@ -62,26 +67,60 @@ export default {
 		searchType: {
 			type: String,
 			default: ''
+		},
+		isHome: {
+			type: Boolean,
+			default: true
 		}
 	},
 	data () {
 		return {
-			statusHeight: 0,
-			titleBarHeight: 0
+			statusBarHeight: 0,
+			navHeight: 0,
+			navbarBtn: {}
 		}
 	},
 	created () {
-		let { systemInfo } = this.$store.state
-		let titleBarHeight = 0
-		if (systemInfo.model.indexOf('iPhone') !== -1) {
-			titleBarHeight = 88
-		} else {
-			titleBarHeight = 96
+		// let haveBack;
+		// if (getCurrentPages().length === 1) { // 当只有一个页面时，并且是从分享页进入
+		//     haveBack = false;
+		// } else {
+		//     haveBack = true;
+		// }
+		// this.setData({
+		//     haveBack: haveBack, // 获取是否是通过分享进入的小程序
+		//     statusBarHeight: statusBarHeight,
+		//     navbarHeight: headerPosi.bottom + btnPosi.bottom, // 胶囊bottom + 胶囊实际bottom
+		//     navbarBtn: btnPosi
+		// })
+
+		/**
+         * wx.getMenuButtonBoundingClientRect() 坐标信息以屏幕左上角为原点
+         * 菜单按键宽度： 87
+         * 菜单按键高度： 32
+         * 菜单按键左边界坐标： 278
+         * 菜单按键上边界坐标： 26
+         * 菜单按键右边界坐标： 365
+         * 菜单按键下边界坐标： 58
+         */
+		const { systemInfo } = this.$store.state
+		console.log(systemInfo)
+		const headerPosi = systemInfo.menuInfo // 胶囊位置信息
+		let statusBarHeight = systemInfo.statusBarHeight
+
+		let btnPosi = { // 胶囊实际位置，坐标信息不是左上角原点
+			height: headerPosi.height,
+			width: headerPosi.width,
+			top: headerPosi.top - statusBarHeight, // 胶囊top - 状态栏高度
+			bottom: headerPosi.bottom - headerPosi.height - statusBarHeight, // 胶囊bottom - 胶囊height - 状态栏height （胶囊实际bottom 为距离导航栏底部的长度）
+			right: systemInfo.screenWidth - headerPosi.right, // 屏幕宽度 - 胶囊right
+			left: systemInfo.screenWidth - headerPosi.left
 		}
 
-		this.titleBarHeight = titleBarHeight
-		this.statusHeight = systemInfo.statusBarHeight * 2
-		this.$local.save('navH', +this.titleBarHeight + +this.statusHeight)
+		this.navHeight = headerPosi.bottom + btnPosi.bottom
+		this.navbarBtn = btnPosi
+		this.statusBarHeight = systemInfo.statusBarHeight
+		this.$local.save('navH', +this.navHeight * 2)
 	},
 	computed: {
 		isBack () {
@@ -109,7 +148,7 @@ export default {
 .navbar{
     position: relative;
     border-bottom: 1px solid #e4e4e4;
-    padding: 12rpx 20rpx;
+    // padding: 12rpx 20rpx;
     box-sizing: border-box;
     background: #fff;
     .at-icon{
@@ -120,21 +159,24 @@ export default {
 
 .nav-title, .nav-icon{
     position: absolute;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     left: 50%;
-    top: 50%;
     font-size: 28px;
     color: #000;
 }
 
 .tools-box{
-    width: 162rpx;
-    height: 62rpx;
-    border: 1px solid #e4e4e4;
+    // width: 82px;
+    border: 0.5px solid #e4e4e4;
     border-radius: 100px;
     position: relative;
     box-sizing: border-box;
     z-index: 1;
+    &.noline{
+        &:after{
+            display: none;
+        }
+    }
 
     &:after{
         content: '';
@@ -148,6 +190,8 @@ export default {
     }
     .tools-item{
         width: 50%;
+        padding: 0 10px;
+        box-sizing: border-box;
     }
 }
 
@@ -160,15 +204,15 @@ export default {
 }
 
 .nav-title{
-    padding: 0 202rpx;
+    // padding: 0 202rpx;
     box-sizing: border-box;
 }
 
 .search-box{
     border-radius: 100px;
-    border: .5px solid #d9d9d9;
+    border: 0.5px solid #d9d9d9;
     background: #f7f7f7;
-    height: 62rpx;
+    box-sizing: border-box;
 }
 
 </style>

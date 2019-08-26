@@ -139,7 +139,11 @@ Vue.component('uParse', uParse)
 // 获取系统信息
 try {
 	uni.getSystemInfo().then(([err, data]) => {
-		!err && store.commit('setSystemInfo', data)
+		if (!err) {
+			let menuInfo = wx.getMenuButtonBoundingClientRect()
+			let dataInfo = { ...data, menuInfo }
+			store.commit('setSystemInfo', dataInfo)
+		}
 	})
 } catch (err) {
 	store.commit('setSystemInfo', {})
