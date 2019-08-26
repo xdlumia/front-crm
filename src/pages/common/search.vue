@@ -21,7 +21,7 @@
 					</div>
 					<div v-if="isSearch" class="hfull wfull d-center ml5 search-box-right">
 						<input v-model='searchInfo' @confirm="searchData" class="wfull searchname f12" type="search" :placeholder="searchNameForm[busType]" focus>
-						<span @click="isSearch = false,searchInfo = ''" style="position:absolute;right:10px;z-index:999">
+						<span @click="isSearch = false,searchInfo = ''" style="position:absolute;right:10px;z-index:999;width:25px;text-align:center;height:100%;">
 							<i-icon type="delete" size="16" color='#999' class="b searchicon"/>
 						</span>
 					</div>

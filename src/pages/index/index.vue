@@ -11,7 +11,7 @@
             <!--显示本周-->
 
             <div v-if="timelong == 7">
-                <div class="d-text-black ml15" style="margin-top:8px" @click='timelong = 30,clickDay = todayDate'>{{todayDate}}
+                <div class="d-text-black ml15" style="margin-top:8px" @click='timelong = 30,clickDay = todayDate'>{{thisDate}}
                     <uni-icon type="arrowdown" class="pl5" size="18"/>
                 </div>
                 <div class="d-flex mt15">
@@ -30,7 +30,7 @@
             <!--日历插件-->
             <div style="position: relative;" v-if="timelong == 30">
                 <uni-calendar ref="calendar" insert="true" :selected='selected' @haveClick='confirm'/>
-                <uni-icon @click='timelong = 7' type="arrowup" class="pl5 d-pointer" size="18" style='position: absolute;top: 8px;left: 85px;'/>
+                <uni-icon @click='timelong = 7,clickDay = todayDate' type="arrowup" class="pl5 d-pointer" size="18" style='position: absolute;top: 8px;left: 85px;'/>
             </div>
 
             <!--暂无日程-->
@@ -275,6 +275,9 @@ export default {
 	},
 	computed: {
 		todayDate () {
+			return (new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate())
+		},
+		thisDate () {
 			return (new Date().getFullYear() + '年' + (new Date().getMonth() + 1) + '月')
 		}
 	},
