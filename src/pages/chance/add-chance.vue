@@ -6,7 +6,7 @@
     <scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
         <m-form ref="mform" class="uni-pb100" :model="editForm" :rules="rules">
             <i-input v-model="editForm.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
-			<a :url="`/pages/client/choose-client?id=${editForm.clientId}}`">
+			<a :url="`/pages/client/choose-client?id=${editForm.clientId}`">
 				<i-input disabled v-model="editForm.clientName" label="客户名称" placeholder="请填写客户名称" required>
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
