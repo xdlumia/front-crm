@@ -23,17 +23,18 @@ Api.interceptors.request.use(async config => {
 			await getApp().$vm.temporaryAuthorization(true)
 		} catch (error) { }
 	}
-	// uni.showLoading({
-	// 	title: '加载中...',
-	// 	mask: true
-	// })
 	config.headers['token'] = local.getItem('token') || ''
 	config.headers['finger'] = local.getItem('finger') || ''
 	config.headers['uid'] = uuid()
 	config.headers['verifycode'] = sha512(
 		config.headers['__'] + config.headers['token'] + config.headers['finger']
 	)
-
+	if (config.method.toUpperCase === 'POST') {
+		uni.showLoading({
+			title: '加载中...',
+			mask: true
+		})
+	}
 	return config
 })
 
