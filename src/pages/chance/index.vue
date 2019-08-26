@@ -71,7 +71,7 @@
           </i-row>
         </div>
         <div class="flex-item d-flex" style="width:50px;align-items: center;" v-if="isSelect">
-          <m-radio v-model="id" disabled :label="item.id"></m-radio>
+          <m-radio v-model="id" :disabled="false" :label="item.id"></m-radio>
         </div>
       </div>
     </scroll-list>
