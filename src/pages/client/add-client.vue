@@ -14,13 +14,13 @@
 
                 <div class="d-bg-white">
 
-                    <i-input v-model="form.name" label="客户名称" maxlength='32' placeholder="请填写客户名称" required type="text" />
+                    <i-input v-model="form.name" label="客户名称" @input='changePhone' maxlength='32' placeholder="请填写客户名称" required type="text" />
 
                     <i-input v-model="form.phone" label="手机号" @input='changePhone' placeholder="请填写" required type="number" maxlength='11'>
-                        <div class="check-repeat" @click='checkRepeat'>{{ isRepeat ? '已查重' : '查重' }}</div>
+                        <div class="check-repeat" v-if='isRepeatShow' @click='checkRepeat'>{{ isRepeat ? '已查重' : '查重' }}</div>
                     </i-input>
 
-					<i-input label="所属部门" v-model="deptInfo.deptName" disabled required />
+                    <i-input label="所属部门" v-model="deptInfo.deptName" disabled required />
 
                     <i-input v-model="form.address" label="详细地址" maxlength='100' placeholder="请填写详细地址">
                         <div @click="chooseMap" class="ml15 ac hfull pl15 d-center" style="border-left: 1px solid #F2F2F2;">
@@ -58,24 +58,24 @@
                         </i-input>
                     </a>
 
-					<div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
-						<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-						<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-						<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
-						<i-select
-							v-if='item.fieldType == 3'
-							v-model="form.formsFieldValueSaveVos[index].fieldValue"
-							:props="{label:'content',value:'code'}"
-							:label="item.fieldName"
-							placeholder="请选择"
-							:options="dictionaryOptions(item.groupCode || '')"
-						/>
-					</div>
+                    <div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
+                        <i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+                        <i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+                        <picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+                        <i-select
+                            v-if='item.fieldType == 3'
+                            v-model="form.formsFieldValueSaveVos[index].fieldValue"
+                            :props="{label:'content',value:'code'}"
+                            :label="item.fieldName"
+                            placeholder="请选择"
+                            :options="dictionaryOptions(item.groupCode || '')"
+                        />
+                    </div>
 
                 </div>
-				<!-- <div class='d-bg-white pb10'>
+                <!-- <div class='d-bg-white pb10'>
 
-				</div> -->
+                </div> -->
 
                 <div class="pt10 pl15 pr15 d-bg-white bb">
                     <div class='f13 mb10 d-text-black'>备注</div>
@@ -115,6 +115,7 @@ export default {
 			isCopy: 0,
 			id: 0,
 			isRepeat: false,
+			isRepeatShow: true,
 			isSkipContact: false, // 是否新建联系人
 			labelNames: '', // 标签名称组合
 			form: {
@@ -154,6 +155,8 @@ export default {
 	onLoad (params) {
 		this.id = params.id || 0
 		this.isCopy = params.isCopy || 0
+
+		this.id && (this.isRepeatShow = false)
 
 		if (this.id || this.isCopy) {
 			this.title = (this.id ? '编辑' : '复制') + '客户信息'
@@ -200,7 +203,8 @@ export default {
 			this.isSkipContact = value
 		},
 
-		changePhone () {
+		changePhone (e) {
+			this.isRepeatShow = true
 			this.isRepeat = false
 		},
 		// 获取已选中的更多条目
@@ -259,9 +263,10 @@ export default {
 
 		// 保存
 		async submit () {
-			// if( !this.isRepeat ){
-			//     this.$utils.toast.text('请先查重')
-			// }
+			if (!this.isRepeat && this.isRepeatShow) {
+				return this.$utils.toast.text('请先查重')
+			}
+
 			await this.$refs.mform.validate()
 			try {
 				let params = {
