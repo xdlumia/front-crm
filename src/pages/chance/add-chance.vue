@@ -30,7 +30,6 @@
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
 			</a>
-            <i-input v-model="editForm.note" label="备注" placeholder="点击填写" type="textarea" />
 			<p v-for="(item,index) of editForm.formsFieldValueSaveVos" :key="index">
 				<i-input v-if='item.fieldType == 0' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
 				<i-input v-if='item.fieldType == 1' type='number' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
@@ -43,6 +42,8 @@
 				placeholder="请选择"
 				:options="dictionaryOptions(item.groupCode || '')"/>
 			</p>
+            <i-input v-model="editForm.note" label="备注" placeholder="点击填写" type="textarea" />
+
         </m-form>
         <a url="/pages/common/more-list?busType=2&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>

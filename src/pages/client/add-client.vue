@@ -58,14 +58,6 @@
                         </i-input>
                     </a>
 
-                </div>
-
-                <div class="pt10 pl15 pr15 d-bg-white bb">
-                    <div class='f13 mb10 d-text-black'>备注</div>
-                    <textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
-                </div>
-
-				<div class='d-bg-white pb10'>
 					<div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
 						<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
 						<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
@@ -79,7 +71,16 @@
 							:options="dictionaryOptions(item.groupCode || '')"
 						/>
 					</div>
-				</div>
+
+                </div>
+				<!-- <div class='d-bg-white pb10'>
+
+				</div> -->
+
+                <div class="pt10 pl15 pr15 d-bg-white bb">
+                    <div class='f13 mb10 d-text-black'>备注</div>
+                    <textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
+                </div>
 
             </m-form>
 

@@ -23,8 +23,7 @@
             <i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
             <i-input v-model="form.address" label="地址" placeholder="请填写"/>
 			<i-input v-model="deptName" label="所属部门" placeholder="请填写"/>
-            <i-input v-model="form.note" label="备注" placeholder="备注" type="textarea" />
-            <p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
+			<p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
 				<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
 				<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
 				<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
@@ -36,6 +35,7 @@
 				placeholder="请选择"
 				:options="dictionaryOptions(item.groupCode || '')"/>
 			</p>
+            <i-input v-model="form.note" label="备注" placeholder="备注" type="textarea" />
         </m-form>
         <a url="/pages/common/more-list?busType=1&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
