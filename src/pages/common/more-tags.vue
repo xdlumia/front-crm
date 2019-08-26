@@ -19,7 +19,7 @@
 			v-model="item.labelName"
 			placeholder="请输入选项名称"
 			@focus="focusChange(item,index)">
-				<div slot="label" v-show="isEdit" @click="deleteMoreList(item.labelName)" class="uni-icon uni-icon-minus-filled f18 d-text-red"></div>
+				<div slot="label" v-show="isEdit" @click="deleteMoreList(index)" class="uni-icon uni-icon-minus-filled f18 d-text-red"></div>
 				<m-checkbox :max="5" v-if="!isEdit" v-model="selCheked"  :label="item.id" />
 				<span v-if="isEdit" class="d-block ar" style="width:90px;">
 					<i @click="clear(item,index)" v-if="item.focus" class="uni-icon uni-icon-clear mr10 f18 d-text-qgray"></i>

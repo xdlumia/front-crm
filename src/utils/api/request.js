@@ -29,7 +29,7 @@ Api.interceptors.request.use(async config => {
 	config.headers['verifycode'] = sha512(
 		config.headers['__'] + config.headers['token'] + config.headers['finger']
 	)
-	if (config.method.toUpperCase === 'POST') {
+	if (config.method === 'POST') {
 		uni.showLoading({
 			title: '加载中...',
 			mask: true
