@@ -1,3 +1,12 @@
+/*
+ * @Author: xdlumia
+ * @Email: xdq@live.cn
+ * @Date: 2019-08-26 09:57:52
+ * @Last Modified by: xdlumia
+ * @Last Modified time: 2019-08-26 10:09:54
+ * @Description: Description
+ */
+
 <template>
     <div>
         <NavBar title="应用" />
