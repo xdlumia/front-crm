@@ -246,7 +246,7 @@ export default {
 				this.$utils.toast.text('请选择机会')
 				return
 			}
-			let index = this.list.findIndex(item => item.id === this.id)
+			let index = this.list.findIndex(item => +item.id === +this.id)
 			let row = this.list[index]
 			uni.$emit('chooseChance', row)
 
