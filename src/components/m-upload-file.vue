@@ -37,7 +37,6 @@ export default {
 		chooseFile () {
 			wx.chooseMessageFile({
 			// wx.uploadFile({
-				url: 'http://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
 				count: 1,
 				type: 'file',
 				success: res => {
