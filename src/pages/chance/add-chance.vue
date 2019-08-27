@@ -5,43 +5,45 @@
     <NavBar :title="`${titleType}销售机会`"/>
     <scroll-view class="ipx" scroll-y :style="'height:calc(100vh - ' + navH +' - 50px)'">
         <m-form ref="mform" class="uni-pb100" :model="editForm" :rules="rules">
-            <i-input v-model="editForm.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
-			<a :url="`/pages/client/choose-client?id=${editForm.clientId}`">
-				<i-input disabled v-model="editForm.clientName" label="客户名称" placeholder="请填写客户名称" required>
-					<i-icon type="enter" size="16" color="#999" />
-				</i-input>
-			</a>
-            <i-input v-model="deptName" label="所属部门" placeholder="请选择所属部门" required />
-            <i-input v-model="editForm.salesMoney" label="销售金额" placeholder="请填写销售金额" required />
-            <i-select
-                v-model="editForm.stageId"
-                :props="{label:'stageName',value:'id'}"
-                label="销售阶段"
-                placeholder="请选择销售阶段"
-                required
-                :options="stageList">
-            </i-select>
-            <picker-date v-model="editForm.reckonFinishTime" label="预计成交日期" placeholder="请选择日期">
-            </picker-date>
-            <i-select v-model="editForm.tradeCode" :props="{label:'content',value:'code'}" label="行业" :options="dictionaryOptions('CRM_KH_HY')"/>
-            <i-select v-model="editForm.sourceCode" :props="{label:'content',value:'code'}" label="来源" :options="dictionaryOptions('CRM_LY')"/>
-			<a :url="`/pages/common/more-tags?busType=2&ids=${ids}`">
-				<i-input disabled v-model="labelNames" label="标签" placeholder="请选择">
-					<i-icon type="enter" size="16" color="#999" />
-				</i-input>
-			</a>
-			<p v-for="(item,index) of editForm.formsFieldValueSaveVos" :key="index">
-				<i-input v-if='item.fieldType == 0' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<i-input v-if='item.fieldType == 1' type='number' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<picker-date v-if='item.fieldType == 2' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+            <div class="d-bg-white">
+				<i-input v-model="editForm.chanceName" label="机会名称" placeholder="请填写销售机会名称" required />
+				<a :url="`/pages/client/choose-client?id=${editForm.clientId}`">
+					<i-input disabled v-model="editForm.clientName" label="客户名称" placeholder="请填写客户名称" required>
+						<i-icon type="enter" size="16" color="#999" />
+					</i-input>
+				</a>
+				<i-input v-model="deptName" label="所属部门" placeholder="请选择所属部门" required />
+				<i-input v-model="editForm.salesMoney" label="销售金额" placeholder="请填写销售金额" required />
 				<i-select
-				v-if='item.fieldType == 3'
-				v-model="editForm.formsFieldValueSaveVos[index].fieldValue"
-				:props="{label:'content',value:'code'}"
-				:label="item.fieldName"
-				placeholder="请选择"
-				:options="dictionaryOptions(item.groupCode || '')"/>
-			</p>
+					v-model="editForm.stageId"
+					:props="{label:'stageName',value:'id'}"
+					label="销售阶段"
+					placeholder="请选择销售阶段"
+					required
+					:options="stageList">
+				</i-select>
+				<picker-date v-model="editForm.reckonFinishTime" label="预计成交日期" placeholder="请选择日期">
+				</picker-date>
+				<i-select v-model="editForm.tradeCode" :props="{label:'content',value:'code'}" label="行业" :options="dictionaryOptions('CRM_KH_HY')"/>
+				<i-select v-model="editForm.sourceCode" :props="{label:'content',value:'code'}" label="来源" :options="dictionaryOptions('CRM_LY')"/>
+				<a :url="`/pages/common/more-tags?busType=2&ids=${ids}`">
+					<i-input disabled v-model="labelNames" label="标签" placeholder="请选择">
+						<i-icon type="enter" size="16" color="#999" />
+					</i-input>
+				</a>
+				<p v-for="(item,index) of editForm.formsFieldValueSaveVos" :key="index">
+					<i-input v-if='item.fieldType == 0' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+					<i-input v-if='item.fieldType == 1' type='number' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+					<picker-date v-if='item.fieldType == 2' v-model="editForm.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+					<i-select
+					v-if='item.fieldType == 3'
+					v-model="editForm.formsFieldValueSaveVos[index].fieldValue"
+					:props="{label:'content',value:'code'}"
+					:label="item.fieldName"
+					placeholder="请选择"
+					:options="dictionaryOptions(item.groupCode || '')"/>
+				</p>
+            </div>
             <i-input v-model="editForm.note" label="备注" placeholder="点击填写" type="textarea" />
 
         </m-form>

@@ -62,7 +62,7 @@
 						<correlationInfo ref='info' :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name, clientId: detailInfo.id}' :sendBackType='detailInfo.sendBackType' :height="'calc(100vh  - 217px - 50px - ' + navH + ' + ' + infoH+ ')'" />
 					</i-tab>
 					<i-tab index='3'>
-						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 217px - 100px - ' + navH + ' + ' + infoH + ')'" />
+						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="`calc(100vh - 217px - 100px - ${ipxH} - ${navH} + ${infoH})`" />
 					</i-tab>
 				</i-tabs>
 			</div>
@@ -167,6 +167,9 @@ export default {
 		this.linkmanQueryBusList({ busId: this.id, busType: 0 })
 	},
 	computed: {
+		ipxH () {
+			return this.isIpx ? '34px' : '0px'
+		},
 		sendBackType () {
 			return +this.detailInfo.sendBackType !== 1
 		},
