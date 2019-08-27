@@ -25,7 +25,7 @@
             </picker-date>
             <i-select v-model="editForm.tradeCode" :props="{label:'content',value:'code'}" label="行业" :options="dictionaryOptions('CRM_KH_HY')"/>
             <i-select v-model="editForm.sourceCode" :props="{label:'content',value:'code'}" label="来源" :options="dictionaryOptions('CRM_LY')"/>
-			<a url="/pages/common/more-tags?busType=2">
+			<a :url="`/pages/common/more-tags?busType=2&ids=${ids}`">
 				<i-input disabled v-model="labelNames" label="标签" placeholder="请选择">
 					<i-icon type="enter" size="16" color="#999" />
 				</i-input>
@@ -226,7 +226,8 @@ export default {
 							this.editForm.formsFieldValueSaveVos = data.formsFieldValueEntitys
 						} else if (key === 'lableBusinessSaveVos') {
 							this.labelNames = data.lableBusinessEntitys.map(item => item.labelName).join(',')
-							this.editForm.lableBusinessSaveVos.labelIdArray = data.lableBusinessEntitys.map(item => item.id)
+							this.editForm.lableBusinessSaveVos.busId = data.id
+							this.editForm.lableBusinessSaveVos.labelIdArray = data.lableBusinessEntitys.map(item => item.labelId)
 						} else {
 							this.editForm[key] = data[key]
 						}
@@ -262,6 +263,10 @@ export default {
 	computed: {
 		titleType () {
 			return this.editType === '1' ? '编辑' : this.editType === '2' ? '复制' : '新建'
+		},
+		ids () {
+			let ids = this.editForm.lableBusinessSaveVos.labelIdArray
+			return JSON.stringify(ids)
 		}
 	}
 }
