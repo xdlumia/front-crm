@@ -1,10 +1,11 @@
-<!--
-/**
-* @author 冀猛超
-* @name 业务属性
-* @date 2019年8月02日
-**/
--->
+/*
+ * @Author: 冀猛超
+ * @Email: xdq@live.cn
+ * @Date: 2019-08-27 16:32:12
+ * @Last Modified by: xdlumia
+ * @Last Modified time: 2019-08-27 17:06:17
+ * @Description: Description
+ */
 <template>
     <div class="d-relative">
         <scroll-view scroll-y :style="{height:height}" @scrolltolower='getListClientbusiness()'>
@@ -63,7 +64,6 @@ export default {
 	onReady () {
 		this.getListClientbusiness()
 		uni.$on('attrBack', data => {
-			console.log(1)
 			this.getListClientbusiness(1)
 		})
 	},
