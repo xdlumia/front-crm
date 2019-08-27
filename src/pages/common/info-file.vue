@@ -7,7 +7,7 @@
 -->
 <template>
     <div>
-        <mPanel top="10" title="附件" color="#4889f4" :isUrl="isUrl">
+        <mPanel top="10" title="附件" color="#4889f4" :isUrl="false">
 			<span slot="add" v-if='isUrl'>
 				<upload-file @success="uploadSuccess">
 					<i-icon type="add" size="24" color="#466bef"></i-icon>
