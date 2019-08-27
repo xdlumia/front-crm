@@ -127,7 +127,9 @@
   .iconshaixuan:before {
     content: "\e61d";
   }
-  
+  .iconshaixuan1:before {
+    content: "\e627";
+  }
   .iconcall:before {
     content: "\e610";
   }
