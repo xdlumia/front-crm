@@ -251,7 +251,7 @@ export default {
     font-size: 12px;
 	// font-weight: 700;
 	margin-top: 2px;
-	color: #80848f
+	color: #80848f;
 }
 
 .i-step-vertical {

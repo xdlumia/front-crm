@@ -21,6 +21,7 @@
                     :disabled="disabled"
 					:rows="3"
                     :focus="autofocus"
+					:fixed="true"
 					style="min-height:55px; height:auto"
                     :value="value"
                     :placeholder="placeholder"
