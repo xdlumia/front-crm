@@ -245,6 +245,9 @@ export default {
 }
 
 .i-step-item-content {
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+    white-space: nowrap;
     font-size: 12px;
 	// font-weight: 700;
 	margin-top: 2px;
