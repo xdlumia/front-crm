@@ -5,36 +5,38 @@
     <NavBar  :title="`${titleType}联系人`"/>
     <scroll-view scroll-y class="ipx" :style="'height:calc(100vh - ' + navH +' - 50px)'">
         <m-form ref="mform" class="uni-pb100" :model="form" :rules="rules">
-            <i-input v-model="form.linkmanName" label="姓名" placeholder="请填写" required />
-            <a :url="`/pages/client/choose-client?id=${form.clientId}`">
-				<i-input disabled v-model="form.clientName" label="客户名称" placeholder="请填写客户名称" required>
-					<i-icon type="enter" size="16" color="#999" />
-				</i-input>
-			</a>
-            <i-input v-model="form.mobile" label="手机" maxlength='11' placeholder="请填写" required />
-            <i-select v-model="form.roleCode" :props="{label:'content',value:'code'}" label="联系人角色" :options="dictionaryOptions('CRM_LXR_JS')"/>
-			<i-select
-				v-model="form.position"
-				:props="{label:'content',value:'code'}"
-				label="职位"
-				placeholder="请选择"
-				:options="dictionaryOptions('CRM_LXR_ZW')"/>
-            <i-input v-model="form.phone" label="电话" placeholder="请填写" :maxlength="19"/>
-            <i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
-            <i-input v-model="form.address" label="地址" placeholder="请填写"/>
-			<i-input v-model="deptName" label="所属部门" placeholder="请填写"/>
-			<p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
-				<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+			<div class="d-bg-white">
+				<i-input v-model="form.linkmanName" label="姓名" placeholder="请填写" required />
+				<a :url="`/pages/client/choose-client?id=${form.clientId}`">
+					<i-input disabled v-model="form.clientName" label="客户名称" placeholder="请填写客户名称" required>
+						<i-icon type="enter" size="16" color="#999" />
+					</i-input>
+				</a>
+				<i-input v-model="form.mobile" label="手机" maxlength='11' placeholder="请填写" required />
+				<i-select v-model="form.roleCode" :props="{label:'content',value:'code'}" label="联系人角色" :options="dictionaryOptions('CRM_LXR_JS')"/>
 				<i-select
-				v-if='item.fieldType == 3'
-				v-model="form.formsFieldValueSaveVos[index].fieldValue"
-				:props="{label:'content',value:'code'}"
-				:label="item.fieldName"
-				placeholder="请选择"
-				:options="dictionaryOptions(item.groupCode || '')"/>
-			</p>
+					v-model="form.position"
+					:props="{label:'content',value:'code'}"
+					label="职位"
+					placeholder="请选择"
+					:options="dictionaryOptions('CRM_LXR_ZW')"/>
+				<i-input v-model="form.phone" label="电话" placeholder="请填写" :maxlength="19"/>
+				<i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
+				<i-input v-model="form.address" label="地址" placeholder="请填写"/>
+				<i-input v-model="deptName" label="所属部门" placeholder="请填写"/>
+				<p v-for="(item,index) of form.formsFieldValueSaveVos" :key="index">
+					<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+					<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+					<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+					<i-select
+					v-if='item.fieldType == 3'
+					v-model="form.formsFieldValueSaveVos[index].fieldValue"
+					:props="{label:'content',value:'code'}"
+					:label="item.fieldName"
+					placeholder="请选择"
+					:options="dictionaryOptions(item.groupCode || '')"/>
+				</p>
+			</div>
             <i-input v-model="form.note" label="备注" placeholder="备注" type="textarea" />
         </m-form>
         <a url="/pages/common/more-list?busType=1&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
