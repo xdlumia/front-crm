@@ -4,7 +4,7 @@
         <div class="d-flex d-flex-wrap">
             <slot />
             <div
-				class="f-tag"
+				class="f-tag d-elip"
 				@click='tagClick(item)'
 				v-for='(item, index) in dataList'
 				:key='index'
