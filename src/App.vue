@@ -39,7 +39,7 @@ export default {
 										}
 									})
 									// 获取用户详细数据
-									that.$api.bizSystemService.getUserDetail({}, { 'sysCode': that.$local.getItem('sysCode') }).then((response) => {
+									that.$api.bizSystemService.getUserDetail({ 'sysCode': that.$local.getItem('sysCode') }).then((response) => {
 										that.$utils.toast.text(response.msg)
 										if (response.code === 200) {
 											uni.$emit('setUserInfo', response.data)

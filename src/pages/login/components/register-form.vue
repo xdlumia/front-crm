@@ -121,12 +121,13 @@ export default {
 
 			await this.$refs.mform.validate()
 
+			let that = this
 			if (this.validateOk) {
 				this.$api.systemService.applyCompany(this.form).then((response) => {
 					if (response.code === 200) {
 						uni.$emit('backFromRegister', {})
 					} else {
-						this.$utils.toast.text(response.msg)
+						that.$utils.toast.text('提交失败')
 					}
 				})
 			} else {

@@ -83,7 +83,7 @@ export default {
 					this.$utils.toast.text(response.msg)
 				}
 			})
-			this.$api.bizSystemService.getUserDetail({}, { 'sysCode': sysCode }).then((response) => {
+			this.$api.bizSystemService.getUserDetail({ 'sysCode': sysCode }).then((response) => {
 				this.$utils.toast.text(response.msg)
 				if (response.code === 200) {
 					uni.$emit('setUserInfo', response.data)
