@@ -19,7 +19,7 @@
 				label="职位"
 				placeholder="请选择"
 				:options="dictionaryOptions('CRM_LXR_ZW')"/>
-            <i-input v-model="form.phone" label="电话" placeholder="请填写"/>
+            <i-input v-model="form.phone" label="电话" placeholder="请填写" :maxlength="19"/>
             <i-input v-model="form.email" label="电子邮件" placeholder="请填写"/>
             <i-input v-model="form.address" label="地址" placeholder="请填写"/>
 			<i-input v-model="deptName" label="所属部门" placeholder="请填写"/>
@@ -76,9 +76,7 @@ export default {
 				lableBusinessSaveVos: {
 					// busId: 100000,
 					// busType: 0,
-					// labelIdArray: [
-					// 	0
-					// ]
+					// labelIdArray: []
 				},
 				leaderId: '', // 责任人id
 				linkmanName: '', // 示例：联系人名称',

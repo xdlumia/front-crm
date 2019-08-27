@@ -91,7 +91,6 @@ export default {
          * 菜单按键下边界坐标： 58
          */
 		const { systemInfo } = this.$store.state
-		console.log(systemInfo)
 		const headerPosi = systemInfo.menuInfo // 胶囊位置信息
 		let statusBarHeight = systemInfo.statusBarHeight
 

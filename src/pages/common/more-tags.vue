@@ -70,6 +70,7 @@ export default {
 	},
 	onLoad (option) {
 		this.busType = option.busType
+		this.selCheked = JSON.parse(option.ids || '')
 		// 获取标签列表
 		this.lableinfoList()
 	},
