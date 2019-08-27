@@ -164,7 +164,7 @@
 				this.isSilde = true
 				this.getMonthAll(
 					this.currentIndex,
-					canlender.year + '-' + canlender.month + '-' + canlender.date
+					canlender.year + '/' + canlender.month + '/' + canlender.date
 				)
 			}
 		},
@@ -186,9 +186,9 @@
 				let index = e.detail.current
 				let date =
 					this.swiperData[index].year +
-					'-' +
+					'/' +
 					this.swiperData[index].month +
-					'-' +
+					'/' +
 					this.swiperData[index].date
 				this.currentIndex = index
 				this.getMonthAll(index, date)
@@ -216,15 +216,15 @@
 				let tempafter = this.getWeek(this.getDate(tempyear, +1, 'month'))
 				let beforeyear =
 					canlender.year +
-					'-' +
+					'/' +
 					canlender.month +
-					'-' +
+					'/' +
 					(canlender.date > tempbefore.lastDate ? tempbefore.lastDate : canlender.date)
 				let afteryear =
 					canlender.year +
-					'-' +
+					'/' +
 					canlender.month +
-					'-' +
+					'/' +
 					(canlender.date > tempafter.lastDate ? tempafter.lastDate : canlender.date)
 
 				let before = this.getWeek(this.getDate(beforeyear, -1, 'month'))
@@ -315,7 +315,7 @@
 			 */
 			isDisableBefore(year, month, date) {
 				let nowDate = this.date ? this.date : new Date()
-				let time = year + '-' + month + '-' + date
+				let time = year + '/' + month + '/' + date
 				let startDate = false
 				let endDate = false
 				if (this.startDate) {
@@ -392,7 +392,7 @@
 						num = 1
 					}
 					let year =
-						this.canlender.year + '-' + this.canlender.month + '-' + this.canlender.date
+						this.canlender.year + '/' + this.canlender.month + '/' + this.canlender.date
 
 					this.getMonthAll(num, year)
 					return
@@ -455,7 +455,7 @@
 						date: this.canlender.date,
 						lunar: this.canlender.lunar,
 						clockinfo: this.canlender.clockinfo || {},
-						fulldate: this.canlender.year + '-' + this.canlender.month + '-' + this.canlender.date
+						fulldate: this.canlender.year + '/' + this.canlender.month + '/' + this.canlender.date
 					})
 			},
 			// 获取日历内容
@@ -501,7 +501,7 @@
 					let clockinfoTemp = {}
 					// 处理打卡信息
 					for (let j = 0; j < selected.length; j++) {
-						let selDate = selected[j].date.split('-')
+						let selDate = selected[j].date.split('/')
 
 						if (
 							Number(year) === Number(selDate[0]) &&
@@ -539,9 +539,9 @@
 						lunar: this.getlunar(year, month, i + ''),
 						isDay: nowDate ===
 							year +
-							'-' +
+							'/' +
 							(month < 10 ? '0' + month : month) +
-							'-' +
+							'/' +
 							(i < 10 ? '0' + i : i)
 					})
 				}
@@ -607,7 +607,7 @@
 				let y = dd.getFullYear()
 				let m = dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1 // 获取当前月份的日期，不足10补0
 				let d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate() // 获取当前几号，不足10补0
-				return y + '-' + m + '-' + d
+				return y + '/' + m + '/' + d
 			},
 			/**
 			 * 计算时间大小

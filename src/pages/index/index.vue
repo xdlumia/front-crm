@@ -41,7 +41,7 @@
 
             <!--日程列表-->
             <div v-for="(item,index) in indexList" :key="index">
-                <a :url="`/pages/index/scheduleAdd?scheId=${item.id}`" v-if="changeTime(item.startTime) == clickDay" style="border: 1px solid #e4e4e4;border-left: none;border-right: none;">
+                <a :url="`/pages/index/scheduleAdd?scheId=${item.id}`" v-if="changeTime(item.startTime) == clickDay" style="border-top: 1px solid #e4e4e4;border-left: none;border-right: none;">
                     <div class="p10 ml5" style="box-sizing: border-box;">
                         <div class="wfull d-flex">
                             <div class="d-flex cirle-blue" style="margin-top: 7px;">
@@ -338,7 +338,7 @@ export default {
 					this.indexList = res.data || []
 					this.indexList.forEach((item) => {
 						this.allcolleagues.push(this.changeTime(item.startTime))
-						this.selected.push({ date: this.getSelectedDate(item.startTime) })
+						this.selected.push({ date: this.changeTime(item.startTime) })
 					})
 				})
 		},
@@ -389,9 +389,9 @@ export default {
 		changeTime (time) {
 			return new Date(time).getFullYear() + '/' + (new Date(time).getMonth() + 1) + '/' + new Date(time).getDate()
 		},
-		getSelectedDate (time) {
-			return new Date(time).getFullYear() + '-' + (new Date(time).getMonth() + 1) + '-' + new Date(time).getDate()
-		},
+		// getSelectedDate (time) {
+		// 	return new Date(time).getFullYear() + '-' + (new Date(time).getMonth() + 1) + '-' + new Date(time).getDate()
+		// },
 		getDates () {
 			var indexDate = new Date()
 			var timesStamp = indexDate.getTime()
