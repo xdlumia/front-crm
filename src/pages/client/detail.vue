@@ -62,7 +62,7 @@
 						<correlationInfo ref='info' :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name, clientId: detailInfo.id}' :sendBackType='detailInfo.sendBackType' :height="'calc(100vh  - 217px - 50px - ' + navH + ' + ' + infoH+ ')'" />
 					</i-tab>
 					<i-tab index='3'>
-						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 217px - 100px - ' + navH + ' + ' + infoH + ')'" />
+						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="'calc(100vh - 217px - 100px - ' + navH + ' + ' + infoH - env(safe-area-inset-bottom) + ')'" />
 					</i-tab>
 				</i-tabs>
 			</div>

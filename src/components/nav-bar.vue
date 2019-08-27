@@ -35,7 +35,7 @@
                         <slot />
                     </div>
 
-                    <a @click="getSearch" class="search-box ac d-center" v-else :style="{ height: `${navbarBtn.height}px`, 'margin-left': '70px', 'margin-right': '10px'  }">
+                    <a @click="getSearch" class="search-box ac d-center" v-else :style="{ height: `${navbarBtn.height}px`, 'margin-left': pages > 1 ? '108px' : '70px', 'margin-right': '10px'  }">
                         <div style="margin-top:-6rpx" class="d-inline" v-if='!keyword'>
                             <i-icon type="search" size="18" color='#c5c5c5' />
                         </div>
@@ -110,9 +110,6 @@ export default {
 		this.$local.save('navH', +this.navHeight)
 	},
 	computed: {
-		isBack () {
-			return true
-		},
 		pages () {
 			let pageLen = getCurrentPages().length
 			return pageLen

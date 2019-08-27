@@ -12,7 +12,7 @@
 					<span class='iconfont iconxiala f12 d-text-gray jt d-inline' :class='{active: filterProp === item.prop && filterShow}'></span>
 				</div>
 
-				<div @click.stop="openFilter('diy')"><span class='iconfont iconshaixuan f13 d-text-black mr5 b'></span><span class='f13'>筛选</span></div>
+				<div @click.stop="openFilter('diy')"><span class='iconfont iconshaixuan1 f13 d-text-black mr5 b'></span><span class='f13'>筛选</span></div>
 			</div>
 			<div class="filter-con" v-show='filterShow'>
 				<!-- 列表筛选 -->

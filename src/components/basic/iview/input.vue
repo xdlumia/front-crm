@@ -30,6 +30,7 @@
                     @input="handleInputChange"
                     @focus="handleInputFocus"
                     @blur="handleInputBlur"
+					:adjust-position="false"
                 ></textarea>
             </div>
         </div>
@@ -60,6 +61,7 @@
                     @input="handleInputChange"
                     @focus="handleInputFocus"
                     @blur="handleInputBlur"
+					:adjust-position="false"
                 />
 				<div class="input-icon"><slot></slot></div>
             </div>

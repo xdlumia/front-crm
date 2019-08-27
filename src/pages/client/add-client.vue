@@ -52,7 +52,7 @@
                         :options="dictionaryOptions('CRM_LY')"
                     />
 
-                    <a url="/pages/common/more-tags?busType=0">
+                    <a :url="'/pages/common/more-tags?busType=0&ids=' + ids">
                         <i-input disabled v-model="labelNames" label="标签" placeholder="请选择">
                             <i-icon type="enter" size="16" color="#999" />
                         </i-input>
@@ -134,6 +134,8 @@ export default {
 				clientStatus: '', // 客户状态
 				formsFieldValueSaveVos: [],
 				lableBusinessSaveVo: {
+					busId: this.id || '', // 100000,
+					busType: 0, // 业务类型(0客户，1联系人，2机会，3成交,4业务属性)
 					labelIdArray: []
 				}
 			},
@@ -150,6 +152,12 @@ export default {
 					message: '手机号格式不正确'
 				}]
 			}
+		}
+	},
+	computed: {
+		ids () {
+			let ids = this.form.lableBusinessSaveVo.labelIdArray
+			return JSON.stringify(ids)
 		}
 	},
 	onLoad (params) {
@@ -171,6 +179,7 @@ export default {
 		uni.$on('moreTags', data => {
 			this.labelNames = data.map(item => item.labelName).join(',')
 			this.form.lableBusinessSaveVo.labelIdArray = data.map(item => item.id)
+			this.form.lableBusinessSaveVo.busId = this.id
 		})
 
 		// 更多条目回掉
@@ -193,7 +202,8 @@ export default {
 					this.form.formsFieldValueSaveVos = info.formsFieldValueEntities
 				} else if (key === 'lableBusinessSaveVo') {
 					this.labelNames = info.lableBusinessEntityList.map(item => item.labelName).join(',')
-					this.form.lableBusinessSaveVo.labelIdArray = info.lableBusinessEntityList.map(item => item.id)
+					this.form.lableBusinessSaveVo.labelIdArray = info.lableBusinessEntityList.map(item => item.labelId)
+					this.form.lableBusinessSaveVo.busId = this.id
 				} else {
 					this.form[key] = info[key]
 				}
