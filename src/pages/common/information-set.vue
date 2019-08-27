@@ -23,7 +23,7 @@
                 <span v-for="(item, index) in informationList" :key="index">
                     <span v-if="item.isOriginal == 0">
 
-                        <div class="setCell d-flex wfull" style="height:50px;height:49px;line-height:49px;align-items: center;justify-content: space-between;">
+                        <div v-if="!item.ishandel" class="setCell d-flex wfull" style="height:50px;height:49px;line-height:49px;align-items: center;justify-content: space-between;">
                             <div style="display:flex;align-items: center;">
                                 <span v-if="!item.ishandel" class="d-text-black ml15 fl">{{item.fieldName}}</span>
                                 <div class="ml5 fl" v-if="!item.ishandel" @click="changeHandelStatus(index)">
@@ -34,16 +34,34 @@
                                         size="20"
                                     />
                                 </div>
-                                <input v-if="item.ishandel" maxlength="6" v-model="item.fieldName" class="ml5 fl" style="flex: 1;border:1px solid #F2F2F2;padding-left:10px;">
-                                <div class="ac d-text-blue m5 fl subButton" v-if="item.ishandel" @click="handelTags(item.id,item.fieldName)">
-                                    <span class="f13">确定</span>
-                                </div>
                             </div>
                             <div style="display:flex;align-items: center;">
                                 <uni-icon @click="fdelete(item.id)" class="mr10" type='minus-filled' color="#EB4D3D" size='20'/>
                                 <m-checkbox class="mr15 mt5" v-model="checkList" :label='item.id'/>
                             </div>
                         </div>
+
+						<div class="d-flex mationInfo" v-if="item.ishandel">
+							<div class="hfull flexcenter mationInfo-top">
+								<!-- <uni-icon @click="isShow = false" class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20'/> -->
+								<input maxlength="6" v-model="item.fieldName" placeholder="属性名称" class="ml15"/>
+								<uni-icon type='arrowright' size='18' color='#696969' />
+							</div>
+							<div class="hfull d-flex mationInfo-middle">
+								<view class="formType wfull" @click="openPopup(item)">
+									<div style="display:flex;justify-content: space-between;align-items: center;width:100%" class="fl hfull">
+										<div class="f12 pl5 d-elip ml5" style="color:#999">{{item.fieldType == 3 ? tagForm[item.groupCode] : msgForm[item.fieldType]}}</div>
+										<uni-icon type='arrowright' size='16' color='#696969' class="mr5"/>
+									</div>
+								</view>
+							</div>
+
+							<div style="calc(100vw - 310px)" class="hfull flexcenter">
+								<div class="ac d-text-blue m5 subButton" @click="handelTags(item)">
+									<span class="f13">确定</span>
+								</div>
+							</div>
+						</div>
                     </span>
                 </span>
         </radio-group>
@@ -55,11 +73,11 @@
                 <uni-icon type='arrowright' size='18' color='#696969' />
             </div>
             <div class="hfull d-flex mationInfo-middle">
-                    <view class="formType wfull" @click="openPopup">
-                        <div class="d-text-black f13 ml5 fl hfull" style="width:55px;line-height:60px">表单类型</div>
-                        <div style="display:flex;justify-content: space-between;align-items: center;min-width:60px;max-width:60px;" class="fl hfull">
-                            <div class="f12 pl5 d-elip" style="color:#999">{{tagName ? (msgName+'/'+tagName) : msgName || '请选择'}}</div>
-                            <uni-icon type='arrowright' size='16' color='#696969' />
+                    <view class="formType wfull" @click="openPopup(0)">
+                        <!-- <div class="d-text-black f13 ml5 fl hfull" style="width:55px;line-height:60px">表单类型</div> -->
+                        <div style="display:flex;justify-content: space-between;align-items: center;width:100%" class="fl hfull">
+                            <div class="f12 pl5 d-elip ml5" style="color:#999">{{tagName ? tagName : msgName || '表单类型'}}</div>
+                            <uni-icon type='arrowright' size='16' color='#696969' class="mr5"/>
                         </div>
                     </view>
             </div>
@@ -111,14 +129,23 @@ export default {
 			informationList: [], // 列表所有list
 			statusTypes: [{ name: '测试', id: 1 }, { name: '发邮件', id: 2 }, { name: '发短信', id: 3 }],
 			msgArr: [{ name: '文本', type: 0 }, { name: '数字', type: 1 }, { name: '日期', type: 2 }, { name: '标签', type: 3 }],
+			msgForm: {
+				'0': '文本',
+				'1': '数字',
+				'2': '日期',
+				'3': '标签'
+			},
+			tagForm: {},
 			tagAllList: [], // 所有标签的数组
-			msgName: '文本',
+			msgName: '',
 			msgid: '0',
 			tagName: '',
 			tagId: '',
 			status: '',
 			userName: '',
 			msgIndex: [],
+			chooseItem: '', // 当前点击的item
+			isChooseHandel: false, // 是否点击的是编辑东西
 			listForm: { fieldName: '', fieldType: [] },
 			isShow: false,
 			iscollapse: false,
@@ -148,32 +175,51 @@ export default {
 				.then(res => {
 					if (res.code === 200) {
 						this.tagAllList = res.data
+						this.tagAllList.forEach((item) => {
+							this.tagForm[item.labelCode] = item.labelName
+						})
 					}
 				})
 		},
 		// 点击属性
 		getmsgName (item) {
+			console.log(item)
 			if (item.type !== 3) {
 				this.tagName = ''
 				this.tagId = ''
 				this.$refs.popup.close()
 			}
-			this.msgName = item.name
-			this.msgid = item.type
+			if (this.isChooseHandel) {
+				this.chooseItem.fieldType = item.type
+				this.msgid = item.type
+			} else {
+				this.msgName = item.name
+				this.msgid = item.type
+			}
 		},
 		// 点击标签
 		gettagName (item) {
-			this.tagName = item.labelName
-			this.tagId = item.labelCode
+			if (this.isChooseHandel) {
+				this.chooseItem.groupCode = item.labelCode
+			} else {
+				this.tagName = item.labelName
+				this.tagId = item.labelCode
+			}
 			this.$refs.popup.close()
 		},
-		openPopup () {
+		openPopup (item) {
+			if (item) {
+				this.chooseItem = item
+				this.isChooseHandel = true
+			} else {
+				this.isChooseHandel = false
+			}
 			this.$refs.popup.open()
 		},
 		closePopup () {
 			this.tagName = ''
 			this.tagId = ''
-			this.msgName = '文本'
+			this.msgName = ''
 			this.msgid = '0'
 			this.$refs.popup.close()
 		},
@@ -189,6 +235,7 @@ export default {
 						if (item.isEnabled === 0) {
 							this.checkList.push(item.id)
 						}
+						// item.isHandel = false
 					})
 				})
 		},
@@ -206,12 +253,16 @@ export default {
 			this.isShow = true
 		},
 		// 修改属性
-		handelTags (id, fieldName) {
-			if (fieldName) {
+		handelTags (item) {
+			console.log(item)
+			if (item.fieldName) {
 				this.$api.seeCrmService.formsfieldconfigUpdate({
-					id: id,
+					id: item.id,
 					busType: this.busType,
-					fieldName: fieldName
+					fieldCode: item.fieldCode,
+					groupCode: item.groupCode,
+					fieldType: item.fieldType,
+					fieldName: item.fieldName
 				})
 					.then(res => {
 						this.isShow = false
