@@ -89,7 +89,7 @@
             </div>
         </div>
 
-		<uni-popup ref="popup" type="bottom" style="height:303px;z-index='999'">
+		<uni-popup ref="popup" type="bottom" style="height:303px;z-index:999;position:fixed;bottom:0">
 			<div style="width:100%;height:50px;line-height:50px;border-bottom:1px solid #f2f2f2;color:333" class="f13 ac">选择表单类型</div>
 			<div style="height:204px;display:flex">
 				<div class="hfull d-auto-y" style="flex:1;border-right:1px solid #f2f2f2">

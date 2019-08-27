@@ -17,7 +17,7 @@
                 <div class="d-flex mt15">
                     <div v-for="item in aweek" :key='item' style="flex:1;color:#CCCCCC" class="d-text-qgray ac b">{{item}}</div>
                 </div>
-                <div class="d-flex" style="flex-wrap:wrap;">
+                <div class="d-flex" style="flex-wrap:wrap;border-bottom: 1px solid #e4e4e4;">
                     <div v-for="(item,index) in allTime" :key='index' style="" @click="fclickThisDay(item)" class="d-text-qgray ac b d-flex cirle-all">
                         <div class="ac mb5" style="font-weight: normal;color: #666;min-height: 32px;line-height: 32px;" :class="item.otherTime == clickDay ? 'haveClick' : ''">
                             {{item.dayTime}}
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <!--日历插件-->
-            <div style="position: relative;" v-if="timelong == 30">
+            <div style="position: relative;border-bottom: 1px solid #e4e4e4;" v-if="timelong == 30">
                 <uni-calendar ref="calendar" insert="true" :selected='selected' @haveClick='confirm'/>
                 <uni-icon @click='timelong = 7,clickDay = todayDate' type="arrowup" class="pl5 d-pointer" size="18" style='position: absolute;top: 8px;left: 85px;'/>
             </div>
@@ -41,7 +41,7 @@
 
             <!--日程列表-->
             <div v-for="(item,index) in indexList" :key="index">
-                <a :url="`/pages/index/scheduleAdd?scheId=${item.id}`" v-if="changeTime(item.startTime) == clickDay" style="border-top: 1px solid #e4e4e4;border-left: none;border-right: none;">
+                <a :url="`/pages/index/scheduleAdd?scheId=${item.id}`" v-if="changeTime(item.startTime) == clickDay" style="border-bottom: 1px solid #e4e4e4;">
                     <div class="p10 ml5" style="box-sizing: border-box;">
                         <div class="wfull d-flex">
                             <div class="d-flex cirle-blue" style="margin-top: 7px;">
