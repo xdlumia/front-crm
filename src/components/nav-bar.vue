@@ -30,8 +30,8 @@
                 </div>
 
                 <div class='nav-title f16 d-text-black wfull' :style="{ height: `${navbarBtn.height}px`, 'top': `${navbarBtn.top + statusBarHeight}px`, 'padding-right': `${navbarBtn.left}px`}">
-                    <div class="ac d-elip b f16" v-if="!isSearch" :style="{'text-indent': `${navbarBtn.left}px`, 'line-height':  `${navbarBtn.height}px`}">
-                        {{title}}
+                    <div class="b" v-if="!isSearch">
+                        <div class='ac d-elip b f16' :style="{'text-indent': `${navbarBtn.left}px`, 'line-height':  `${navbarBtn.height}px`}">{{title}}</div>
                         <slot />
                     </div>
 
