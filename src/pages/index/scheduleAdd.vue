@@ -23,7 +23,7 @@
                 <div class="d-bg-schedule"></div>
 
                 <ruiDatePicker
-                     :disabled='!isadd && !ishandel'
+                    :disabled='!isadd && !ishandel'
                     fields="minute"
                     start="2010-00-00 00:00"
                     end="2030-12-30 23:59"
@@ -33,7 +33,7 @@
                 </ruiDatePicker>
 
                 <ruiDatePicker
-                     :disabled='!isadd && !ishandel'
+                    :disabled='!isadd && !ishandel'
                     fields="minute"
                     start="2010-00-00 00:00"
                     end="2030-12-30 23:59"
@@ -43,7 +43,7 @@
                 </ruiDatePicker>
 
                 <i-select
-                     :disabled='!isadd && !ishandel'
+                    :disabled='!isadd && !ishandel'
                     v-model="acheduleForm.remindSecond"
                     :props="{label:'name',value:'id'}"
                     label="提醒"
@@ -313,7 +313,7 @@ export default {
 				this.$utils.toast.text('结束时间与开始时间只能是同一天！')
 				return
 			}
-			if (Date.parse(this.acheduleForm.startTimeOnle) > Date.parse(val)) {
+			if (Date.parse((this.acheduleForm.startTimeOnle).replace(/-/g, '/')) > Date.parse(val.replace(/-/g, '/'))) {
 				this.$utils.toast.text('结束时间必须大于开始时间！')
 				return
 			}
@@ -326,18 +326,17 @@ export default {
 		// 保存日程
 		async fsubmit () {
 			await this.$refs.acheduleForm.validate()
-			if (Date.parse(this.acheduleForm.startTimeOnle) > Date.parse(this.acheduleForm.endTimeOnle)) {
+			if (Date.parse((this.acheduleForm.startTimeOnle).replace(/-/g, '/')) > Date.parse((this.acheduleForm.endTimeOnle).replace(/-/g, '/'))) {
 				this.$utils.toast.text('结束时间必须大于开始时间！')
 				return
 			}
-			// let startTimeOnle =
 			this.acheduleForm.clientId = this.clientData.id || ''
 			this.acheduleForm.linkId = this.contactData.id || ''
 			this.acheduleForm.salesFunnelId = this.chanceData.id || ''
 			this.acheduleForm.transactionRecordId = this.transactionData.id || ''
 			this.acheduleForm.seaPoolId = this.highseasData.id || ''
-			this.acheduleForm.startTime = Date.parse(this.acheduleForm.startTimeOnle)
-			this.acheduleForm.endTime = Date.parse(this.acheduleForm.endTimeOnle)
+			this.acheduleForm.startTime = Date.parse((this.acheduleForm.startTimeOnle).replace(/-/g, '/'))
+			this.acheduleForm.endTime = Date.parse((this.acheduleForm.endTimeOnle).replace(/-/g, '/'))
 			if (this.isadd) {
 				this.$api.seeCrmService.scheduleSave(this.acheduleForm)
 					.then(res => {

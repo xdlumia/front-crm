@@ -24,9 +24,10 @@
 						</span>
 					</div>
 				</div>
+				<div style="width:100%;height:15px"></div>
 				<div class="search-jl">
-					<span class="d-text-black ml15 mt15">历史搜索</span>
-					<span @click="deleteSearchList()" class="d-text-blue f13 mr15 mt15">清除</span>
+					<span class="d-text-black ml15">历史搜索</span>
+					<span @click="deleteSearchList()" class="d-text-blue f13 mr15">清除</span>
 				</div>
 				<div class="search-history p15" style="padding-top: 10px;" v-if="searchHistoryList.length > 0">
 					<div class="d-bg-white p1 searchistory mr5 mb5" v-for="(item,index) in searchHistoryList" :key="index">
