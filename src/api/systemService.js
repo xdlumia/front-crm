@@ -34,7 +34,7 @@ export default {
 	},
 	// 申请公司
 	applyCompany: {
-		url: '	/rmapplycompany/apply',
+		url: '/rmapplycompany/apply',
 		methods: 'post'
 	},
 	// 查看当前微信用户是否绑定账号
