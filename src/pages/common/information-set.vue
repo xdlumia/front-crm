@@ -89,7 +89,7 @@
             </div>
         </div>
 
-		<div @click="isPopup = false" v-if="isPopup" style="position:absolute;top:0;bottom:0;left:0;right:0;z-index:990;background:rgba(0,0,0,.4)" class="wfull">
+		<div @click="isPopup = false" v-if="isPopup" style="position:fixed;top:0;bottom:0;left:0;right:0;z-index:990;background:rgba(0,0,0,.4)" class="wfull">
 		</div>
 		<div v-if="isPopup" style="height:303px;z-index:999;position:fixed;bottom:0;width:100%;background:#FFF">
 			<div style="width:100%;height:50px;line-height:50px;border-bottom:1px solid #f2f2f2;color:333" class="f13 ac">选择表单类型</div>
