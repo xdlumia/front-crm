@@ -41,7 +41,7 @@
                             </div>
                         </div>
 
-						<div class="d-flex mationInfo" v-if="item.ishandel">
+						<div class="d-flex mationInfo" v-if="item.ishandel" style="border-top:1px solid #F2F2F2">
 							<div class="hfull flexcenter mationInfo-top">
 								<!-- <uni-icon @click="isShow = false" class="ml15 fr" type='minus-filled' color="#EB4D3D" size='20'/> -->
 								<input maxlength="6" v-model="item.fieldName" placeholder="属性名称" class="ml15"/>
@@ -89,7 +89,9 @@
             </div>
         </div>
 
-		<uni-popup ref="popup" type="bottom" style="height:303px;z-index:999;position:fixed;bottom:0">
+		<div @click="isPopup = false" v-if="isPopup" style="position:absolute;top:0;bottom:0;left:0;right:0;z-index:990;background:rgba(0,0,0,.7)" class="wfull">
+		</div>
+		<div v-if="isPopup" style="height:303px;z-index:999;position:fixed;bottom:0;width:100%;background:#FFF">
 			<div style="width:100%;height:50px;line-height:50px;border-bottom:1px solid #f2f2f2;color:333" class="f13 ac">选择表单类型</div>
 			<div style="height:204px;display:flex">
 				<div class="hfull d-auto-y" style="flex:1;border-right:1px solid #f2f2f2">
@@ -104,7 +106,7 @@
 				</div>
 			</div>
 			<div @click="closePopup" style="width:100%;height:50px;line-height:50px;border-top:3px solid #E4E4E4;color:333" class="f13 ac">取消</div>
-		</uni-popup>
+		</div>
 
         <div class="moreinfo" @click="moreAdd">
             <div class="ml15">
@@ -136,6 +138,7 @@ export default {
 				'3': '标签'
 			},
 			tagForm: {},
+			isPopup: false,
 			tagAllList: [], // 所有标签的数组
 			msgName: '',
 			msgid: '0',
@@ -160,7 +163,6 @@ export default {
 		}
 	},
 	onLoad (option) {
-		console.log(option)
 		this.busType = option.busType || ''
 		this.getTagList()
 		this.getInfosList()
@@ -183,11 +185,11 @@ export default {
 		},
 		// 点击属性
 		getmsgName (item) {
-			console.log(item)
 			if (item.type !== 3) {
 				this.tagName = ''
 				this.tagId = ''
-				this.$refs.popup.close()
+				// this.$refs.popup.close()
+				this.isPopup = false
 			}
 			if (this.isChooseHandel) {
 				this.chooseItem.fieldType = item.type
@@ -205,7 +207,8 @@ export default {
 				this.tagName = item.labelName
 				this.tagId = item.labelCode
 			}
-			this.$refs.popup.close()
+			// this.$refs.popup.close()
+			this.isPopup = false
 		},
 		openPopup (item) {
 			if (item) {
@@ -214,14 +217,16 @@ export default {
 			} else {
 				this.isChooseHandel = false
 			}
-			this.$refs.popup.open()
+			// this.$refs.popup.open()
+			this.isPopup = true
 		},
 		closePopup () {
 			this.tagName = ''
 			this.tagId = ''
 			this.msgName = ''
 			this.msgid = '0'
-			this.$refs.popup.close()
+			this.isPopup = false
+			// this.$refs.popup.close()
 		},
 		// 获取所有列表
 		getInfosList () {
@@ -254,7 +259,6 @@ export default {
 		},
 		// 修改属性
 		handelTags (item) {
-			console.log(item)
 			if (item.fieldName) {
 				this.$api.seeCrmService.formsfieldconfigUpdate({
 					id: item.id,
