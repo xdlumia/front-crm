@@ -136,9 +136,11 @@ Vue.component('uParse', uParse)
 /** 全局注册UI组件 - END */
 
 // 获取系统信息
+let isIpx = false
 try {
 	uni.getSystemInfo().then(([err, data]) => {
 		if (!err) {
+			isIpx = data.model.indexOf('iPhone X') !== -1
 			let menuInfo = wx.getMenuButtonBoundingClientRect()
 			let dataInfo = { ...data, menuInfo }
 			store.commit('setSystemInfo', dataInfo)
@@ -147,7 +149,7 @@ try {
 } catch (err) {
 	store.commit('setSystemInfo', {})
 }
-
+console.log(isIpx)
 // 注册登录事件
 uni.$on('login', data => {
 	// 保存token finger sysCode
@@ -206,6 +208,11 @@ let generateButtonCodes = (authorityBtn, arr) => {
 	}, arr || [])
 }
 Vue.mixin({
+	data () {
+		return {
+				isIpx: isIpx
+			}
+		},
 	computed: {
 		authorityButtons () {
 			let authorityBtn = local.fetch('sourceList') || []

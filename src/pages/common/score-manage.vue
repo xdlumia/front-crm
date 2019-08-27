@@ -14,7 +14,7 @@
 					:labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}'
 					:props="{label:'fieldName',value:'id'}"
 					v-model='item.fieldConfigId'
-					:label="'字段名称-' + index"
+					:label="'字段名称' + (index+1)"
 					:options="fieldData"
 					@input='getField($event, index)'
 				/>
@@ -38,7 +38,7 @@
 			<div class="mb5 d-bg-white" v-for='(subItem, subIndex) in item.fieldRuleEntityList' :key='subIndex'>
 
 				<!-- filedType == 0 是填写数字 -->
-				<i-input labelWidth='120' @handleLableClick='delItem(index, subIndex)' :labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}' :label=" item.fieldDescribe + '一'" disabled v-if="item.filedType == 1">
+				<i-input labelWidth='120' @handleLableClick='delItem(index, subIndex)' :labelIcon='{type: "minus-filled", color: "#EB4D3D", size: 20}' :label=" item.fieldDescribe + (subIndex + 1)" disabled v-if="item.filedType == 1">
 					<div class='d-center' style='width:180px;'>
 						<input
 							type="number"
@@ -59,7 +59,7 @@
 					labelWidth='150' i-class='ar pr20'
 					v-model='subItem.fieldAccordingTo'
 					:props="{label:'content',value:'code'}"
-					:label=" item.fieldDescribe + '一'"
+					:label=" item.fieldDescribe + (subIndex + 1)"
 					:options="subFieldData[index]"
 				/>
 
@@ -261,25 +261,25 @@ export default {
 					// 数字 判断
 					if (+scoreItem.filedType === 1) {
 						if (!scoreSubItem.maxValue || !scoreSubItem.minValue) {
-							return this.$utils.toast.text('请填写' + scoreSubItem.fieldDescribe)
+							return this.$utils.toast.text('请填写' + scoreSubItem.fieldDescribe + (subI + 1))
 						}
 
 						if (+scoreSubItem.maxValue < +scoreSubItem.minValue) {
-							return this.$utils.toast.text(scoreSubItem.fieldDescribe + '格式不正确')
+							return this.$utils.toast.text(scoreSubItem.fieldDescribe + (subI + 1) + '格式不正确')
 						}
 						if (scoreSubList[subI - 1] && (+scoreSubItem.minValue <= +scoreSubList[subI - 1].maxValue)) {
-							return this.$utils.toast.text(scoreSubItem.fieldDescribe + '格式不正确1')
+							return this.$utils.toast.text(scoreSubItem.fieldDescribe + (subI + 1) + '格式不正确')
 						}
 					}
 					// 标签判断
 					if (+scoreItem.filedType === 3) {
 						if (!scoreSubItem.fieldAccordingTo) {
-							return this.$utils.toast.text('请选择' + scoreSubItem.fieldDescribe)
+							return this.$utils.toast.text('请选择' + scoreSubItem.fieldDescribe + (i + 1))
 						}
 					}
 
 					if (scoreSubItem.fieldGrade === '') {
-						return this.$utils.toast.text('请填写' + scoreSubItem.fieldDescribe + '计算评分')
+						return this.$utils.toast.text('请填写' + scoreSubItem.fieldDescribe + (i + 1) + '计算评分')
 					}
 				}
 
