@@ -313,6 +313,7 @@ export default {
 					if (res.code === 200) {
 						setTimeout(() => {
 							this.getInfosList()
+							this.$routing.navigateBack()
 						}, 800)
 					}
 				})
