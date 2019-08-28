@@ -16,6 +16,9 @@ Api = new Flyio()
 // #endif
 Api.default.config.timeout = 300000
 Api.interceptors.request.use(async config => {
+	// 获取日志  上线后取消
+	console.log(config)
+
 	let token = local.getItem('token')
 	let finger = local.getItem('finger')
 	if ((!token || !finger) && !config.url.match('wxLogin/temporaryAuthorization')) {
@@ -39,6 +42,8 @@ Api.interceptors.request.use(async config => {
 })
 
 Api.interceptors.response.use(async (response, promise) => {
+	// 获取日志  上线后取消
+	console.log(response)
 	let res = response.data || {}
 	let msg = res.msg || ''
 	res.msg = msg.replace(/<\/?.+?>/g, '')
