@@ -100,16 +100,19 @@ export default {
 						}
 					} else {
 						this.$utils.toast.text(response.msg)
-						// 重新获取code
-						uni.login({
-							provider: 'weixin',
-							success: function (loginRes) {
-								this.form.code = loginRes.code
-							}
-						})
+						this.reGetCode()
 					}
 				})
 			}
+		},
+		// 重新获取code
+		reGetCode () {
+			uni.login({
+				provider: 'weixin',
+				success: function (loginRes) {
+					this.form.code = loginRes.code
+				}
+			})
 		},
 		// 直接登录
 		thirdpartyAuthorizationLogin () {
@@ -124,19 +127,24 @@ export default {
 							that.$local.save('sourceList', response.data)
 						} else {
 							that.$utils.toast.text(response.msg)
+							that.reGetCode()
 						}
 					})
 					// 获取用户详细数据
 					that.$api.bizSystemService.getUserDetail({ 'sysCode': 'crm' }).then((response) => {
 						that.$utils.toast.text(response.msg)
 						if (response.code === 200) {
+							that.reGetCode()
 							uni.$emit('setUserInfo', response.data)
 							// 跳转到首页
 							that.$routing.switchTab('/pages/index/index')
+						} else {
+							that.reGetCode()
 						}
 					})
 				} else {
 					that.$utils.toast.text(response.msg)
+					that.reGetCode()
 				}
 			})
 		},

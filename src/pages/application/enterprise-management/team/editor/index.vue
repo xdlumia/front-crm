@@ -28,9 +28,8 @@
 				<i-input v-model="formData.email" label="企业邮箱" placeholder="企业邮箱"/>
 				<i-input v-model="formData.employeeNo" label="工号" placeholder="工号"/>
 				<i-input type="textarea" v-model="formData.remark" label="备注" maxlength="300" placeholder="点击填写"/>
-                <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view>
+                <!-- <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view> -->
                 <view class="d-absolute wfull d-fixed" style="bottom:0">
-                    <!-- <i-button class="fl width50" v-if="isEditor == 1" type="warn" @click="deleteEmployee">刪除</i-button> -->
                     <i-button  v-if="isEditor == 1" type="primary" @click="update">保存</i-button>
                     <i-button v-if="isEditor == 0" type="primary" @click="save">保存</i-button>
                 </view>
