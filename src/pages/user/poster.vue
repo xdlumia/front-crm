@@ -24,12 +24,16 @@ export default {
 	},
 	methods: {
 		getImg () {
+			this.$utils.showLoading('加载中')
 			this.$api.seeCrmService.posterGet({
 				userAvatar: this.$store.state.userInfo.avatarUrl || this.$local.fetch('userInfo').avatarUrl || ''
 			}).then(res => {
 				if (res.code === 200) {
+					this.$utils.hideLoading()
 					this.imgUrl = res.data || ''
 				}
+			}).catch(() => {
+				this.$utils.hideLoading()
 			})
 		},
 		handleClick () {
