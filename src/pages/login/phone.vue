@@ -76,14 +76,14 @@ export default {
 		// 初始化用户详细数据
 		getUserDetail (sysCode) {
 			// 调用角色权限列表，刷新后端缓存
-			this.$api.bizSystemService.getUserResource({}, sysCode).then((response) => {
+			this.$api.bizSystemService.getUserResource({}, 'crm').then((response) => {
 				if (response.code === 200) {
 					this.$local.save('sourceList', response.data)
 				} else {
 					this.$utils.toast.text(response.msg)
 				}
 			})
-			this.$api.bizSystemService.getUserDetail({ 'sysCode': sysCode }).then((response) => {
+			this.$api.bizSystemService.getUserDetail({ 'sysCode': 'crm' }).then((response) => {
 				this.$utils.toast.text(response.msg)
 				if (response.code === 200) {
 					uni.$emit('setUserInfo', response.data)

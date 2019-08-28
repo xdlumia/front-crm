@@ -44,7 +44,7 @@
 					企业规模
 				</div>
 				<div class="d-cell mr10 form-row-item">
-					<input type="text" class='f12 d-text-gray' v-model="form.scale" placeholder="请填写正确的企业规模">
+					<input type="text" class='f12 d-text-gray' maxlength="11" v-model="form.scale" placeholder="请填写正确的企业规模">
 				</div>
 			</div>
 		</m-form>
