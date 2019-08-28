@@ -100,7 +100,6 @@ export default {
 			clientId: '',
 
 			list: [], // 联系人列表
-			chooseRowIndex: '', // 选中行数据的下标
 			filterData: [
 				{
 					prop: 'queryType',
@@ -187,7 +186,6 @@ export default {
 						this.linkIds.push(row.id)
 					}
 				} else {
-					this.chooseRowIndex = index
 					this.linkIds = row.id
 				}
 			}
@@ -218,7 +216,8 @@ export default {
 			if (this.multiple) {
 				data = this.list.filter(item => this.linkIds.includes(item.id))
 			} else {
-				data = this.list[this.chooseRowIndex]
+				let row = this.list.filter(item => this.linkIds == item.id)// eslint-disable-line
+				data = row[0]
 			}
 			uni.$emit('chooseContact', data)
 			this.$routing.navigateBack()
