@@ -44,7 +44,6 @@ export default {
 	onLoad (option) {
 	},
 	created () {
-		console.log(this.isUrl)
 		this.fileinfoQueryList()
 	},
 	methods: {
