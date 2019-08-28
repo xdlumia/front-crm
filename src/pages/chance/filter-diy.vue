@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </filter-plane>
-            <filter-plane title='销售阶段' v-model='filterData.stageIds' :dataList='stageList'/>
+            <filter-plane title='销售阶段' v-model='filterData.stageIds' :dataList='stageLists'/>
             <filter-plane title='预计成交日期' v-model='filterData.transationTime' isSingle :dataList='dateList'/>
             <filter-plane title='机会来源' v-model='filterData.sourceCode' :dataList="dictionaryOptions('CRM_LY')"/>
         </scroll-view>
@@ -37,7 +37,7 @@ let dateList = [
 	{ code: '7', content: '下周' }
 ]
 export default {
-	props: ['form'],
+	props: ['stageList', 'form'],
 	components: {
 		FilterPlane,
 		mAvatar
@@ -54,27 +54,15 @@ export default {
 			},
 			userInfo: {},
 			userName: '',
-			avatarUrl: '',
-			stageList: []
+			avatarUrl: ''
 		}
 	},
-	created () {
-		this.salesstageQueryList()
-	},
 	computed: {
-		// stageLists () {
-		// 	return this.stageList.map(item => { return { content: item.stageName, code: item.id } })
-		// }
+		stageLists () {
+			return this.stageList.map(item => { return { content: item.stageName, code: item.id } })
+		}
 	},
 	methods: {
-		salesstageQueryList () {
-			this.$api.seeCrmService.salesstageQueryList({ isOriginal: -1 })
-				.then(res => {
-					let data = res.data || []
-					// 未删除的数据
-					this.stageList = data.map(item => { return { content: item.stageName, code: item.id } })
-				})
-		},
 		chooseLeader () {
 			uni.$once('colleagueChoose', data => {
 				if (data.data.length > 0) {

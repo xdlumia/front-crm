@@ -11,7 +11,13 @@
 			<div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
             <div v-else class="detail-list uni-flex uni-row pb10" v-for="(item,index) of list" :key="index">
                 <div class="flex-item item-progress mr10">
-                    <circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" />
+					<cmd-progress type="circle" :stroke-width="9" stroke-color="#7fc25c" :width="45" :percent="stagePercent(item)" :success-percent="stageListMax" custom>
+						<div class="f12 ac">
+							{{stagePercent(item)}}/{{stageListMax}}
+							<!-- {{(stageList.findIndex(row => row.id == item.stageId)+1)}}/{{stageListMax}} -->
+						</div>
+					</cmd-progress>
+                    <!-- <circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" /> -->
                 </div>
                 <div class="flex-item d-elip wfull">
                     <div class="d-elip">{{item.chanceName}}</div>
@@ -74,7 +80,6 @@ export default {
 		},
 		click () {
 			uni.$once('addChance', data => {
-				console.log(data)
 				this.saleschanceQueryList()
 			})
 			this.$routing.navigateTo(`/pages/chance/add-chance?clientId=${this.query.busId}&clientName=${this.query.name}`)

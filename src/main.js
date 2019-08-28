@@ -151,7 +151,6 @@ try {
 } catch (err) {
 	store.commit('setSystemInfo', {})
 }
-console.log(isIpx)
 // 注册登录事件
 uni.$on('login', data => {
 	// 保存token finger sysCode

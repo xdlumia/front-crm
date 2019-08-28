@@ -3,7 +3,7 @@
     <NavBar title="机会" :isSearch="true" placeholder="搜索销售机会名称" :keyword='queryForm.clientOrChanceName' searchType='1' @getSearch='getSearch'/>
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData="filterData" @filterSubmit="filterSubmit" ref="filter">
-      <filter-diy @submit="diyFilterSubmit" />
+      <filter-diy :stageList="stageList" @submit="diyFilterSubmit" />
     </Filter>
     <!-- 步骤 -->
     <i-steps
@@ -47,12 +47,21 @@
         class="chance-item uni-flex uni-row"
       >
         <div class="flex-item item-progress">
-		<cmd-progress type="circle" :stroke-width="9" stroke-color="#7fc25c" :width="45" :percent="(stageList.findIndex(row => row.id == item.stageId)+1)" :success-percent="10" custom>
-			<div class="f12 ac">
-				{{stagePercent(item)}}/{{stageListMax}}
-				<!-- {{(stageList.findIndex(row => row.id == item.stageId)+1)}}/{{stageListMax}} -->
-			</div>
-		</cmd-progress>
+			<progressC :successPercent="stageListMax" :list="stageListAll" :row="item"/>
+			<!-- <cmd-progress
+			type="circle"
+			:stroke-width="9"
+			stroke-color="#7fc25c"
+			:width="45"
+			:status="stagePercent(item).status || 'normal'"
+			:percent="stagePercent(item)"
+			:success-percent="stageListMax"
+			:custom="stagePercent(item).status == 'normal' || !stagePercent(item).status">
+				<div class="f12 ac">
+					<span v-if="stagePercent(item).status == 'normal'" class="stage-bar"></span>
+					<span v-else>{{stagePercent(item).percent}}/{{stageListMax}}</span>
+				</div>
+			</cmd-progress> -->
           <!-- <circleProgress
             width="45px"
             :max="stageListMax"
@@ -101,6 +110,7 @@
 <script>
 import Filter from '@/components/filter'
 import FilterDiy from './filter-diy'
+import progressC from './component/progress'
 // 筛选数据
 let queryType = [
 	{ id: '-1', name: '全部' },
@@ -130,7 +140,8 @@ export default {
 	mixins: [],
 	components: {
 		Filter,
-		FilterDiy
+		FilterDiy,
+		progressC
 	},
 	data () {
 		return {
@@ -149,8 +160,8 @@ export default {
 					list: sortType
 				}
 			],
-			// 步骤列表
-			stageList: [],
+			stageList: [], // 内置阶段
+			stageListAll: [], // 全部阶段
 			stageSts: {
 				totalCount: '',
 				totalSalesChanceMoney: ''
@@ -230,7 +241,31 @@ export default {
 	},
 	methods: {
 		stagePercent (row) {
-			return this.stageList.findIndex(item => +item.id === row.stageId) + 1
+			let status = {
+				'赢单': 'success',
+				'输单': 'exception',
+				'无效': 'normal'
+			}
+			// 获取下标
+			let index = this.stageListAll.findIndex(item => +item.id === row.stageId)
+			// 内置阶段获取类型
+			let statusType = status[(this.stageListAll[index] || {}).stageName]
+
+			/**
+			 * 如果有内置阶段返回内置阶段类型
+			 * 否则就返回当前进度 并且状态是normal
+			 */
+			if (statusType) {
+				return {
+					status: statusType,
+					percent: index + 1
+				}
+			} else {
+				return {
+					status: false,
+					percent: index + 1
+				}
+			}
 		},
 		getSearch (data) {
 			this.queryForm.clientOrChanceName = data.searchInfo
@@ -331,13 +366,14 @@ export default {
 		},
 		// 获取销售阶段
 		salesstageQueryList () {
-			this.$api.seeCrmService.salesstageQueryList({ isOriginal: 0 }).then(res => {
+			this.$api.seeCrmService.salesstageQueryList({ isOriginal: -1 }).then(res => {
 				if (res.code !== 200) return
 				let data = res.data || []
 				data.forEach(item => {
 					item.name = item.stageName
 				})
-				this.stageList = data
+				this.stageList = data.filter(item => +item.isOriginal === 0)
+				this.stageListAll = data
 				// 刷新列表
 				this.$refs.steps._updateDataChange()
 			})
@@ -394,12 +430,5 @@ export default {
     color: #333;
   }
 }
-.client-menu {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 10px 15px;
-  box-sizing: border-box;
-}
+.stage-bar{display: inline-block; width:8px; height: 2px; background-color: #e1e4e8}
 </style>
