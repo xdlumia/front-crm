@@ -48,6 +48,7 @@ import uniIcon from './components/basic/uni/uni-icon/uni-icon'
 import uniPopup from './components/basic/uni/uni-popup/uni-popup'
 import uniSwipeAction from './components/basic/uni/uni-swipe-action/uni-swipe-action'
 import uniCalendar from './components/basic/uni/uni-calendar/uni-calendar'
+import cmdProgress from './components/basic/uni/cmd-progress/'
 import uniTag from './components/basic/uni/uni-tag/uni-tag'
 // import dragSort from './components/basic/uni/drag-sort'
 // import tabPane from './components/basic/uni/uni-tabs/tabPane'
@@ -110,6 +111,7 @@ Vue.component('uniIcon', uniIcon)
 Vue.component('uniPopup', uniPopup)
 Vue.component('uniSwipeAction', uniSwipeAction)
 Vue.component('uniCalendar', uniCalendar)
+Vue.component('cmdProgress', cmdProgress)
 Vue.component('uniTag', uniTag)
 
 // Vue.component('tabPane', tabPane)

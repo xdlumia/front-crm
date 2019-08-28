@@ -9,7 +9,8 @@
 						<p><i class="stage-index">{{index+1}}</i></p>
 					</i-col>
 					<i-col span="3">
-						<span @click="delStage(item,index)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
+						<span v-if="!item.isOriginal" @click="delStage(item,index)"><i-icon type="offline_fill" size="20" color="#eb4d3d" /></span>
+						<span v-else class="d-text-white">0</span>
 					</i-col>
 					<i-col span="3">
 						<p @click="handlerAction(item)" class="f13">{{item.equityedge}}%</p>
@@ -18,7 +19,7 @@
 						<p @click="handlerAction(item)"><i-icon type="enter" size="20" color="#999" /></p>
 					</i-col>
 					<i-col span="9" i-class="col-class">
-						<i-input class="stage-name" :label-width="0" v-model="item.stageName" placeholder="请输入名称"></i-input>
+						<i-input class="stage-name" :disabled="item.isOriginal" :label-width="0" v-model="item.stageName" placeholder="请输入名称"></i-input>
 					</i-col>
 					<i-col span="4" class="ar">
 						<span v-if="index != 0" @click="farrowthinup(index,item)">
@@ -92,10 +93,6 @@ export default {
 		this.equityList = this.equityedgeList()
 	},
 	computed: {
-		// 计算拖动按钮高度
-		currentListLength () {
-			return this.stageList.length
-		}
 	},
 	methods: {
 		// 向上移动
@@ -116,7 +113,7 @@ export default {
 		},
 		// 获取销售阶段列表
 		salesstageQueryList () {
-			this.$api.seeCrmService.salesstageQueryList()
+			this.$api.seeCrmService.salesstageQueryList({ isOriginal: -1 })
 				.then(res => {
 					let data = res.data || []
 					// 未删除的数据
@@ -150,14 +147,18 @@ export default {
 		},
 		// 提交表单
 		submit () {
-			// 验证
-			for (let i = 0; i < this.stageList.length; i++) {
-				if (!this.stageList[i].stageName || !this.stageList[i].equityedge) {
+			/**
+			 * 验证
+			 */
+			// 获取非内置字段
+			let istageList = this.stageList.filter(item => !item.isOriginal)
+			for (let i = 0; i < istageList.length; i++) {
+				if (!istageList[i].stageName || !istageList[i].equityedge) {
 					this.$utils.toast.text('阶段赢率和名称是必填项')
 					return
 				}
-				if (this.stageList[i + 1] && +this.stageList[i].equityedge >= +this.stageList[i + 1].equityedge) {
-					this.$utils.toast.text('阶段赢率是递增关系')
+				if (istageList[i + 1] && +istageList[i].equityedge >= +istageList[i + 1].equityedge) {
+					this.$utils.toast.text('自定义阶段赢率是递增关系')
 					return
 				}
 			}

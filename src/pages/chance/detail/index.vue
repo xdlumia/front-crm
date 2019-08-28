@@ -199,7 +199,7 @@ export default {
 		},
 		// 获取销售阶段
 		salesstageQueryList () {
-			this.$api.seeCrmService.salesstageQueryList().then(res => {
+			this.$api.seeCrmService.salesstageQueryList({ isOriginal: 0 }).then(res => {
 				let data = res.data || []
 				let index = data.findIndex(item => item.id === this.detailInfo.stageId)
 				this.stageActive = index

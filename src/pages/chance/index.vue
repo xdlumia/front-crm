@@ -3,7 +3,7 @@
     <NavBar title="机会" :isSearch="true" placeholder="搜索销售机会名称" :keyword='queryForm.clientOrChanceName' searchType='1' @getSearch='getSearch'/>
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData="filterData" @filterSubmit="filterSubmit" ref="filter">
-      <filter-diy :stageList="stageList" @submit="diyFilterSubmit" />
+      <filter-diy @submit="diyFilterSubmit" />
     </Filter>
     <!-- 步骤 -->
     <i-steps
@@ -47,11 +47,17 @@
         class="chance-item uni-flex uni-row"
       >
         <div class="flex-item item-progress">
-          <circleProgress
+		<cmd-progress type="circle" :stroke-width="9" stroke-color="#7fc25c" :width="45" :percent="(stageList.findIndex(row => row.id == item.stageId)+1)" :success-percent="10" custom>
+			<div class="f12 ac">
+				{{stagePercent(item)}}/{{stageListMax}}
+				<!-- {{(stageList.findIndex(row => row.id == item.stageId)+1)}}/{{stageListMax}} -->
+			</div>
+		</cmd-progress>
+          <!-- <circleProgress
             width="45px"
             :max="stageListMax"
             :progress="(stageList.findIndex(row => row.id == item.stageId)+1)"
-          />
+          /> -->
         </div>
         <div class="flex-item item-info d-elip wfull">
           <h4 class="d-elip f13">{{item.chanceName || '-'}}</h4>
@@ -223,6 +229,9 @@ export default {
 		}
 	},
 	methods: {
+		stagePercent (row) {
+			return this.stageList.findIndex(item => +item.id === row.stageId) + 1
+		},
 		getSearch (data) {
 			this.queryForm.clientOrChanceName = data.searchInfo
 			this.$refs.list.reload()
@@ -322,7 +331,7 @@ export default {
 		},
 		// 获取销售阶段
 		salesstageQueryList () {
-			this.$api.seeCrmService.salesstageQueryList().then(res => {
+			this.$api.seeCrmService.salesstageQueryList({ isOriginal: 0 }).then(res => {
 				if (res.code !== 200) return
 				let data = res.data || []
 				data.forEach(item => {

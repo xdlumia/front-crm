@@ -255,7 +255,7 @@ export default {
 		},
 		// 获取销售阶段
 		salesstageQueryList () {
-			this.$api.seeCrmService.salesstageQueryList()
+			this.$api.seeCrmService.salesstageQueryList({ isOriginal: -1 })
 				.then(res => {
 					let data = res.data || []
 					this.stageList = data

@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </filter-plane>
-            <filter-plane title='销售阶段' v-model='filterData.stageIds' :dataList='stageLists'/>
+            <filter-plane title='销售阶段' v-model='filterData.stageIds' :dataList='stageList'/>
             <filter-plane title='预计成交日期' v-model='filterData.transationTime' isSingle :dataList='dateList'/>
             <filter-plane title='机会来源' v-model='filterData.sourceCode' :dataList="dictionaryOptions('CRM_LY')"/>
         </scroll-view>
@@ -27,17 +27,17 @@ import FilterPlane from '@/components/filter-plane'
 import mAvatar from '@/components/m-avatar'
 
 let dateList = [
-	{ code: '0', content: '本周' },
-	{ code: '1', content: '本季' },
-	{ code: '2', content: '本年' },
-	{ code: '3', content: '上周' },
-	{ code: '4', content: '上月' },
 	{ code: '5', content: '本月' },
+	{ code: '1', content: '本季度' },
+	{ code: '2', content: '本年' },
+	{ code: '8', content: '昨天' },
 	{ code: '6', content: '今天' },
+	{ code: '3', content: '上周' },
+	{ code: '0', content: '本周' },
 	{ code: '7', content: '下周' }
 ]
 export default {
-	props: ['stageList', 'form'],
+	props: ['form'],
 	components: {
 		FilterPlane,
 		mAvatar
@@ -54,15 +54,27 @@ export default {
 			},
 			userInfo: {},
 			userName: '',
-			avatarUrl: ''
+			avatarUrl: '',
+			stageList: []
 		}
+	},
+	created () {
+		this.salesstageQueryList()
 	},
 	computed: {
-		stageLists () {
-			return this.stageList.map(item => { return { content: item.stageName, code: item.id } })
-		}
+		// stageLists () {
+		// 	return this.stageList.map(item => { return { content: item.stageName, code: item.id } })
+		// }
 	},
 	methods: {
+		salesstageQueryList () {
+			this.$api.seeCrmService.salesstageQueryList({ isOriginal: -1 })
+				.then(res => {
+					let data = res.data || []
+					// 未删除的数据
+					this.stageList = data.map(item => { return { content: item.stageName, code: item.id } })
+				})
+		},
 		chooseLeader () {
 			uni.$once('colleagueChoose', data => {
 				if (data.data.length > 0) {
