@@ -22,7 +22,7 @@
                         <span class="ml5 mr5 d-text-cgray">|</span>
                     </div>
                     <div class='d-cell d-flex'>
-                        <span class='d-cell d-text-gray'>{{positionName}}</span>
+                        <span v-if="'0' !== positionName" class='d-cell d-text-gray'>{{positionName}}</span>
                     </div>
                 </div>
             </div>

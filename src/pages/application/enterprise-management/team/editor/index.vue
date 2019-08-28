@@ -110,6 +110,9 @@ export default {
 					this.formData.roleIds = []
 					this.formData.roleNames = ''
 					this.isApply = this.formData.isApply
+					if (this.formData.positionName === '0') {
+						this.formData.positionName = ''
+					}
 					let items = this.formData.roleList
 					for (var i = 0, lenI = items.length; i < lenI; ++i) {
 						const item = items[i]
