@@ -107,10 +107,11 @@ export default {
 		},
 		// 重新获取code
 		reGetCode () {
+			let that = this
 			uni.login({
 				provider: 'weixin',
 				success: function (loginRes) {
-					this.form.code = loginRes.code
+					that.form.code = loginRes.code
 				}
 			})
 		},

@@ -79,14 +79,7 @@ export default {
 		if (option.deptId) {
 			this.deptId = option.deptId
 		} else {
-			// let companyInfo = this.$local.fetch('companyInfo')
-			// if(companyInfo.companyTypeId === 1){
-			// 	//虚拟企业
-
-			// }else{
-			// 	//实体企业
-			// 	this.deptId = 1
-			// }
+			this.deptId = this.$local.fetch('companyInfo').companyDeptId
 		}
 		this.init()
 		if (option.hierarchy) {
