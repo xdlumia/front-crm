@@ -36,7 +36,7 @@
 export default {
 	data () {
 		return {
-			link: 'http://39.105.103.188:1443/index.html',
+			link: 'https://testcrm.zhenkehu.com:1443/index.html',
 			image: '',
 			shareText: '团队邀请',
 			avatarUrl: '',
