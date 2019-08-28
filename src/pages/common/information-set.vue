@@ -88,26 +88,6 @@
                 </div>
             </div>
         </div>
-
-		<div @click="isPopup = false" v-if="isPopup" style="position:fixed;top:0;bottom:0;left:0;right:0;z-index:990;background:rgba(0,0,0,.4)" class="wfull">
-		</div>
-		<div v-if="isPopup" style="height:303px;z-index:999;position:fixed;bottom:0;width:100%;background:#FFF">
-			<div style="width:100%;height:50px;line-height:50px;border-bottom:1px solid #f2f2f2;color:333" class="f13 ac">选择表单类型</div>
-			<div style="height:204px;display:flex">
-				<div class="hfull d-auto-y" style="flex:1;border-right:1px solid #f2f2f2">
-					<div @click="getmsgName(item)" v-for="(item,index) in msgArr" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
-						{{item.name}}
-					</div>
-				</div>
-				<div v-if='msgid == 3' class="hfull d-auto-y" style="width:270px">
-					<div @click="gettagName(item)" v-for="(item,index) in tagAllList" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
-						{{item.labelName}}
-					</div>
-				</div>
-			</div>
-			<div @click="closePopup" style="width:100%;height:50px;line-height:50px;border-top:3px solid #E4E4E4;color:333" class="f13 ac">取消</div>
-		</div>
-
         <div class="moreinfo" @click="moreAdd">
             <div class="ml15">
                 <uni-icon type='plus-filled' size='18' color='#4889F4' />
@@ -116,6 +96,28 @@
         </div>
 
     </scroll-view>
+
+	<!-- <div @click="isPopup = false" v-if="isPopup" style="position:fixed;top:0;bottom:0;left:0;right:0;z-index:990;background:rgba(0,0,0,.4)" class="wfull">
+	</div> -->
+	<!-- <div v-if="isPopup" style="height:303px;z-index:999;position:fixed;bottom:0;width:100%;background:#FFF"> -->
+	<uni-popup ref="popup" type="bottom" style="height:303px;z-index:999;position:fixed;bottom:0">
+		<div style="width:100%;height:50px;line-height:50px;border-bottom:1px solid #f2f2f2;color:333" class="f13 ac">选择表单类型</div>
+		<div style="height:204px;display:flex">
+			<div class="hfull d-auto-y" style="flex:1;border-right:1px solid #f2f2f2">
+				<div @click="getmsgName(item)" v-for="(item,index) in msgArr" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
+					{{item.name}}
+				</div>
+			</div>
+			<div v-if='msgid == 3' class="hfull d-auto-y" style="width:270px">
+				<div @click="gettagName(item)" v-for="(item,index) in tagAllList" :key='index' class="ac d-text-black" style="line-height:50px;border-bottom:1px solid #f2f2f2;">
+					{{item.labelName}}
+				</div>
+			</div>
+		</div>
+		<div @click="closePopup" style="width:100%;height:50px;line-height:50px;border-top:3px solid #E4E4E4;color:333" class="f13 ac">取消</div>
+	</uni-popup>
+	<!-- </div> -->
+
     <!-- 客户 -->
    <div class="footer-fixed-menu">
         <i-button @click="fsubmit" type="primary" i-class="f16">保 存</i-button>
@@ -188,8 +190,8 @@ export default {
 			if (item.type !== 3) {
 				this.tagName = ''
 				this.tagId = ''
-				// this.$refs.popup.close()
-				this.isPopup = false
+				this.$refs.popup.close()
+				// this.isPopup = false
 			}
 			if (this.isChooseHandel) {
 				this.chooseItem.fieldType = item.type
@@ -207,8 +209,8 @@ export default {
 				this.tagName = item.labelName
 				this.tagId = item.labelCode
 			}
-			// this.$refs.popup.close()
-			this.isPopup = false
+			this.$refs.popup.close()
+			// this.isPopup = false
 		},
 		openPopup (item) {
 			if (item) {
@@ -217,16 +219,16 @@ export default {
 			} else {
 				this.isChooseHandel = false
 			}
-			// this.$refs.popup.open()
-			this.isPopup = true
+			this.$refs.popup.open()
+			// this.isPopup = true
 		},
 		closePopup () {
 			this.tagName = ''
 			this.tagId = ''
 			this.msgName = ''
 			this.msgid = '0'
-			this.isPopup = false
-			// this.$refs.popup.close()
+			// this.isPopup = false
+			this.$refs.popup.close()
 		},
 		// 获取所有列表
 		getInfosList () {
