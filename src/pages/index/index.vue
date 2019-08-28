@@ -182,9 +182,9 @@
                     <i class="iconfont f20 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
                     <span class="b ml5 f13">销售漏斗</span><span class="f13 b">( 商机金额 )</span>
                 </div>
-                <div class="wfull" style="height:200px;">
+                <div class="wfull" style="height:200px;box-sizing: border-box;">
                    <view class="echartsBox">
-                         <ec-canvas :ec="ec" ref='echart'></ec-canvas>
+                         <ec-canvas :ec="ec" ref='echart' class='mr10'></ec-canvas>
                     </view>
                 </div>
             </div>
@@ -246,12 +246,13 @@ export default {
 							width: '60%',
 							sort: 'none',
 							height: '80%',
-							left: '10%',
+							left: '5%',
 							top: '5%',
 							data: this.funnelList,
 							label: {
 								fontSize: 12,
-								color: '#333'
+								color: '#333',
+								show: true
 							}
 						}
 					]
@@ -363,9 +364,9 @@ export default {
 					this.funnelList = []
 					let arr = res.data || []
 					arr.forEach((item, index) => {
-						this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount })
+						this.funnelList.push({ value: item.amount, name: ((index + 1) + '.' + item.stageName + '：' + item.amount).length > 11 ? ((index + 1) + '.' + item.stageName + '：' + item.amount).substring(0, 11) + '...' : (index + 1) + '.' + item.stageName + '：' + item.amount })
+						// this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount})
 					})
-					// this.funnelList = [{value:2000,name:'阶段1 - 5000'},{value:5000,name:'阶段2 - 5000'},{value:2000,name:'阶段3 - 2000'}]
 					this.ec.option.series[0].data = this.funnelList || []
 					this.$nextTick(() => {
 						if (this.$refs.echart) {
