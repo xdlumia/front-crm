@@ -246,13 +246,13 @@
 		{
 			"path": "pages/login/index",
 			"style": {
-				"navigationBarTitleText": "登陆"
+				"navigationBarTitleText": "登录"
 			}
 		},
 		{
 			"path": "pages/login/phone",
 			"style": {
-				"navigationBarTitleText": "登陆"
+				"navigationBarTitleText": "登录"
 			}
 		},
 		{

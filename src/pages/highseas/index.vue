@@ -10,7 +10,7 @@
         <NavBar :title='select ? "公海池" : ""'>
 			<a :url="'./choose-highseas?poolId=' + pool.id" class='d-center f16' style="padding-left:108px; text-indetnd"  v-if='!select'>
 				<span class="d-elip" style="max-width:calc(100% - 20px)">{{pool.name || ''}}</span>
-				<div>
+				<div v-if='pool.name'>
 					<i-icon type="unfold" size='18' color='#000' i-class="inline" />
 				</div>
 			</a>
