@@ -51,9 +51,9 @@
         <span class="d-text-black ml10">添加{{typeform[queryForm.busType]}}标签</span>
       </div>
     </div>
-    <div class="footer-fixed-menu">
+    <!-- <div class="footer-fixed-menu">
       <i-button type="primary" i-class="f16">保 存</i-button>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

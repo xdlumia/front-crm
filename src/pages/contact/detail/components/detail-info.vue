@@ -9,7 +9,7 @@
             <m-list label-width="120" label="姓名">{{detailInfo.linkmanName}}</m-list>
             <m-list label-width="120" label="负责人">{{detailInfo.leaderName}}</m-list>
             <m-list label-width="120" label="公司名称">{{detailInfo.clientName}}</m-list>
-				<div v-for='item in detailInfo.formsFieldValueEntitys' :key='item.id'>
+			<div v-for='item in detailInfo.formsFieldValueEntitys' :key='item.id'>
                 <m-list label-width="120" :label="item.fieldName" v-if="item.fieldType == 3">{{item.fieldValue | dictionary(item.groupCode || '-')}}</m-list>
                 <m-list label-width="120" :label="item.fieldName" v-else>{{item.fieldValue || "-"}}</m-list>
             </div>

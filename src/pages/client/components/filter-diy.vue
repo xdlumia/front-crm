@@ -1,10 +1,9 @@
-<!--
-/**
-* @author 冀猛超
-* @name 自定义筛选
-* @date 2019年8月09日
-**/
--->
+/*
+ * @Author: jimengchao
+ * @Date: 2019-08-28 10:11:42
+ * @Last Modified by: jimengchao
+ * @Last Modified time: 2019-08-28 10:17:02
+ */
 <template>
     <div>
         <scroll-view class='diy-filter' :style='"height: calc(100vh - "+ navH + " - 40px)"' scroll-y>
@@ -30,7 +29,7 @@
             <filter-plane v-model='filterData.followStatuss' isSingle title='跟进状态' :dataList='followStatuss' />
 
             <!-- 成交状态 -->
-            <filter-plane v-model='filterData.makeBargainCodes' title='成交状态' :dataList='CRM_CJZT' />
+            <filter-plane v-model='filterData.makeBargainCodes' title='成交状态' :dataList='clinchStatus' />
 
             <!-- 来源 -->
             <filter-plane v-model='filterData.sourceCodes' title='来源' :dataList='CRM_LY' />
@@ -51,6 +50,7 @@ import mAvatar from '@/components/m-avatar'
 
 let followStatuss = ['暂无', '跟进1次', '跟进多次'].map((content, code) => ({ code, content }))
 let property = ['非公海客户', '共享客户'].map((content, code) => ({ code, content }))
+let clinchStatus = ['未成交', '已成交', '多次成交'].map((content, code) => ({ code, content }))
 
 export default {
 	components: {
@@ -61,6 +61,7 @@ export default {
 		return {
 			property, // 客户性质
 			followStatuss, // 跟进状态
+			clinchStatus, // 成交状态
 			principal: [],
 			filterData: {
 				followStatuss: '', // 跟进状态
@@ -79,9 +80,6 @@ export default {
 	computed: {
 		CRM_KHJB () {
 			return this.dictionaryOptions('CRM_KHJB')
-		},
-		CRM_CJZT () {
-			return this.dictionaryOptions('CRM_CJZT')
 		},
 		CRM_LY () {
 			return this.dictionaryOptions('CRM_LY')
