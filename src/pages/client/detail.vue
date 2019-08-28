@@ -29,7 +29,7 @@
 
 				<template v-if="!source">
 					<div class="d-center d-text-gray mb5">
-						<div class="d-cell f13">成交状态： <span class='d-text-blue'>{{detailInfo.makeBargainCode == 1 ? '已成交' : item.makeBargainCode == 2 ? '多次成交' : '未成交'}}</span></div>
+						<div class="d-cell f13">成交状态： <span class='d-text-blue'>{{detailInfo.makeBargainCode == 1 ? '已成交' : detailInfo.makeBargainCode == 2 ? '多次成交' : '未成交'}}</span></div>
 						<div class="d-cell f13">负责人： <span>{{detailInfo.leaderName || ''}}</span></div>
 					</div>
 					<div class='d-text-gray f13 mb5'>
