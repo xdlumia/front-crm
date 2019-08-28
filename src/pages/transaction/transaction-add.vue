@@ -27,8 +27,8 @@
         <picker-date v-model="form.startTime" label="开始时间" placeholder="请选择" required></picker-date>
         <picker-date v-model="form.endTime" label="结束时间" placeholder="请选择" required></picker-date>
         <i-input
-          maxlength="32"
-          type="number"
+          maxlength="15"
+          type='digit'
           v-model="form.totalAmount"
           label="总金额"
           placeholder="请输入"
@@ -37,25 +37,25 @@
      <i-input maxlength="32" v-model="deptInfo.deptName" disabled label="所属部门" placeholder="请输入"/>
         <picker-date v-model="form.signDate" label="签约日期" placeholder="请选择日期"></picker-date>
       </m-form>
-		<div class='d-bg-white pb10'>
-			<div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
-				<i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
-				<picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
-				<i-select
-					v-if='item.fieldType == 3'
-					v-model="form.formsFieldValueSaveVos[index].fieldValue"
-					:props="{label:'content',value:'code'}"
-					:label="item.fieldName"
-					placeholder="请选择"
-					:options="dictionaryOptions(item.groupCode || '')"
-				/>
-			</div>
-		</div>
-		<div class="pt10 pl15 pr15 d-bg-white bb">
-				<div class='f13 mb10 d-text-black'>备注</div>
-				<textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
-		</div>
+        <div class='d-bg-white pb10'>
+            <div v-for="(item,index) of form.formsFieldValueSaveVos" :key='index'>
+                <i-input v-if='item.fieldType == 0' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+                <i-input v-if='item.fieldType == 1' type='number' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName" placeholder="点击填写" />
+                <picker-date v-if='item.fieldType == 2' v-model="form.formsFieldValueSaveVos[index].fieldValue" :label="item.fieldName"  placeholder="请选择日期" />
+                <i-select
+                    v-if='item.fieldType == 3'
+                    v-model="form.formsFieldValueSaveVos[index].fieldValue"
+                    :props="{label:'content',value:'code'}"
+                    :label="item.fieldName"
+                    placeholder="请选择"
+                    :options="dictionaryOptions(item.groupCode || '')"
+                />
+            </div>
+        </div>
+        <div class="pt10 pl15 pr15 d-bg-white bb">
+                <div class='f13 mb10 d-text-black'>备注</div>
+                <textarea rows="5" v-model="form.note" class="f12 d-text-gray" maxlength="300" style='width: auto; height:60px' placeholder="点击填写"></textarea>
+        </div>
       <div @click="getMoreList" class="ac d-text-gray lh40 d-block">
         <i-icon type="add" size="18" color="#999"/>添加更多条目
       </div>
@@ -140,9 +140,9 @@ export default {
 		}
 		// 在客户里边调用成交记录的话，需要将客户id带给销售机会，用来筛选当前客户关联的销售机会
 		// 在机会里边调用成交记录的话，需要取到当前机会的id，用id去查询详情，填充客户名称，并且传到联系人，走正常成交记录流程
-		if (option.busType == 0) { // eslint-disable-line
+        if (option.busType == 0) { // eslint-disable-line
 			this.clientId = option.id || ''
-		} else if (option.busType == 2) { // eslint-disable-line
+        } else if (option.busType == 2) { // eslint-disable-line
 			this.$api.seeCrmService.saleschanceInfo(null, option.id).then(res => {
 				let data = res.data || {}
 				this.form.salesFunnelName = data.chanceName || ''

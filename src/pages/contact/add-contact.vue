@@ -12,7 +12,7 @@
 						<i-icon type="enter" size="16" color="#999" />
 					</i-input>
 				</a>
-				<i-input v-model="form.mobile" label="手机" maxlength='11' placeholder="请填写" required />
+				<i-input v-model="form.mobile" label="手机" type="number" maxlength='11' placeholder="请填写" required />
 				<i-select v-model="form.roleCode" :props="{label:'content',value:'code'}" label="联系人角色" :options="dictionaryOptions('CRM_LXR_JS')"/>
 				<i-select
 					v-model="form.position"

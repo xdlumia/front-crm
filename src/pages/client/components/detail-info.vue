@@ -15,12 +15,12 @@
             <m-list label-width="120" label="行业">{{detailInfo.tradeCode | dictionary('CRM_KH_HY')}}</m-list>
             <m-list label-width="120" label="来源">{{detailInfo.sourceCode | dictionary('CRM_LY')}}</m-list>
             <m-list label-width="120" label="成交状态">{{detailInfo.makeBargainCode == 1 ? '已成交' : item.makeBargainCode == 2 ? '多次成交' : '未成交'}}</m-list>
-            <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
             <m-list label-width="120" label="销售额（元）">{{detailInfo.totalSalesChanceMoney || '-'}}</m-list>
             <div v-for='item in basicInfo' :key='item.id'>
                 <m-list label-width="120" :label="item.fieldName" v-if="item.fieldType == 3">{{item.fieldValue | dictionary(item.groupCode || '-')}}</m-list>
                 <m-list label-width="120" :label="item.fieldName" v-else>{{(item.fieldValue) || "-"}}</m-list>
             </div>
+            <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
         </mPanel>
 		<mPanel title="联系信息" bg="#f8f9fc" :isUrl='false'>
             <m-list label-width="120" label="手机号">{{detailInfo.phone}}</m-list>

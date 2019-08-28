@@ -13,7 +13,7 @@
 					</i-input>
 				</a>
 				<i-input v-model="deptName" label="所属部门" placeholder="请选择所属部门" required />
-				<i-input v-model="editForm.salesMoney" label="销售金额" placeholder="请填写销售金额" required />
+				<i-input v-model="editForm.salesMoney" label="销售金额" placeholder="请填写销售金额" type='digit' maxlength='15' required />
 				<i-select
 					v-model="editForm.stageId"
 					:props="{label:'stageName',value:'id'}"
