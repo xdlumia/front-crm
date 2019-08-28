@@ -29,11 +29,11 @@
                 <view class="pl50 m5 pl10 d-text-qgray">申请理由</view>
                 <view class="pl50 m5 pl10">{{applyReason}}</view>
             </view>
-            <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view>
-            <view class="flex-item flex-item-V">
-                <button class="width90 f15 p5 h30" style="border: none;" plain="true">已同意</button>
-            </view>
-            <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view>
+            <!-- <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view> -->
+            <!-- <view class="flex-item flex-item-V"> -->
+                <!-- <button class="width90 f15 p5 h30" style="border: none;" plain="true">已同意</button> -->
+                <i-button  class="mt30 ba title-font wfull" style="text-align: center;">已同意</i-button>
+            <!-- </view> -->
         </view>
     </view>
 </template>

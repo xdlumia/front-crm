@@ -30,13 +30,11 @@
                     </view>
                 </view>
             </view>
-            <view class="flex-item flex-item-V bb mt10 p10 d-flex-lr" >
-               <i class="iconfont f28 iconxinjian fl d-text-blue"></i>
-               <!-- <button  class="pl5 fl d-text-cgray ml0" style="border: none;" open-type="getUserInfo" @getuserinfo="invite" plain="true">邀请同事加入</button > -->
+            <view class="flex-item flex-item-V bb pl10 d-flex-lr" >
+               <i class="iconfont f35 iconxinjian fl d-text-blue"></i>
                <button  class="pl5 fl d-text-cgray ml0" style="border: none;" @click="invite" plain="true">邀请同事加入</button >
             </view>
-            <view class="flex-item flex-item-V" style="height: 50px;background: #F9F9F9;"></view>
-            <view class="flex-item flex-item-V bt pt10 pb10 wfull" style="position: fixed;bottom: 0;background-color: rgba(255,255,255,1)">
+            <view class="flex-item flex-item-V bt pt15 pb15 wfull" style="position: fixed;bottom: 0;background-color: rgba(255,255,255,1)">
                 <view class="uni-flex uni-row">
                     <a :class="['flex-item', {'width33': hierarchy != 0},{'width50': hierarchy == 0}]" class="d-text-blue"
                         style="text-align: center;"
