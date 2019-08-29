@@ -1,7 +1,7 @@
 <template>
     <div style="wfull">
         <NavBar title="首页" />
-        <div class="d-flex mt5">
+        <div class="d-flex mt5 wfull">
             <div @click="current = 0,clickDay = todayDate" class="f16 d-text-gray b ml15 ac" :class="current == 0 ? 'brblur' : ''">今天</div>
             <div @click="current = 1,clickDay = todayDate" class="f16 d-text-gray b ml15 ac" :class="current == 1 ? 'brblur' : ''">仪表盘 </div>
         </div>
@@ -223,7 +223,7 @@ export default {
 			current: 0,
 			aweek: ['日', '一', '二', '三', '四', '五', '六'],
 			allTime: [],
-			userInfo: {},
+			// userInfo: {},
 			timelong: 7,
 			opts: {}, // 传给漏斗图的数据
 			clickDay: '',
@@ -280,10 +280,13 @@ export default {
 		},
 		thisDate () {
 			return (new Date().getFullYear() + '年' + (new Date().getMonth() + 1) + '月')
+		},
+		userInfo () {
+			return this.$store.state.userInfo || this.$local.fetch('userInfo') || {}
 		}
 	},
 	created () {
-		this.userInfo = this.$store.state.userInfo || this.$local.fetch('userInfo') || {}
+		// this.userInfo = this.$store.state.userInfo || this.$local.fetch('userInfo') || {}
 		this.userId = this.userInfo.id
 		this.userName = this.userInfo.name
 		this.avatarUrl = this.userInfo.avatarUrl
@@ -310,7 +313,7 @@ export default {
 						this.userId = data.data[0].userId
 						this.userName = data.data[0].employeeName
 						this.avatarUrl = data.data[0].avatarUrl
-					} else {
+					} else { // 如果没选
 						this.userId = this.userInfo.id
 						this.userName = this.userInfo.name
 						this.avatarUrl = this.userInfo.avatarUrl
