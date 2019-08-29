@@ -42,7 +42,7 @@ export default {
 			roleId: 0,
 			ckeckedRoleIds: [],
 			ckeckedRoles: [],
-			current: 0
+			current: ''
 		}
 	},
 	onLoad (option) {
