@@ -240,33 +240,33 @@ export default {
 		}
 	},
 	methods: {
-		stagePercent (row) {
-			let status = {
-				'赢单': 'success',
-				'输单': 'exception',
-				'无效': 'normal'
-			}
-			// 获取下标
-			let index = this.stageListAll.findIndex(item => +item.id === row.stageId)
-			// 内置阶段获取类型
-			let statusType = status[(this.stageListAll[index] || {}).stageName]
+		// stagePercent (row) {
+		// 	let status = {
+		// 		'赢单': 'success',
+		// 		'输单': 'exception',
+		// 		'无效': 'normal'
+		// 	}
+		// 	// 获取下标
+		// 	let index = this.stageListAll.findIndex(item => +item.id === row.stageId)
+		// 	// 内置阶段获取类型
+		// 	let statusType = status[(this.stageListAll[index] || {}).stageName]
 
-			/**
-			 * 如果有内置阶段返回内置阶段类型
-			 * 否则就返回当前进度 并且状态是normal
-			 */
-			if (statusType) {
-				return {
-					status: statusType,
-					percent: index + 1
-				}
-			} else {
-				return {
-					status: false,
-					percent: index + 1
-				}
-			}
-		},
+		// 	/**
+		// 	 * 如果有内置阶段返回内置阶段类型
+		// 	 * 否则就返回当前进度 并且状态是normal
+		// 	 */
+		// 	if (statusType) {
+		// 		return {
+		// 			status: statusType,
+		// 			percent: index + 1
+		// 		}
+		// 	} else {
+		// 		return {
+		// 			status: false,
+		// 			percent: index + 1
+		// 		}
+		// 	}
+		// },
 		getSearch (data) {
 			this.queryForm.clientOrChanceName = data.searchInfo
 			this.$refs.list.reload()

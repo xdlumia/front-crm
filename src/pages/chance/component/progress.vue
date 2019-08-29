@@ -6,8 +6,8 @@
 			stroke-color="#7fc25c"
 			:width="45"
 			:status="stagePercent.status || 'normal'"
-			:percent="stagePercent"
-			:success-percent="stageListMax"
+			:percent="stagePercent.percent"
+			:success-percent="successPercent"
 			:custom="stagePercent.status == 'normal' || !stagePercent.status">
 				<div class="f12 ac">
 					<span v-if="stagePercent.status == 'normal'" class="stage-bar"></span>
@@ -22,7 +22,9 @@
 
 export default {
 	props: {
-		list: {},
+		list: {
+			required: true
+		},
 		// 进度最大值
 		successPercent: {
 			required: true
