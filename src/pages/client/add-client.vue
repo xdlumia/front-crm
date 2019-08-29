@@ -273,11 +273,12 @@ export default {
 
 		// 保存
 		async submit () {
+			await this.$refs.mform.validate()
+
 			if (!this.isRepeat && this.isRepeatShow) {
 				return this.$utils.toast.text('请先查重')
 			}
 
-			await this.$refs.mform.validate()
 			try {
 				let params = {
 					...this.form
