@@ -157,6 +157,15 @@ export default {
 				this.$api.seeCrmService.organizationalStructureUpdateEmployee(this.formData).then((response) => {
 					if (response.code === 200) {
 						this.$utils.toast.text('修改成功')
+						// 同步修改用户姓名，手机号，职位
+						let user = this.$local.fetch('userInfo')
+						if (parseInt(this.formData.userId) === parseInt(user.id)) {
+							user.positionName = this.formData.positionName
+							user.phone = this.formData.phone
+							user.name = this.formData.name
+							this.$local.remove('userInfo')
+							this.$local.save('userInfo', user)
+						}
 						setTimeout(() => {
 							this.$routing.navigateBack()
 						}, 800)
