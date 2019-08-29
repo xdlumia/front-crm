@@ -77,11 +77,12 @@ export default {
 		uni.hideLoading()
 	},
 
-	showModal (content) {
+	showModal (content, options = {}) {
 		return new Promise((resolve, reject) => {
 			uni.showModal({
 				title: '提示',
-				content: content || '确定要删除选择的记录？'
+				content: content || '确定要删除选择的记录？',
+				...options
 			}).then(([err, res]) => {
 				if (err || !res.confirm) {
 					reject(new Error(err))

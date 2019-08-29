@@ -89,6 +89,14 @@ export default {
 				roleCode: '' // 联系人角色code'
 			},
 			rules: {
+				linkmanName: [{
+					required: true,
+					message: '请填写姓名'
+				}],
+				clientName: [{
+					required: true,
+					message: '请选择客户'
+				}],
 				email: [{
 					required: false
 				}, {
