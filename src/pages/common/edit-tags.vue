@@ -7,7 +7,7 @@
     <div class="toptrasaction wfull">
       <span class="d-text-black fl ml15">标签名称</span>
       <span class="fr mr15">
-				<input maxlength="32" v-model="tagName" placeholder="" class="ml5 f13" style="flex: 1;color:#999">
+				<input maxlength="32" v-model="tagName" placeholder=" " class="ml5 f13" style="flex: 1;color:#999">
       </span>
     </div>
     <div style="height: 10px;background: #f2f2f2;"></div>
