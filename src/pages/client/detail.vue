@@ -181,7 +181,7 @@ export default {
 	methods: {
 
 		editClient (id = '', isCopy = 0) {
-			this.$routing.navigateTo('./add-client?id=' + id + '&isCopy=' + isCopy)
+			this.$routing.navigateTo('./add-client?id=' + id + '&isCopy=' + isCopy + '&poolId=' + this.poolId || '')
 			this.$store.commit('client/setClientInfo', this.detailInfo)
 		},
 
