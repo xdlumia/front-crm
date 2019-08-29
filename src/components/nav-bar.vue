@@ -75,9 +75,9 @@ export default {
 	},
 	data () {
 		return {
-			statusBarHeight: 0,
-			navHeight: 0,
-			navbarBtn: {}
+			statusBarHeight: this.$local.fetch('statusBarHeight') || 0,
+			navHeight: this.$local.fetch('navH') || 0,
+			navbarBtn: this.$local.fetch('navbarBtn') || {}
 		}
 	},
 	created () {
@@ -106,7 +106,10 @@ export default {
 		this.navHeight = headerPosi.bottom + btnPosi.bottom
 		this.navbarBtn = btnPosi
 		this.statusBarHeight = systemInfo.statusBarHeight
+
 		this.$local.save('navH', +this.navHeight)
+		this.$local.save('navbarBtn', btnPosi)
+		this.$local.save('statusBarHeight', +systemInfo.statusBarHeight)
 	},
 	computed: {
 		pages () {

@@ -20,6 +20,10 @@ export default {
 		if (option.id) {
 			this.$api.systemService.getHandbookInfo({}, option.id).then((response) => {
 				if (response.code === 200) {
+					if (response.data.entity.content.indexOf('iframe') !== -1) {
+						// 处理 视频问题
+						response.data.entity.content = response.data.entity.content.replace(/iframe class="ql-video"/g, 'video')
+					}
 					this.content = response.data.entity.content
 				} else {
 					this.$utils.toast.text(response.msg)
