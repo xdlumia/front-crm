@@ -218,8 +218,8 @@
         let percent = this.percent;
         if (!this.percent || this.percent < 0) {
           percent = 0;
-        } else if (this.percent >= 100) {
-          percent = 100;
+        } else if (this.percent >= this.percentMax) {
+          percent = this.percentMax;
         }
         return percent;
       },
@@ -246,6 +246,7 @@
        * 圈进度
        */
       setCirclePathStyle() {
+        console.log(this.setProgress,this.percentMax)
         const radius = 50 - this.strokeWidth / 2;
         const len = Math.PI * 2 * radius;
         const gapDeg = this.gapDegree || (this.type === 'dashboard' && 75);
@@ -300,7 +301,7 @@
           currentColor = '#f5222d'
         }
         // 完成进度
-        if (this.status == 'success' || this.setProgress >= 100 || this.strokeColor) {
+        if (this.status == 'success' || this.setProgress >= this.percentMax || this.strokeColor) {
           currentColor = this.strokeColor || '#52c41a'
         }
         let svgToBase =
