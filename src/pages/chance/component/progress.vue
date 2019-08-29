@@ -7,7 +7,7 @@
 			:width="45"
 			:status="stagePercent.status || 'normal'"
 			:percent="stagePercent.percent"
-			:success-percent="successPercent"
+			:percentMax = 'percentMax'
 			:custom="stagePercent.status == 'normal' || !stagePercent.status">
 				<div class="f12 ac">
 					<span v-if="stagePercent.status == 'normal'" class="stage-bar"></span>
@@ -26,7 +26,7 @@ export default {
 			required: true
 		},
 		// 进度最大值
-		successPercent: {
+		percentMax: {
 			required: true
 		},
 		// 当前行数据

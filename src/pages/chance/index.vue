@@ -3,7 +3,7 @@
     <NavBar title="机会" :isSearch="true" placeholder="搜索销售机会名称" :keyword='queryForm.clientOrChanceName' searchType='1' @getSearch='getSearch'/>
     <!-- <filter-diy @submit='submit' @clear='clear' /> -->
     <Filter :filterData="filterData" @filterSubmit="filterSubmit" ref="filter">
-      <filter-diy :stageList="stageList" @submit="diyFilterSubmit" />
+      <filter-diy :stageList="stageListAll" @submit="diyFilterSubmit" />
     </Filter>
     <!-- 步骤 -->
     <i-steps
@@ -47,7 +47,7 @@
         class="chance-item uni-flex uni-row"
       >
         <div class="flex-item item-progress">
-			<progressC :successPercent="stageListMax" :list="stageListAll" :row="item"/>
+			<progressC :percentMax="stageListMax" :list="stageListAll" :row="item"/>
 			<!-- <cmd-progress
 			type="circle"
 			:stroke-width="9"
