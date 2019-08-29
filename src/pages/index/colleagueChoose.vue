@@ -4,7 +4,7 @@
  */ -->
 <template>
     <div style="background-color: #f9f9f9;">
-        <NavBar title="首页" />
+        <NavBar title="选择同事" />
         <div>
 			<indexed-list @getList='getSearchList' :isRadio='isRadio' ref="sortPickerList" :isCheckedAllData='isCheckedAllData' @clickData="clickData" :echodata='echodata'></indexed-list>
         </div>
