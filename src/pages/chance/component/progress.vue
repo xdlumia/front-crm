@@ -7,12 +7,12 @@
 			:width="45"
 			:status="stagePercent.status || 'normal'"
 			:percent="stagePercent.percent"
-			:percentMax = 'percentMax'
+			:percentMax="percentMax"
 			:custom="stagePercent.status == 'normal' || !stagePercent.status">
 				<div class="f12 ac">
 					<span v-if="stagePercent.status == 'normal'" class="stage-bar"></span>
-					<span v-else>{{stagePercent.percent}}/{{successPercent}}</span>
-					<!-- {{(stageList.findIndex(row => row.id == item.stageId)+1)}}/{{stageListMax}} -->
+					<span v-else>{{stagePercent.percent}}/{{percentMax}}</span>
+					<!-- {{(stageList.findIndex(row => row.id == item.stageId)+1)}}/{{percentMax}} -->
 				</div>
 			</cmd-progress>
   </div>
