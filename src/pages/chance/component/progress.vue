@@ -57,7 +57,7 @@ export default {
 				'输单': 'exception',
 				'无效': 'normal'
 			}
-			// 获取下标
+			// 获取有内置字段的下标
 			let index = this.list.findIndex(item => +item.id === this.row.stageId)
 			// 内置阶段获取类型
 			let statusType = status[(this.list[index] || {}).stageName]
@@ -79,17 +79,6 @@ export default {
 		}
 	},
 	methods: {
-		// 获取销售阶段
-		// salesstageQueryList () {
-		// 	this.$api.seeCrmService.salesstageQueryList({ isOriginal: -1 }).then(res => {
-		// 		if (res.code !== 200) return
-		// 		let data = res.data || []
-		// 		data.forEach(item => {
-		// 			item.name = item.stageName
-		// 		})
-		// 		this.stageListAll = data
-		// 	})
-		// }
 	}
 }
 </script>

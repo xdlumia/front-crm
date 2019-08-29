@@ -48,20 +48,6 @@
       >
         <div class="flex-item item-progress">
 			<progressC :percentMax="stageListMax" :list="stageListAll" :row="item"/>
-			<!-- <cmd-progress
-			type="circle"
-			:stroke-width="9"
-			stroke-color="#7fc25c"
-			:width="45"
-			:status="stagePercent(item).status || 'normal'"
-			:percent="stagePercent(item)"
-			:success-percent="stageListMax"
-			:custom="stagePercent(item).status == 'normal' || !stagePercent(item).status">
-				<div class="f12 ac">
-					<span v-if="stagePercent(item).status == 'normal'" class="stage-bar"></span>
-					<span v-else>{{stagePercent(item).percent}}/{{stageListMax}}</span>
-				</div>
-			</cmd-progress> -->
           <!-- <circleProgress
             width="45px"
             :max="stageListMax"
@@ -240,33 +226,6 @@ export default {
 		}
 	},
 	methods: {
-		// stagePercent (row) {
-		// 	let status = {
-		// 		'赢单': 'success',
-		// 		'输单': 'exception',
-		// 		'无效': 'normal'
-		// 	}
-		// 	// 获取下标
-		// 	let index = this.stageListAll.findIndex(item => +item.id === row.stageId)
-		// 	// 内置阶段获取类型
-		// 	let statusType = status[(this.stageListAll[index] || {}).stageName]
-
-		// 	/**
-		// 	 * 如果有内置阶段返回内置阶段类型
-		// 	 * 否则就返回当前进度 并且状态是normal
-		// 	 */
-		// 	if (statusType) {
-		// 		return {
-		// 			status: statusType,
-		// 			percent: index + 1
-		// 		}
-		// 	} else {
-		// 		return {
-		// 			status: false,
-		// 			percent: index + 1
-		// 		}
-		// 	}
-		// },
 		getSearch (data) {
 			this.queryForm.clientOrChanceName = data.searchInfo
 			this.$refs.list.reload()
@@ -318,8 +277,8 @@ export default {
 				this.currStage = '-1'
 			} else if (filterData.stageIds.length === 1) {
 				let [id] = filterData.stageIds
-				let index = this.stageList.findIndex(item => item.id === id)
-				this.stageSts.equityedge = this.stageList[index].equityedge
+				let index = this.stageListAll.findIndex(item => item.id === id)
+				this.stageSts.equityedge = this.stageListAll[index].equityedge
 				this.currStage = index + 1
 			}
 			this.queryForm = Object.assign({}, this.queryForm, filterData)

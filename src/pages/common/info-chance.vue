@@ -11,12 +11,7 @@
 			<div class="detail-list ac f12 d-text-gray" v-if="!list.length">暂无数据</div>
             <div v-else class="detail-list uni-flex uni-row pb10" v-for="(item,index) of list" :key="index">
                 <div class="flex-item item-progress mr10">
-					<cmd-progress type="circle" :stroke-width="9" stroke-color="#7fc25c" :width="45" :percent="stagePercent(item)" :success-percent="stageListMax" custom>
-						<div class="f12 ac">
-							{{stagePercent(item)}}/{{stageListMax}}
-							<!-- {{(stageList.findIndex(row => row.id == item.stageId)+1)}}/{{stageListMax}} -->
-						</div>
-					</cmd-progress>
+					<progressC :percentMax="stageListMax" :list="stageListAll" :row="item"/>
                     <!-- <circleProgress width="45px" :max="stageList.length" :progress="(stageList.findIndex(row => row.id == item.stageId)+1)" /> -->
                 </div>
                 <div class="flex-item d-elip wfull">
@@ -34,6 +29,7 @@
 </template>
 
 <script>
+import progressC from '@/pages/chance/component/progress'
 export default {
 	props: {
 		query: {
@@ -45,12 +41,13 @@ export default {
 		}
 	},
 	components: {
-		// mPager
+		progressC
 	},
 	data () {
 		return {
 			list: [],
-			stageList: []
+			stageList: [], // 内置阶段
+			stageListAll: [] // 全部阶段
 		}
 	},
 	onLoad (option) {
@@ -58,6 +55,11 @@ export default {
 	created () {
 		this.saleschanceQueryList()
 		this.salesstageQueryList()
+	},
+	computed: {
+		stageListMax () {
+			return this.stageList.length
+		}
 	},
 	methods: {
 		// 获取联系人列表
@@ -75,7 +77,8 @@ export default {
 					data.forEach(item => {
 						item.name = item.stageName
 					})
-					this.stageList = data
+					this.stageList = data.filter(item => +item.isOriginal === 0)
+					this.stageListAll = data
 				})
 		},
 		click () {
