@@ -125,7 +125,7 @@ export default {
 				uni.showToast({ title: '最大只能添加5条', icon: 'none' })
 				return
 			}
-			this.stageList.push({ equityedge: '', stageName: '' })
+			this.stageList.push({ equityedge: '', stageName: '', isOriginal: 0 })
 		},
 		// 删除阶段列表
 		delStage (row, index) {
