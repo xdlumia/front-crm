@@ -65,22 +65,13 @@ export default {
 		},
 
 		download (url) {
-			uni.downloadFile({
-				url: url,
+			uni.setClipboardData({
+				data: url,
 				success: (res) => {
-					this.$utils.toast.text('正在保存')
-					uni.saveFile({
-						tempFilePath: res.tempFilePath,
-						success: ({ savedFilePath }) => {
-							this.$utils.toast.text('保存到' + savedFilePath)
-						},
-						fail: () => {
-							this.$utils.toast.text('保存失败')
-						}
+					uni.hideToast()
+					this.$utils.showModal('文件链接已复制，请到浏览器中下载', {
+						showCancel: false
 					})
-				},
-				fail: () => {
-					this.$utils.toast.text('保存失败')
 				}
 			})
 		}
