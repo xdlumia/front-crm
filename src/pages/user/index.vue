@@ -130,6 +130,7 @@ export default {
 						// 更新用户头像
 						this.avatarUrl = mp.detail.userInfo.avatarUrl
 						this.$store.commit('setavatarUrl', this.avatarUrl)
+						uni.$emit('updateAvatarUrl', { params: '' })
 					} else {
 						this.$utils.toast.text(response.msg)
 					}

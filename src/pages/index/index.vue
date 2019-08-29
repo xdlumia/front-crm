@@ -290,6 +290,9 @@ export default {
 		this.userId = this.userInfo.id
 		this.userName = this.userInfo.name
 		this.avatarUrl = this.userInfo.avatarUrl
+		uni.$once('updateAvatarUrl', data => {
+			this.avatarUrl = this.$store.state.userInfo.avatarUrl
+		})
 	},
 	onShow () {
 		this.scheduleSelectSalesKit()
