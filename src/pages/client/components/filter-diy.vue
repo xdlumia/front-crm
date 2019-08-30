@@ -2,7 +2,7 @@
  * @Author: jimengchao
  * @Date: 2019-08-28 10:11:42
  * @Last Modified by: jimengchao
- * @Last Modified time: 2019-08-28 10:17:02
+ * @Last Modified time: 2019-08-30 17:30:26
  */
 <template>
     <div>
@@ -26,7 +26,7 @@
             <filter-plane v-model='filterData.property' isSingle title='客户性质' :dataList='property' />
 
             <!-- 跟进状态 -->
-            <filter-plane v-model='filterData.followStatuss' isSingle title='跟进状态' :dataList='followStatuss' />
+            <filter-plane v-model='filterData.followStatus' isSingle title='跟进状态' :dataList='followStatus' />
 
             <!-- 成交状态 -->
             <filter-plane v-model='filterData.makeBargainCodes' title='成交状态' :dataList='clinchStatus' />
@@ -34,7 +34,7 @@
             <!-- 来源 -->
             <filter-plane v-model='filterData.sourceCodes' title='来源' :dataList='CRM_LY' />
             <!-- 销售阶段 -->
-            <filter-plane v-model='filterData.stageIds' title='销售阶段' :dataList='CRM_XSJD' />
+            <filter-plane v-model='filterData.stageIds' title='销售阶段' :dataList='stageList' />
 
         </scroll-view>
         <div class='filter-btn d-center f18 d-text-blue'>
@@ -48,7 +48,7 @@
 import FilterPlane from '@/components/filter-plane'
 import mAvatar from '@/components/m-avatar'
 
-let followStatuss = ['暂无', '跟进1次', '跟进多次'].map((content, code) => ({ code, content }))
+let followStatus = ['暂无', '跟进1次', '跟进多次'].map((content, code) => ({ code, content }))
 let property = ['非公海客户', '共享客户'].map((content, code) => ({ code, content }))
 let clinchStatus = ['未成交', '已成交', '多次成交'].map((content, code) => ({ code, content }))
 
@@ -60,11 +60,11 @@ export default {
 	data () {
 		return {
 			property, // 客户性质
-			followStatuss, // 跟进状态
+			followStatus, // 跟进状态
 			clinchStatus, // 成交状态
 			principal: [],
 			filterData: {
-				followStatuss: '', // 跟进状态
+				followStatus: '', // 跟进状态
 				property: '', // 客户性质
 				gradeCodes: [], // 客户级别
 				makeBargainCodes: [], // 成交状态
@@ -74,8 +74,20 @@ export default {
 			},
 			userInfo: {},
 			userName: '',
-			avatarUrl: ''
+			avatarUrl: '',
+			stageList: []
 		}
+	},
+	created () {
+		// 获取销售阶段
+		this.$api.seeCrmService.salesstageQueryList({ isOriginal: -1 }).then(res => {
+			if (res.code !== 200) return
+			let data = res.data || []
+			data.forEach(item => {
+				item.name = item.stageName
+			})
+			this.stageList = data.filter(item => +item.isOriginal === 0).map(item => ({ content: item.stageName, code: item.id }))
+		})
 	},
 	computed: {
 		CRM_KHJB () {
@@ -83,9 +95,6 @@ export default {
 		},
 		CRM_LY () {
 			return this.dictionaryOptions('CRM_LY')
-		},
-		CRM_XSJD () {
-			return this.dictionaryOptions('CRM_XSJD')
 		}
 	},
 	methods: {
@@ -101,7 +110,7 @@ export default {
 					this.avatarUrl = this.userInfo.avatarUrl
 				}
 			})
-			this.$routing.navigateTo(`/pages/index/colleagueChoose?subordinate=1&userId=${this.$store.state.userInfo.id || ''}&ids=${this.filterData.leaderId}`)
+			this.$routing.navigateTo(`/pages/index/colleagueChoose?subordinate=1&userId=${this.$store.state.userInfo.employeeId || ''}&ids=${this.filterData.leaderId}`)
 		},
 		clear () {
 			Object.assign(this.filterData, this.$options.data().filterData)
