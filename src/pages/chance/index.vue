@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-23 19:22:32
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-08-30 16:54:48
+ * @Description: 机会列表
+ */
 <template>
   <div class="chance-bg">
     <NavBar title="机会" :isSearch="true" placeholder="搜索销售机会名称" :keyword='queryForm.clientOrChanceName' searchType='1' @getSearch='getSearch'/>
