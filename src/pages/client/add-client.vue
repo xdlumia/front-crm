@@ -289,14 +289,14 @@ export default {
 				})
 
 				// 判断是 公海池新建 还是 客户列表新建
-				params.belongType = this.form.poolId ? 1 : 0
+				params.belongType = +this.form.poolId ? 1 : 0
 
 				// this.id 为 false 则是新增
 				let resulte = await this.$api.seeCrmService[!this.id ? 'clientinfoSave' : 'clientinfoUpdate'](params)
 
 				// 是否同时新建联系人
 				if (this.isSkipContact) {
-					this.$routing.redirectTo(`/pages/contact/add-contact?buyType=0&clientId=${resulte.data.id || this.id || 0}&clientName=${this.form.name}`)
+					this.$routing.redirectTo(`/pages/contact/add-contact?buyType=0&clientId=${this.id || (resulte.data && resulte.data.id) || 0}&clientName=${this.form.name}`)
 				} else {
 					this.$routing.navigateBack()
 				}
