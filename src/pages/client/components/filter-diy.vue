@@ -2,7 +2,7 @@
  * @Author: jimengchao
  * @Date: 2019-08-28 10:11:42
  * @Last Modified by: jimengchao
- * @Last Modified time: 2019-08-30 17:30:26
+ * @Last Modified time: 2019-08-30 18:29:37
  */
 <template>
     <div>
@@ -53,6 +53,9 @@ let property = ['非公海客户', '共享客户'].map((content, code) => ({ cod
 let clinchStatus = ['未成交', '已成交', '多次成交'].map((content, code) => ({ code, content }))
 
 export default {
+	props: {
+		stageList: Array
+	},
 	components: {
 		FilterPlane,
 		mAvatar
@@ -74,20 +77,8 @@ export default {
 			},
 			userInfo: {},
 			userName: '',
-			avatarUrl: '',
-			stageList: []
+			avatarUrl: ''
 		}
-	},
-	created () {
-		// 获取销售阶段
-		this.$api.seeCrmService.salesstageQueryList({ isOriginal: -1 }).then(res => {
-			if (res.code !== 200) return
-			let data = res.data || []
-			data.forEach(item => {
-				item.name = item.stageName
-			})
-			this.stageList = data.filter(item => +item.isOriginal === 0).map(item => ({ content: item.stageName, code: item.id }))
-		})
 	},
 	computed: {
 		CRM_KHJB () {
