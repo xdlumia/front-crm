@@ -35,8 +35,17 @@ export default {
 				this.$utils.toast.text(response.msg)
 			}
 		})
+		this.getContactinfo()
 	},
 	methods: {
+		// 获取公司联系电话
+		getContactinfo () {
+			this.$api.systemService.rmcontactinfo({}, 'crm').then((response) => {
+				if (response.code === 200) {
+					this.phone = response.data.customerServicePhone
+				}
+			})
+		},
 		toInfo (id) {
 			let url = '/pages/user/help-info?id=' + id
 			this.$routing.navigateTo(url)

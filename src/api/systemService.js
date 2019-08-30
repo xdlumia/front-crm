@@ -51,5 +51,10 @@ export default {
 	thirdpartyAuthorizationLogin: {
 		url: '/login/thirdpartyAuthorizationLogin',
 		methods: 'get'
+	},
+	// //	查看公司联系信息
+	rmcontactinfo: {
+		url: '/rmcontactinfo/info/{sysCode}',
+		methods: 'get'
 	}
 }

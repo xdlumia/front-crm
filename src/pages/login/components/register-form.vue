@@ -99,14 +99,26 @@ export default {
 					required: true,
 					message: '请输入企业名称'
 				}]
-			}
+			},
+			phoneNumber: '010-80755370'
 		}
+	},
+	onLoad () {
+		this.getContactinfo()
 	},
 	methods: {
 		// 拨打客服电话
 		callPhone () {
 			uni.makePhoneCall({
-				phoneNumber: '010-80755370' // 仅为示例
+				phoneNumber: this.phoneNumber // 仅为示例
+			})
+		},
+		// 获取公司联系电话
+		getContactinfo () {
+			this.$api.systemService.rmcontactinfo({}, 'crm').then((response) => {
+				if (response.code === 200) {
+					this.phoneNumber = response.data.customerServicePhone
+				}
 			})
 		},
 		// 提交申请

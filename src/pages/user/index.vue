@@ -65,7 +65,7 @@
                 <i-cell title="我的客服" is-link></i-cell>
             </button>
             <i-cell title="推荐给好友" is-link @click='openPop'></i-cell>
-            <i-cell title="客服电话" value='010-80755370' @click="callPhone('010-80755370')"></i-cell>
+            <i-cell title="客服电话" :value='customerServicePhone' @click="callPhone(customerServicePhone)"></i-cell>
         </i-cell-group>
 
         <uni-popup ref="popup" type='bottom' custom>
@@ -103,11 +103,14 @@ export default {
 			phone: '',
 			avatarUrl: '',
 			name: '',
-			positionName: ''
+			positionName: '',
+			customerServicePhone: ''// 客户电话
 		}
 	},
 	onLoad (option) {
+		let userInfo = this.$local.fetch('userInfo') || {}
 		this.avatarUrl = userInfo.avatarUrl
+		this.getContactinfo()
 	},
 	onShow () {
 		let userInfo = this.$local.fetch('userInfo') || {}
@@ -116,6 +119,14 @@ export default {
 		this.positionName = userInfo.positionName === null ? '' : userInfo.positionName
 	},
 	methods: {
+		// 获取公司联系电话
+		getContactinfo () {
+			this.$api.systemService.rmcontactinfo({}, 'crm').then((response) => {
+				if (response.code === 200) {
+					this.customerServicePhone = response.data.customerServicePhone
+				}
+			})
+		},
 		switchTabTo (url) {
 			this.$local.setItem('queryType', 2)
 			this.$routing.switchTab('/pages/' + url + '/index')
