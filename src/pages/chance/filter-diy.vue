@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-30 17:51:00
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-08-30 18:01:02
+ * @Description: 机会列表筛选
+ */
 <template>
     <div>
         <scroll-view class='diy-filter' :style='"height: calc(100vh - "+ navH + " - 40px)"' scroll-y>
@@ -14,7 +21,7 @@
             </filter-plane>
             <filter-plane title='销售阶段' v-model='filterData.stageIds' :dataList='stageLists'/>
             <filter-plane title='预计成交日期' v-model='filterData.transationTime' isSingle :dataList='dateList'/>
-            <filter-plane title='机会来源' v-model='filterData.sourceCode' :dataList="dictionaryOptions('CRM_LY')"/>
+            <filter-plane title='机会来源' v-model='filterData.sourceCodes' :dataList="dictionaryOptions('CRM_LY')"/>
         </scroll-view>
         <div class='filter-btn d-center f18 d-text-blue'>
             <div class='btn-item hfull d-cell ac' @click='clear'>清空</div>
@@ -49,7 +56,7 @@ export default {
 			filterData: {
 				stageIds: [], // 销售阶段
 				transationTime: '', // 预计成交日期
-				sourceCode: [],
+				sourceCodes: [],
 				leaderId: ''
 			},
 			userInfo: {},

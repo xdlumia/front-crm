@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-23 19:22:32
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-08-30 16:54:48
+ * @LastEditTime: 2019-08-30 17:57:49
  * @Description: 机会列表
  */
 <template>
@@ -14,7 +14,7 @@
     </Filter>
     <!-- 步骤 -->
     <i-steps
-		ref="steps"
+	ref="steps"
       :current="currStage"
       class="change-steps d-fixed wfull pt5 pb5"
       :style="{top:`calc(${navH} + 39px)`}"
@@ -167,7 +167,7 @@ export default {
 				chanceName: '', // 销售机会名称
 				stageIds: [], // 阶段ids
 				clientOrChanceName: '', // 客户名称或机会名称（模糊查询）
-				sourceCode: [], // 来源
+				sourceCodes: [], // 来源
 				transationTime: '', // 成交时间（0-本周，1-本季，2-本年，3-上周，4-上月,5-本月，6-今天，7-下周）
 				queryType: '0', // -1全部，0我负责的，1我参与的，2我关注的，3 7天未跟进的，4下属的，5下属参与的
 				orderByStr: 'a.follow_up_time' // 排序字段（a.follow_up_time跟进日期，a.stage_propel_time阶段更新日期，a.sales_money销售金额，c.equityedge赢率）
