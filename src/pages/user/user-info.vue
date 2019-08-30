@@ -36,7 +36,7 @@ export default {
 		let companyInfo = this.$local.fetch('companyInfo') || {}
 		this.companyName = companyInfo.companyName
 		this.name = userInfo.name
-		this.positionName = userInfo.positionName
+		this.positionName = userInfo.positionName === '0' ? '' : userInfo.positionName || ''
 	},
 	methods: {
 		loginOut () {
