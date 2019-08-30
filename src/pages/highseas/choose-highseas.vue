@@ -45,6 +45,9 @@ export default {
 			this.id = item.id
 		},
 		submit () {
+			if (this.id && !Object.keys(this.pool).length) {
+				this.pool = this.list.filter(item => +item.id === +this.id)[0] || {}
+			}
 			Object.keys(this.pool).length && this.$store.commit('highseas/setPool', this.pool)
 			this.$routing.navigateBack()
 		}
