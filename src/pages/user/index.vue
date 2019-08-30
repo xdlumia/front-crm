@@ -106,7 +106,8 @@ export default {
 			positionName: ''
 		}
 	},
-	onLoad (option) {
+	onLoad (option) {},
+	onShow () {
 		let userInfo = this.$local.fetch('userInfo') || {}
 		this.phone = userInfo.phone.substring(0, 3) + '****' + userInfo.phone.substring(userInfo.phone.length - 4)
 		this.avatarUrl = userInfo.avatarUrl
