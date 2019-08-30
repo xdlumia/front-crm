@@ -26,7 +26,7 @@
                 <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view>
 				<i-input v-model="formData.positionName" label="职位" placeholder="职位"/>
 				<i-input v-model="formData.email" label="企业邮箱" placeholder="企业邮箱"/>
-				<i-input v-model="formData.employeeNo" label="工号" placeholder="工号"/>
+				<i-input v-model="formData.employeeNo" label="员工编号" placeholder="员工编号"/>
 				<i-input type="textarea" v-model="formData.remark" label="备注" maxlength="300" placeholder="点击填写"/>
                 <!-- <view class="uni-form-item" style="height: 10px;background: #F9F9F9;"></view> -->
                 <view class="d-absolute wfull d-fixed" style="bottom:0">
