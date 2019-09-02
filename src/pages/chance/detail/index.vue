@@ -1,8 +1,8 @@
 /*
  * @Author: web.王晓东
  * @Date: 2019-07-24 16:03:30
- * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-02 16:47:51
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-02 18:22:56
  * @Description: 机会详情
  */
 <template>
@@ -309,7 +309,7 @@ export default {
 						.then(() => {
 							this.$api.seeCrmService.saleschanceLogicDelete({ id: this.busId })
 							setTimeout(() => {
-								this.$routing.switchTab('/pages/chance/index')
+								this.$routing.navigateBack()
 							}, 1000)
 						})
 						.catch(() => {})

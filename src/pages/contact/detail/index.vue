@@ -1,8 +1,8 @@
 /*
  * @Author: web.王晓东
  * @Date: 2019-07-27 09:16:04
- * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-02 16:48:00
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-02 18:23:28
  * @Description: 联系人详情
  */
 <template>
@@ -146,13 +146,6 @@ export default {
 
 					this.phoneActions = [{ name: `${this.detailInfo.linkmanName} ${this.detailInfo.mobile}`, phone: this.detailInfo.mobile }]
 					this.phoneActions.unshift({ name: '联系人电话' })
-					if (this.detailInfo.clientIsDelete) {
-						uni.showToast({
-							title: `客户[${this.detailInfo.clientName}]已删除,不能查看详情`,
-							icon: 'none',
-							duration: 4000
-						})
-					}
 				})
 		},
 		handlerAction (item) {
@@ -217,8 +210,10 @@ export default {
 							this.$api.seeCrmService.linkmanLogicDelete({ id: this.busId })
 								.then(res => {
 									if (res.code !== 200) return
-									// 删除成功跳转到列表页ß
-									this.$routing.navigateTo(`/pages/contact/index`)
+									setTimeout(() => {
+										// 删除成功跳转到列表页
+										this.$routing.navigateBack()
+									}, 1000)
 								})
 						})
 						.catch(() => {})

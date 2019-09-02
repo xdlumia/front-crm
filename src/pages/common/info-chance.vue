@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-22 21:33:06
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 17:42:36
+ * @LastEditTime: 2019-09-02 18:20:16
  * @Description: 详情机会列表
  */
 <template>
@@ -17,7 +17,7 @@
                 <div class="flex-item d-elip wfull">
                     <div class="d-elip">{{item.chanceName}}</div>
                     <!-- <div class="d-elip d-text-qgray f12">{{formatStage(item)}}</div> -->
-                    <div class="d-elip d-text-qgray f12">{{item.stateName}}</div>
+                    <div class="d-elip d-text-qgray f12">{{item.stageName || ''}}</div>
                 </div>
                 <div class="flex-item item-progress" style="width:110px">
                     <div class="d-elip f12">{{item.createTime | timeToStr('y年m月d日')}}</div>
