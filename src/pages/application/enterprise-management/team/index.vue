@@ -8,7 +8,11 @@
 <template>
     <view>
         <NavBar title="团队申请" />
-		<scroll-list
+		<view v-if="nullShow" class="ac">
+			<img src="../../../../assets/img/nothing.png" style="width: 132px;height: 111px;"/>
+            <span class="d-text-qgray d-show">暂无数据</span>
+		</view>
+		<scroll-list v-if="!nullShow"
 				api="seeCrmService.userapplicationinformationList"
 				:params="queryForm"
 				@getList='getList'
@@ -57,7 +61,8 @@ export default {
 				limit: 30,
 				page: 1
 			},
-			teamDatas: []
+			teamDatas: [],
+			nullShow: false
 		}
 	},
 	onLoad (option) {},
@@ -66,7 +71,11 @@ export default {
 	},
 	methods: {
 		getList (teamDatas) {
-			this.teamDatas = teamDatas
+			if (teamDatas.length > 0) {
+				this.teamDatas = teamDatas
+			} else {
+				this.nullShow = true
+			}
 		},
 		// 同意
 		agreeApply (item) {

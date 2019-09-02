@@ -4,6 +4,10 @@
         <view class="p15">
             <u-parse v-if='content' :content="content" />
         </view>
+		<i-load-more
+                :tip=" !loading && !list.length ? '暂无数据' : !loading ? '没有更多了' : '加载中'"
+                :loading="loading"
+        />
     </div>
 </template>
 
@@ -13,7 +17,8 @@ export default {
 	},
 	data () {
 		return {
-			content: ''
+			content: '',
+			loading: true
 		}
 	},
 	onLoad (option) {
@@ -23,6 +28,7 @@ export default {
 					if (response.data.entity.content.indexOf('iframe') !== -1) {
 						// 处理 视频问题
 						response.data.entity.content = response.data.entity.content.replace(/iframe class="ql-video"/g, 'video')
+						this.loading = false
 					}
 					this.content = response.data.entity.content
 				} else {
