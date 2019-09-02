@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-22 21:33:06
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 16:04:15
+ * @LastEditTime: 2019-09-02 16:08:59
  * @Description: 机会详情
  */
 <template>
@@ -204,6 +204,13 @@ export default {
 						icon: 'none',
 						duration: 4000,
 						position: 'top'
+					})
+				}
+				if (this.detailInfo.clientIsDelete) {
+					uni.showToast({
+						title: `客户[${detailInfo.clientName}]已删除,不能查看详情`,
+						icon: 'none',
+						duration: 4000
 					})
 				}
 				// 获取销售阶段
