@@ -156,7 +156,6 @@ export default {
 			ishandel: false, // 切换编辑和回显状态
 			tixIndex: '',
 			userInfo: {},
-			nowDate: '',
 			handelTypeForm: {
 				'0': '新建日程',
 				'1': '日程详情',
@@ -186,7 +185,6 @@ export default {
 		this.acheduleForm.particiNames = this.userInfo.name
 	},
 	onLoad (option) {
-		this.nowDate = timeToStr(new Date().getTime(), 'yyyy-mm-dd hh:ii')// 当前时间
 		if (option.scheId) { // 详情
 			this.handelType = '1'
 			this.scheId = option.scheId
