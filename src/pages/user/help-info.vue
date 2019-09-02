@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-08-13 18:58:47
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-02 19:04:46
+ * @LastEditTime: 2019-09-02 19:07:13
  * @Description: file content
  */
 <template>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { setTimeout } from 'timers'
 export default {
 	data () {
 		return {
@@ -32,9 +33,11 @@ export default {
 						response.data.entity.content = response.data.entity.content.replace(/iframe class="ql-video"/g, 'video')
 					}
 					this.content = response.data.entity.content
-					this.$nextTick(() => {
-						this.loading = false
-					})
+					setTimeout(() => {
+						this.$nextTick(() => {
+							this.loading = false
+						})
+					}, 300)
 				} else {
 					this.$utils.toast.text(response.msg)
 					this.loading = false
