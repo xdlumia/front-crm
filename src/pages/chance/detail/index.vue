@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-22 21:33:06
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-02 16:04:15
+ * @Description: 机会详情
+ */
 <template>
   <div class="chance-bg">
     <NavBar title="销售机会详情" />
@@ -24,6 +31,12 @@
         <div class="f12">
           客户名称：
           <a
+			v-if="detailInfo.clientIsDelete"
+            class="d-elip d-text-blue d-inline d-middle"
+            style="width:50%"
+          >{{detailInfo.clientName}}</a>
+			<a
+			v-else
             :url="`/pages/client/detail?id=${detailInfo.clientId}`"
             class="d-elip d-text-blue d-inline d-middle"
             style="width:50%"
