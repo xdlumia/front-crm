@@ -1,8 +1,15 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-28 18:59:18
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-02 18:28:36
+ * @Description: 机会列表圆形进度条
+ */
 <template>
   <div>
 			<cmd-progress
 			type="circle"
-			:stroke-width="9"
+			:stroke-width="7"
 			stroke-color="#7fc25c"
 			:width="45"
 			:status="stagePercent.status || 'normal'"
