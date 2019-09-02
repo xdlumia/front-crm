@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-22 21:33:06
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 16:43:29
+ * @LastEditTime: 2019-09-02 16:45:45
  * @Description: 联系人详情
  */
 <template>
@@ -131,7 +131,7 @@ export default {
 				uni.showToast({
 					title: `客户已删除`,
 					icon: 'none',
-					duration: 3000
+					duration: 1000
 				})
 			}
 		},
