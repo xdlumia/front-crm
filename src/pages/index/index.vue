@@ -343,6 +343,8 @@ export default {
 		},
 		// 获取日程列表
 		getIndexList () {
+			let allcolleagues = []
+			let selected = []
 			this.$api.seeCrmService.scheduleList({
 				userId: this.userInfo.id,
 				page: 1,
@@ -351,9 +353,11 @@ export default {
 				.then(res => {
 					this.indexList = res.data || []
 					this.indexList.forEach((item) => {
-						this.allcolleagues.push(this.changeTime(item.startTime))
-						this.selected.push({ date: this.changeTime(item.startTime) })
+						allcolleagues.push(this.changeTime(item.startTime))
+						selected.push({ date: this.changeTime(item.startTime) })
 					})
+					this.allcolleagues = allcolleagues
+					this.selected = selected
 				})
 		},
 		// 查询本月当前人的销售简报

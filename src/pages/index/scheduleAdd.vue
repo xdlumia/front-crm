@@ -7,11 +7,11 @@
         <NavBar :title="handelTypeForm[handelType]" />
         <scroll-view scroll-y style="height:calc(100vh - 115px)">
             <m-form ref="acheduleForm" class="uni-pb100" :model="acheduleForm" :rules="rules">
-				<div v-if="isadd" class="d-bg-schedule"></div>
+                <div v-if="isadd" class="d-bg-schedule"></div>
                 <div v-else class="d-bg-schedule f14" style="height:40px;line-height:40px;color:rgba(72, 137, 244, 0.776470588235294)">
-					<span class="ml15">该日程于{{acheduleForm.createTime | timeToStr('yy-mm-dd')}}由{{acheduleForm.creatorName}}创建</span>
-				</div>
-				<i-input :disabled='!isadd && !ishandel' maxlength='10000' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
+                    <span class="ml15">该日程于{{acheduleForm.createTime | timeToStr('yy-mm-dd')}}由{{acheduleForm.creatorName}}创建</span>
+                </div>
+                <i-input :disabled='!isadd && !ishandel' maxlength='10000' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
                 <div class="d-bg-schedule"></div>
 
                 <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
@@ -22,9 +22,12 @@
                 </div>
                 <div class="d-bg-schedule"></div>
 
+                 <!-- v-if="!isadd ? acheduleForm.startTimeOnle : true" -->
                 <ruiDatePicker
+                v-if="acheduleForm.startTimeOnle"
                     :disabled='!isadd && !ishandel'
                     fields="minute"
+                    :value='acheduleForm.startTimeOnle'
                     start="2010-00-00 00:00"
                     end="2030-12-30 23:59"
                     @change="startTimeChange"
@@ -32,9 +35,12 @@
                     <i-input disabled label="开始" v-model="acheduleForm.startTimeOnle" placeholder=" " required><uni-icon type='forward' size='18' color='#999'/></i-input>
                 </ruiDatePicker>
 
+ <!-- v-if="!isadd ? acheduleForm.endTimeOnle : true" -->
                 <ruiDatePicker
+                    v-if="acheduleForm.endTimeOnle"
                     :disabled='!isadd && !ishandel'
                     fields="minute"
+                    :value='acheduleForm.endTimeOnle'
                     start="2010-00-00 00:00"
                     end="2030-12-30 23:59"
                     @change="endTimeChange"
@@ -58,7 +64,7 @@
                 <div class="d-bg-schedule"></div>
 
                 <i-cell-group>
-					<!-- 新增和编辑状态跳转选择页面  回显状态直接跳转各个页面的详情 -->
+                    <!-- 新增和编辑状态跳转选择页面  回显状态直接跳转各个页面的详情 -->
                     <div @click="getClient" v-if="(isadd || ishandel) || clientData.id" >
                         <i-input disabled label="客户" :class="(isadd || ishandel) ? 'd-text-black' : 'd-text-blue'" v-model="clientData.name" placeholder=" "><uni-icon v-if="isadd || ishandel" type='forward' size='18' color='#999' /></i-input>
                     </div>
@@ -92,6 +98,8 @@
 
 <script>
 import ruiDatePicker from '@/components/basic/uni/rattenking-dtpicker/rattenking-dtpicker.vue'
+import Vue from 'vue'
+let timeToStr = Vue.filter('timeToStr')
 export default {
 	components: {
 		ruiDatePicker
@@ -148,6 +156,7 @@ export default {
 			ishandel: false, // 切换编辑和回显状态
 			tixIndex: '',
 			userInfo: {},
+			nowDate: '',
 			handelTypeForm: {
 				'0': '新建日程',
 				'1': '日程详情',
@@ -177,12 +186,16 @@ export default {
 		this.acheduleForm.particiNames = this.userInfo.name
 	},
 	onLoad (option) {
+		this.nowDate = timeToStr(new Date().getTime(), 'yyyy-mm-dd hh:ii')// 当前时间
 		if (option.scheId) { // 详情
 			this.handelType = '1'
 			this.scheId = option.scheId
 			this.getScheduleInfo(option.scheId)
 			this.ishandel = false
 			this.isadd = false
+		} else { // 新增，给开始时间和结束时间一个默认值
+			this.acheduleForm.startTimeOnle = timeToStr(new Date().getTime(), 'yyyy-mm-dd hh:ii')// 当前时间
+			this.acheduleForm.endTimeOnle = timeToStr((new Date().getTime() + 0.5 * 60 * 60 * 1000), 'yyyy-mm-dd hh:ii')// 当前时间推半个小时
 		}
 		if (option.busType) {
 			this[this.typeform[option.busType]].name = option.name || ''
@@ -231,17 +244,20 @@ export default {
 	methods: {
 		// 查询日程详情
 		getScheduleInfo (id) {
+			this.acheduleForm.startTimeOnle = ''
+			this.acheduleForm.endTimeOnle = ''
 			this.$api.seeCrmService.scheduleInfo(null, id)
 				.then(res => {
+					// this.acheduleForm = res.data || {};
+					res.data.particiNames = res.data.participantNames ? res.data.participantNames.join(',') : ''
+					res.data.startTimeOnle = timeToStr(res.data.startTime, 'yyyy-mm-dd hh:ii')
+					res.data.endTimeOnle = timeToStr(res.data.endTime, 'yyyy-mm-dd hh:ii')
+					this.clientData = { name: res.data.clientName || '', id: res.data.clientId || '' }// 客户，
+					this.contactData = { name: res.data.linkName || '', id: res.data.linkId || '' }// 联系人
+					this.transactionData = { name: res.data.transactionRecordName || '', id: res.data.transactionRecordId || '' }// 成交记录
+					this.chanceData = { name: res.data.salesFunnelName || '', id: res.data.salesFunnelId || '' }// 销售机会
+					this.highseasData = { name: res.data.seaPoolName || '', id: res.data.seaPoolId || '' }// 公海池
 					this.acheduleForm = res.data || {}
-					this.acheduleForm.particiNames = this.acheduleForm.participantNames ? this.acheduleForm.participantNames.join(',') : ''
-					this.acheduleForm.startTimeOnle = this.changeTime(this.acheduleForm.startTime)
-					this.acheduleForm.endTimeOnle = this.changeTime(this.acheduleForm.endTime)
-					this.clientData = { name: this.acheduleForm.clientName || '', id: this.acheduleForm.clientId || '' }// 客户，
-					this.contactData = { name: this.acheduleForm.linkName || '', id: this.acheduleForm.linkId || '' }// 联系人
-					this.transactionData = { name: this.acheduleForm.transactionRecordName || '', id: this.acheduleForm.transactionRecordId || '' }// 成交记录
-					this.chanceData = { name: this.acheduleForm.salesFunnelName || '', id: this.acheduleForm.salesFunnelId || '' }// 销售机会
-					this.highseasData = { name: this.acheduleForm.seaPoolName || '', id: this.acheduleForm.seaPoolId || '' }// 公海池
 				})
 		},
 		changeTime (time) {
@@ -250,7 +266,7 @@ export default {
 		// 点击客户
 		getClient () {
 			let url = (this.isadd || this.ishandel) ? `/pages/client/choose-client?id=${this.clientData.id}` : `/pages/client/detail?id=${this.clientData.id}`
-			if(this.acheduleForm.clientIsDelete != 1){// eslint-disable-line
+            if(this.acheduleForm.clientIsDelete != 1){// eslint-disable-line
 				this.$routing.navigateTo(url)
 			} else {
 				this.$utils.toast.text('该客户已删除！')
@@ -259,7 +275,7 @@ export default {
 		// 点击联系人
 		getContact () {
 			let url = (this.isadd || this.ishandel) ? `/pages/contact/index?select=1&id=${this.contactData.id}` : `/pages/contact/detail/index?id=${this.contactData.id}`
-			if(this.acheduleForm.linkIsDelete != 1){// eslint-disable-line
+            if(this.acheduleForm.linkIsDelete != 1){// eslint-disable-line
 				this.$routing.navigateTo(url)
 			} else {
 				this.$utils.toast.text('该联系人已删除！')
@@ -268,7 +284,7 @@ export default {
 		// 点击机会
 		getChance () {
 			let url = (this.isadd || this.ishandel) ? `/pages/chance/choose-chance?&id=${this.chanceData.id}` : `/pages/chance/detail/index?id=${this.chanceData.id}`
-			if(this.acheduleForm.salesFunnelIsDelete != 1){// eslint-disable-line
+            if(this.acheduleForm.salesFunnelIsDelete != 1){// eslint-disable-line
 				this.$routing.navigateTo(url)
 			} else {
 				this.$utils.toast.text('该机会已删除！')
@@ -277,7 +293,7 @@ export default {
 		// 点击成交记录
 		getTransaction () {
 			let url = (this.isadd || this.ishandel) ? `/pages/transaction/index?select=1&id=${this.transactionData.id}` : `/pages/transaction/detail?id=${this.transactionData.id}`
-			if(this.acheduleForm.transactionIsDelete != 1){// eslint-disable-line
+            if(this.acheduleForm.transactionIsDelete != 1){// eslint-disable-line
 				this.$routing.navigateTo(url)
 			} else {
 				this.$utils.toast.text('该成交记录已删除！')
@@ -286,7 +302,7 @@ export default {
 		// 点击公海池
 		getHighseas () {
 			let url = (this.isadd || this.ishandel) ? `/pages/highseas/index?select=1&id=${this.highseasData.id}` : `/pages/client/detail?id=${this.highseasData.id}`
-			if(this.acheduleForm.seaPoolIsDelete != 1){// eslint-disable-line
+            if(this.acheduleForm.seaPoolIsDelete != 1){// eslint-disable-line
 				this.$routing.navigateTo(url)
 			} else {
 				this.$utils.toast.text('该公海池已删除！')
