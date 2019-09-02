@@ -1,10 +1,10 @@
-<!--
-/**
-* @author 冀猛超
-* @name 自定义筛选
-* @date 2019年8月09日
-**/
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-08-08 14:54:33
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-02 12:04:13
+ * @Description: 自定义筛选
+ */
 <template>
     <div>
         <scroll-view class='diy-filter' :style='"height: calc(100vh - "+ navH + " - 49px - 40px)"' scroll-y>
@@ -13,7 +13,7 @@
             <filter-plane v-model='filterData.gradeCodes' title='客户级别' :dataList='CRM_KHJB' />
 
             <!-- 跟进状态 -->
-            <filter-plane v-model='filterData.followStatuss' isSingle title='跟进状态' :dataList='followStatuss' />
+            <filter-plane v-model='filterData.followStatus' isSingle title='跟进状态' :dataList='followStatus' />
 
             <!-- 成交状态 -->
             <filter-plane v-model='filterData.makeBargainCodes' title='成交状态' :dataList='CRM_CJZT' />
@@ -31,7 +31,7 @@
 <script>
 
 import FilterPlane from '@/components/filter-plane'
-let followStatuss = ['暂无', '跟进1次', '跟进多次'].map((content, code) => ({ code, content }))
+let followStatus = ['暂无', '跟进1次', '跟进多次'].map((content, code) => ({ code, content }))
 let property = ['非公海客户', '共享客户'].map((content, code) => ({ code, content }))
 
 export default {
@@ -41,10 +41,10 @@ export default {
 	data () {
 		return {
 			property, // 客户性质
-			followStatuss, // 跟进状态
+			followStatus, // 跟进状态
 			principal: [],
 			filterData: {
-				followStatuss: '', // 跟进状态
+				followStatus: '', // 跟进状态
 				gradeCodes: [], // 客户级别
 				makeBargainCodes: [], // 成交状态
 				sourceCodes: [] // 来源
