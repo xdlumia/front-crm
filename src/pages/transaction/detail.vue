@@ -126,6 +126,7 @@ export default {
 				this.$utils.toast.text('该客户已删除！')
 			}
 		},
+		// 点击编辑
 		detailClick () {
 			uni.$once('updatetransList', data => {
 				this.$refs.correlationInfo.$refs.infoContact.linkmanQueryBusList()

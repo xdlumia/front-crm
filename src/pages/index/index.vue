@@ -185,11 +185,15 @@
             </div>
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
-                <div class="h50" style="align-items: center">
-                    <i class="iconfont f20 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
-                    <span class="b ml5 f13">销售漏斗</span><span class="f13 b">( 商机金额 )</span>
+                <div class="h50" style="align-items: center;justify-content: space-between;display:flex">
+                    <span>
+                        <i class="iconfont f20 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
+                        <span class="b ml5 f13">销售漏斗</span><span class="f13 b">( 商机金额 )</span>
+                    </span>
+                    <span class="mr15 f13" style="color:#999">单位：万元</span>
+
                 </div>
-                <div class="wfull" style="height:200px;box-sizing: border-box;">
+                <div class="wfull" style="height:300px;box-sizing: border-box;">
                    <view class="echartsBox">
                          <ec-canvas :ec="ec" ref='echart' class='mr10'></ec-canvas>
                     </view>
@@ -250,7 +254,7 @@ export default {
 					series: [
 						{
 							type: 'funnel',
-							width: '60%',
+							width: '50%',
 							sort: 'none',
 							height: '80%',
 							left: '5%',
@@ -381,7 +385,7 @@ export default {
 					this.funnelList = []
 					let arr = res.data || []
 					arr.forEach((item, index) => {
-						this.funnelList.push({ value: item.amount, name: ((index + 1) + '.' + item.stageName + '：' + item.amount).length > 11 ? ((index + 1) + '.' + item.stageName + '：' + item.amount).substring(0, 11) + '...' : (index + 1) + '.' + item.stageName + '：' + item.amount })
+						this.funnelList.push({ value: item.amount, name: index + 1 + '. ' + item.stageName + '：' + '\n\n' + item.amount })// eslint-disable-line
 						// this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount})
 					})
 					this.ec.option.series[0].data = this.funnelList || []
@@ -391,6 +395,15 @@ export default {
 						}
 					})
 				})
+		},
+		formatter (val) {
+			// var strs = val.split('') // 字符串数组
+			// var str = ''
+			// for (var i = 0, s; s = strs[i++];) { // 遍历字符串数组
+			// 	str += s
+			// 	if (!(i % 7)) str += '\n\n' // eslint-disable-line
+			// }
+			// return str
 		},
 		// 日历的点击
 		confirm (value) {
