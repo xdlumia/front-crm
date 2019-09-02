@@ -1,13 +1,14 @@
-<!-- /**
- * @author 王晓冬
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-24 17:56:03
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-02 11:32:47
  * @description 滚动刷新列表
  * @param {boolean} isSearch 是否显示搜索框
  * @param {string} placeholder 搜索框文案 默认为 搜索
  * @param {string} title 标题
  * @param  select 判断当前是否是选择
-
-    <NavBar title="首页"  />
- */ -->
+ */
 <template>
       <scroll-view
         scroll-y
@@ -22,7 +23,10 @@
         <i-load-more :loading="topLoading" tip="加载中" />
     </div>
     <slot />
-    <div class="no-data-msg" v-if="pager.isLoaded&&!list.length">暂无数据</div>
+
+    <!-- <div class="no-data-msg" >暂无数据</div> -->
+
+	<Empty v-if="pager.isLoaded && !list.length" className="hfull" />
     <i-load-more
       :tip="(pager.noMore&&!pager.loading)?'没有更多了':'加载中'"
       :loading="pager.loading"
@@ -32,8 +36,11 @@
 </template>
 
 <script>
+import Empty from './empty'
 export default {
-	components: {},
+	components: {
+		Empty
+	},
 	props: {
 		select: {
 			default: 0
