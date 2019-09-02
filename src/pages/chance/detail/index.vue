@@ -2,7 +2,7 @@
  * @Author: web.王晓东
  * @Date: 2019-07-24 16:03:30
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 18:36:04
+ * @LastEditTime: 2019-09-02 19:18:04
  * @Description: 机会详情
  */
 <template>
@@ -206,12 +206,14 @@ export default {
 				this.moreActions = +this.$store.state.userInfo.id === +res.data.leaderId ? moreActions : moreActions.filter(item => joinAuth.includes(item.id))
 
 				if (+this.detailInfo.isMsg === 1) {
-					uni.showToast({
-						title: `商机阶段发生变更，原商机阶段为${this.detailInfo.salesStageEntity.stageName}`,
-						icon: 'none',
-						duration: 4000,
-						position: 'top'
-					})
+					setTimeout(() => {
+						uni.showToast({
+							title: `商机阶段发生变更，原商机阶段为${this.detailInfo.salesStageEntity.stageName}`,
+							icon: 'none',
+							duration: 4000,
+							position: 'top'
+						})
+					}, 1000)
 				}
 				// 获取销售阶段
 				this.salesstageQueryList()

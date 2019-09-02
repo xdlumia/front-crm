@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-23 19:22:32
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-08-30 17:57:49
+ * @LastEditTime: 2019-09-02 19:18:44
  * @Description: 机会列表
  */
 <template>
@@ -313,11 +313,13 @@ export default {
 			this.$api.seeCrmService.salesstagemessageCheckisMsgUser(null, userId)
 				.then(res => {
 					if (res.data) {
-						uni.showToast({
-							title: `管理员更改了销售阶段，请重新选择`,
-							icon: 'none',
-							duration: 4000
-						})
+						setTimeout(() => {
+							uni.showToast({
+								title: `管理员更改了销售阶段，请重新选择`,
+								icon: 'none',
+								duration: 4000
+							})
+						}, 1000)
 					}
 				})
 		},
