@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓东
+ * @Date: 2019-07-24 16:03:30
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-02 16:29:49
+ * @Description: 销售机会详情
+ */
 <template>
   <div class="chance-bg">
     <NavBar title="销售机会详情" />
@@ -114,7 +121,8 @@ import detailInfo from './components/detail-info'
 import followInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './components/correlation-info'
 let moreActionsTitle = ['更多操作', '复制', '变更负责人', '删除', '日程']
-let moreActions = moreActionsTitle.map(item => ({ name: item }))
+let moreActions = moreActionsTitle.map((item, index) => ({ name: item, id: index }))
+const joinAuth = [0, 1, 3]
 export default {
 	components: {
 		detailInfo,
@@ -138,8 +146,7 @@ export default {
 			detailInfo: {},
 			moreShow: false,
 			phoneShow: false,
-			moreActions: moreActions
-			// phoneActions: []
+			moreActions: []
 		}
 	},
 	onShow () {
@@ -185,6 +192,9 @@ export default {
 		saleschanceInfo (id) {
 			this.$api.seeCrmService.saleschanceInfo(null, id).then(res => {
 				this.detailInfo = res.data || {}
+
+				this.moreActions = +this.$store.state.userInfo.id === +res.data.leaderId ? moreActions : moreActions.filter(item => joinAuth.includes(item.id))
+
 				if (+this.detailInfo.isMsg === 1) {
 					uni.showToast({
 						title: `商机阶段发生变更，原商机阶段为${this.detailInfo.salesStageEntity.stageName}`,

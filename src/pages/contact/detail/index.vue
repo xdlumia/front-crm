@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓东
+ * @Date: 2019-07-27 09:16:04
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-02 16:45:32
+ * @Description: 联系人详情
+ */
 <template>
   <div class="chance-bg">
     <NavBar title="联系人详情" />
@@ -65,7 +72,8 @@ import notesInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './components/correlation-info'
 
 let moreActionsTitle = ['更多操作', '变更负责人', '删除', '复制']
-let moreActions = moreActionsTitle.map(item => ({ name: item }))
+let moreActions = moreActionsTitle.map((item, index) => ({ name: item, id: index }))
+const joinAuth = [0, 3]
 
 export default {
 	components: {
@@ -86,7 +94,7 @@ export default {
 			detailInfo: {},
 			moreShow: false,
 			phoneShow: false,
-			moreActions: moreActions,
+			moreActions: [],
 			phoneActions: []
 		}
 	},
@@ -121,6 +129,9 @@ export default {
 			this.$api.seeCrmService.linkmanInfo(null, id)
 				.then(res => {
 					this.detailInfo = res.data || {}
+
+					this.moreActions = +this.$store.state.userInfo.id === +res.data.leaderId ? moreActions : moreActions.filter(item => joinAuth.includes(item.id))
+
 					this.phoneActions = [{ name: `${this.detailInfo.linkmanName} ${this.detailInfo.mobile}`, phone: this.detailInfo.mobile }]
 					this.phoneActions.unshift({ name: '联系人电话' })
 				})

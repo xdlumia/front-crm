@@ -92,11 +92,11 @@ export default {
 		chooseLeader () {
 			uni.$once('colleagueChoose', data => {
 				if (data.data.length > 0) {
-					this.filterData.leaderId = data.data[0].userId
+					this.filterData.leaderId = data.data[0].userId || ''
 					this.userName = data.data[0].employeeName
 					this.avatarUrl = data.data[0].avatarUrl
 				} else {
-					this.filterData.leaderId = this.userInfo.id
+					this.filterData.leaderId = this.userInfo.id || ''
 					this.userName = this.userInfo.name
 					this.avatarUrl = this.userInfo.avatarUrl
 				}
