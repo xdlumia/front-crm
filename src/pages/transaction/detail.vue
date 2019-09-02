@@ -7,7 +7,7 @@
  */
 <template>
     <div class="client-detail-page">
-		<template v-if='!loading'>
+        <template v-if='!loading'>
         <NavBar title='成交详情' />
         <!-- 顶部信息 -->
 
@@ -18,9 +18,9 @@
                     <div @click="detailClick">
                         <i-icon type="brush" size="18" class="ml5" color="#1890FF" />
                     </div>
-					<span @click="changeWatchful">
-						<i-icon type="like_fill" size="20" class="ml15" :color="!detailInfo.isWatchful ? '#999' : '#ff5533'" />
-					</span>
+                    <span @click="changeWatchful">
+                        <i-icon type="like_fill" size="20" class="ml15" :color="!detailInfo.isWatchful ? '#999' : '#ff5533'" />
+                    </span>
                 </div>
             </div>
 
@@ -37,8 +37,12 @@
                     :options="CRM_CJZT"
                 />
             </div>
-            <div class='d-text-gray f13 mb5'>
-                客户名称： <span>{{detailInfo.clientName || ''}}</span>
+            <div class='f13 mb5'>
+
+                 <div @click="getClientInfo"
+                    class="d-elip d-text-blue d-inline d-middle"
+                    style="width:50%"
+                ><span class="d-text-gray ">客户名称：</span>{{detailInfo.clientName || ''}}</div>
             </div>
         </div>
 
@@ -61,9 +65,9 @@
                 <i-icon type='more' size='20' color='#696969' /><span class="ml5 f13  d-text-gray">更多</span>
             </div>
         </div>
-		</template>
+        </template>
 
-		<i-spin fix fullscreen v-else></i-spin>
+        <i-spin fix fullscreen v-else></i-spin>
         <!-- 更多 action -->
         <i-actionSheet :visible="moreShow" :actions="moreActions" show-cancel @cancel="handlerAction('moreShow')" @click="handleMore" />
 
@@ -124,6 +128,15 @@ export default {
 	onReady () {
 	},
 	methods: {
+		// 点击客户名称进入客户详情界面
+		getClientInfo () {
+			let url = `/pages/client/detail?id=${this.detailInfo.clientId}`
+             if(this.detailInfo.clientIsDelete != 1){// eslint-disable-line
+				this.$routing.navigateTo(url)
+			} else {
+				this.$utils.toast.text('该客户已删除！')
+			}
+		},
 		detailClick () {
 			uni.$once('updatetransList', data => {
 				this.$refs.correlationInfo.$refs.infoContact.linkmanQueryBusList()

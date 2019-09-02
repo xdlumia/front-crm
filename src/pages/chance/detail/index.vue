@@ -2,8 +2,8 @@
  * @Author: web.王晓东
  * @Date: 2019-07-24 16:03:30
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-02 16:29:49
- * @Description: 销售机会详情
+ * @LastEditTime: 2019-09-02 16:47:51
+ * @Description: 机会详情
  */
 <template>
   <div class="chance-bg">
@@ -30,11 +30,10 @@
         </div>
         <div class="f12">
           客户名称：
-          <a
-            :url="`/pages/client/detail?id=${detailInfo.clientId}`"
+          <span
+			@click="viewClient()"
             class="d-elip d-text-blue d-inline d-middle"
-            style="width:50%"
-          >{{detailInfo.clientName}}</a>
+            style="width:50%">{{detailInfo.clientName}}</span>
         </div>
         <div class="f12">负责人： {{detailInfo.leaderName || '-'}}</div>
         <div class="f12">
@@ -185,6 +184,17 @@ export default {
 		}
 	},
 	methods: {
+		viewClient () {
+			if (!this.detailInfo.clientIsDelete) {
+				this.$routing.navigateTo('/pages/client/detail?id=' + this.detailInfo.clientId)
+			} else {
+				uni.showToast({
+					title: `客户已删除`,
+					icon: 'none',
+					duration: 1000
+				})
+			}
+		},
 		updateFollow () {
 			this.saleschanceInfo(this.busId)
 		},
