@@ -1,5 +1,12 @@
+/*
+ * @Author: web.王晓东
+ * @Date: 2019-07-27 09:16:04
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-02 16:48:00
+ * @Description: 联系人详情
+ */
 <template>
-  <div class="chance-bg">
+<div class="chance-bg">
     <NavBar title="联系人详情" />
     <!-- 列表内容 -->
     <div style="height:100vh">
@@ -22,8 +29,10 @@
 			</div>
         </div>
         <div class="f12">负责人: {{detailInfo.leaderName || '-'}}</div>
-        <div class="f12"><a :url="`/pages/client/detail?id=${detailInfo.clientId}`" class="d-elip d-text-blue" style="display:inline">{{detailInfo.clientName}}</a></div>
-        <div class="f12">{{detailInfo.address || '-'}}</div>
+        <div class="f12">
+			<span @click="viewClient()" class="d-elip d-text-blue" style="display:inline">{{detailInfo.clientName}}</span>
+        </div>
+		<div class="f12">{{detailInfo.address || '-'}}</div>
       </div>
       <!-- tabs切换组件 -->
       <i-tabs :current="currTabIndex" :tabList='tabBars' @change="tagsChange">
@@ -54,9 +63,8 @@
 
         <!-- 电话 action -->
         <i-actionSheet :visible="phoneShow" :actions="phoneActions" show-cancel @cancel="handlerAction('phoneShow')" @click='handlePhone' />
-
     </div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -65,7 +73,8 @@ import notesInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './components/correlation-info'
 
 let moreActionsTitle = ['更多操作', '变更负责人', '删除', '复制']
-let moreActions = moreActionsTitle.map(item => ({ name: item }))
+let moreActions = moreActionsTitle.map((item, index) => ({ name: item, id: index }))
+const joinAuth = [0, 3]
 
 export default {
 	components: {
@@ -86,7 +95,7 @@ export default {
 			detailInfo: {},
 			moreShow: false,
 			phoneShow: false,
-			moreActions: moreActions,
+			moreActions: [],
 			phoneActions: []
 		}
 	},
@@ -116,13 +125,34 @@ export default {
 		updateFollow () {
 			this.linkmanInfo(this.busId)
 		},
+		viewClient () {
+			if (!this.detailInfo.clientIsDelete) {
+				this.$routing.navigateTo('/pages/client/detail?id=' + this.detailInfo.clientId)
+			} else {
+				uni.showToast({
+					title: `客户已删除`,
+					icon: 'none',
+					duration: 1000
+				})
+			}
+		},
 		// 查询联系人详情
 		linkmanInfo (id) {
 			this.$api.seeCrmService.linkmanInfo(null, id)
 				.then(res => {
 					this.detailInfo = res.data || {}
+
+					this.moreActions = +this.$store.state.userInfo.id === +res.data.leaderId ? moreActions : moreActions.filter(item => joinAuth.includes(item.id))
+
 					this.phoneActions = [{ name: `${this.detailInfo.linkmanName} ${this.detailInfo.mobile}`, phone: this.detailInfo.mobile }]
 					this.phoneActions.unshift({ name: '联系人电话' })
+					if (this.detailInfo.clientIsDelete) {
+						uni.showToast({
+							title: `客户[${this.detailInfo.clientName}]已删除,不能查看详情`,
+							icon: 'none',
+							duration: 4000
+						})
+					}
 				})
 		},
 		handlerAction (item) {

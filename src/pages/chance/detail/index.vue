@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓东
+ * @Date: 2019-07-24 16:03:30
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-02 16:47:51
+ * @Description: 机会详情
+ */
 <template>
   <div class="chance-bg">
     <NavBar title="销售机会详情" />
@@ -23,11 +30,10 @@
         </div>
         <div class="f12">
           客户名称：
-          <a
-            :url="`/pages/client/detail?id=${detailInfo.clientId}`"
+          <span
+			@click="viewClient()"
             class="d-elip d-text-blue d-inline d-middle"
-            style="width:50%"
-          >{{detailInfo.clientName}}</a>
+            style="width:50%">{{detailInfo.clientName}}</span>
         </div>
         <div class="f12">负责人： {{detailInfo.leaderName || '-'}}</div>
         <div class="f12">
@@ -114,7 +120,8 @@ import detailInfo from './components/detail-info'
 import followInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './components/correlation-info'
 let moreActionsTitle = ['更多操作', '复制', '变更负责人', '删除', '日程']
-let moreActions = moreActionsTitle.map(item => ({ name: item }))
+let moreActions = moreActionsTitle.map((item, index) => ({ name: item, id: index }))
+const joinAuth = [0, 1, 3]
 export default {
 	components: {
 		detailInfo,
@@ -138,8 +145,7 @@ export default {
 			detailInfo: {},
 			moreShow: false,
 			phoneShow: false,
-			moreActions: moreActions
-			// phoneActions: []
+			moreActions: []
 		}
 	},
 	onShow () {
@@ -178,6 +184,17 @@ export default {
 		}
 	},
 	methods: {
+		viewClient () {
+			if (!this.detailInfo.clientIsDelete) {
+				this.$routing.navigateTo('/pages/client/detail?id=' + this.detailInfo.clientId)
+			} else {
+				uni.showToast({
+					title: `客户已删除`,
+					icon: 'none',
+					duration: 1000
+				})
+			}
+		},
 		updateFollow () {
 			this.saleschanceInfo(this.busId)
 		},
@@ -185,6 +202,9 @@ export default {
 		saleschanceInfo (id) {
 			this.$api.seeCrmService.saleschanceInfo(null, id).then(res => {
 				this.detailInfo = res.data || {}
+
+				this.moreActions = +this.$store.state.userInfo.id === +res.data.leaderId ? moreActions : moreActions.filter(item => joinAuth.includes(item.id))
+
 				if (+this.detailInfo.isMsg === 1) {
 					uni.showToast({
 						title: `商机阶段发生变更，原商机阶段为${this.detailInfo.salesStageEntity.stageName}`,

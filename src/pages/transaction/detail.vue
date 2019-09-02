@@ -1,3 +1,10 @@
+/*
+ * @Author: web.徐贺
+ * @Date: 2019-07-29 16:51:28
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-02 16:26:49
+ * @Description: file content
+ */
 <template>
     <div class="client-detail-page">
         <template v-if='!loading'>
@@ -74,7 +81,11 @@ import detailInfo from './components/detail-info'
 import correlationInfo from './components/correlation-info'
 
 let moreActionsTitle = ['更多操作', '变更负责人', '删除', '日程']
-let moreActions = moreActionsTitle.map(item => ({ name: item }))
+let moreActions = moreActionsTitle.map((item, index) => ({ name: item, id: index }))
+
+// 参与人权限
+const joinAuth = [0, 3]
+
 export default {
 	components: {
 		detailInfo,
@@ -86,7 +97,7 @@ export default {
 			detailId: '',
 			moreShow: false,
 			phoneShow: false,
-			moreActions: moreActions,
+			moreActions: [],
 			phoneActions: [
 				{
 					name: '联系人电话'
@@ -139,6 +150,9 @@ export default {
 			this.$api.seeCrmService.transactionrecordInfo(null, this.detailId)
 				.then(res => {
 					this.detailInfo = res.data || {}
+
+					this.moreActions = +this.$store.state.userInfo.id === +res.data.leaderId ? moreActions : moreActions.filter(item => joinAuth.includes(item.id))
+
 					this.loading = false
 				})
 		},

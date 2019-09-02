@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-30 17:51:00
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-02 14:41:54
+ * @LastEditTime: 2019-09-02 15:22:29
  * @Description: 机会列表筛选
  */
 <template>
@@ -73,11 +73,11 @@ export default {
 		chooseLeader () {
 			uni.$once('colleagueChoose', data => {
 				if (data.data.length > 0) {
-					this.filterData.leaderId = data.data[0].userId
+					this.filterData.leaderId = data.data[0].userId || ''
 					this.userName = data.data[0].employeeName
 					this.avatarUrl = data.data[0].avatarUrl
 				} else {
-					this.filterData.leaderId = this.userInfo.id
+					this.filterData.leaderId = this.userInfo.id || ''
 					this.userName = this.userInfo.name
 					this.avatarUrl = this.userInfo.avatarUrl
 				}

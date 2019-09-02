@@ -1,10 +1,10 @@
-<!--
-/**
-* @author 冀猛超
-* @name 客户详情
-* @date 2019年8月02日
-**/
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-26 10:58:16
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-02 15:59:26
+ * @Description: 客户详情
+ */
 <template>
     <div class="client-detail-page">
 
@@ -118,6 +118,9 @@ let moreActionsPool = [
 	{ name: '日程', id: 5 }
 ]
 
+// 参与人权限
+const joinAuth = [0, 1, 5]
+
 export default {
 	components: {
 		detailInfo,
@@ -158,7 +161,7 @@ export default {
 		this.source = data.source || 0
 		this.poolId = data.poolId || 0
 		// 区分 更多按钮选项
-		this.moreActions = data.source ? moreActionsPool : moreActions
+		// this.moreActions = data.source ? moreActionsPool : this.participantAuth
 	},
 	onShow () {
 		// 获取客户详情
@@ -170,12 +173,18 @@ export default {
 		ipxH () {
 			return this.isIpx ? '34px' : '0px'
 		},
+		// 是否为保留退回的客户
 		sendBackType () {
 			return +this.detailInfo.sendBackType !== 1
 		},
+		// 判断 是否为客户列表进入的详情
 		infoH () {
 			return !this.source ? '0px' : '48px'
-			// return '48px'
+		},
+		participantAuth () {
+			return +this.$store.state.userInfo.id === +this.detailInfo.leaderId
+				? moreActions
+				: moreActions.filter(item => joinAuth.includes(item.id))
 		}
 	},
 	methods: {
@@ -191,6 +200,9 @@ export default {
 				let resulte = await this.$api.seeCrmService.clientinfoInfo(null, this.id)
 				if (resulte.code === 200) {
 					this.detailInfo = resulte.data || {}
+
+					// 区分 更多按钮选项
+					this.moreActions = this.source ? moreActionsPool : this.participantAuth
 				}
 			} catch (err) {
 				this.detailInfo = {}
