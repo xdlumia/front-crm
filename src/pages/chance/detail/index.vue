@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-22 21:33:06
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 16:13:54
+ * @LastEditTime: 2019-09-02 16:44:02
  * @Description: 机会详情
  */
 <template>
@@ -30,17 +30,10 @@
         </div>
         <div class="f12">
           客户名称：
-          <a
-			v-if="detailInfo.clientIsDelete"
-            class="d-elip d-text-gray d-inline d-middle"
-            style="width:50%"
-          >{{detailInfo.clientName}}</a>
-			<a
-			v-else
-            :url="`/pages/client/detail?id=${detailInfo.clientId}`"
+          <span
+			@click="viewClient()"
             class="d-elip d-text-blue d-inline d-middle"
-            style="width:50%"
-          >{{detailInfo.clientName}}</a>
+            style="width:50%">{{detailInfo.clientName}}</span>
         </div>
         <div class="f12">负责人： {{detailInfo.leaderName || '-'}}</div>
         <div class="f12">
@@ -191,6 +184,17 @@ export default {
 		}
 	},
 	methods: {
+		viewClient () {
+			if (!this.detailInfo.clientIsDelete) {
+				this.$routing.navigateTo('/pages/client/detail?id=' + this.detailInfo.clientId)
+			} else {
+				uni.showToast({
+					title: `客户已删除`,
+					icon: 'none',
+					duration: 3000
+				})
+			}
+		},
 		updateFollow () {
 			this.saleschanceInfo(this.busId)
 		},
@@ -204,13 +208,6 @@ export default {
 						icon: 'none',
 						duration: 4000,
 						position: 'top'
-					})
-				}
-				if (this.detailInfo.clientIsDelete) {
-					uni.showToast({
-						title: `客户[${this.detailInfo.clientName}]已删除,不能查看详情`,
-						icon: 'none',
-						duration: 4000
 					})
 				}
 				// 获取销售阶段
