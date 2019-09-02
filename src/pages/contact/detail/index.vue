@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-22 21:33:06
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 16:08:48
+ * @LastEditTime: 2019-09-02 16:12:49
  * @Description: 联系人详情
  */
 <template>
@@ -134,7 +134,7 @@ export default {
 					this.phoneActions.unshift({ name: '联系人电话' })
 					if (this.detailInfo.clientIsDelete) {
 						uni.showToast({
-							title: `客户[${detailInfo.clientName}]已删除,不能查看详情`,
+							title: `客户[${this.detailInfo.clientName}]已删除,不能查看详情`,
 							icon: 'none',
 							duration: 4000
 						})

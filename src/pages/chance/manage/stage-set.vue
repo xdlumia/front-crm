@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-22 21:33:06
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-02 16:10:53
+ * @Description: 销售阶段管理
+ */
 <template>
     <div class='stage-page'>
         <NavBar title='编辑销售阶段' />
@@ -18,7 +25,7 @@
 						<p @click="handlerAction(item)"><i-icon type="enter" size="20" color="#999" /></p>
 					</i-col>
 					<i-col span="9" i-class="col-class">
-						<i-input class="stage-name" :label-width="0" v-model="item.stageName" placeholder="请输入名称"></i-input>
+						<i-input class="stage-name" :label-width="0" v-model="item.stageName" maxlength="4" placeholder="请输入名称"></i-input>
 					</i-col>
 					<i-col span="4" class="ar">
 						<span v-if="index != 0" @click="farrowthinup(index,item)">
