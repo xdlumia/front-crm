@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-22 21:33:06
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 16:12:49
+ * @LastEditTime: 2019-09-02 16:13:40
  * @Description: 联系人详情
  */
 <template>
@@ -30,7 +30,7 @@
         </div>
         <div class="f12">负责人: {{detailInfo.leaderName || '-'}}</div>
         <div class="f12">
-			<a v-if="detailInfo.clientIsDelete" class="d-elip d-text-blue" style="display:inline">{{detailInfo.clientName}}</a>
+			<a v-if="detailInfo.clientIsDelete" class="d-elip d-text-gray" style="display:inline">{{detailInfo.clientName}}</a>
 			<a v-if="!detailInfo.clientIsDelete" :url="`/pages/client/detail?id=${detailInfo.clientId}`" class="d-elip d-text-blue" style="display:inline">{{detailInfo.clientName}}</a>
         </div>
 		<div class="f12">{{detailInfo.address || '-'}}</div>

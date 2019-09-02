@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-22 21:33:06
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 16:12:40
+ * @LastEditTime: 2019-09-02 16:13:54
  * @Description: 机会详情
  */
 <template>
@@ -32,7 +32,7 @@
           客户名称：
           <a
 			v-if="detailInfo.clientIsDelete"
-            class="d-elip d-text-blue d-inline d-middle"
+            class="d-elip d-text-gray d-inline d-middle"
             style="width:50%"
           >{{detailInfo.clientName}}</a>
 			<a
