@@ -174,7 +174,8 @@ export default {
 		this.chooseData = options.id || ''
 
 		this.queryForm.queryType = options.queryType || 0
-		this.$set(this.filterData[0], 'current', { id: 2, name: '我关注的' })
+		let name = this.queryForm.queryType == 2 ? '我关注的' : '我负责的'// eslint-disable-line
+		this.$set(this.filterData[0], 'current', { id: 2, name: name })
 	},
 	computed: {
 		CRM_CJZT () {

@@ -1,5 +1,10 @@
-<!-- 添加机会 -->
-<!-- wangxiaodong -->
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-28 14:54:48
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-08-30 16:57:40
+ * @Description: 新建机会
+ */
 <template>
 <div class="d-bg-white">
     <NavBar :title="`${titleType}销售机会`"/>

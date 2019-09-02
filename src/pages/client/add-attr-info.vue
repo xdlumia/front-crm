@@ -9,7 +9,7 @@
     <div class='attr-info-page'>
         <NavBar title='添加业务属性' />
 
-        <div class="form-row d-flex">
+        <div class="form-row d-center">
             <div class="f14 d-text-black form-row-item form-row-label mr10">
                 标题:
             </div>
@@ -133,8 +133,8 @@ export default {
 				if (resulte.code === 200) {
 					this.$utils.toast.text('保存成功')
 					setTimeout(() => {
-						this.$routing.navigateBack()
 						uni.$emit('attrBack')
+						this.$routing.navigateBack()
 					}, 800)
 				}
 			} catch (err) {

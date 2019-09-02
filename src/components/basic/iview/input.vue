@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-27 14:24:03
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-08-30 16:37:51
+ * @Description: i-input公共组件
+ */
 <!-- /**
  * @新增required请求
  */ -->
@@ -16,7 +23,7 @@
                 <span v-if="required" class="d-text-red">*</span>
                 <label class="d-elip d-text-black">{{label}}</label>
             </div>
-            <div>
+            <div class="i-textarea-box">
                 <textarea
                     :disabled="disabled"
 					:rows="3"
@@ -154,5 +161,15 @@ export default {
 .input-icon{
 	display: inline-block;
 	color:#999;
+}
+.i-textarea-box{
+	position: relative;
+	height: 55px;
+	.i-input-textarea{
+		position:absolute;
+		top:0;
+		left:0;
+		right:0;
+	}
 }
 </style>

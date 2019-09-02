@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-29 18:05:13
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-08-30 17:38:42
+ * @Description: 首页
+ */
 <template>
     <div style="wfull">
         <NavBar title="首页" />

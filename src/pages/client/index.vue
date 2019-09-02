@@ -9,7 +9,7 @@
     <div class="client-page">
         <NavBar isSearch placeholder='搜索客户' :keyword='queryForm.name' searchType='0' @getSearch='getSearch'/>
 		<Filter :filterData='filterData' @filterSubmit='filterSubmit' ref='filter'>
-			<filter-diy @submit='diyFilterSubmit' />
+			<filter-diy @submit='diyFilterSubmit' :stageList="stageList"/>
 		</Filter>
 		<div class='client-list-view d-relative'>
 
@@ -22,8 +22,8 @@
 				<div @click='handlerClient(item, index)' v-for="(item, index) of list" :key="item.id" class="d-center client-item pb5 pt5 pl15 pr15 d-bg-white" >
 					<div class="d-cell">
 						<div class="d-flex f14 mb5">
-							<div class="d-text-black d-cell d-elip">{{item.name}}</div>
-							<div class='d-text-cgray' v-if='!isSelect'>{{item.makeBargainCode == 1 ? '已成交' : item.makeBargainCode == 2 ? '多次成交' : '未成交'}}</div>
+							<div class="d-text-black d-cell d-elip" style="max-width: 300px">{{item.name}}</div>
+							<div class='d-text-cgray' style="margin-left:auto" v-if='!isSelect'>{{item.makeBargainCode == 1 ? '已成交' : item.makeBargainCode == 2 ? '多次成交' : '未成交'}}</div>
 						</div>
 						<div class="d-flex client-tags">
 							<div class="iconfont iconqian f16 d-text-blue mr10" v-if='item.salesType === 1'></div>
@@ -118,7 +118,8 @@ export default {
 			],
 			list: [], // 列表数据
 			chooseDataIndex: '', // 已选择的索引
-			chooseData: '' // 已选择的数据
+			chooseData: '', // 已选择的数据
+			stageList: []
 		}
 	},
 	onLoad () {
@@ -137,6 +138,7 @@ export default {
 			selects[item.prop] = item.current || item.list[0]
 			this.$set(this.queryForm, item.prop, selects[item.prop].id)
 		})
+		this.salesstageQueryList()
 		this.filterSelect = selects
 		this.$refs.list.reload()
 	},
@@ -196,7 +198,19 @@ export default {
 			uni.$emit('chooseClient', { id, name })
 
 			this.$routing.navigateBack()
+		},
+		salesstageQueryList () {
+			// 获取销售阶段
+			this.$api.seeCrmService.salesstageQueryList({ isOriginal: -1 }).then(res => {
+				if (res.code !== 200) return
+				let data = res.data || []
+				data.forEach(item => {
+					item.name = item.stageName
+				})
+				this.stageList = data.map(item => ({ content: item.stageName, code: item.id }))
+			})
 		}
+
 	},
 	watch: {
 		'form.name' () {

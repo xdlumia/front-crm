@@ -36,9 +36,9 @@
 						最后跟进时间： <span>{{detailInfo.finallyFollowTime | timeToStr('yyyy-mm-dd')}}</span>
 					</div>
 
-					<div class="d-center d-text-gray">
-						<div class="d-cell f13"><span class="b">销售机会金额：</span> <span style='color: #FF9900'>{{detailInfo.totalSalesChanceMoney}}元</span></div>
-						<div class="d-cell f13"><span class="b">成交金额：</span> <span style='color: #FF9900'>{{detailInfo.bargainSum}}元</span></div>
+					<div class="d-text-gray">
+						<div class="f13"><span class="b">销售机会金额：</span> <span style='color: #FF9900'>{{detailInfo.totalSalesChanceMoney}}元</span></div>
+						<div class="f13"><span class="b">成交金额：</span> <span style='color: #FF9900'>{{detailInfo.bargainSum}}元</span></div>
 					</div>
 				</template>
 				<template v-if='source'>
@@ -53,16 +53,16 @@
 			<div class="">
 				<i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
 					<i-tab index="0">
-						<followInfo :query='{clientId: detailInfo.id, busId: detailInfo.id, busType: 0,}' @updateFollow='updateFollow' :height="'calc(100vh - 49px - 217px - 50px - ' + navH + ' + ' + infoH + ')'" />
+						<followInfo :query='{clientId: detailInfo.id, busId: detailInfo.id, busType: 0,}' @updateFollow='updateFollow' :height="'calc(100vh - 49px - 240px - 50px - ' + navH + ' + ' + infoH + ')'" />
 					</i-tab>
 					<i-tab index="1">
-						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ' + ' + infoH + ')'" />
+						<detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 240px - 50px - ' + navH + ' + ' + infoH + ')'" />
 					</i-tab>
 					<i-tab index="2">
-						<correlationInfo ref='info' :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name, clientId: detailInfo.id}' :sendBackType='detailInfo.sendBackType' :height="'calc(100vh  - 217px - 50px - ' + navH + ' + ' + infoH+ ')'" />
+						<correlationInfo ref='info' :query='{busId: detailInfo.id, busType: 0, name: detailInfo.name, clientId: detailInfo.id}' :sendBackType='detailInfo.sendBackType' :height="'calc(100vh  - 240px - 50px - ' + navH + ' + ' + infoH+ ')'" />
 					</i-tab>
 					<i-tab index='3'>
-						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="`calc(100vh - 217px - 100px - ${ipxH} - ${navH} + ${infoH})`" />
+						<attrInfo :query='{clientId: detailInfo.id, busType: 0}' :height="`calc(100vh - 240px - 100px - ${ipxH} - ${navH} + ${infoH})`" />
 					</i-tab>
 				</i-tabs>
 			</div>

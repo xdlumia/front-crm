@@ -2,8 +2,8 @@
  * @Author: 冀猛超
  * @Email: xdq@live.cn
  * @Date: 2019-08-27 16:32:12
- * @Last Modified by: xdlumia
- * @Last Modified time: 2019-08-27 17:06:17
+ * @Last Modified by: jimengchao
+ * @Last Modified time: 2019-08-30 17:07:27
  * @Description: Description
  */
 <template>
@@ -31,7 +31,7 @@
             />
         </scroll-view>
         <div class="pl15 pr15">
-           <a :url="'/pages/client/add-attr-info?id=' + query.clientId" class="add-attr-btn f14 d-text-black d-bg-white ac">+ 添加</a>
+           <div @click='skip' class="add-attr-btn f14 d-text-black d-bg-white ac">+ 添加</div>
         </div>
     </div>
 </template>
@@ -63,11 +63,14 @@ export default {
 	},
 	onReady () {
 		this.getListClientbusiness()
-		uni.$on('attrBack', data => {
-			this.getListClientbusiness(1)
-		})
 	},
 	methods: {
+		skip () {
+			uni.$once('attrBack', data => {
+				this.getListClientbusiness(1)
+			})
+			this.$routing.navigateTo('/pages/client/add-attr-info?id=' + this.query.clientId)
+		},
 		// 获取业务属性列表
 		async getListClientbusiness (page) {
 			if (!this.loading && !page) return
@@ -88,6 +91,8 @@ export default {
 					this.params.page++
 					if (resulte.count <= this.list.length) {
 						this.loading = false
+					} else {
+						this.loading = true
 					}
 				}
 			} catch (err) {
