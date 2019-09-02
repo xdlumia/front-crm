@@ -2,7 +2,7 @@
  * @Author: web.王晓东
  * @Date: 2019-07-27 09:16:04
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 18:23:28
+ * @LastEditTime: 2019-09-02 18:34:56
  * @Description: 联系人详情
  */
 <template>
@@ -192,6 +192,7 @@ export default {
 			})
 		},
 		handleMore ({ target: { index } }) {
+			let id = this.moreActions[index].id
 			if (index === 0) return
 			let fnType = {
 				// 转移
@@ -223,7 +224,7 @@ export default {
 					this.$routing.navigateTo(`/pages/contact/add-contact?id=${this.busId}&editType=2`)
 				}
 			}
-			fnType[index]()
+			fnType[id]()
 		}
 	},
 	created () {}

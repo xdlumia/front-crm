@@ -2,7 +2,7 @@
  * @Author: web.王晓东
  * @Date: 2019-07-24 16:03:30
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 18:22:56
+ * @LastEditTime: 2019-09-02 18:36:04
  * @Description: 机会详情
  */
 <template>
@@ -121,7 +121,7 @@ import followInfo from '@/pages/client/components/follow-info'
 import correlationInfo from './components/correlation-info'
 let moreActionsTitle = ['更多操作', '复制', '变更负责人', '删除', '日程']
 let moreActions = moreActionsTitle.map((item, index) => ({ name: item, id: index }))
-const joinAuth = [0, 1, 3]
+const joinAuth = [0, 1, 4]
 export default {
 	components: {
 		detailInfo,
@@ -286,7 +286,8 @@ export default {
 		},
 
 		handleMore ({ target: { index } }) {
-			if (index === 0) return
+			let id = this.moreActions[index].id
+			if (id === 0) return
 			let fnType = {
 				1: () => {
 					// 1编辑 2复制
@@ -321,7 +322,7 @@ export default {
 					)
 				}
 			}
-			fnType[index]()
+			fnType[id]()
 		}
 	}
 }
