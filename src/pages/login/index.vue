@@ -138,7 +138,7 @@ export default {
 							that.reGetCode()
 							uni.$emit('setUserInfo', response.data)
 							// 跳转到首页
-							that.$routing.switchTab('/pages/index/index')
+							that.$routing.switchTab('/pages/chance/index')
 						} else {
 							that.reGetCode()
 						}

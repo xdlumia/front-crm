@@ -88,7 +88,7 @@ export default {
 				if (response.code === 200) {
 					uni.$emit('setUserInfo', response.data)
 					// 跳转到首页
-					this.$routing.switchTab('/pages/index/index')
+					this.$routing.switchTab('/pages/chance/index')
 				}
 			})
 		},

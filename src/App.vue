@@ -45,7 +45,7 @@ export default {
 										that.$utils.toast.text(response.msg)
 										if (response.code === 200) {
 											uni.$emit('setUserInfo', response.data)
-											that.$routing.switchTab('/pages/index/index')
+											that.$routing.switchTab('/pages/chance/index')
 										}
 									})
 								} else {
