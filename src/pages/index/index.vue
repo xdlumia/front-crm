@@ -193,11 +193,12 @@
                     <span class="mr15 f13" style="color:#999">单位：万元</span>
 
                 </div>
-                <div class="wfull" style="height:300px;box-sizing: border-box;">
+                <div class="wfull" style="height:300px;box-sizing: border-box;" :style="{height:loucount*60 + 'px'}">
                    <view class="echartsBox">
                          <ec-canvas :ec="ec" ref='echart' class='mr10'></ec-canvas>
                     </view>
                 </div>
+                <div style="height: 10px;background: #FFF;"></div>
             </div>
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
@@ -269,6 +270,7 @@ export default {
 					]
 				}
 			},
+			loucount: 0,
 			hour: 3600, // 区分小时还是分钟
 			mint: 60,
 			userId: 1,
@@ -384,6 +386,7 @@ export default {
 				.then(res => {
 					this.funnelList = []
 					let arr = res.data || []
+					this.loucount = arr.length
 					arr.forEach((item, index) => {
 						this.funnelList.push({ value: item.amount, name: index + 1 + '. ' + item.stageName + '：' + '\n\n' + item.amount })// eslint-disable-line
 						// this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount})
