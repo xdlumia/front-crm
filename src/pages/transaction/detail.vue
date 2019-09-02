@@ -2,7 +2,7 @@
  * @Author: web.徐贺
  * @Date: 2019-07-29 16:51:28
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-02 16:26:49
+ * @LastEditTime: 2019-09-02 18:37:44
  * @Description: file content
  */
 <template>
@@ -198,6 +198,10 @@ export default {
 				})
 		},
 		handleMore ({ target: { index } }) {
+			if (!index) return
+
+			let itemIndex = this.moreActions[index].id
+
 			let fnType = {
 				1: () => {
 					// 变更负责人
@@ -228,7 +232,7 @@ export default {
 					this.$routing.navigateTo(`/pages/index/scheduleAdd?busType=3&name=${this.detailInfo.name}&id=${this.detailInfo.id}`)
 				}
 			}
-			fnType[index]()
+			fnType[itemIndex]()
 		},
 		// 变更负责人
 		updateLeader (leaderId) {
