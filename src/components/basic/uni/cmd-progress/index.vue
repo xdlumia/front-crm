@@ -1,3 +1,10 @@
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-08-28 17:17:08
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-02 17:49:18
+ * @Description: file content
+ */
 <template>
   <view class="cmd-progress cmd-progress-default" :class="setStatusClass">
     <block v-if="type == 'circle' || type == 'dashboard'">
@@ -246,7 +253,7 @@
        * 圈进度
        */
       setCirclePathStyle() {
-        console.log(this.setProgress,this.percentMax)
+        // console.log(this.setProgress,this.percentMax)
         const radius = 50 - this.strokeWidth / 2;
         const len = Math.PI * 2 * radius;
         const gapDeg = this.gapDegree || (this.type === 'dashboard' && 75);
@@ -305,7 +312,8 @@
           currentColor = this.strokeColor || '#52c41a'
         }
         let svgToBase =
-          `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' class='cmd-progress-circle'%3E%3Cpath d='${this.setCirclePath}' stroke='%23f3f3f3' stroke-linecap='${this.strokeShape}' stroke-width='${this.strokeWidth}' fill-opacity='0' class='cmd-progress-circle-trail' style='stroke-dasharray: ${len - (gapDeg||0)}px, ${len}px;stroke-dashoffset: -${(gapDeg||0) / 2}px;transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s;'%3E%3C/path%3E%3Cpath  d='${this.setCirclePath}' stroke-linecap='${this.strokeShape}' stroke-width='${this.strokeWidth}' fill-opacity='0' class='cmd-progress-circle-path' style='stroke: ${currentColor};stroke-dasharray: ${(this.setProgress / 100) * (len - (gapDeg||0))}px, ${len}px;stroke-dashoffset: -${(gapDeg||0) / 2}px;transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s, stroke-width 0.06s ease 0.3s;'%3E%3C/path%3E%3C/svg%3E`
+          `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' class='cmd-progress-circle'%3E%3Cpath d='${this.setCirclePath}' stroke='%23f3f3f3' stroke-linecap='${this.strokeShape}' stroke-width='${this.strokeWidth}' fill-opacity='0' class='cmd-progress-circle-trail' style='stroke-dasharray: ${len - (gapDeg||0)}px, ${len}px;stroke-dashoffset: -${(gapDeg||0) / 2}px;transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s;'%3E%3C/path%3E%3Cpath  d='${this.setCirclePath}' stroke-linecap='${this.strokeShape}' stroke-width='${this.strokeWidth}' fill-opacity='0' class='cmd-progress-circle-path' style='stroke: ${currentColor};stroke-dasharray: ${(this.setProgress / this.percentMax) * (len - (gapDeg||0))}px, ${len}px;stroke-dashoffset: -${(gapDeg||0) / 2}px;transition: stroke-dashoffset 0.3s ease 0s, stroke-dasharray 0.3s ease 0s, stroke 0.3s, stroke-width 0.06s ease 0.3s;'%3E%3C/path%3E%3C/svg%3E`
+          
         return `background-image: url("${svgToBase}");
 				background-size: cover;
 				display: inline-block;
