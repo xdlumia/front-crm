@@ -97,18 +97,24 @@ export default {
 										if (response.code === 200) { // 绑定成功，直接登录
 											that.thirdpartyAuthorizationLogin()
 										} else {
-											this.$utils.toast.text('请前往申请开通页面')
+											that.reGetCode()
+											that.$utils.toast.text('请前往申请开通页面')
 										}
+									}).catch(() => {
+										that.reGetCode()
 									})
 								} else {
-									this.$utils.toast.text('请前往申请开通页面')
+									that.reGetCode()
+									that.$utils.toast.text('请前往申请开通页面')
 								}
 							})
 						}
 					} else {
-						this.$utils.toast.text(response.msg)
-						this.reGetCode()
+						that.reGetCode()
+						that.$utils.toast.text(response.msg)
 					}
+				}).catch(() => {
+					this.reGetCode()
 				})
 			}
 		},
