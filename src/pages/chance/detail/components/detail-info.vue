@@ -1,8 +1,8 @@
 /*
  * @Author: web.冀猛超
  * @Date: 2019-07-25 20:18:36
- * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-03 14:30:01
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-03 21:32:34
  * @Description: file content
  */
 <!--
@@ -22,7 +22,7 @@
             <m-list label-width="120" label="赢率">{{detailInfo.salesStageEntity.equityedge || '0'}}%</m-list>
             <m-list label-width="120" label="预计成交日期">{{detailInfo.reckonFinishTime | timeToStr('y-m-d')}}</m-list>
             <m-list label-width="120" label="行业">{{detailInfo.tradeCode | dictionary('CRM_KH_HY')}}</m-list>
-            <m-list label-width="120" label="来源">{{detailInfo.sourceCode | dictionary('CRM_LY')}}</m-list>
+            <m-list label-width="120" label="来源">{{detailInfo.sourceCode | dictionary('CRM_JH_JHLY')}}</m-list>
             <div>
                 <p v-for='item in detailInfo.formsFieldValueEntitys' :key='item.id'>
                     <m-list label-width="120" :label="item.fieldName" v-if="item.fieldType == 3">{{item.fieldValue | dictionary(item.groupCode || '')}}</m-list>
