@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-28 14:54:48
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-08-30 16:57:40
+ * @LastEditTime: 2019-09-03 14:40:16
  * @Description: 新建机会
  */
 <template>
@@ -30,7 +30,7 @@
 				<picker-date v-model="editForm.reckonFinishTime" label="预计成交日期" placeholder="请选择日期">
 				</picker-date>
 				<i-select v-model="editForm.tradeCode" :props="{label:'content',value:'code'}" label="行业" :options="dictionaryOptions('CRM_KH_HY')"/>
-				<i-select v-model="editForm.sourceCode" :props="{label:'content',value:'code'}" label="来源" :options="dictionaryOptions('CRM_LY')"/>
+				<i-select v-model="editForm.sourceCode" :props="{label:'content',value:'code'}" label="来源" :options="dictionaryOptions('CRM_JH_JHLY')"/>
 				<a :url="`/pages/common/more-tags?busType=2&ids=${ids}`">
 					<i-input disabled v-model="labelNames" label="标签" placeholder="请选择">
 						<i-icon type="enter" size="16" color="#999" />
