@@ -1,8 +1,8 @@
 /*
  * @Author: web.王晓东
  * @Date: 2019-07-24 16:03:30
- * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 19:18:04
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 23:58:56
  * @Description: 机会详情
  */
 <template>
@@ -68,7 +68,7 @@
       <i-tabs :current="currTabIndex" :tabList="tabBars" @change="tagsChange">
         <i-tab index="0">
           <!-- 跟进: -->
-          <followInfo @updateFollow="updateFollow()" v-if="busId" :query='{salesFunnelId: busId, busId:busId,busType:2,}' :height="'calc(100vh - 49px - 121px - 50px - 96px - 46px - ' + navH + ')'" />
+          <followInfo @updateFollow="updateFollow()" v-if="busId" :query='{salesFunnelId: busId}' :height="'calc(100vh - 49px - 121px - 50px - 96px - 46px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="1">
           <detailInfo :detailInfo="detailInfo" :height="'calc(100vh - 49px - 50px - 121px - 96px - ' + navH + ')'" />
