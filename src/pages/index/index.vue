@@ -36,7 +36,7 @@
             </div>
             <!--日历插件-->
             <div style="position: relative;border-bottom: 1px solid #e4e4e4;" v-if="timelong == 30">
-                <uni-calendar ref="calendar" insert="true" :selected='selected' @haveClick='confirm'/>
+                <uni-calendar @clickDate='timelong = 7,clickDay = todayDate' ref="calendar" insert="true" :selected='selected' @haveClick='confirm'/>
                 <uni-icon @click='timelong = 7,clickDay = todayDate' type="arrowup" class="pl5 d-pointer" size="18" style='position: absolute;top: 8px;left: 85px;'/>
             </div>
 

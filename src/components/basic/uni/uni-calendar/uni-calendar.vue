@@ -7,7 +7,7 @@
 						<!-- <view class="uni-calendar__date-befor" @tap="dataBefor('0', 'month')">
 							<text class="iconfont icon-jiantou" />
 						</view> -->
-						<view class="uni-calendar__panel-box" style="float:left;color:#333">
+						<view @click="clickDate" class="uni-calendar__panel-box" style="float:left;color:#333">
 							<view>{{ canlender.year }}年</view>
 							<view>{{ canlender.month }}月</view>
 						</view>
@@ -194,6 +194,9 @@
 				this.getMonthAll(index, date)
 				clearTimeout(this.timer)
 				this.duration = 200
+			},
+			clickDate(){
+				this.$emit('clickDate','')
 			},
 			change(e) {
 				let index = e.detail.current
