@@ -1,8 +1,12 @@
-<!--
- * @description 文件上传
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-08-22 19:46:00
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 16:16:08
+ * @Description
  * 使用：<m-upload v-model="fileList"></m-upload>
  * 注意：v-model绑定的值必须为一个数组
- -->
+ */
 <template>
     <div class="uni-uploader-body uni-mt0">
         <div class="uni-uploader__files">
@@ -197,9 +201,9 @@ export default {
 		previewImage (url) {
 			uni.previewImage({
 				current: url,
-				urls: [this.value.map(item => {
+				urls: [...this.value.map(item => {
 					return item.filePath
-				}), this.tempImgs]
+				}), ...this.tempImgs]
 			})
 		},
 		// 更新双向绑定
@@ -237,6 +241,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.uni-uploader__input-box{
+	width: 178rpx;
+	height: 178rpx;
+}
+.uni-uploader__file, .uni-uploader__img{
+	width: 180rpx;
+	height: 180rpx;
+}
 .del-img {
   position: absolute;
   right: -30upx;

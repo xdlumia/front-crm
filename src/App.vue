@@ -1,3 +1,10 @@
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-18 18:23:16
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 15:13:47
+ * @Description: file content
+ */
 <script>
 export default {
 	/** 以下是应用生命周期 */
@@ -11,54 +18,13 @@ export default {
 		// 1.获取用户openid
 		// 用户已经存在则获取token，finger再getUserDetail
 		// 用户不存在则跳转到登录页面
-		let that = this
-		// 进入小程序获取用户openid
-		uni.login({
-			provider: 'weixin',
-			success: function (loginRes) {
-				let code = loginRes.code
-				// 查看当前微信用户是否绑定账号
-				that.$api.systemService.isBindByWx(
-					{
-						'code': code,
-						'appId': that.$local.getItem('appid')
-					}
-				).then((response) => {
-					if (response.code === 200) {
-						if (response.data.bind) {
-							that.$api.systemService.thirdpartyAuthorizationLogin({
-								'userKey': response.data.userKey
-							}).then((response2) => {
-								if (response2.code === 200) {
-									that.$local.setItem('token', response2.data.token)
-									that.$local.setItem('finger', response2.data.finger)
-									// 调用角色权限列表，刷新后端缓存
-									that.$api.bizSystemService.getUserResource({}, 'crm').then((response) => {
-										if (response.code === 200) {
-											that.$local.save('sourceList', response.data)
-										} else {
-											that.$utils.toast.text(response.msg)
-										}
-									})
-									// 获取用户详细数据
-									that.$api.bizSystemService.getUserDetail({ 'sysCode': 'crm' }).then((response) => {
-										that.$utils.toast.text(response.msg)
-										if (response.code === 200) {
-											uni.$emit('setUserInfo', response.data)
-											that.$routing.switchTab('/pages/chance/index')
-										}
-									})
-								} else {
-									that.$utils.toast.text(response.msg)
-								}
-							})
-						} else {
-							// uni.$emit('loginout')
-						}
-					}
-				})
-			}
-		})
+		const token = this.$local.getItem('token')
+		const finger = this.$local.getItem('finger')
+		if (token && finger && userInfo) {
+			this.$routing.switchTab('/pages/chance/index')
+		} else {
+			this.$routing.redirectTo('/pages/login/index')
+		}
 	},
 	// 当 uni-app 启动，或从后台进入前台显示
 	onShow: function () {

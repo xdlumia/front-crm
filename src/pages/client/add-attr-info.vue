@@ -1,17 +1,17 @@
-<!--
-/**
-* @author 冀猛超
-* @name  添加业务详情
-* @date  2019年8月02日
-**/
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-30 14:50:54
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 14:38:33
+ * @Description: 添加业务详情
+ */
 <template>
     <div class='attr-info-page'>
         <NavBar title='添加业务属性' />
 
         <div class="form-row d-center">
             <div class="f14 d-text-black form-row-item form-row-label mr10">
-                标题:
+                <span class="d-text-red">*</span>标题:
             </div>
             <div class="d-cell mr10 form-row-item">
                 <input type="text" v-model='form.headline' class='f12 d-text-black' placeholder="请填写标题" maxlength='20' style='padding-top:2px'>

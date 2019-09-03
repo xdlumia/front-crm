@@ -1,16 +1,19 @@
 /* eslint-disable */
 
-import _getIterator from 'babel-runtime/core-js/get-iterator'
-/** 前台字典表缓存
- * @author web-闫超
- * @date 2018年7月26日
- *
+/*
+ * @Author: web.闫超
+ * @Date: 2019-07-29 14:18:40
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 14:58:00
+ * @Description: 供一个获取字典表的方法和字典表过滤器
  *  提供一个获取字典表的方法和字典表过滤器
  * 1、字典表方法
  *  v-for="(item,index) of dictionaryOptions('FM_CONGSHI_HANGYE')"
  * 2、 字典表过滤器
  *  v-model="form.tenantCertificatesTypeCode | dictionary('FM_HT_ZJLX')"
- **/
+ */
+
+import _getIterator from 'babel-runtime/core-js/get-iterator'
 
 import api from './api'
 import Vue from 'vue'
@@ -18,18 +21,18 @@ import Vue from 'vue'
 var dictionaryCache = {}
 var getDictionaryArr = function getDictionaryArr (dicName) {
 	var dictionaryArr = dictionaryCache[dicName]
-
 	if (!dictionaryArr) {
 		Vue.util.defineReactive(dictionaryCache, dicName, [])
 		dictionaryArr = dictionaryCache[dicName]
-
 		var success = false
-		api.seeDataDictionaryService.valueListCode({}, dicName).then(function (res) {
+		api.seeDataDictionaryService.valueListCode(null, dicName).then(function (res) {
 			dictionaryCache[dicName] = res.data || []
 			success = true
 		}).then(function () {
 			// 简单处理下，如果没加载成功，下次重新加载
 			!success && delete dictionaryCache[dicName]
+		}).catch(err => {
+			delete dictionaryCache[dicName]
 		})
 	}
 
