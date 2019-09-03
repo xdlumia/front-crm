@@ -3,7 +3,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-18 18:23:16
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-03 19:46:59
+ * @LastEditTime: 2019-09-03 21:50:32
  * @Description: file content
  */
 // local 为开发人员本地 dev 为开发环境 build 为测试环境  product 为生产环境
@@ -20,7 +20,7 @@ if (model === 'dev') {
 } else if (model === 'product') {
   api = 'https://crm.zhenkehu.com/apis/'
   inviteLink = 'https://crm.zhenkehu.com:1443/index'
-  ossUrl = 'https://oss-a-develop.oss-cn-beijing.aliyuncs.com/'
+  ossUrl = 'https://fmd-c-oss.oss-cn-beijing.aliyuncs.com/'
 }
 
 var baseURL = {

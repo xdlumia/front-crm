@@ -1,10 +1,10 @@
-<!--
-/**
-* @author 王晓冬
-* @name 成交记录
-* @date 2019年7月299日
-**/
--->
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-01 18:13:09
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 22:19:26
+ * @Description: 成交记录
+ */
 <template>
     <div>
         <mPanel top="10" title="成交记录" color="#1FC695"  @click='click' :isUrl='isUrl'>
@@ -65,6 +65,7 @@ export default {
 			})
 		},
 		click () {
+			uni.$off('updatetransList')
 			uni.$once('updatetransList', (data) => {
 				this.transactionrecordQueryRecordListById()
 			})
