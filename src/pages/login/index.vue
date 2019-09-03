@@ -1,8 +1,15 @@
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-23 11:54:25
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 18:01:29
+ * @Description: 登陆页面
+ */
 <template>
     <div class="login-page">
         <NavBar title="登录" />
         <div class="">
-            <img class="logo-img d-block" src="../../assets/img/logo.png" alt="">
+            <img class="logo-img d-block" src="https://fmd-a-oss.oss-cn-beijing.aliyuncs.com/public/crm/logo.png" alt="">
             <div class="plr40">
                 <button style="padding-left:0;padding-right:0;" open-type="getPhoneNumber" @getphonenumber="handlePhoneClick">
                     <i-button type="primary" size="default" i-class="f16 mb15">
@@ -162,7 +169,7 @@ export default {
 <style scoped lang="scss">
     .logo-img{
         width: 150px;
-        height: 146px;
+        height: 150px;
         margin: 88px auto 100px ;
     }
 

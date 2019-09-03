@@ -1,3 +1,10 @@
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-18 18:23:16
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 17:15:42
+ * @Description: 个人中心
+ */
 <template>
     <div class="user-page">
         <NavBar title="我的" />
@@ -164,8 +171,8 @@ export default {
 	onShareAppMessage () {
 		return {
 			title: '智能推送客户',
-			imageUrl: '/static/img/share.jpg',
-			path: '/pages/login/index' // 这里的 path 是页面 url，而不是小程序路由
+			imageUrl: 'https://fmd-a-oss.oss-cn-beijing.aliyuncs.com/public/crm/share_crm.jpg',
+			path: '/pages/login/index'
 		}
 	}
 }

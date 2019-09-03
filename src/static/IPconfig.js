@@ -1,16 +1,26 @@
 /* eslint-disable */
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-18 18:23:16
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 19:46:59
+ * @Description: file content
+ */
 // local 为开发人员本地 dev 为开发环境 build 为测试环境  product 为生产环境
-const model = 'dev' 
-
-var api = ''
-var ossUrl = 'https://oss-a-develop.oss-cn-beijing.aliyuncs.com/'
+const model = 'product';
+let api = '',
+inviteLink = '',
+ossUrl = ''
 if (model === 'dev') {
-  // api = 'http://39.105.103.188:9011/'
-  api = 'https://testcrm.zhenkehu.com/apis/'
+  api = 'https://px.xaborong.com/apix/'
+  inviteLink = 'https://testcrm.zhenkehu.com:1443/index'
 } else if (model === 'build') {
   api = 'https://px.xaborong.com/apix/'
+  inviteLink = 'https://testcrm.zhenkehu.com:1443/index'
 } else if (model === 'product') {
-  api = 'https://pxxcx.fangmaidong.com/apix/'
+  api = 'https://crm.zhenkehu.com/apis/'
+  inviteLink = 'https://crm.zhenkehu.com:1443/index'
+  ossUrl = 'https://oss-a-develop.oss-cn-beijing.aliyuncs.com/'
 }
 
 var baseURL = {
@@ -30,5 +40,6 @@ if (window) {
 global.g = {
   ApiUrl: baseURL,
   // 重定向路由，如果接口请求超时需要重定向，可以设置
-  redirectUrl: '/pages/login/index'
+  redirectUrl: '/pages/login/index',
+  inviteLink
 }

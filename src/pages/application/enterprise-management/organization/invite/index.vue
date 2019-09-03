@@ -1,10 +1,10 @@
-<!--
-/**
-* @author王艳龙
-* @name 邀请成员加入团队
-* @date 2019年8月2日
-**/
--->
+/*
+ * @Author: web.王艳龙
+ * @Date: 2019-08-01 16:14:27
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 17:47:28
+ * @Description: 邀请成员加入团队
+ */
 <template>
     <view>
         <NavBar title="邀请成员加入团队" />
@@ -36,7 +36,7 @@
 export default {
 	data () {
 		return {
-			link: 'https://crm.zhenkehu.com:1443/index.html',
+			link: global.g.inviteLink,
 			image: '',
 			shareText: '团队邀请',
 			avatarUrl: '',
