@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-23 19:22:32
  * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-02 19:18:44
+ * @LastEditTime: 2019-09-03 22:15:37
  * @Description: 机会列表
  */
 <template>
@@ -278,7 +278,7 @@ export default {
 		},
 		diyFilterSubmit (filterData) {
 			// 如果全选阶段选中全部
-			if (filterData.stageIds.length === this.stageList.length) {
+			if (filterData.stageIds.length === this.stageList.length || !filterData.stageIds.length) {
 				this.currStage = 0
 			} else if (filterData.stageIds.length > 1) {
 				this.currStage = '-1'
