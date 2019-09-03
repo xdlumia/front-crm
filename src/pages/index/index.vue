@@ -254,6 +254,8 @@ export default {
 					calculable: true,
 					series: [
 						{
+							min: 0,
+							max: 100,
 							type: 'funnel',
 							width: '50%',
 							sort: 'none',
@@ -388,7 +390,7 @@ export default {
 					let arr = res.data || []
 					this.loucount = arr.length
 					arr.forEach((item, index) => {
-						this.funnelList.push({ value: item.amount, name: index + 1 + '. ' + item.stageName + '：' + '\n\n' + item.amount })// eslint-disable-line
+                        this.funnelList.push({ value: item.amount, name: index + 1 + '. ' + item.stageName + '：' + '\n\n' + item.amount })// eslint-disable-line
 						// this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount})
 					})
 					this.ec.option.series[0].data = this.funnelList || []
