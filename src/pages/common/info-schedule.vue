@@ -1,10 +1,10 @@
-<!--
-/**
-* @author 徐贺
-* @name 日程
-* @date 2019年7月299日
-**/
--->
+/*
+ * @Author: web.徐贺
+ * @Date: 2019-08-01 18:13:09
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 23:33:44
+ * @Description: 日程
+ */
 <template>
     <div>
         <mPanel top="10" title="日程" color="#00BCD4" @click='click' :isUrl='isUrl'>
@@ -58,6 +58,7 @@ export default {
 			})
 		},
 		click () {
+			uni.$off('updateIndexList')
 			uni.$once('updateIndexList', (data) => {
 				this.scheduleQueryRecordListById()
 			})
