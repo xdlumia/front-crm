@@ -36,7 +36,7 @@
 export default {
 	data () {
 		return {
-			link: 'https://testcrm.zhenkehu.com:1443/index.html',
+			link: 'https://crm.zhenkehu.com:1443/index.html',
 			image: '',
 			shareText: '团队邀请',
 			avatarUrl: '',
@@ -48,7 +48,7 @@ export default {
 		return {
 			title: this.shareText ? this.shareText : '欢迎体验',
 			path: '/pages/application/enterprise-management/organization/invite/invite?inviter=' + this.user.name + '&companyName=' + this.company.companyName + '&companyCode=' + this.company.companyCode + '&avatarUrl=' + this.avatarUrl,
-			imageUrl: '/static/img/logo.png',
+			imageUrl: 'https://fmd-a-oss.oss-cn-beijing.aliyuncs.com/public/crm/join_crm.jpg',
 			desc: this.user.name + '邀请你加入' + this.company.companyName
 		}
 	},
