@@ -1,8 +1,10 @@
-<!--
-/**
-* @author 详细信息
-* @date 2019年7月299日
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-27 09:16:04
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 11:21:19
+ * @Description: 详细信息
+ */
 <template>
     <div class="hfull d-auto-y ipx" :style="{height:height}">
         <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
@@ -11,6 +13,7 @@
             <m-list label-width="120" label="公司名称">{{detailInfo.clientName}}</m-list>
 			<div v-for='item in detailInfo.formsFieldValueEntitys' :key='item.id'>
                 <m-list label-width="120" :label="item.fieldName" v-if="item.fieldType == 3">{{item.fieldValue | dictionary(item.groupCode || '-')}}</m-list>
+                <m-list label-width="120" :label="item.fieldName" v-else-if="item.fieldType == 2">{{+item.fieldValue | timeToStr('yyyy-mm-dd')}}</m-list>
                 <m-list label-width="120" :label="item.fieldName" v-else>{{item.fieldValue || "-"}}</m-list>
             </div>
         </mPanel>

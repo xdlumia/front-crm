@@ -1,13 +1,10 @@
-<!--
-/**
-* @author 添加跟进
-* @date 2019年7月299日
-* @example 调用示例
-* @params busType 类型(0=>客户,1=>跟进联系人,2=>跟进机会)
-* @params busId 业务id
-*    <add-follow busId="1" busType="1"></add-follow>
-**/
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-08-06 16:10:30
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 11:27:42
+ * @Description: 添加跟进
+ */
 <template>
 <div style="background-color:#f9f9f9">
     <NavBar :title="bus_type[form.busType].title"/>
@@ -165,7 +162,7 @@ export default {
 				...this.form
 			}
 			params.fileAddress = this.fileAddress.map(item => item.filePath)
-			params.nextTime = new Date(params.nextTime).getTime()
+			params.nextTime = new Date(params.nextTime.replace(/-/g, '/')).getTime()
 			this.$api.seeCrmService.followupSave(params)
 				.then(res => {
 					// 返回上一页

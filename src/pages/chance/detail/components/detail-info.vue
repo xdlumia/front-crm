@@ -1,3 +1,10 @@
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-25 20:18:36
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 14:30:01
+ * @Description: file content
+ */
 <!--
 /**
 * @author 详细信息
@@ -19,6 +26,7 @@
             <div>
                 <p v-for='item in detailInfo.formsFieldValueEntitys' :key='item.id'>
                     <m-list label-width="120" :label="item.fieldName" v-if="item.fieldType == 3">{{item.fieldValue | dictionary(item.groupCode || '')}}</m-list>
+                    <m-list label-width="120" :label="item.fieldName" v-else-if="item.fieldType == 2">{{+item.fieldValue | timeToStr('yyyy-mm-dd')}}</m-list>
                     <m-list label-width="120" :label="item.fieldName" v-else>{{item.fieldValue || "-"}}</m-list>
                 </p>
             </div>
@@ -29,15 +37,12 @@
 			<div>
 				<m-list label="创建日期">
 					{{detailInfo.createTime | timeToStr('y-m-d h:i')}}
-					<uni-tag class="fr" text="时间" size="small" type="primary"></uni-tag>
 				</m-list>
 				<m-list label="最后跟进">
 					{{detailInfo.followUpTime | timeToStr('y-m-d h:i')}}
-					<uni-tag class="fr" text="时间" size="small" type="primary"></uni-tag>
 				</m-list>
 				<m-list label="最新修改">
 					{{detailInfo.modifyTime | timeToStr('y-m-d h:i')}}
-					<uni-tag class="fr" text="时间" size="small" type="primary"></uni-tag>
 				</m-list>
 				<m-list label="修改人">{{detailInfo.modifierName || '-'}}</m-list>
 			</div>

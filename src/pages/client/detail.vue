@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-26 10:58:16
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-02 15:59:26
+ * @LastEditTime: 2019-09-03 10:48:46
  * @Description: 客户详情
  */
 <template>
@@ -98,8 +98,6 @@ import correlationInfo from './components/correlation-info'
 import attrInfo from './components/attr-info'
 
 // 普通客户
-// let moreActionsTitle = ['更多操作', '复制', '退回公海', '变更负责人', '删除', '日程']
-// let moreActions = moreActionsTitle.map(item => ({ name: item }))
 
 let moreActions = [
 	{ name: '更多操作', id: 0 },
