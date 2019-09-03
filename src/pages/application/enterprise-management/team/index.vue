@@ -1,22 +1,25 @@
-<!--
-/**
-* @author王艳龙
-* @name 团队申请
-* @date 2019年8月2日
-**/
--->
+/*
+ * @Author: web.王艳龙
+ * @Date: 2019-07-25 10:12:26
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 16:28:32
+ * @Description: 团队申请
+ */
+
 <template>
     <view>
         <NavBar title="团队申请" />
-		<view v-if="nullShow" class="ac">
+		<!-- <view v-if="nullShow" class="ac">
 			<img src="../../../../assets/img/nothing.png" style="width: 132px;height: 111px;"/>
             <span class="d-text-qgray d-show">暂无数据</span>
-		</view>
-		<scroll-list v-if="!nullShow"
-				api="seeCrmService.userapplicationinformationList"
-				:params="queryForm"
-				@getList='getList'
-				ref='teamDatas'>
+		</view> -->
+		<scroll-list
+			api="seeCrmService.userapplicationinformationList"
+			:params="queryForm"
+			@getList='getList'
+			ref='teamDatas'
+			:height="'calc(100vh - ' + navH +')'"
+		>
 			<view class="uni-flex uni-column" v-for="(item) in teamDatas" :key="item.id">
 				<view class="flex-item flex-item-V uni-flex uni-row pt15 pl15 pr15">
 					<view class="flex-item width15 p10">
