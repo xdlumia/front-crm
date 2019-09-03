@@ -1,10 +1,10 @@
-<!--
-/**
-* @author 冀猛超
-* @name 跟进记录
-* @date 2019年8月02日
-**/
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-27 14:47:21
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-03 22:16:56
+ * @Description: 跟进记录
+ */
 <template>
     <div class="note-box">
         <div class="note-search-box d-center">
@@ -92,7 +92,7 @@ export default {
 	},
 	created () {
 		this.getFollowup()
-
+		uni.$off('updateFollow')
 		uni.$on('updateFollow', () => {
 			this.getFollowup(1)
 		})
