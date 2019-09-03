@@ -1,5 +1,10 @@
-<!-- 添加联系人 -->
-<!-- wangxiaodong -->
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-29 18:05:13
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-03 14:19:15
+ * @Description: 新增联系人
+ */
 <template>
 <div class="d-bg-white">
     <NavBar  :title="`${titleType}联系人`"/>
@@ -37,7 +42,7 @@
 					:options="dictionaryOptions(item.groupCode || '')"/>
 				</p>
 			</div>
-            <i-input v-model="form.note" label="备注" placeholder="备注" type="textarea" />
+            <i-input v-model="form.note" label="备注" placeholder="点击填写" type="textarea" />
         </m-form>
         <a url="/pages/common/more-list?busType=1&isEnabled=-1" class="ac d-text-gray lh40 d-block"><i-icon type="add" size="18" color="#999" />添加更多条目</a>
     </scroll-view>
