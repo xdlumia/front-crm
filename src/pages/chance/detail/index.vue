@@ -2,7 +2,7 @@
  * @Author: web.王晓东
  * @Date: 2019-07-24 16:03:30
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-03 23:58:56
+ * @LastEditTime: 2019-09-04 00:34:39
  * @Description: 机会详情
  */
 <template>
@@ -71,7 +71,7 @@
           <followInfo @updateFollow="updateFollow()" v-if="busId" :query='{salesFunnelId: busId}' :height="'calc(100vh - 49px - 121px - 50px - 96px - 46px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="1">
-          <detailInfo :detailInfo="detailInfo" :height="'calc(100vh - 49px - 50px - 121px - 96px - ' + navH + ')'" />
+          <detailInfo ref='info' :detailInfo="detailInfo" :height="'calc(100vh - 49px - 50px - 121px - 96px - ' + navH + ')'" />
         </i-tab>
         <i-tab index="2">
           <!-- 相关信息 -->
@@ -167,6 +167,7 @@ export default {
 		// 移除监听事件
 		uni.$off('addChance')
 		uni.$off('updateFollow')
+		this.moreShow && (this.moreShow = false)
 	},
 	created () {
 	},
@@ -318,6 +319,11 @@ export default {
 						.catch(() => {})
 				},
 				4: () => {
+					uni.$off('updateIndexList')
+					// 日程
+					uni.$once('updateIndexList', data => {
+						this.$refs.info.$refs.infoSchedule.colleagueChoose()
+					})
 					// 更多日程
 					this.$routing.navigateTo(
 						`/pages/index/scheduleAdd?busType=2&id=${this.detailInfo.id}&name=${this.detailInfo.chanceName}`
@@ -326,6 +332,9 @@ export default {
 			}
 			fnType[id]()
 		}
+	},
+	onHide () {
+		this.moreShow && (this.moreShow = false)
 	}
 }
 </script>

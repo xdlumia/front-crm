@@ -1,10 +1,10 @@
-<!--
-/**
-* @author 王晓冬
-* @name 相关信息
-* @date 2019年7月29日
-**/
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-08-06 12:03:18
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-04 00:16:53
+ * @Description: file content
+ */
 <template>
     <div class="hfull d-auto-y ipx" :style="{height:height}">
         <!-- 联系人 -->
@@ -14,7 +14,7 @@
         <!-- 成交记录 -->
         <infoTransaction :query="query" :isUrl='isUrl' />
         <!-- 日程 -->
-        <infoSchedule :query="query" :isUrl='isUrl' />
+        <infoSchedule ref="infoSchedule" :query="query" :isUrl='isUrl' />
         <!-- 附件 -->
         <infoFile :query="query" :isUrl='isUrl' />
         <!-- 团队成员 -->

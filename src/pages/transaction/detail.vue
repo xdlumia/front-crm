@@ -2,7 +2,7 @@
  * @Author: web.徐贺
  * @Date: 2019-07-29 16:51:28
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-02 18:37:44
+ * @LastEditTime: 2019-09-04 00:15:15
  * @Description: file content
  */
 <template>
@@ -225,6 +225,7 @@ export default {
 						})
 				},
 				3: () => {
+					uni.$off('updateIndexList')
 					// 日程
 					uni.$once('updateIndexList', data => {
 						this.$refs.correlationInfo.colleagueChoose()

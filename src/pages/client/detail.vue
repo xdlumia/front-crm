@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-26 10:58:16
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-03 10:48:46
+ * @LastEditTime: 2019-09-04 00:19:36
  * @Description: 客户详情
  */
 <template>
@@ -300,6 +300,11 @@ export default {
 					this.clientinfoDelete()
 				},
 				5: () => {
+					uni.$off('updateIndexList')
+					// 日程
+					uni.$once('updateIndexList', data => {
+						this.$refs.info.$refs.infoSchedule.colleagueChoose()
+					})
 					// 更多日程
 					this.$routing.navigateTo('/pages/index/scheduleAdd?busId=' + this.id + '&busType=0&name=' + this.detailInfo.name + '&id=' + this.detailInfo.id)
 				},
