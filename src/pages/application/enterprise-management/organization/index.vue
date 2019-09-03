@@ -30,7 +30,7 @@
                     </view>
                 </view>
             </view>
-            <view class="flex-item flex-item-V bb pl10 d-flex-lr" >
+            <view class="flex-item flex-item-V bb pl10 d-flex-lr" style="margin-bottom: 100px;" >
                <i class="iconfont f35 iconxinjian fl d-text-blue"></i>
                <button  class="pl5 fl d-text-cgray ml0" style="border: none;" @click="invite" plain="true">邀请同事加入</button >
             </view>
