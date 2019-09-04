@@ -234,6 +234,7 @@ export default {
     z-index: 9999;
 }
     .search-jl{
+		min-height:30px;
         display: flex;
         justify-content: space-between;
         align-items: center;
