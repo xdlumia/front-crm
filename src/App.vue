@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-18 18:23:16
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-05 11:09:16
+ * @LastEditTime: 2019-09-05 17:40:34
  * @Description: file content
  */
 <script>
@@ -18,13 +18,13 @@ export default {
 		// 1.获取用户openid
 		// 用户已经存在则获取token，finger再getUserDetail
 		// 用户不存在则跳转到登录页面
-		const token = this.$local.getItem('token')
-		const finger = this.$local.getItem('finger')
-		if (token && finger && userInfo) {
-			this.$routing.switchTab('/pages/chance/index')
-		} else {
-			this.$routing.redirectTo('/pages/login/index')
-		}
+		// const token = this.$local.getItem('token')
+		// const finger = this.$local.getItem('finger')
+		// if (token && finger && userInfo) {
+		// 	this.$routing.switchTab('/pages/chance/index')
+		// } else {
+		// 	this.$routing.redirectTo('/pages/login/index')
+		// }
 	},
 	// 当 uni-app 启动，或从后台进入前台显示
 	onShow: function () {
