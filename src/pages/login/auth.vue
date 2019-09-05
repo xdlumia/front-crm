@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-23 11:54:25
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-05 11:04:15
+ * @LastEditTime: 2019-09-05 11:42:42
  * @Description: 授权页面
  */
 <template>
@@ -10,10 +10,10 @@
         <NavBar title="登录" />
         <div class="ac" style="margin-bottom: 32px;">
             <img class="logo-img d-block" src="https://fmd-a-oss.oss-cn-beijing.aliyuncs.com/public/crm/logo.png" alt="">
-            <div class="f18 d-text-black b">客户管理</div>
+            <div class="f18 d-text-black b">真客户-智客</div>
         </div>
         <div class="bt" style="padding: 30px 24px 0">
-            <div class="f16 d-text-black b mb20">真客户智客申请获得一下权限:</div>
+            <div class="f16 d-text-black b mb20">真客户-智客申请获得以下权限:</div>
             <div class="f14 d-text-gray">· 申请获取你微信绑定的手机号</div>
             <div class="mt40 d-center auth-btn">
                 <div class="d-cell mr15">
