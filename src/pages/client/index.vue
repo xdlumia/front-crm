@@ -140,7 +140,7 @@ export default {
 		})
 		this.salesstageQueryList()
 		this.filterSelect = selects
-		this.$refs.list.reload()
+		// this.$refs.list.reload()
 	},
 	onHide () {
 		this.$local.remove('queryType')
