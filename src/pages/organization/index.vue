@@ -12,13 +12,13 @@
             <!-- 公司 -->
             <div class="flex-item flex-item-V mt10 mb10">
                 <span class="p10 d-text-blue">{{userInfo.companyEntity.companyName}}</span>
-                <span class="p10 d-text-blue" v-for='(item, index) in breadCrumbs' :key="index"> <span>></span> <span>{{item.title}}</span> </span>
+                <span class="d-text-blue" v-for='(item, index) in breadCrumbs' :key="index"> <span>></span> <span class="p10">{{item.title}}</span> </span>
             </div>
 
             <div class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></div>
 
             <div class="d-bg-white dept-box">
-                <div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="item in cuList" :key="item.id">
+                <div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in cuList" :key="item.id">
                     <m-radio />
                     <div class="d-cell f14 d-text-black pl15 d-elip">{{item.title}}</div>
                     <div class="f14 pl10 d-text-blue" v-if="item.children && item.children.length" @click.stop="getNext(index)">下级</div>
@@ -67,7 +67,7 @@ export default {
 		return {
 			cuList: [],
 			breadCrumbs: [], // 面包屑
-			index: [],
+			deptsIndexs: [],
 			depts: [
 				{
 					title: '部门一',
@@ -92,8 +92,6 @@ export default {
 	onLoad (option) {
 		let [...list] = this.depts
 		this.cuList = list
-		// 默认
-		this.setBreadCrumbs(0)
 	},
 
 	computed: {
@@ -102,17 +100,31 @@ export default {
 		}
 	},
 
-	// 设置面包屑
-	setBreadCrumbs (index) {
-		this.breadCrumbs.push({
-			title: this.list[index].title,
-			index
-		})
-	},
+	methods: {
+		// 设置面包屑
+		setBreadCrumbs (index) {
+			this.breadCrumbs.push({
+				title: this.cuList[index].title,
+				index
+			})
+		},
 
-	// 获取下级
-	getNext (index) {
-		// this.cuList = this.
+		// 获取下级
+		getNext (index) {
+			this.deptsIndexs.push(index)
+			this.setBreadCrumbs(index)
+		},
+		// 获取所点击的childred
+		getItem () {
+			return this.deptsIndexs.reduce((cu, index) => {
+				return cu.length ? cu[index].children : this.depts[index].children
+			}, [])
+		}
+	},
+	watch: {
+		deptsIndexs (value) {
+			this.cuList = this.getItem()
+		}
 	}
 
 }
