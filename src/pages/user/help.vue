@@ -3,7 +3,7 @@
         <NavBar title="帮助中心" />
         <div class="d-bg-white">
             <i-cell-group v-for="(item) in helps" :key="item.id">
-                <i-cell :title='item.title'  is-link @click="toInfo(item.id)"></i-cell>
+                <i-cell :title='item.title'  is-link @tap="toInfo(item.id)"></i-cell>
             </i-cell-group>
         </div>
 
@@ -22,8 +22,12 @@ export default {
 	data () {
 		return {
 			phone: '010-80755370',
-			helps: []
+			helps: [],
+			isDoubleCkeck: true
 		}
+	},
+	onShow () {
+		this.isDoubleCkeck = true
 	},
 	onLoad () {
 		// 获取意见反馈列表
@@ -47,8 +51,11 @@ export default {
 			})
 		},
 		toInfo (id) {
-			let url = '/pages/user/help-info?id=' + id
-			this.$routing.navigateTo(url)
+			if (this.isDoubleCkeck) {
+				this.isDoubleCkeck = false
+				let url = '/pages/user/help-info?id=' + id
+				this.$routing.navigateTo(url)
+			}
 		}
 	}
 }
