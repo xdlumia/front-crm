@@ -299,7 +299,7 @@ export default {
 		},
 		// 点击公海池
 		getHighseas () {
-			let url = (this.isadd || this.ishandel) ? `/pages/highseas/index?select=1&id=${this.highseasData.id}` : `/pages/client/detail?id=${this.highseasData.id}`
+			let url = (this.isadd || this.ishandel) ? `/pages/highseas/index?select=1&id=${this.highseasData.id}&poolId=${3}` : `/pages/client/detail?id=${this.highseasData.id}`
             if(this.acheduleForm.seaPoolIsDelete != 1){// eslint-disable-line
 				this.$routing.navigateTo(url)
 			} else {
