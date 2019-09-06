@@ -17,11 +17,15 @@ let mutations = {
 }
 
 let actions = {
-	getList ({ commit, state }, params = { page: 1, limit: 15 }) {
-		api.seeCrmService.clientpublicpoolList(params).then(res => {
+	getList ({ commit, state }, poolId) {
+		api.seeCrmService.clientpublicpoolList({ page: 1, limit: 15 }).then(res => {
 			if (res.data && res.data.length) {
 				// 如果当前公海池没有数据 则设置
-				!Object.keys(state.pool).length && commit('setPool', res.data[0])
+				let index = 0
+				if (poolId) {
+					index = res.data.findIndex(item => +item.id === +poolId)
+				}
+				!Object.keys(state.pool).length && commit('setPool', res.data[index])
 				commit('setList', res.data)
 			}
 		})

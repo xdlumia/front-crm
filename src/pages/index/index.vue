@@ -78,9 +78,9 @@
         <!-- 仪表盘 -->
         <div v-if='current == 1'>
             <div class="h40 d-flex-level mt10" style="background:#F9F9F9;">
-                <div class="d-flex ml15" style="height: 26px;align-items: center;">
+                <div @click="getColleagueChoose" class="d-flex ml15" style="height: 26px;align-items: center;">
                     <m-avatar :nameLength='1' :url='avatarUrl' :text='userName' :width='24' :height='24'></m-avatar>
-                    <div @click="getColleagueChoose">
+                    <div>
                         <span class="d-text-qgray f13 ml5">{{userName}}</span>
                     </div>
                     <uni-icon color='#999' type="arrowdown" class="pl5 d-text-qgray" size="16"/>
