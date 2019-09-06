@@ -85,6 +85,7 @@ export default {
 <style scoped lang="scss">
     .feedback-page{
         background: #f2f2f2;
+		padding-bottom: 60px;
     }
 
     .textarea-box{

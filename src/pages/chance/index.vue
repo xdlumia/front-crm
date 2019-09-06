@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-23 19:22:32
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-05 15:19:02
+ * @LastEditTime: 2019-09-05 18:04:15
  * @Description: 机会列表
  */
 <template>
@@ -181,7 +181,7 @@ export default {
 			this.queryForm.queryType = type - 1
 		}
 		this.salesstagemessageCheckisMsgUser()
-		// this.$refs.list.reload()
+		this.$refs.list.reload()
 		// 获取销售阶段
 		this.salesstageQueryList()
 		this.saleschanceSalesChanceStatistics()

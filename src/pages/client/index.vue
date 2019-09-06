@@ -97,8 +97,8 @@ export default {
 		return {
 			queryForm: {
 				name: '', // 搜索
-				queryType: '', // 查询类型
-				sortType: '', // 排序类型
+				queryType: '0', // 查询类型
+				sortType: '1', // 排序类型
 				lonSort: '', // 经度
 				latSort: '', // 纬度
 				belongType: 0 // 是否为 0 为 客户列表 1 为公海池
@@ -131,16 +131,13 @@ export default {
 	onShow () {
 		// 默认筛选值
 		let type = +(this.$local.getItem('queryType') || 0) + 1
-		this.$set(this.filterData[0], 'current', queryType[type])
+		if (type !== 1) {
+			this.$set(this.filterData[0], 'current', queryType[type])
+			this.queryForm.queryType = 2
+		}
 
-		let selects = {}
-		this.filterData.forEach(item => {
-			selects[item.prop] = item.current || item.list[0]
-			this.$set(this.queryForm, item.prop, selects[item.prop].id)
-		})
 		this.salesstageQueryList()
-		this.filterSelect = selects
-		// this.$refs.list.reload()
+		this.$refs.list.reload()
 	},
 	onHide () {
 		this.$local.remove('queryType')
@@ -148,6 +145,7 @@ export default {
 	onUnload () {
 		// 移除监听事件
 		uni.$off('updatedate')
+		this.$local.remove('queryType')
 	},
 
 	methods: {
