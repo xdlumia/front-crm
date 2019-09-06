@@ -142,6 +142,11 @@ export default {
 			return pageLen
 		}
 	},
+	onUnload () {
+		if (!this.searchInfo) {
+			uni.$emit('updatedate', { searchInfo: this.searchInfo })
+		}
+	},
 	methods: {
 		clickToSearch (item) {
 			// console.log(item)
@@ -175,6 +180,7 @@ export default {
 			this.searchForm[this.optionType] = this.searchHistoryList
 			this.$local.save('searchForm', this.searchForm)
 		}
+
 	}
 
 }
