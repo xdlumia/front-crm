@@ -8,55 +8,39 @@
 <template>
     <div>
         <NavBar title="组织架构" />
-        <div class="uni-flex uni-column">
+        <div class="uni-flex uni-column dept-page">
             <!-- 公司 -->
             <div class="flex-item flex-item-V mt10 mb10">
-                <span class="p10 d-text-blue">{{userInfo.companyEntity.companyName}}</span>
-                <span class="d-text-blue" v-for='(item, index) in breadCrumbs' :key="index"> <span>></span> <span class="p10">{{item.title}}</span> </span>
+                <span class="p10 d-text-blue" @click="skipItem(-1)">{{userInfo.companyEntity.companyName}}</span>
+                <span class="d-text-blue" v-for='(item, index) in breadCrumbs' :key="index" @click="skipItem(index)"> <span>></span> <span class="p10">{{item.title}}</span> </span>
             </div>
 
             <div class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></div>
 
             <div class="d-bg-white dept-box">
-                <div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in cuList" :key="item.id">
-                    <m-radio />
-                    <div class="d-cell f14 d-text-black pl15 d-elip">{{item.title}}</div>
-                    <div class="f14 pl10 d-text-blue" v-if="item.children && item.children.length" @click.stop="getNext(index)">下级</div>
+                <div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in cuList" :key="item.id" @click="chooseDeptItem(item)">
+                    <span class='radio-box d-block' :class="{active: deptIds.includes(item.id)}"></span>
+                    <div class="d-cell f14 d-text-black pl15 d-elip">{{item.deptName}}</div>
+                    <div class="f14 pl10 d-text-blue" :class="{ disable: deptIds.includes(item.id)}" v-if="item.children && item.children.length" @click.stop="getNext(item, index)">下级</div>
+                </div>
+            </div>
+            <div class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></div>
+            <div class='d-bg-white'>
+                <div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="item in employees" :key="item.id" @click="chooseEmployeesItem(item)">
+                    <span class='radio-box d-block' :class="{active: employeesIds.includes(item.id)}"></span>
+                    <div class="ml15">
+                        <mAvatat :text='item.employeeName' :url="item.avatarUrl" />
+                    </div>
+                    <div class="d-cell f14 d-text-black pl15 d-elip">
+                        {{item.employeeName}}
+                    </div>
                 </div>
             </div>
 
-            <!-- <div class='d-bg-white'>
-                <div class="d-center dept-item pl15 pr15 pt10 pb10 bb">
-                    <m-radio />
-                    <div class="ml15">
-                        <mAvatat text='木落' />
-                    </div>
-                    <div class="d-cell f14 d-text-black pl15 d-elip">
-                        销售部销售部销售部销售部销售部销售部销售部销售部销售部销售部销售部销售部
-                    </div>
-                </div>
-
-            </div> -->
-
-            <!-- <view class="flex-item flex-item-V uni-flex uni-column" >
-                <i-cell-group v-for="(item) in depts" :key="item.id">
-                    <i-cell is-link @click="toNextHierarchy(item.id,item.deptName)" >{{item.deptName}}({{item.children.length + item.employeeList.length}})</i-cell>
-                </i-cell-group>
-            </view>
-
-            <view class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></view>
-
-            <view class="flex-item flex-item-V uni-flex uni-column" v-for="(item) in users" :key="item.id" @click="editEmployee(item.id)">
-                <view class="flex-item flex-item-V bb p10">
-                    <view class="fl width20">
-						<mAvatat :text='item.employeeName' :url='item.avatarUrl'></mAvatat>
-                    </view>
-                    <view class="fl width33 pl10 mt15">{{item.employeeName}}</view>
-                    <view v-if="item.roleNames" class="fl ac ml10 pl5 pr5 mt15 d-text-blue" style="border: 1px solid #457FF5;border-radius: 5px;">
-                        {{item.roleNames.split(',')[0]}}
-                    </view>
-                </view>
-            </view> -->
+            <div style="height:50px;justify-content: space-between;align-items: center;position:fixed;bottom:0;z-index:30;background:#F8F8FA;border-top:1px solid #F2F2F2" class="d-flex wfull">
+                    <div class="d-text-blue ml15 d-elip">已选择：2323</div>
+                    <i-button class="mr15" @click="handleClick" type="primary" size='small'>确定</i-button>
+            </div>
 
         </div>
     </div>
@@ -66,32 +50,21 @@ export default {
 	data () {
 		return {
 			cuList: [],
+			depts: [], // 部门数据
+			employees: [], //
 			breadCrumbs: [], // 面包屑
-			deptsIndexs: [],
-			depts: [
-				{
-					title: '部门一',
-					id: 1,
-					children: [
-						{
-							title: '部门一 一',
-							id: 2,
-							children: [
-								{
-									id: 3,
-									title: '部门一 一 一'
-								}
-							]
-						}
-					]
-				}
-			]
+			deptsIndexs: [], // 已选中部门的索引
+			employeesIds: [], // 已选中人员的id
+			deptIds: [], // 已选中的部门 id
+			chooseDepts: [], // 已选中的部门
+			chooseEmployees: [] // 已选中的人员
 		}
 	},
 
 	onLoad (option) {
-		let [...list] = this.depts
-		this.cuList = list
+		// 获取部门数据
+		this.getDeptData(this.userInfo.companyEntity.companyTypeId)
+		this.getEmployeesData(this.userInfo.companyEntity.companyTypeId)
 	},
 
 	computed: {
@@ -102,34 +75,120 @@ export default {
 
 	methods: {
 		// 设置面包屑
-		setBreadCrumbs (index) {
-			this.breadCrumbs.push({
-				title: this.cuList[index].title,
-				index
+		setBreadCrumbs () {
+			let breadCrumbs = []
+			this.deptsIndexs.forEach((index) => {
+				breadCrumbs.push({
+					title: this.depts[index].deptName,
+					index,
+					id: this.depts[index].id
+				})
 			})
+			this.breadCrumbs = breadCrumbs
+
+			// 面包屑变更 获取当前部门下的人员
+			let lastItem = [...breadCrumbs].pop()
+			this.getEmployeesData((lastItem && lastItem.id) || this.userInfo.companyEntity.companyTypeId)
 		},
 
 		// 获取下级
-		getNext (index) {
+		getNext (item, index) {
+			// 当前部门已选中的话 禁止选择下级
+			if (this.deptIds.includes(item.id)) return
 			this.deptsIndexs.push(index)
-			this.setBreadCrumbs(index)
 		},
 		// 获取所点击的childred
 		getItem () {
-			return this.deptsIndexs.reduce((cu, index) => {
+			return this.deptsIndexs.length ? this.deptsIndexs.reduce((cu, index) => {
 				return cu.length ? cu[index].children : this.depts[index].children
-			}, [])
+			}, []) : [...this.depts]
+		},
+		// 点击面包屑
+		skipItem (index) {
+			this.deptsIndexs = index === -1 ? [] : this.deptsIndexs.slice(0, index + 1)
+		},
+		// 选中事件
+		chooseDeptItem (item, index) {
+			let deptIdIndex = this.deptIds.includes(item.id)
+			if (deptIdIndex) {
+				this.deptIds.splice(this.deptsIndexs, 1)
+			} else {
+				this.deptIds.push(item.id)
+				// this.deptIds = [item.id]
+			}
+		},
+
+		// 选中事件
+		chooseEmployeesItem (item, index) {
+			let deptIdIndex = this.employeesIds.includes(item.id)
+			if (deptIdIndex) {
+				this.employeesIds.splice(this.deptsIndexs, 1)
+			} else {
+				this.employeesIds.push(item.id)
+			}
+		},
+
+		// 初始化数据
+		getDeptData (deptId) {
+			// 获取部门数据
+			this.$api.seeCrmService.organizationalStructureChildrenDepts({ deptId }).then((response) => {
+				if (response.code === 200) {
+					// this.depts = response.data[0].children
+					this.depts = response.data[0].children
+					this.cuList = response.data[0].children
+				} else {
+					this.$utils.toast.text(response.msg)
+				}
+			})
+		},
+
+		getEmployeesData (deptId) {
+			this.$api.seeCrmService.organizationalStructureChildrenEmployees({ deptId }).then((response) => {
+				if (response.code === 200) {
+					this.employees = response.data
+					this.cuList = this.getItem()
+				} else {
+					this.$utils.toast.text(response.msg)
+				}
+			})
 		}
 	},
 	watch: {
 		deptsIndexs (value) {
-			this.cuList = this.getItem()
+			this.setBreadCrumbs()
 		}
 	}
 
 }
 </script>
 
-<style>
+<style lang="scss" >
 
+.dept-page{
+    padding-bottom: 50px;
+}
+.radio-box{
+    width: 15px;
+    height: 15px;
+    border-radius: 100px;
+    border: 1px solid #d9d9d9;
+    position: relative;
+    &.active{
+        border-color: #1890ff;
+        &::before{
+            content: '';
+            width: 11px;
+            height: 11px;
+            background: #1890ff;
+            border-radius: 100px;
+            position: absolute;
+            left: 2px;
+            top: 2px;
+        }
+    }
+}
+
+.disable{
+    opacity: .6;
+}
 </style>
