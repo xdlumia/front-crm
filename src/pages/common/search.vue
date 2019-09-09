@@ -35,7 +35,7 @@
 						<uni-icon @click="deleteSearchList(index)" class="fr" type='closeempty' color="#999" size='20'/>
 					</div>
 				</div>
-				<div v-if="isSearch" style="width:100%;background:#FFF;z-index:999;left:0" :style="{top:`${navHeight - statusBarHeight + navbarBtn.height + navbarBtn.top}px`}" class="hfull d-absolute">
+				<div v-if="isSearch" style="width:100%;background:#FFF;z-index:999;left:0" :style="{top:`${navHeight}px`}" class="hfull d-absolute">
 					<div @click="clickToSearch(item)" style="justify-content: space-between;height:40px;border-bottom:1px solid #EBEBEB;display:flex;align-items: center;color:#666" v-for="(item,index) in searchHistoryList" :key="index">
 						<span>
 							<i-icon type="search" size="16" color='#999' class="b searchicon ml15"/>
