@@ -193,9 +193,9 @@
                     <span class="mr15 f13" style="color:#999">单位：万元</span>
 
                 </div>
-                <div class="wfull" style="height:300px;box-sizing: border-box;" :style="{height:loucount*60 + 'px'}">
-                   <view class="echartsBox">
-                         <ec-canvas :ec="ec" ref='echart' class='mr10'></ec-canvas>
+                <div class="wfull" style="min-height:100px;box-sizing: border-box;">
+                   <view class="echartsBox d-center">
+						<img @load="imageLoad"  :style="{width:`${canvasImgForm.width}px`,height:`${canvasImgForm.height}px`}" :src="`data:image/png;base64,${canvasImg}`" alt="">
                     </view>
                 </div>
                 <div style="height: 10px;background: #FFF;"></div>
@@ -229,6 +229,7 @@
 
 <script>
 import mAvatar from '@/components/m-avatar'
+// import { base64src } from '../../utils/base64src.js'
 export default {
 	data () {
 		return {
@@ -240,6 +241,7 @@ export default {
 			opts: {}, // 传给漏斗图的数据
 			clickDay: '',
 			selected: [],
+			canvasImg: '',
 			ec: {
 				option: {
 					color: ['#FF9900', '#ffe06c', '#b1e289', '#72daa3', '#53d1c6', '#5CBFF8', '#5cA1ff'],
@@ -272,11 +274,52 @@ export default {
 					]
 				}
 			},
+			chartData: {
+				'chart': {
+					'type': 'funnel',
+					'marginRight': 300
+				},
+				'title': {
+					'text': '',
+					'x': 50
+				},
+				'plotOptions': {
+					'series': {
+						'dataLabels': {
+							'enabled': true,
+							'crop': false,
+							'overflow': 'none',
+							'format': '<b>{point.name}</b> ({point.y:,.0f})',
+							'color': "(Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'",
+							'softConnector': true
+						},
+						'neckWidth': '20%',
+						'neckHeight': '10%'
+					}
+				},
+				'legend': {
+					'enabled': false
+				},
+				'series': [{
+					'name': '用户',
+					'data': [
+						['访问网站<br>', 15654],
+						['下载产品<br>', 0],
+						['询价<br>', 1987630],
+						['发送合同<br>', 9764522],
+						['接收到看<br>', 846111],
+						['大股东刮过<br>', 0],
+						['电饭锅<br>', 8846111],
+						['有意见<br>', 962111]
+					]
+				}]
+			},
 			loucount: 0,
 			hour: 3600, // 区分小时还是分钟
 			mint: 60,
 			userId: 1,
 			popaic: '',
+			canvasImgForm: {},
 			avatarUrl: '', // 用户头像
 			userName: '',
 			allcolleagues: [], // 有日程的所有时间
@@ -313,7 +356,6 @@ export default {
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
 		this.scheduleSelectSalesFunnel()
-
 		this.getIndexList()
 		this.changeTime()
 		this.getDates()
@@ -322,6 +364,40 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
+		getTry () {
+			uni.request({
+
+				url: 'http://39.106.171.35:11942/',
+
+				data: this.chartData,
+
+				method: 'POST',
+
+				responseType: 'arraybuffer', // 将原本按文本解析修改为arraybuffer
+
+				success: res => {
+					// 	base64src(wx.arrayBufferToBase64(res.data), res1 => {
+					// 		this.canvasImg = res1
+					// 		console.log(res1) // 返回图片地址，直接赋值到image标签即可
+					// });
+
+					this.canvasImg = wx.arrayBufferToBase64(res.data)
+				}
+
+			})
+		},
+		imageLoad: function (e) {
+			var $width = e.detail.width // 获取图片真实宽度
+			var $height = e.detail.height
+			var ratio = $width / $height // 图片的真实宽高比例
+			var viewWidth = this.$store.state.systemInfo.screenWidth // 设置图片显示宽度，左右留有16rpx边距
+			var viewHeight = viewWidth / ratio // 计算的高度值
+			// 将图片的datadata-index作为image对象的key,然后存储图片的宽高值
+			this.canvasImgForm = {
+				width: viewWidth,
+				height: viewHeight
+			}
+		},
 		// 点击切换人员
 		getColleagueChoose () {
 			if (this.authorityButtons.includes('crm_index_001')) {
@@ -389,10 +465,13 @@ export default {
 					this.funnelList = []
 					let arr = res.data || []
 					this.loucount = arr.length
+					this.chartData.series[0].data = []
 					arr.forEach((item, index) => {
+						this.chartData.series[0].data.push([index + 1 + '. ' + item.stageName + '：' + '<br>', item.amount])
                         this.funnelList.push({ value: item.amount, name: index + 1 + '. ' + item.stageName + '：' + '\n\n' + item.amount })// eslint-disable-line
 						// this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount})
 					})
+					this.getTry()
 					this.ec.option.series[0].data = this.funnelList || []
 					this.$nextTick(() => {
 						if (this.$refs.echart) {
