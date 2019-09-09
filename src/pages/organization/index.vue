@@ -17,25 +17,27 @@
 
             <div class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></div>
 
-            <div class="d-bg-white dept-box">
-                <div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in cuList" :key="item.id" @click="chooseDeptItem(item)">
-                    <span class='radio-box d-block' :class="{active: deptIds.includes(item.id)}"></span>
-                    <div class="d-cell f14 d-text-black pl15 d-elip">{{item.deptName}}</div>
-                    <div class="f14 pl10 d-text-blue" :class="{ disable: deptIds.includes(item.id)}" v-if="item.children && item.children.length" @click.stop="getNext(item, index)">下级</div>
-                </div>
-            </div>
-            <div class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></div>
-            <div class='d-bg-white'>
-                <div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="item in employees" :key="item.id" @click="chooseEmployeesItem(item)">
-                    <span class='radio-box d-block' :class="{active: employeesIds.includes(item.id)}"></span>
-                    <div class="ml15">
-                        <mAvatat :text='item.employeeName' :url="item.avatarUrl" />
-                    </div>
-                    <div class="d-cell f14 d-text-black pl15 d-elip">
-                        {{item.employeeName}}
-                    </div>
-                </div>
-            </div>
+			<div>
+				<div class="d-bg-white dept-box">
+					<div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in cuList" :key="item.id" @click="chooseDeptItem(item)">
+						<span class='radio-box d-block' :class="{active: deptIds.includes(item.id)}"></span>
+						<div class="d-cell f14 d-text-black pl15 d-elip">{{item.deptName}}</div>
+						<div class="f14 pl10 d-text-blue" :class="{ disable: deptIds.includes(item.id)}" v-if="item.children && item.children.length" @click.stop="getNext(item, index)">下级</div>
+					</div>
+				</div>
+				<div class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;"></div>
+				<div class='d-bg-white'>
+					<div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="item in employees" :key="item.id" @click="chooseEmployeesItem(item)">
+						<span class='radio-box d-block' :class="{active: employeesIds.includes(item.id)}"></span>
+						<div class="ml15">
+							<mAvatat :text='item.employeeName' :url="item.avatarUrl" />
+						</div>
+						<div class="d-cell f14 d-text-black pl15 d-elip">
+							{{item.employeeName}}
+						</div>
+					</div>
+				</div>
+			</div>
 
             <div style="height:50px;justify-content: space-between;align-items: center;position:fixed;bottom:0;z-index:30;background:#F8F8FA;border-top:1px solid #F2F2F2" class="d-flex wfull">
                     <div class="d-text-blue ml15 d-elip">已选择：2323</div>
@@ -107,27 +109,28 @@ export default {
 		skipItem (index) {
 			this.deptsIndexs = index === -1 ? [] : this.deptsIndexs.slice(0, index + 1)
 		},
-		// 选中事件
+		// 选中部门事件
 		chooseDeptItem (item, index) {
-			let deptIdIndex = this.deptIds.includes(item.id)
-			if (deptIdIndex) {
-				this.deptIds.splice(this.deptsIndexs, 1)
+			let deptIdIndex = this.deptIds.indexOf(item.id)
+			if (~deptIdIndex) {
+				this.deptIds.splice(deptIdIndex, 1)
 			} else {
 				this.deptIds.push(item.id)
 				// this.deptIds = [item.id]
 			}
 		},
 
-		// 选中事件
+		// 选中人员事件
 		chooseEmployeesItem (item, index) {
-			let deptIdIndex = this.employeesIds.includes(item.id)
-			if (deptIdIndex) {
-				this.employeesIds.splice(this.deptsIndexs, 1)
+			let employeesIndex = this.employeesIds.indexOf(item.id)
+			let o = ~employeesIndex
+			console.log(o)
+			if (o) {
+				this.employeesIds.splice(employeesIndex, 1)
 			} else {
 				this.employeesIds.push(item.id)
 			}
 		},
-
 		// 初始化数据
 		getDeptData (deptId) {
 			// 获取部门数据
@@ -141,7 +144,7 @@ export default {
 				}
 			})
 		},
-
+		// 获取人员数据
 		getEmployeesData (deptId) {
 			this.$api.seeCrmService.organizationalStructureChildrenEmployees({ deptId }).then((response) => {
 				if (response.code === 200) {
