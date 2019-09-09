@@ -18,8 +18,8 @@
             <!--显示本周-->
 
             <div v-if="timelong == 7">
-                <div class="d-text-black ml15" style="margin-top:8px" @click='timelong = 30,clickDay = todayDate'>{{thisDate}}
-                    <uni-icon type="arrowdown" class="pl5" size="18"/>
+                <div class="d-text-black ml15 d-relative" style="margin-top:8px" @click='timelong = 30,clickDay = todayDate'>{{thisDate}}
+                    <uni-icon type="arrowdown" class="pl5" size="18" style="position:absolute;left:140rpx;"/>
                 </div>
                 <div class="d-flex mt15">
                     <div v-for="item in aweek" :key='item' style="flex:1;color:#CCCCCC" class="d-text-qgray ac b">{{item}}</div>
@@ -37,7 +37,7 @@
             <!--日历插件-->
             <div style="position: relative;border-bottom: 1px solid #e4e4e4;" v-if="timelong == 30">
                 <uni-calendar @clickDate='timelong = 7,clickDay = todayDate' ref="calendar" insert="true" :selected='selected' @haveClick='confirm'/>
-                <uni-icon @click='timelong = 7,clickDay = todayDate' type="arrowup" class="pl5 d-pointer" size="18" style='position: absolute;top: 8px;left: 85px;'/>
+                <uni-icon @click='timelong = 7,clickDay = todayDate' type="arrowup" class="pl5 d-pointer" size="18" style='position: absolute;top: 16rpx;left:170rpx;'/>
             </div>
 
             <!--暂无日程-->
