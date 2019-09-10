@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-09-04 17:55:03
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-09 14:21:50
+ * @Description: file content
+ */
 <template>
     <div>
 		<m-form ref="mform" :model="form" :rules="rules">

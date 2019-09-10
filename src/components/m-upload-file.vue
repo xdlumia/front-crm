@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-09-04 17:55:03
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-06 09:03:45
+ * @Description: file content
+ */
 <!--
  * @description 文件上传
  * 使用：<m-upload v-model="fileList"></m-upload>
@@ -45,7 +52,6 @@ export default {
 							title: '文件上传中...',
 							mask: true
 						})
-						console.log(res)
 						this.upload(res.tempFiles, 0)
 					} catch (err) {
 						uni.hideLoading()
