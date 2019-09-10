@@ -1,18 +1,13 @@
 /*
  * @Author: web.冀猛超
  * @Date: 2019-07-25 20:18:36
- * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-03 21:32:34
- * @Description: file content
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-10 17:02:45
+ * @Description: 详细信息
  */
-<!--
-/**
-* @author 详细信息
-* @date 2019年7月299日
--->
 <template>
     <div class="hfull d-auto-y ipx" :style="{height:height}">
-        <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
+        <mPanel title="基本信息" :isUrl='false'>
             <m-list label-width="120" label="机会名称">{{detailInfo.chanceName || '-'}}</m-list>
             <m-list label-width="120" label="所属部门">{{detailInfo.deptName || '-'}}</m-list>
             <m-list label-width="120" label="客户名称">{{detailInfo.clientName || '-'}}</m-list>
@@ -33,7 +28,7 @@
             <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
             <!-- <m-list label-width="120" v-for="(item,index) of detailInfo.formsFieldValueEntitys" :label="item.fieldName" :key="index">{{item.fieldValue || '-'}}</m-list> -->
         </mPanel>
-		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
+		<mPanel title="其他信息" top="10" :isUrl='false'>
 			<div>
 				<m-list label="创建日期">
 					{{detailInfo.createTime | timeToStr('y-m-d h:i')}}
