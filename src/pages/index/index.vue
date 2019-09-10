@@ -193,10 +193,16 @@
                     <span class="mr15 f13" style="color:#999">单位：万元</span>
 
                 </div>
-                <div class="wfull" style="min-height:100px;box-sizing: border-box;">
+                <!-- <div class="wfull" style="min-height:100px;box-sizing: border-box;">
                    <view class="echartsBox d-center">
-						<img @load="imageLoad"  :style="{width:`${canvasImgForm.width}px`,height:`${canvasImgForm.height}px`}" :src="`data:image/png;base64,${canvasImg}`" alt="">
+                        <img @load="imageLoad"  :style="{width:`${canvasImgForm.width}px`,height:`${canvasImgForm.height}px`}" :src="`data:image/png;base64,${canvasImg}`" alt="">
                     </view>
+                </div> -->
+                <!-- :style="{height:loucount*80 + 'px'}" -->
+                <div class="wfull" style="box-sizing: border-box;height:350px">
+                           <view class="echartsBox">
+                         <ec-canvas :ec="ec" ref='echart' class='mr10'></ec-canvas>
+                        </view>
                 </div>
                 <div style="height: 10px;background: #FFF;"></div>
             </div>
@@ -246,7 +252,6 @@ export default {
 				option: {
 					color: ['#FF9900', '#ffe06c', '#b1e289', '#72daa3', '#53d1c6', '#5CBFF8', '#5cA1ff'],
 					title: {
-						left: 'left',
 						top: 'bottom'
 					},
 					tooltip: {
@@ -258,17 +263,19 @@ export default {
 						{
 							min: 0,
 							max: 100,
+							minSize: '30%',
 							type: 'funnel',
-							width: '50%',
+							width: '80%',
 							sort: 'none',
 							height: '80%',
-							left: '5%',
-							top: '5%',
+							left: '10%',
+							top: '0%',
 							data: this.funnelList,
 							label: {
 								fontSize: 12,
-								color: '#333',
-								show: true
+								color: '#FFF',
+								show: true,
+								position: 'inside'
 							}
 						}
 					]
@@ -277,7 +284,8 @@ export default {
 			chartData: {
 				'chart': {
 					'type': 'funnel',
-					'marginRight': 300
+					'marginRight': 300,
+					'height': 1300
 				},
 				'title': {
 					'text': '',
@@ -293,8 +301,8 @@ export default {
 							'color': "(Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'",
 							'softConnector': true
 						},
-						'neckWidth': '20%',
-						'neckHeight': '10%'
+						'neckWidth': '35%',
+						'neckHeight': '20%'
 					}
 				},
 				'legend': {
@@ -466,13 +474,32 @@ export default {
 					let arr = res.data || []
 					this.loucount = arr.length
 					this.chartData.series[0].data = []
+					let lenHeight = 0
+					lenHeight = arr.length * 200
+					this.chartData.chart.height = lenHeight
+					arr.reverse()
 					arr.forEach((item, index) => {
-						this.chartData.series[0].data.push([index + 1 + '. ' + item.stageName + '：' + '<br>', item.amount])
-                        this.funnelList.push({ value: item.amount, name: index + 1 + '. ' + item.stageName + '：' + '\n\n' + item.amount })// eslint-disable-line
+						this.chartData.series[0].data.push([index + 1 + '. ' + item.stageName + '：' + '<br>', 800])
+						// this.funnelList.push({ value: 100-(index*20), name: index + 1 + '. ' + item.stageName + '：'  + item.amount })// eslint-disable-line
+                        this.funnelList.unshift({value:(100/7)*index,name: item.stageName + '：'  + item.amount})// eslint-disable-line
 						// this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount})
 					})
 					this.getTry()
+
+					this.funnelList[this.funnelList.length - 1].value = 0
+					// 	this.funnelList =  [
+					//     {value: 100, name: '访问'},
+					//     {value: 80, name: '咨询'},
+					//     {value: 60, name: '订单'},
+					//     {value: 40, name: '访问'},
+					//     {value: 20, name: '咨询'},
+					//     {value: 0, name: '订单'},
+					//     {value: 0, name: '点击'},
+					//     {value: 0, name: '展现'}
+					// ]
+
 					this.ec.option.series[0].data = this.funnelList || []
+
 					this.$nextTick(() => {
 						if (this.$refs.echart) {
 							this.$refs.echart.init()
