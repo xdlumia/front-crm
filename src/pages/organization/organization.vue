@@ -41,26 +41,56 @@
 			</div>
 
             <div style="height:50px;justify-content: space-between;align-items: center;position:fixed;bottom:0;z-index:30;background:#F8F8FA;border-top:1px solid #F2F2F2" class="d-flex wfull">
-                    <div class="d-text-blue ml15 d-elip">已选择：<span v-if="chooseEmployees.length || chooseDepts.length">{{chooseEmployees.length}}人,{{chooseDepts.length}}个部门</span></div>
-                    <i-button class="mr15" @click="submit" type="primary" size='small'>确定</i-button>
+				<div class="d-text-blue ml15 d-elip">
+                    已选择：<span v-if="chooseEmployees.length || chooseDepts.length" @click="isShow = true">
+                        {{chooseEmployees.length}}人 <span class="ml5" v-if="chooseDepts.length">{{chooseDepts.length}}个部门</span>
+                    </span>
+                </div>
+				<i-button class="mr15" @click="submit" type="primary" size='small'>确定</i-button>
             </div>
+
+            <!-- 已选择人员部门 -->
+			<div v-if="isShow && (chooseDepts.length || chooseEmployees.length)" class="d-relative d-fixed choose-box">
+				<div class="d-bg-white dept-box">
+					<div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in chooseDepts" :key="item.id">
+						<div class="d-cell f14 d-text-black d-elip">{{item.deptName}}</div>
+						<div class="d-text-red f14" @click.stop="removeDept(index)">移除</div>
+					</div>
+				</div>
+				<div class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;" v-if="chooseDepts.length"></div>
+				<div class='d-bg-white'>
+					<div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in chooseEmployees" :key="item.id" >
+						<div class="">
+							<mAvatat :text='item.employeeName' :url="item.avatarUrl" />
+						</div>
+						<div class="d-cell f14 d-text-black pl15 d-elip">
+							{{item.employeeName}}
+						</div>
+						<div class="d-text-red f14" @click.stop="removeEmployees(index)">移除</div>
+					</div>
+				</div>
+
+                <div class="footer-fixed-menu">
+                    <i-button type="primary" i-class="f16" @click='isShow = false'>确定</i-button>
+                </div>
+			</div>
 
         </div>
     </div>
 </template>
 <script>
 export default {
-	props: {
-		// 是否多选
-		isMultiple: {
-			type: Boolean,
-			default: false
-		},
-		type: {
-			type: [String, Number],
-			default: 0 // 0 => 部门和人员  1 => 只选择部门 2 => 只选择人员
-		}
-	},
+	// props: {
+	// 	// 是否多选
+	// 	isMultiple: {
+	// 		type: Boolean,
+	// 		default: true
+	// 	},
+	// 	type: {
+	// 		type: [String, Number],
+	// 		default: 0 // 0 => 部门和人员  1 => 只选择部门 2 => 只选择人员
+	// 	}
+	// },
 	data () {
 		return {
 			currentDeptList: [], // 当前部门列表
@@ -71,7 +101,10 @@ export default {
 			employeesIds: [], // 已选中人员的id
 			deptIds: [], // 已选中的部门 id
 			chooseDepts: [], // 已选中的部门
-			chooseEmployees: [] // 已选中的人员
+			chooseEmployees: [], // 已选中的人员
+			isShow: false,
+			type: 0,
+			isMultiple: true
 		}
 	},
 
@@ -141,11 +174,9 @@ export default {
 		chooseDeptItem (item, index) {
 			// 判断是否只能选择人员
 			if (this.isOnlyEmployees) return
+
 			let deptIdIndex = this.deptIds.indexOf(item.id)
-			if (~deptIdIndex) {
-				this.deptIds.splice(deptIdIndex, 1)
-				this.chooseDepts.splice(deptIdIndex, 1)
-			} else {
+			if (!~deptIdIndex) {
 				// 过滤 children 字段
 				let { children, ...deptItem } = item
 
@@ -158,18 +189,17 @@ export default {
 
 				this.deptIds = [deptItem.id]
 				this.chooseDepts = [deptItem]
+				return
 			}
+
+			this.removeDept(deptIdIndex)
 		},
 
 		// 选中人员事件
 		chooseEmployeesItem (item, index) {
 			let employeesIndex = this.employeesIds.indexOf(item.id)
-			if (~employeesIndex) {
-				this.employeesIds.splice(employeesIndex, 1)
-				this.chooseEmployees.splice(employeesIndex, 1)
-			} else {
-				this.employeesIds.push(item.id)
-				// 过滤 children 字段
+
+			if (!~employeesIndex) {
 				let { children, ...employeesItem } = item
 
 				if (this.isMultiple) {
@@ -180,7 +210,24 @@ export default {
 
 				this.employeesIds = [employeesItem.id]
 				this.chooseEmployees = [employeesItem]
+
+				return
 			}
+
+			this.removeEmployees(employeesIndex)
+		},
+
+		// 删除人员
+		removeEmployees (index) {
+			this.employeesIds.splice(index, 1)
+			this.chooseEmployees.splice(index, 1)
+			this.isShow && (this.isShow = this.employeesIds.length || this.deptIds.length)
+		},
+		// 删除 部门
+		removeDept (index) {
+			this.deptIds.splice(index, 1)
+			this.chooseDepts.splice(index, 1)
+			this.isShow && (this.isShow = this.employeesIds.length || this.deptIds.length)
 		},
 
 		// 初始化数据
@@ -217,7 +264,6 @@ export default {
 				depts: this.chooseDepts,
 				employees: this.chooseEmployees
 			}
-
 			this.$emit('submit', data)
 		}
 	},
@@ -264,5 +310,14 @@ export default {
 	&:last-child{
 		color: #a2a2a4
 	}
+}
+
+.choose-box{
+	z-index: 31;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+    padding-bottom: 45px;
+    overflow-y: auto;
 }
 </style>
