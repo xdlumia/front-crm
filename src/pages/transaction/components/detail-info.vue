@@ -1,6 +1,6 @@
 <template>
-    <div class="d-auto-y ipx" style="height:calc( 100vh - 350px )">
-        <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
+    <div class="d-auto-y ipx" :style="{height:height}">
+        <mPanel title="基本信息" :isUrl='false'>
             <m-list  label-width="120" label="主题">{{detailInfo.name || '-'}}</m-list>
             <m-list  label-width="120" label="客户">{{detailInfo.clientName || '-'}}</m-list>
             <m-list label-width="120" label="总金额（元）">{{detailInfo.totalAmount || '-'}}</m-list>
@@ -8,7 +8,7 @@
 			<m-list label-width="120" label="开始时间">{{detailInfo.startTime | timeToStr('yyyy-mm-dd hh:ii')}}</m-list>
 			<m-list label-width="120" label="结束时间">{{detailInfo.endTime | timeToStr('yyyy-mm-dd hh:ii')}}</m-list>
         </mPanel>
-		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
+		<mPanel title="其他信息" top="10" :isUrl='false'>
 			<m-list label-width="120" label="负责人">{{detailInfo.leaderName || '-'}}</m-list>
             <m-list label-width="120" label="创建日期">{{detailInfo.createTime | timeToStr('yyyy-mm-dd hh:ii')}}</m-list>
             <m-list label-width="120" label="创建人">{{detailInfo.creatorName || '-'}}</m-list>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-	props: ['detailInfo'],
+	props: ['detailInfo', 'height'],
 	components: {
 		// mPager
 	},

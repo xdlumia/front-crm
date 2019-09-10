@@ -1,15 +1,15 @@
-<!-- 标签设置-->
-<!-- 徐贺 -->
+/*
+ * @Author: web.徐贺
+ * @Date: 2019-07-30 10:12:42
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-10 16:58:06
+ * @Description: 标签设置
+ */
 <template>
   <div class="d-bg-white">
     <NavBar :title="`${typeform[queryForm.busType]}标签管理`"/>
     <!-- :height="'calc(100vh - ' + navH +' - 230px)'" -->
-    <scroll-list
-      api="seeCrmService.dictionaryrelationList"
-      @getList="getTagsList"
-      :params="queryForm"
-      ref="list"
-    >
+	<div>
       <a
         :url="`/pages/common/edit-tags?dicCode=${item.labelCode}&busType=${queryForm.busType}&tagName=${item.labelName}&id=${item.id}`"
         class="toptrasaction"
@@ -25,7 +25,7 @@
           <uni-icon type="arrowright" size="16" color="#696969"/>
         </span>
       </a>
-    </scroll-list>
+    </div>
 
     <div class="moreinfo d-flex" v-if="isAdd">
       <div class="hfull flexcenter">
@@ -77,15 +77,19 @@ export default {
 		}
 	},
 	onShow () {
-		this.$refs.list.reload()
+		this.getTagsList()
 	},
 	onLoad (option) {
 		this.queryForm.busType = option.busType
 	},
 	methods: {
 		// 所有标签项
-		getTagsList (list) {
-			this.tagsList = list
+		getTagsList () {
+			this.$api.seeCrmService.dictionaryrelationList(this.queryForm).then(res => {
+				if (+res.code === 200) {
+					this.tagsList = res.data || []
+				}
+			})
 		},
 		moreAdd () {
 			this.labelName = ''
