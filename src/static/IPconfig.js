@@ -3,19 +3,19 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-18 18:23:16
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-03 21:50:32
+ * @LastEditTime: 2019-09-05 18:06:02
  * @Description: file content
  */
 // local 为开发人员本地 dev 为开发环境 build 为测试环境  product 为生产环境
-const model = 'product';
+const model = 'build';
 let api = '',
 inviteLink = '',
-ossUrl = ''
-if (model === 'dev') {
-  api = 'https://px.xaborong.com/apix/'
+ossUrl = 'https://oss-a-develop.oss-cn-beijing.aliyuncs.com/'
+if (model === 'dev') {  
+  api = 'https://testcrm.zhenkehu.com/apis/'
   inviteLink = 'https://testcrm.zhenkehu.com:1443/index'
 } else if (model === 'build') {
-  api = 'https://px.xaborong.com/apix/'
+  api = 'https://testcrm.zhenkehu.com/apis/'
   inviteLink = 'https://testcrm.zhenkehu.com:1443/index'
 } else if (model === 'product') {
   api = 'https://crm.zhenkehu.com/apis/'

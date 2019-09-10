@@ -7,8 +7,8 @@
 -->
 <template>
     <div class="highseas-page">
-        <NavBar :title='select ? "公海池" : ""'>
-			<a :url="'./choose-highseas?poolId=' + pool.id" class='d-center f16' style="padding-left:108px; text-indetnd"  v-if='!select'>
+        <NavBar>
+			<a :url="'./choose-highseas?poolId=' + pool.id" class='d-center f16' style="padding-left:108px; text-indetnd">
 				<span class="d-elip" style="max-width:calc(100% - 20px)">{{pool.name || ''}}</span>
 				<div v-if='pool.name'>
 					<i-icon type="unfold" size='18' color='#000' i-class="inline" />
@@ -89,10 +89,11 @@ export default {
 	},
 	data () {
 		return {
+			poolId: 0,
 			select: 0, // 是否选择
 			queryForm: {
-				queryType: '', // 查询类型
-				sortType: '', // 排序类型
+				queryType: '6', // 查询类型
+				sortType: '1', // 排序类型
 				poolId: '', // 公海池id
 				lonSort: '',
 				latSort: '',
@@ -131,24 +132,20 @@ export default {
 			],
 			cuClient: {},
 			chooseDataIndex: 0,
-			chooseData: 0
+			chooseData: 0,
+			poolItem: {}
 		}
 	},
 	onLoad (option) {
 		this.select = option.select || 0
-		this.$store.dispatch('highseas/getList')
+		this.chooseData = option.id || 0
+		option.poolId && (this.poolId = option.poolId)
+		this.$store.dispatch('highseas/getList', option.poolId || '')
 
 		// 设置经纬度
 		let localtion = this.$local.fetch('localtion') || this.$store.state.localtion
 		this.queryForm.lonSort = localtion.longitude
 		this.queryForm.latSort = localtion.latitude
-
-		let selects = {}
-		this.filterData.forEach(item => {
-			selects[item.prop] = item.current || item.list[0]
-			this.queryForm[item.prop] = selects[item.prop].id
-		})
-		this.filterSelect = selects
 	},
 	onShow () {
 		try {
@@ -240,6 +237,11 @@ export default {
 				this.$utils.toast.text('请选择客户')
 				return
 			}
+
+			if (!this.chooseDataIndex && this.chooseData) {
+				this.chooseDataIndex = this.list.findIndex(item => +item.id === +this.chooseData)
+			}
+
 			let { id, name } = this.list[this.chooseDataIndex]
 			uni.$emit('choosePool', { id, name })
 

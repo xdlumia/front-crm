@@ -1,10 +1,3 @@
-/*
- * @Author: web.徐贺
- * @Date: 2019-07-29 16:51:28
- * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-04 00:15:15
- * @Description: file content
- */
 <template>
     <div class="client-detail-page">
         <template v-if='!loading'>
@@ -25,16 +18,17 @@
             </div>
 
             <div class='d-text-gray f13 mb5'>
-                总金额： <span class='d-text-blue'>{{detailInfo.totalAmount || ''}}</span>
+                总金额：<span class='d-text-blue'>{{detailInfo.totalAmount || ''}}</span>
             </div>
             <div class="d-text-gray mb5 transaction">
                 <i-select
                     @input="transactionrecordUpdate"
                     v-model="detailInfo.transactionStatus"
                     :props="{label:'content',value:'code'}"
-                    label="状态"
+                    label="状态："
                     placeholder="请选择"
                     :options="CRM_CJZT"
+					i-class="transaction"
                 />
             </div>
             <div class='f13 mb5'>
@@ -42,17 +36,17 @@
                  <div @click="getClientInfo"
                     class="d-elip d-text-blue d-inline d-middle"
                     style="width:50%"
-                ><span class="d-text-gray ">客户名称：</span>{{detailInfo.clientName || ''}}</div>
+                ><span class="d-text-gray f13">客户名称：</span>{{detailInfo.clientName || ''}}</div>
             </div>
         </div>
 
         <div class="">
             <i-tabs :current="currIndex" :tabList='tabBars' @change="handleChange">
                 <i-tab index="0">
-                    <detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 50px - ' + navH + ')'" />
+                    <detailInfo :detailInfo='detailInfo' :height="'calc(100vh  - 217px - 45px - ' + navH + ')'" />
                 </i-tab>
                 <i-tab index="1">
-                    <correlationInfo ref='correlationInfo' v-if="Object.keys(detailInfo).length" :query='{busType:3,name:detailInfo.name,busId:detailInfo.id}' :height="'calc(100vh - 217px - 50px - ' + navH + ')'" />
+                    <correlationInfo ref='correlationInfo' v-if="Object.keys(detailInfo).length" :query='{busType:3,name:detailInfo.name,busId:detailInfo.id}' :height="'calc(100vh - 217px - 45px - ' + navH + ')'" />
                 </i-tab>
             </i-tabs>
         </div>
@@ -280,6 +274,7 @@ export default {
 
 </style>
 <style>
-.transaction .detail-panel-item{border-bottom: none;width: 120px;padding: 0px !important;}
-.transaction .uni-lh50{width: 50px !important;}
+.transaction{padding-top: 0;}
+.transaction.detail-panel-item.detail-panel-item{border-bottom: none;width: 120px;padding: 0px !important;}
+.transaction.uni-lh50{width: 50px !important;}
 </style>

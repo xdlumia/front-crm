@@ -2,12 +2,12 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-27 15:59:30
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-03 14:29:51
+ * @LastEditTime: 2019-09-10 17:03:30
  * @Description: 相关信息
  */
 <template>
     <div class="hfull d-auto-y ipx" :style="{height:height}">
-        <mPanel title="基本信息" bg="#f8f9fc" :isUrl='false'>
+        <mPanel title="基本信息" :isUrl='false'>
             <m-list label-width="120" label="客户名称">{{detailInfo.name || '-'}}</m-list>
             <m-list label-width="120" label="所属部门">{{detailInfo.deptName || '-'}}</m-list>
             <m-list label-width="120" label="负责人">{{detailInfo.leaderName || '-'}}</m-list>
@@ -23,7 +23,7 @@
             </div>
             <m-list label-width="120" label="备注">{{detailInfo.note || '-'}}</m-list>
         </mPanel>
-		<mPanel title="联系信息" bg="#f8f9fc" :isUrl='false'>
+		<mPanel title="联系信息" top="10" :isUrl='false'>
             <m-list label-width="120" label="手机号">{{detailInfo.phone}}</m-list>
             <m-list label-width="120" label="详细地址">{{detailInfo.address}}</m-list>
             <div v-for='item in contactInfo' :key='item.id' >
@@ -32,7 +32,7 @@
                 <m-list label-width="120" :label="item.fieldName" v-else>{{(item.fieldValue) || "-"}}</m-list>
             </div>
         </mPanel>
-		<mPanel title="其他信息" bg="#f8f9fc" :isUrl='false'>
+		<mPanel title="其他信息" top="10" :isUrl='false'>
             <m-list label="创建日期" label-width="120">
                 {{detailInfo.createTime | timeToStr('yyyy-mm-dd hh:ii')}}
             </m-list>

@@ -1,6 +1,6 @@
 <template>
     <div class="register-page">
-        <NavBar title="申请免费试用" />
+        <NavBar title="申请开通" />
         <div class="">
            <div class=''>
                <div class="ml20 mt5 mb5">开通流程：</div>
@@ -49,7 +49,7 @@ export default {
 
 	},
 	onReady () {
-		console.log(this.$store.state)
+
 	}
 }
 </script>

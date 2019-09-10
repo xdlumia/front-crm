@@ -18,7 +18,7 @@
  */ -->
 <template>
     <picker :disabled="disabled" :value="valueIndex" :range="range" @change='change($event, "upTypeIndex")'>
-		<i-input disabled v-model="valueName" :labelWidth="labelWidth" @handleLableClick='handleLableClick' :labelIcon='labelIcon' :label="label" :placeholder="placeholder" :required='required'>
+		<i-input disabled v-model="valueName" :iClass="iClass" :labelWidth="labelWidth" @handleLableClick='handleLableClick' :labelIcon='labelIcon' :label="label" :placeholder="placeholder" :required='required'>
 			<i-icon type="enter" size="16" color="#999" />
 		</i-input>
 	</picker>
@@ -27,6 +27,10 @@
 <script>
 export default {
 	props: {
+		iClass: {
+			type: String,
+			default: ''
+		},
 		value: {
 			required: true
 		},

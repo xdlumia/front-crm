@@ -1,10 +1,4 @@
-<!--
-/**
-* @author 王晓冬
-* @name 相关信息
-* @date 2019年7月29日
-**/
--->
+
 <template>
     <div class="hfull d-auto-y ipx" :style="{height:height}">
         <!-- 联系人 -->

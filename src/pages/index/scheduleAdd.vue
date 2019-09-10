@@ -14,9 +14,9 @@
                 <i-input :disabled='!isadd && !ishandel' maxlength='10000' v-model="acheduleForm.content" label="日程主题" placeholder="请输入" required />
                 <div class="d-bg-schedule"></div>
 
-                <div class="d-bg-white wfull d-flex" style="align-items:center;height: 48px;">
+                <div class="d-bg-white wfull d-flex s-position" style="align-items:center;">
                     <i-input label="位置" :disabled='!isadd && !ishandel' maxlength='45' v-model="acheduleForm.address" placeholder="点击输入" style="flex:1" class='wfull'/>
-                    <div v-if="isadd || ishandel" @click="chooseMap" class="ac" style="border-left: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;line-height: 48px;width:100px;">
+                    <div v-if="isadd || ishandel" @click="chooseMap" class="ac" style="border-left: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;width:100px;align-items:center;padding:12px 0">
                         <i-icon type="coordinates" size="22" color="#999" />
                     </div>
                 </div>
@@ -299,7 +299,7 @@ export default {
 		},
 		// 点击公海池
 		getHighseas () {
-			let url = (this.isadd || this.ishandel) ? `/pages/highseas/index?select=1&id=${this.highseasData.id}` : `/pages/client/detail?id=${this.highseasData.id}`
+			let url = (this.isadd || this.ishandel) ? `/pages/highseas/index?select=1&id=${this.highseasData.id}&poolId=${3}` : `/pages/client/detail?id=${this.highseasData.id}`
             if(this.acheduleForm.seaPoolIsDelete != 1){// eslint-disable-line
 				this.$routing.navigateTo(url)
 			} else {
@@ -410,4 +410,7 @@ export default {
             text-indent: 15px;
         }
     }
+</style>
+<style>
+.s-position .detail-panel-item{border-bottom:none;}
 </style>

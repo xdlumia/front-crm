@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-23 11:54:25
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-03 18:01:29
+ * @LastEditTime: 2019-09-05 11:05:59
  * @Description: 登陆页面
  */
 <template>
@@ -11,14 +11,12 @@
         <div class="">
             <img class="logo-img d-block" src="https://fmd-a-oss.oss-cn-beijing.aliyuncs.com/public/crm/logo.png" alt="">
             <div class="plr40">
-                <button style="padding-left:0;padding-right:0;" open-type="getPhoneNumber" @getphonenumber="handlePhoneClick">
-                    <i-button type="primary" size="default" i-class="f16 mb15">
-                            <uni-icon type='weixin' size='24' color='#fff' />
-                            <span class="ml10">
-                                微信授权登录
-                            </span>
-                    </i-button>
-                </button>
+				<i-button type="primary" size="default" i-class="f16 mb15" @click="skip">
+					<uni-icon type='weixin' size='24' color='#fff' />
+					<span class="ml10">
+						微信授权登录
+					</span>
+				</i-button>
                 <a url="/pages/login/phone">
                     <i-button type="ghost" size="default" i-class="f16 mb15">
                         <i-icon type='mobilephone' size='26' color='#4788F4' /> <span class="ml10 d-text-blue">手机快捷登录</span>
@@ -49,122 +47,9 @@ export default {
 			}
 		}
 	},
-	onLoad (option) {
-		let that = this
-		uni.login({
-			provider: 'weixin',
-			success: function (loginRes) {
-				that.form.code = loginRes.code
-			}
-		})
-	},
-
 	methods: {
-		// 微信手机号授权回调
-		handlePhoneClick ({ mp }) {
-			if (mp.detail.encryptedData && mp.detail.iv) {
-				this.form.encryptedData = mp.detail.encryptedData
-				this.form.iv = mp.detail.iv
-				// this.form.avatarUrl = mp.detail.userInfo.avatarUrl
-				// 判断是否有绑定，是则直接登录，否则去绑定（成功则直接登录，否则去申请）
-				let that = this
-				that.$api.systemService.isBindByWx(
-					{
-						'code': that.form.code,
-						'appId': that.$local.getItem('appid')
-					}
-				).then((response) => {
-					let openid = response.data.userKey
-					that.form.sessionKey = response.data.sessionKey
-					that.$local.save('openid', openid)
-					if (response.code === 200) {
-						if (response.data.bind) { // 直接登录
-							// 登录
-							that.thirdpartyAuthorizationLogin()
-						} else { // 尝试绑定
-							// 获取手机号
-							that.$api.seeCrmService.wgwGetPhoneNumber(that.form).then((response) => {
-								if (response.code === 200) {
-									let phoneNum = response.data.phoneNumber
-									// 绑定
-									that.$api.systemService.userBinding(
-										{
-											'phone': phoneNum,
-											'systemCode': 'crm',
-											'userKey': openid
-										}
-									).then((response) => {
-										if (response.code === 200) { // 绑定成功，直接登录
-											that.thirdpartyAuthorizationLogin()
-										} else {
-											that.reGetCode()
-											that.$utils.toast.text('请前往申请开通页面')
-										}
-									}).catch(() => {
-										that.reGetCode()
-									})
-								} else {
-									that.reGetCode()
-									that.$utils.toast.text('请前往申请开通页面')
-								}
-							})
-						}
-					} else {
-						that.reGetCode()
-						that.$utils.toast.text(response.msg)
-					}
-				}).catch(() => {
-					this.reGetCode()
-				})
-			}
-		},
-		// 重新获取code
-		reGetCode () {
-			let that = this
-			uni.login({
-				provider: 'weixin',
-				success: function (loginRes) {
-					that.form.code = loginRes.code
-				}
-			})
-		},
-		// 直接登录
-		thirdpartyAuthorizationLogin () {
-			let that = this
-			that.$api.systemService.thirdpartyAuthorizationLogin({ 'userKey': that.$local.fetch('openid') }).then((response2) => {
-				if (response2.code === 200) {
-					that.$local.setItem('token', response2.data.token)
-					that.$local.setItem('finger', response2.data.finger)
-					// 调用角色权限列表，刷新后端缓存
-					this.$api.bizSystemService.getUserResource({}, 'crm').then((response) => {
-						if (response.code === 200) {
-							that.$local.save('sourceList', response.data)
-						} else {
-							that.$utils.toast.text(response.msg)
-							that.reGetCode()
-						}
-					})
-					// 获取用户详细数据
-					that.$api.bizSystemService.getUserDetail({ 'sysCode': 'crm' }).then((response) => {
-						that.$utils.toast.text(response.msg)
-						if (response.code === 200) {
-							that.reGetCode()
-							uni.$emit('setUserInfo', response.data)
-							// 跳转到首页
-							that.$routing.switchTab('/pages/chance/index')
-						} else {
-							that.reGetCode()
-						}
-					})
-				} else {
-					that.$utils.toast.text(response.msg)
-					that.reGetCode()
-				}
-			})
-		},
-		// 微信登录
-		loginByWxPhone () {
-			this.$lcoal.fetch('wxPhone')
+		skip () {
+			this.$routing.navigateTo('./auth')
 		}
 	},
 	onReady () {

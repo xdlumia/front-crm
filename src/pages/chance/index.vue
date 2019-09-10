@@ -1,8 +1,8 @@
 /*
  * @Author: web.王晓冬
  * @Date: 2019-08-23 19:22:32
- * @LastEditors: web.王晓冬
- * @LastEditTime: 2019-09-03 22:15:37
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-05 18:04:15
  * @Description: 机会列表
  */
 <template>
@@ -189,21 +189,17 @@ export default {
 		this.$forceUpdate()
 	},
 	onLoad (option) {
-		this.salesstagemessageCheckisMsgUser()
+		// this.salesstagemessageCheckisMsgUser()
 		// this.select = option.select
 		this.queryForm.busId = option.busId || ''
 		this.queryForm.busType = option.busType || ''
 		// 如果是从客户页面过来的新增成交记录选的机会，要通过客户的id来筛选,在这里多加一个参数
-		if (option.clientId) {
-			this.queryForm.clientId = option.clientId
-			this.$refs.list.reload()
-		} else {
-			this.queryForm.clientId = ''
-		}
+		this.queryForm.clientId = option.clientId || ''
+		// this.$refs.list.reload()
 
-		this.salesstageQueryList()
+		// this.salesstageQueryList()
 		// 获取销售机会阶段统计
-		this.saleschanceSalesChanceStatistics()
+		// this.saleschanceSalesChanceStatistics()
 		// uni.$on('updatedate', ({ searchInfo }) => {
 		// 	this.queryForm.clientOrChanceName = searchInfo
 		// 	this.$refs.list.reload()

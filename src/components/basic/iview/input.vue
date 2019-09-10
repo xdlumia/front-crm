@@ -9,7 +9,7 @@
  * @新增required请求
  */ -->
 <template>
-    <div class="detail-panel-item f13">
+    <div class="detail-panel-item f13" :class="iClass">
         <div v-if="type === 'textarea'">
             <div v-if="labelWidth" class="uni-h50 uni-lh50 f13">
 				<uni-icon

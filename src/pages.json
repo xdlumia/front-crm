@@ -251,6 +251,12 @@
 			}
 		},
 		{
+			"path": "pages/login/auth",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
 			"path": "pages/login/phone",
 			"style": {
 				"navigationBarTitleText": "登录"
