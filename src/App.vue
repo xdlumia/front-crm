@@ -9,21 +9,30 @@
 export default {
 	/** 以下是应用生命周期 */
 	// 当uni-app 初始化完成时触发（全局只触发一次）
-	onLaunch: function () {
+	onLaunch: function (options) {
 		let userInfo = this.$local.fetch('userInfo')
 		userInfo && this.$store.commit('setUserInfo', userInfo)
 
 		this.$local.setItem('appid', 'wx19ee978ff0ef382f')
 		this.$local.setItem('sysCode', 'crm')
-		// 1.获取用户openid
 		// 用户已经存在则获取token，finger再getUserDetail
 		// 用户不存在则跳转到登录页面
 		const token = this.$local.getItem('token')
 		const finger = this.$local.getItem('finger')
-		if (token && finger && userInfo) {
-			this.$routing.switchTab('/pages/chance/index')
+		// 加载小程序时来源有三
+		// 1.正常加载scene1001
+		// 2.来自卡片分享scene1036
+		// 3.来源于真客户小程序scene1037,1038
+		if (options.scene === 1037 || options.scene === 1038) {
+			this.$routing.navigateTo('/pages/login/auth')
+		} else if (options.scene === 1036) {
+			// 直接放行该页面
 		} else {
-			this.$routing.redirectTo('/pages/login/index')
+			if (token && finger && userInfo) {
+				this.$routing.switchTab('/pages/chance/index')
+			} else {
+				this.$routing.redirectTo('/pages/login/index')
+			}
 		}
 	},
 	// 当 uni-app 启动，或从后台进入前台显示

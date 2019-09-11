@@ -375,6 +375,12 @@
 			"style":{
 				"navigationBarTitleText":"海报"
 			}
+		},
+		{
+			"path":"pages/organization/index",
+			"style":{
+				"navigationBarTitleText":"组织树"
+			}
 		}
 	],
 	"globalStyle": {

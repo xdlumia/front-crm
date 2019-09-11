@@ -1,3 +1,10 @@
+/*
+ * @Author: web.王晓冬
+ * @Date: 2019-08-22 21:33:06
+ * @LastEditors: web.王晓冬
+ * @LastEditTime: 2019-09-11 09:16:24
+ * @Description: file content
+ */
 <template>
 <div>
     <div :class="['i-as-mask', 'i-class-mask', {'i-as-mask-show': visible }]" @click="handleClickMask"></div>
