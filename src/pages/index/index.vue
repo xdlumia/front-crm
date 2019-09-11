@@ -494,15 +494,6 @@ export default {
 					})
 				})
 		},
-		formatter (val) {
-			// var strs = val.split('') // 字符串数组
-			// var str = ''
-			// for (var i = 0, s; s = strs[i++];) { // 遍历字符串数组
-			// 	str += s
-			// 	if (!(i % 7)) str += '\n\n' // eslint-disable-line
-			// }
-			// return str
-		},
 		// 日历的点击
 		confirm (value) {
 			this.clickDay = value.fulldate.replace(/-/g, '/')
@@ -511,16 +502,10 @@ export default {
 		getTodayDate () {
 			this.clickDay = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate()
 		},
-		handleChange () {
-
-		},
 		// 将时间戳转换成年月日
 		changeTime (time) {
 			return new Date(time).getFullYear() + '/' + (new Date(time).getMonth() + 1) + '/' + new Date(time).getDate()
 		},
-		// getSelectedDate (time) {
-		// 	return new Date(time).getFullYear() + '-' + (new Date(time).getMonth() + 1) + '-' + new Date(time).getDate()
-		// },
 		getDates () {
 			var indexDate = new Date()
 			var timesStamp = indexDate.getTime()
