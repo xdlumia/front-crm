@@ -269,7 +269,7 @@ export default {
 							sort: 'none',
 							height: '80%',
 							left: '10%',
-							top: '0%',
+							top: '4%',
 							data: this.funnelList,
 							label: {
 								fontSize: 12,
@@ -484,19 +484,9 @@ export default {
                         this.funnelList.unshift({value:(100/7)*index,name: item.stageName + '：'  + item.amount})// eslint-disable-line
 						// this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount})
 					})
-					this.getTry()
+					// this.getTry()
 
 					this.funnelList[this.funnelList.length - 1].value = 0
-					// 	this.funnelList =  [
-					//     {value: 100, name: '访问'},
-					//     {value: 80, name: '咨询'},
-					//     {value: 60, name: '订单'},
-					//     {value: 40, name: '访问'},
-					//     {value: 20, name: '咨询'},
-					//     {value: 0, name: '订单'},
-					//     {value: 0, name: '点击'},
-					//     {value: 0, name: '展现'}
-					// ]
 
 					this.ec.option.series[0].data = this.funnelList || []
 
