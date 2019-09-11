@@ -187,7 +187,7 @@
             <div>
                 <div class="h50" style="align-items: center;justify-content: space-between;display:flex">
                     <span>
-                        <i class="iconfont f20 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
+                        <i class="iconfont f18 iconxiaoshouloudou ml15" style="color: #E55FD4;"></i>
                         <span class="b ml5 f13">销售漏斗</span><span class="f13 b">( 商机金额 )</span>
                     </span>
                     <span class="mr15 f13" style="color:#999">单位：万元</span>
@@ -200,11 +200,11 @@
                 </div> -->
                 <!-- :style="{height:loucount*80 + 'px'}" -->
                 <div class="wfull" style="box-sizing: border-box;height:350px">
-                           <view class="echartsBox">
-                         <ec-canvas :ec="ec" ref='echart' class='mr10'></ec-canvas>
-                        </view>
+					<view class="echartsBox d-center wfull" style="height:350px;">
+						<ec-canvas :ec="ec" ref='echart' class='mr10' style="width:100%;height:310px;"></ec-canvas>
+					</view>
                 </div>
-                <div style="height: 10px;background: #FFF;"></div>
+                <!-- <div style="height: 10px;background: #FFF;"></div> -->
             </div>
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
@@ -267,9 +267,9 @@ export default {
 							type: 'funnel',
 							width: '80%',
 							sort: 'none',
-							height: '80%',
+							height: '100%',
 							left: '10%',
-							top: '4%',
+							top: 0,
 							data: this.funnelList,
 							label: {
 								fontSize: 12,

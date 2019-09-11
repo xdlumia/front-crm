@@ -149,7 +149,7 @@ export default {
 <style lang="scss" scoped>
     .ec-canvas {
         width: 100%;
-        height: 100%;
+        height: 310px;
     }
 
 </style>
