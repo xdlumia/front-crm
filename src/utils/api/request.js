@@ -49,8 +49,11 @@ Api.interceptors.response.use(async (response, promise) => {
 	res.msg = msg.replace(/<\/?.+?>/g, '')
 	uni.hideLoading()
 	if (+response.data.code === 402 || +response.data.code === 403) {
-		uni.$emit('loginout')
-		throw promise.reject(response.data)
+		let option = wx.getLaunchOptionsSync()
+		if (option.scene !== 1037 && option.scene !== 1044) {
+			uni.$emit('loginout')
+			throw promise.reject(response.data)
+		}
 		// return Promise.resolve(
 		// 	Object.assign({
 		// 		data: []
