@@ -281,47 +281,47 @@ export default {
 					]
 				}
 			},
-			chartData: {
-				'chart': {
-					'type': 'funnel',
-					'marginRight': 300,
-					'height': 1300
-				},
-				'title': {
-					'text': '',
-					'x': 50
-				},
-				'plotOptions': {
-					'series': {
-						'dataLabels': {
-							'enabled': true,
-							'crop': false,
-							'overflow': 'none',
-							'format': '<b>{point.name}</b> ({point.y:,.0f})',
-							'color': "(Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'",
-							'softConnector': true
-						},
-						'neckWidth': '35%',
-						'neckHeight': '20%'
-					}
-				},
-				'legend': {
-					'enabled': false
-				},
-				'series': [{
-					'name': '用户',
-					'data': [
-						['访问网站<br>', 15654],
-						['下载产品<br>', 0],
-						['询价<br>', 1987630],
-						['发送合同<br>', 9764522],
-						['接收到看<br>', 846111],
-						['大股东刮过<br>', 0],
-						['电饭锅<br>', 8846111],
-						['有意见<br>', 962111]
-					]
-				}]
-			},
+			// chartData: {
+			// 	'chart': {
+			// 		'type': 'funnel',
+			// 		'marginRight': 300,
+			// 		'height': 1300
+			// 	},
+			// 	'title': {
+			// 		'text': '',
+			// 		'x': 50
+			// 	},
+			// 	'plotOptions': {
+			// 		'series': {
+			// 			'dataLabels': {
+			// 				'enabled': true,
+			// 				'crop': false,
+			// 				'overflow': 'none',
+			// 				'format': '<b>{point.name}</b> ({point.y:,.0f})',
+			// 				'color': "(Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'",
+			// 				'softConnector': true
+			// 			},
+			// 			'neckWidth': '35%',
+			// 			'neckHeight': '20%'
+			// 		}
+			// 	},
+			// 	'legend': {
+			// 		'enabled': false
+			// 	},
+			// 	'series': [{
+			// 		'name': '用户',
+			// 		'data': [
+			// 			['访问网站<br>', 15654],
+			// 			['下载产品<br>', 0],
+			// 			['询价<br>', 1987630],
+			// 			['发送合同<br>', 9764522],
+			// 			['接收到看<br>', 846111],
+			// 			['大股东刮过<br>', 0],
+			// 			['电饭锅<br>', 8846111],
+			// 			['有意见<br>', 962111]
+			// 		]
+			// 	}]
+			// },
 			loucount: 0,
 			hour: 3600, // 区分小时还是分钟
 			mint: 60,
@@ -372,28 +372,28 @@ export default {
 	onLoad (option) {
 	},
 	methods: {
-		getTry () {
-			uni.request({
+		// getTry () {
+		// 	uni.request({
 
-				url: 'http://39.106.171.35:11942/',
+		// 		url: 'http://39.106.171.35:11942/',
 
-				data: this.chartData,
+		// 		data: this.chartData,
 
-				method: 'POST',
+		// 		method: 'POST',
 
-				responseType: 'arraybuffer', // 将原本按文本解析修改为arraybuffer
+		// 		responseType: 'arraybuffer', // 将原本按文本解析修改为arraybuffer
 
-				success: res => {
-					// 	base64src(wx.arrayBufferToBase64(res.data), res1 => {
-					// 		this.canvasImg = res1
-					// 		console.log(res1) // 返回图片地址，直接赋值到image标签即可
-					// });
+		// 		success: res => {
+		// 			// 	base64src(wx.arrayBufferToBase64(res.data), res1 => {
+		// 			// 		this.canvasImg = res1
+		// 			// 		console.log(res1) // 返回图片地址，直接赋值到image标签即可
+		// 			// });
 
-					this.canvasImg = wx.arrayBufferToBase64(res.data)
-				}
+		// 			this.canvasImg = wx.arrayBufferToBase64(res.data)
+		// 		}
 
-			})
-		},
+		// 	})
+		// },
 		imageLoad: function (e) {
 			var $width = e.detail.width // 获取图片真实宽度
 			var $height = e.detail.height
@@ -473,16 +473,13 @@ export default {
 					this.funnelList = []
 					let arr = res.data || []
 					this.loucount = arr.length
-					this.chartData.series[0].data = []
-					let lenHeight = 0
-					lenHeight = arr.length * 200
-					this.chartData.chart.height = lenHeight
+					// this.chartData.series[0].data = []
 					arr.reverse()
 					arr.forEach((item, index) => {
-						this.chartData.series[0].data.push([index + 1 + '. ' + item.stageName + '：' + '<br>', 800])
+						// this.chartData.series[0].data.push([index + 1 + '. ' + item.stageName + '：' + '<br>', 800])
+
 						// this.funnelList.push({ value: 100-(index*20), name: index + 1 + '. ' + item.stageName + '：'  + item.amount })// eslint-disable-line
                         this.funnelList.unshift({value:(100/7)*index,name: item.stageName + '：'  + item.amount})// eslint-disable-line
-						// this.funnelList.push({ value: item.amount, name: (index + 1) + '.' + item.stageName + '：' + item.amount})
 					})
 					// this.getTry()
 
