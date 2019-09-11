@@ -10,6 +10,10 @@ export default {
 	/** 以下是应用生命周期 */
 	// 当uni-app 初始化完成时触发（全局只触发一次）
 	onLaunch: function (options) {
+
+	},
+	// 当 uni-app 启动，或从后台进入前台显示
+	onShow: function (options) {
 		let userInfo = this.$local.fetch('userInfo')
 		userInfo && this.$store.commit('setUserInfo', userInfo)
 
@@ -21,12 +25,13 @@ export default {
 		const finger = this.$local.getItem('finger')
 		// 加载小程序时来源有三
 		// 1.正常加载scene1001
-		// 2.来自卡片分享scene1036
-		// 3.来源于真客户小程序scene1037,1038
-		if (options.scene === 1037 || options.scene === 1038) {
+		// 2.来自卡片分享scene1044
+		// 3.来源于真客户小程序scene1037
+		if (options.scene === 1037) {
 			this.$routing.navigateTo('/pages/login/auth')
-		} else if (options.scene === 1036) {
+		} else if (options.scene === 1044) {
 			// 直接放行该页面
+			this.$routing.navigateTo('/pages/application/enterprise-management/organization/invite/invite')
 		} else {
 			if (token && finger && userInfo) {
 				this.$routing.switchTab('/pages/chance/index')
@@ -34,9 +39,6 @@ export default {
 				this.$routing.redirectTo('/pages/login/index')
 			}
 		}
-	},
-	// 当 uni-app 启动，或从后台进入前台显示
-	onShow: function () {
 	},
 	// 当 uni-app 从前台进入后台
 	onHide: function () {
