@@ -43,14 +43,13 @@ Api.interceptors.request.use(async config => {
 
 Api.interceptors.response.use(async (response, promise) => {
 	// 获取日志  上线后取消
-	console.log(response)
 	let res = response.data || {}
 	let msg = res.msg || ''
 	res.msg = msg.replace(/<\/?.+?>/g, '')
 	uni.hideLoading()
 	if (+response.data.code === 402 || +response.data.code === 403) {
 		let option = wx.getLaunchOptionsSync()
-		if (option.scene !== 1037 && option.scene !== 1044) {
+		if (option.scene !== 1037 && options.scene !== 1007 && options.scene !== 1008) {
 			uni.$emit('loginout')
 			throw promise.reject(response.data)
 		}

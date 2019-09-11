@@ -19,24 +19,26 @@ export default {
 		// 用户不存在则跳转到登录页面
 		const token = this.$local.getItem('token')
 		const finger = this.$local.getItem('finger')
-		if (token && finger && userInfo) {
-			this.$routing.switchTab('/pages/chance/index')
+		// 加载小程序时来源有三
+		// 1.正常加载scene1001
+		// 2.来自卡片分享scene1007,1008
+		// 3.来源于真客户小程序scene1037
+		if (options.scene === 1037) {
+			this.$routing.navigateTo('/pages/login/auth')
+		} else if (options.scene === 1007 || options.scene === 1008) {
+			// 直接放行该页面
+			// this.$routing.navigateTo('/pages/application/enterprise-management/organization/invite/invite')
 		} else {
-			this.$routing.redirectTo('/pages/login/index')
+			if (token && finger && userInfo) {
+				this.$routing.switchTab('/pages/chance/index')
+			} else {
+				this.$routing.redirectTo('/pages/login/index')
+			}
 		}
 	},
 	// 当 uni-app 启动，或从后台进入前台显示
 	onShow: function (options) {
-		// 加载小程序时来源有三
-		// 1.正常加载scene1001
-		// 2.来自卡片分享scene1044
-		// 3.来源于真客户小程序scene1037
-		if (options.scene === 1037) {
-			this.$routing.navigateTo('/pages/login/auth')
-		} else if (options.scene === 1044) {
-			// 直接放行该页面
-			this.$routing.navigateTo('/pages/application/enterprise-management/organization/invite/invite')
-		}
+		console.log(options)
 	},
 	// 当 uni-app 从前台进入后台
 	onHide: function () {
