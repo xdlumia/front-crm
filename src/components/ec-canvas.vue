@@ -4,8 +4,7 @@
  */ -->
 <template>
     <canvas class="ec-canvas" ref='canvas' :canvas-id="canvasId"
-	@init="init"
-	@touchstart="ec.disableTouch ? '' : 'touchStart'" @touchmove="ec.disableTouch ? '' : 'touchMove'" @touchend="ec.disableTouch ? '' : 'touchEnd'">
+	@init="init">
 	</canvas>
 </template>
 
@@ -87,6 +86,9 @@ export default {
 			let option = this.ec.option
 
 			chart.setOption(option)
+			setTimeout(() => {
+				this.$store.commit('client/getCanvasShow', true)
+			})
 		},
 
 		canvasToTempFilePath (opt) {

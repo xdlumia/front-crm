@@ -8,13 +8,14 @@
 <template>
     <div style="wfull">
         <NavBar title="首页" />
+		<scroll-view scroll-y :style="'height:calc(100vh - ' + navH +' )'">
         <div class="d-flex mt5 wfull">
-            <div @click="current = 0,clickDay = todayDate" class="f16 d-text-gray b ml15 ac" :class="current == 0 ? 'brblur' : ''">今天</div>
-            <div @click="current = 1,clickDay = todayDate" class="f16 d-text-gray b ml15 ac" :class="current == 1 ? 'brblur' : ''">仪表盘 </div>
+            <div @click="current = 0,clickDay = todayDate,$store.commit('client/getCanvasShow', false)" class="f16 d-text-gray b ml15 ac" :class="current == 0 ? 'brblur' : ''">今天</div>
+            <div @click="current = 1,clickDay = todayDate,scheduleSelectSalesFunnel()" class="f16 d-text-gray b ml15 ac" :class="current == 1 ? 'brblur' : ''">仪表盘 </div>
         </div>
 
         <!-- 今天 -->
-        <div v-if='current == 0'>
+        <div v-show='current == 0'>
             <!--显示本周-->
 
             <div v-if="timelong == 7">
@@ -76,7 +77,8 @@
         </div>
 
         <!-- 仪表盘 -->
-        <div v-if='current == 1'>
+        <div v-show='current == 1'>
+
             <div class="h40 d-flex-level mt10" style="background:#F9F9F9;">
                 <div @click="getColleagueChoose" class="d-flex ml15" style="height: 26px;align-items: center;">
                     <m-avatar :nameLength='1' :url='avatarUrl' :text='userName' :width='24' :height='24'></m-avatar>
@@ -193,18 +195,11 @@
                     <span class="mr15 f13" style="color:#999">单位：万元</span>
 
                 </div>
-                <!-- <div class="wfull" style="min-height:100px;box-sizing: border-box;">
-                   <view class="echartsBox d-center">
-                        <img @load="imageLoad"  :style="{width:`${canvasImgForm.width}px`,height:`${canvasImgForm.height}px`}" :src="`data:image/png;base64,${canvasImg}`" alt="">
-                    </view>
-                </div> -->
-                <!-- :style="{height:loucount*80 + 'px'}" -->
                 <div class="wfull" style="box-sizing: border-box;height:350px">
 					<view class="echartsBox d-center wfull" style="height:350px;">
 						<ec-canvas :ec="ec" ref='echart' class='mr10' style="width:100%;height:310px;"></ec-canvas>
 					</view>
                 </div>
-                <!-- <div style="height: 10px;background: #FFF;"></div> -->
             </div>
             <div style="height: 10px;background: #F1F1F1;"></div>
             <div>
@@ -228,8 +223,9 @@
                 </div>
             </div>
             <div class="mt10" style="height: 10px;background: #FFF;"></div>
-        </div>
 
+        </div>
+		</scroll-view>
     </div>
 </template>
 
@@ -349,6 +345,9 @@ export default {
 		},
 		userInfo () {
 			return this.$store.state.userInfo || this.$local.fetch('userInfo') || {}
+		},
+		canvasIsShow () {
+			return this.$store.state.client.canvasIsShow
 		}
 	},
 	created () {

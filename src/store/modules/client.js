@@ -2,12 +2,16 @@
 
 /** 状态定义 */
 let state = {
-	clientInfo: {}
+	clientInfo: {},
+	canvasIsShow: false
 }
 
 let mutations = {
 	setClientInfo (state, info) {
 		state.clientInfo = info
+	},
+	getCanvasShow (state, info) {
+		state.canvasIsShow = info
 	}
 }
 
