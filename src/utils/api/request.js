@@ -1,6 +1,11 @@
-// import {
-// 	$message
-// } from '@/utils/message'
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-18 18:23:16
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-16 09:15:45
+ * @Description: request
+ */
+
 import local from '@/utils/localStorage'
 import sha512 from 'js-sha512'
 import uuid from 'uuid'
@@ -45,6 +50,7 @@ Api.interceptors.response.use(async (response, promise) => {
 	// 获取日志  上线后取消
 	let res = response.data || {}
 	let msg = res.msg || ''
+	// 过滤掉标签
 	res.msg = msg.replace(/<\/?.+?>/g, '')
 	uni.hideLoading()
 

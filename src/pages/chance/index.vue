@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-23 19:22:32
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-05 18:04:15
+ * @LastEditTime: 2019-09-19 10:36:36
  * @Description: 机会列表
  */
 <template>
@@ -33,8 +33,8 @@
     </i-steps>
     <!-- 统计 -->
     <div class="chance-sts bt d-fixed wfull" :style="{top:`calc(${navH} + 39px + 65px)`}">
-      <li class="sts-item">{{stageSts.totalCount}}个商机</li>
-      <li class="sts-item">{{stageSts.totalSalesChanceMoney}}元</li>
+      <li class="sts-item">{{stageSts.totalCount || 0}}个商机</li>
+      <li class="sts-item">{{stageSts.totalSalesChanceMoney || 0}}元</li>
       <li class="sts-item" v-if="currStage != 0 && currStage != '-1'">赢率{{stageSts.equityedge}}%</li>
     </div>
     <!-- 列表内容 -->

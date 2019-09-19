@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-26 10:58:16
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-04 00:19:36
+ * @LastEditTime: 2019-09-19 10:56:50
  * @Description: 客户详情
  */
 <template>
@@ -291,9 +291,10 @@ export default {
 				3: () => {
 					// 变更负责人
 					uni.$once('colleagueChoose', data => {
-						this.updateLeader(data.data.map(item => item.userId)[0])
+						this.updateLeader(data.employees.map(item => item.userId)[0])
 					})
-					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
+
+					this.$routing.navigateTo(`/pages/organization/index?employeesIds=${this.detailInfo.leaderId}&isRequire=1&isMultiple=0&type=2&employeesKey=userId&partiType=0`)
 				},
 				4: () => {
 					// 删除
@@ -311,10 +312,10 @@ export default {
 				6: () => {
 					// 分配
 					uni.$once('colleagueChoose', data => {
-						this.allocation(data.data.map(item => item.id)[0])
+						this.allocation(data.employees.map(item => item.id)[0])
 					})
 					// 设置当前选中的 客户项
-					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
+					this.$routing.navigateTo(`/pages/organization/index?isMultiple=0&type=2&employeesKey=id&partiType=0`)
 				},
 				7: () => {
 					// 领取
@@ -356,6 +357,8 @@ export default {
 				poolId: this.poolId,
 				sendBackType: this.detailInfo.sendBackType,
 				leaderId: leaderId
+			}).then(res => {
+				this.$routing.navigateBack()
 			})
 		},
 		updateFollow () {

@@ -1,10 +1,10 @@
-<!--
-/**
-* @author 冀猛超
-* @name 公海池详情
-* @date 2019年8月09日
-**/
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-30 16:10:32
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-19 11:16:24
+ * @Description: 公海池详情
+ */
 <template>
     <div class='setting-page'>
         <NavBar title='公海池设置' />
@@ -17,8 +17,8 @@
                 <div class='d-bg-white'>
                     <mPanel title="基本信息" color="#4889f4" :isUrl='false'>
                         <i-input label="公海名称" v-model='info.name' required />
-
-                        <a url='/pages/application/enterprise-management/organizational-structure'>
+<!-- /pages/organization/index?deptIds=${deptId || ""}&type=1&isMultiple=0&callback=backFromOrg -->
+                        <a :url='`/pages/organization/index?deptIds=${info.memberDeptCode || ""}&deptKey=totalCode&type=1&isMultiple=0&callback=backFromOrg`'>
                             <i-input label="公海成员" v-model='deptName' placeholder="添加成员部门" disabled required>
                                 <div class="d-center hfull">
                                     <div class="isarrow"></div>
@@ -196,10 +196,15 @@ export default {
 
 		// 回显选择部门返回的信息
 		uni.$on('backFromOrg', (data) => {
-			let dept = JSON.parse(data)
-			this.info.memberDeptCode = dept.totalCode
-			this.deptName = dept.deptName
-			this.deptId = dept.id
+			try {
+				this.info.memberDeptCode = data.depts[0].totalCode
+				this.deptName = data.depts[0].deptName
+				this.deptId = data.depts[0].id
+			} catch (err) {
+				this.info.memberDeptCode = ''
+				this.deptName = ''
+				this.deptId = ''
+			}
 
 			this.info.administratorId = ''
 			this.administratorName = ''

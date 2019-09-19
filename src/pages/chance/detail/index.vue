@@ -2,7 +2,7 @@
  * @Author: web.王晓东
  * @Date: 2019-07-24 16:03:30
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-04 00:34:39
+ * @LastEditTime: 2019-09-19 11:05:42
  * @Description: 机会详情
  */
 <template>
@@ -302,10 +302,10 @@ export default {
 				2: () => {
 					// 变更负责人
 					uni.$once('colleagueChoose', data => {
-						this.updateLeader(data.data.map(item => item.userId)[0])
+						this.updateLeader(data.employees.map(item => item.userId)[0])
 					})
 					this.moreShow = false
-					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
+					this.$routing.navigateTo(`/pages/organization/index?employeesIds=${this.detailInfo.leaderId}&isRequire=1&isMultiple=0&type=2&employeesKey=userId&partiType=0`)
 				},
 				// 删除
 				3: () => {

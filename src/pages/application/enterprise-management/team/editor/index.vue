@@ -1,10 +1,10 @@
-<!--
-/**
-* @author王艳龙
-* @name 编辑员工、添加员工
-* @date 2019年8月2日
-**/
--->
+/*
+ * @Author: web.王艳龙
+ * @Date: 2019-07-25 10:12:26
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-19 11:14:19
+ * @Description: 编辑员工、添加员工
+ */
 <template>
     <view>
 		<NavBar v-if="isEditor == 1 || formData.isApply == 1 " title="编辑员工" />
@@ -85,8 +85,13 @@ export default {
 		let that = this
 		// 回显选择部门返回的信息
 		uni.$on('backFromOrg', function (data) {
-			that.formData.deptId = JSON.parse(data).id
-			that.formData.deptName = JSON.parse(data).deptName
+			try {
+				that.formData.deptId = data.depts[0].id
+				that.formData.deptName = data.depts[0].deptName
+			} catch (err) {
+				that.formData.deptId = ''
+				that.formData.deptName = ''
+			}
 		})
 
 		// 回显选择角色返回的信息
@@ -194,7 +199,8 @@ export default {
 		// 選擇部門
 		selectDept (deptId) {
 			uni.navigateTo({
-				url: '/pages/application/enterprise-management/organizational-structure?deptId=' + deptId
+				// url: '/pages/application/enterprise-management/organizational-structure?deptId=' + deptId,
+				url: `/pages/organization/index?deptIds=${deptId || ''}&type=1&isMultiple=0&callback=backFromOrg`
 			})
 		},
 		// 选择角色

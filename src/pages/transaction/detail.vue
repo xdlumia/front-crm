@@ -1,3 +1,10 @@
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-29 16:51:28
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-19 11:06:04
+ * @Description: 成交详情
+ */
 <template>
     <div class="client-detail-page">
         <template v-if='!loading'>
@@ -200,9 +207,9 @@ export default {
 				1: () => {
 					// 变更负责人
 					uni.$once('colleagueChoose', data => {
-						this.updateLeader(data.data.map(item => item.userId)[0])
+						this.updateLeader(data.employees.map(item => item.userId)[0])
 					})
-					this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=0')
+					this.$routing.navigateTo(`/pages/organization/index?employeesIds=${this.detailInfo.leaderId}&isRequire=1&isMultiple=0&type=2&employeesKey=userId&partiType=0`)
 				},
 				2: () => {
 					// 删除

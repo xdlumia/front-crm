@@ -1,10 +1,10 @@
-<!--
-/**
-* @author 冀猛超
-* @name 公海池列表
-* @date 2019年8月09日
-**/
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-07-25 18:29:33
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-19 11:22:17
+ * @Description: 公海池列表
+ */
 <template>
     <div class="highseas-page">
         <NavBar>
@@ -224,11 +224,11 @@ export default {
 		handlerAllocation (item, index) {
 			// 注册 事件
 			uni.$once('colleagueChoose', data => {
-				this.allocation(data.data.map(item => item.userId)[0], item, index)
+				this.allocation(data.employees.map(item => item.userId)[0], item, index)
 			})
 			// 设置当前选中的 客户项
 			this.cuClient = item
-			this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=1&partiType=1')
+			this.$routing.navigateTo(`/pages/organization/index?isMultiple=0&type=2&employeesKey=id&partiType=0`)
 		},
 
 		// 选择 公海池客户 回调
@@ -256,7 +256,9 @@ export default {
 				sendBackType: item.sendBackType || '',
 				leaderId: leaderId
 			}).then(res => {
-				this.$refs.list.reload()
+				setTimeout(() => {
+					this.$refs.list.reload()
+				}, 300)
 			})
 		}
 

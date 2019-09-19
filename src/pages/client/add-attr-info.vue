@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-30 14:50:54
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-03 14:38:33
+ * @LastEditTime: 2019-09-18 10:16:55
  * @Description: 添加业务详情
  */
 <template>
@@ -315,7 +315,7 @@ export default {
     }
 
     .ql-container{
-       height: 300px;
+       height: 160px;
 	}
 
 	.attr-video{

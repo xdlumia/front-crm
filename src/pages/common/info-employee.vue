@@ -1,10 +1,10 @@
-<!--
-/**
-* @author 王晓冬
-* @name 团队成员
-* @date 2019年7月299日
-**/
--->
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-08-01 18:13:09
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-18 14:32:55
+ * @Description: 团队成员
+ */
 <template>
     <div>
         <mPanel top="10" title="团队成员" color="#1890FF" @click="click" :isUrl='isUrl'>
@@ -126,13 +126,13 @@ export default {
 			// 注册 事件
 			uni.$once('colleagueChoose', data => {
 				if (+data.query.partiType === 1) {
-					this.updateEmployee(data.data.map(item => item.userId))
+					this.updateEmployee(data.employees.map(item => item.userId))
 				} else {
-					this.updateLeader(data.data.map(item => item.userId)[0])
+					this.updateLeader(data.employees.map(item => item.userId)[0])
 				}
 			})
 
-			this.$routing.navigateTo('/pages/index/colleagueChoose?isRadio=0&ids=' + this.ids + '&partiType=1&busType=' + this.query.busType)
+			this.$routing.navigateTo(`/pages/organization/index?employeesIds=${this.ids}&isMultiple=1&type=2&employeesKey=userId&partiType=1`)
 		}
 
 	}
