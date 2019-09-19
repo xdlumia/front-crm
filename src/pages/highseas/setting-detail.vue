@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-30 16:10:32
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-19 11:16:24
+ * @LastEditTime: 2019-09-19 11:41:30
  * @Description: 公海池详情
  */
 <template>
@@ -231,7 +231,7 @@ export default {
 			if (!this.info.memberDeptCode && !this.deptId) {
 				return this.$utils.toast.text('请选择公海成员')
 			}
-			this.$routing.navigateTo('/pages/index/colleagueChoose?deptId=' + this.deptId)
+			this.$routing.navigateTo('/pages/index/colleagueChoose?isAll=1&deptId=' + this.deptId)
 		},
 		getDetailInfo (id) {
 			this.$api.seeCrmService.clientpublicpoolInfo(null, id).then(res => {

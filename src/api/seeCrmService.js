@@ -1,3 +1,10 @@
+/*
+ * @Author: web.冀猛超
+ * @Date: 2019-08-01 14:42:21
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-19 11:53:24
+ * @Description: file content
+ */
 const MOCK_ADDRESS = ''
 // let _isMock = false
 
@@ -507,6 +514,12 @@ export default {
 	// 根据部门id获取其下人员列表
 	organizationalStructureChildrenEmployees: {
 		'url': '/organizationalStructure/childrenEmployees',
+		'mock': true
+	},
+
+	// 根据部门id获取其下人员列表
+	organizationalStructureOffspringEmployees: {
+		'url': '/organizationalStructure/offspringEmployees',
 		'mock': true
 	},
 
