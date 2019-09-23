@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-23 11:54:25
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-05 11:05:59
+ * @LastEditTime: 2019-09-20 18:43:11
  * @Description: 登陆页面
  */
 <template>
@@ -28,6 +28,11 @@
                     </i-button>
                 </a>
             </div>
+
+            <div class="f13 ac d-text-gray mt30" @click="skipWebview">
+                没有账号，先了解产品？
+            </div>
+
         </div>
     </div>
 </template>
@@ -44,12 +49,16 @@ export default {
 				iv: '',
 				sessionKey: '',
 				avatarUrl: ''
-			}
+			},
+			webViewUrl: 'http://testwebset.zhenkehu.com:82/product/custom-mange/'
 		}
 	},
 	methods: {
 		skip () {
 			this.$routing.navigateTo('./auth')
+		},
+		skipWebview () {
+			this.$routing.navigateTo(`/pages/web-view/index?url=${encodeURIComponent(this.webViewUrl)}`)
 		}
 	},
 	onReady () {

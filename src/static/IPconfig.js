@@ -3,11 +3,11 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-18 18:23:16
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-05 18:06:02
+ * @LastEditTime: 2019-09-20 16:54:26
  * @Description: file content
  */
 // local 为开发人员本地 dev 为开发环境 build 为测试环境  product 为生产环境
-const model = 'build';
+const model = 'product';
 let api = '',
 inviteLink = '',
 ossUrl = 'https://oss-a-develop.oss-cn-beijing.aliyuncs.com/'

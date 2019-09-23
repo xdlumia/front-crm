@@ -382,6 +382,12 @@
 			"style":{
 				"navigationBarTitleText":"组织树"
 			}
+		},
+		{
+			"path":"pages/web-view/index",
+			"style": {
+				"navigationStyle": "default"
+			}
 		}
 	],
 	"globalStyle": {

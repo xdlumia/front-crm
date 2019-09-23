@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-18 18:23:16
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-16 09:15:45
+ * @LastEditTime: 2019-09-19 18:30:05
  * @Description: request
  */
 
@@ -22,7 +22,7 @@ Api = new Flyio()
 Api.default.config.timeout = 300000
 Api.interceptors.request.use(async config => {
 	// 获取日志  上线后取消
-	console.log(config)
+	// console.log(config)
 
 	let token = local.getItem('token')
 	let finger = local.getItem('finger')

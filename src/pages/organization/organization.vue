@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-09-10 15:28:34
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-19 11:21:59
+ * @LastEditTime: 2019-09-20 16:25:10
  * @Description: 组织架构
  */
 
@@ -11,14 +11,14 @@
         <NavBar title="组织架构" />
         <div class="uni-flex uni-column dept-page">
             <!-- 公司 -->
-            <div class="flex-item flex-item-V mt10 mb10">
-                <span class="p10 d-text-blue" @click="skipItem(-1)">{{userInfo.companyEntity.companyName}}</span>
+            <div class="flex-item flex-item-V mt10 mb10" v-if="breadCrumbs.length">
+                <!-- <span class="p10 d-text-blue" @click="skipItem(-1)">{{userInfo.companyEntity.companyName}}</span> -->
                 <span class="d-text-blue bread-item"
 					v-for='(item, index) in breadCrumbs'
 					:key="index"
 					@click="skipItem(index)"
 				>
-					<span>></span>
+					<span v-if="index">></span>
 					<span class="p10">{{item.title}}</span>
 				</span>
             </div>
@@ -30,7 +30,12 @@
 					<div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in currentDeptList.children" :key="item.id" @click="chooseDeptItem(item)">
 						<span class='radio-box d-block mr15' :class="{active: chooseDeptIds.includes(item[deptKey].toString())}" v-if='!isOnlyEmployees'></span>
 						<div class="d-cell f14 d-text-black d-elip">{{item.deptName}}</div>
-						<div class="f14 pl10 d-text-blue" :class="{ disable: chooseDeptIds.includes(item[deptKey].toString())}" v-if="item.children && item.children.length" @click.stop="getNext(item, index)">下级</div>
+						<div
+							class="f14 pl10 d-text-blue"
+							:class="{ disable: chooseDeptIds.includes(item[deptKey].toString())}"
+							v-if="isOnlyDept ? item.children && item.children.length : (item.children && item.children.length) || (item.employeeList && item.employeeList.length)"
+							@click.stop="getNext(item, index)"
+						>下级</div>
 					</div>
 				</div>
 				<div class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;" v-if="!isOnlyDept"></div>
@@ -119,7 +124,10 @@ export default {
 	},
 	data () {
 		return {
-			currentDeptList: {}, // 当前部门列表
+			currentDeptList: {
+				children: [],
+				employeeList: []
+			}, // 当前部门列表
 			depts: [], //  人员数据
 			// employees: [], // 人员数据
 			breadCrumbs: [], // 面包屑
@@ -134,7 +142,7 @@ export default {
 
 	created (option) {
 		// 获取部门数据
-		this.getDeptData(this.userInfo.companyEntity.companyTypeId)
+		this.getDeptData(this.userInfo.companyEntity.companyDeptId)
 	},
 
 	computed: {
@@ -168,6 +176,7 @@ export default {
 				index++
 			}
 			this.breadCrumbs = breadCrumbs
+			console.log(this.breadCrumbs.length)
 		},
 
 		// 获取下级
@@ -187,7 +196,7 @@ export default {
 		// 点击面包屑
 		skipItem (index) {
 			if (+index === +this.breadCrumbs.length) return
-			this.deptsIndexs = index === -1 ? [] : this.deptsIndexs.slice(0, index + 1)
+			this.deptsIndexs = index === 0 ? [] : this.deptsIndexs.slice(0, index + 1)
 		},
 
 		// 选中部门事件
@@ -258,11 +267,21 @@ export default {
 			// 获取部门数据
 			this.$api.seeCrmService.organizationalStructureChildrenDepts({ deptId }).then((response) => {
 				if (response.code === 200) {
-					this.depts = response.data[0]
-					this.currentDeptList = response.data[0]
+					// 时间紧迫, 外层增加一级. 把公司展示出来
+					let data = [
+						{
+							children: [...response.data],
+							employeeList: []
+						}
+					]
+
+					this.depts = data[0] || {}
+					this.currentDeptList = data[0] || {
+						children: [],
+						employeeList: []
+					}
 					// 缓存部门信息
 					this.$local.save('depts', response.data)
-
 					// 回显
 					this.getChildItem(this.chooseDeptIds, this.chooseEmployeesIds)
 				} else {
@@ -362,7 +381,7 @@ export default {
 }
 
 .bread-item{
-	&:last-child{
+	&:last-child:not(:first-child){
 		color: #a2a2a4
 	}
 }

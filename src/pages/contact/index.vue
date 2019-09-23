@@ -1,3 +1,11 @@
+/*
+ * @Author: web.王晓东
+ * @Date: 2019-07-27 09:16:04
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-19 18:16:29
+ * @Description: 联系人
+ */
+
 <template>
   <div class="chance-bg">
     <NavBar title="联系人" />
@@ -153,12 +161,12 @@ export default {
 		// 	this.$refs.list.reload()
 		// })
 	},
-	onReady () {
-		// 公共搜索反馈
-		// uni.$on('updatedate', (data) => {
-		// 	this.queryForm.linkmanName = data.searchInfo
-		// 	this.$refs.list.reload()
-		// })
+	onHide () {
+		this.$local.remove('queryType')
+	},
+	onUnload () {
+		// 移除监听事件
+		this.$local.remove('queryType')
 	},
 	methods: {
 		getSearch () {

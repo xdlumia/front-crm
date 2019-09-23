@@ -1,3 +1,10 @@
+/*
+ * @Author: web.徐贺
+ * @Date: 2019-07-27 18:52:21
+ * @LastEditors: web.冀猛超
+ * @LastEditTime: 2019-09-19 18:17:03
+ * @Description: 成交记录
+ */
 <template>
     <div class="highseas-page">
         <NavBar title='成交记录' searchType='2' />
@@ -194,8 +201,12 @@ export default {
 		this.$refs.list.reload()
 		// })
 	},
-	created () {
-
+	onHide () {
+		this.$local.remove('queryType')
+	},
+	onUnload () {
+		// 移除监听事件
+		this.$local.remove('queryType')
 	},
 	methods: {
 		getTransactionList (list) {

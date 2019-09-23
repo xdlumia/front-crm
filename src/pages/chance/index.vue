@@ -2,7 +2,7 @@
  * @Author: web.王晓冬
  * @Date: 2019-08-23 19:22:32
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-19 10:36:36
+ * @LastEditTime: 2019-09-19 18:14:58
  * @Description: 机会列表
  */
 <template>
@@ -212,9 +212,13 @@ export default {
 		// 	this.saleschanceSalesChanceStatistics()
 		// })
 	},
+	onHide () {
+		this.$local.remove('queryType')
+	},
 	onUnload () {
 		// 移除监听事件
 		uni.$off('updatedate')
+		this.$local.remove('queryType')
 	},
 	computed: {
 		stageListMax () {
