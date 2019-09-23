@@ -2,7 +2,7 @@
  * @Author: web.冀猛超
  * @Date: 2019-07-23 11:54:25
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-20 18:43:11
+ * @LastEditTime: 2019-09-23 18:14:11
  * @Description: 登陆页面
  */
 <template>
@@ -50,7 +50,7 @@ export default {
 				sessionKey: '',
 				avatarUrl: ''
 			},
-			webViewUrl: 'http://testwebset.zhenkehu.com:82/product/custom-mange/'
+			webViewUrl: 'https://www.zhenkehu.com/product/custom-mange/'
 		}
 	},
 	methods: {
