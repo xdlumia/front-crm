@@ -2,10 +2,9 @@
  * @Author: web.冀猛超
  * @Date: 2019-09-10 15:28:34
  * @LastEditors: web.冀猛超
- * @LastEditTime: 2019-09-20 16:25:10
+ * @LastEditTime: 2019-09-25 15:43:10
  * @Description: 组织架构
  */
-
 <template>
     <div>
         <NavBar title="组织架构" />
@@ -27,12 +26,11 @@
 
 			<div>
 				<div class="d-bg-white dept-box">
-					<div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in currentDeptList.children" :key="item.id" @click="chooseDeptItem(item)">
+					<div class="d-center dept-item pl15 bb" v-for="(item, index) in currentDeptList.children" :key="item.id" @click="chooseDeptItem(item)">
 						<span class='radio-box d-block mr15' :class="{active: chooseDeptIds.includes(item[deptKey].toString())}" v-if='!isOnlyEmployees'></span>
 						<div class="d-cell f14 d-text-black d-elip">{{item.deptName}}</div>
 						<div
-							class="f14 pl10 d-text-blue"
-							:class="{ disable: chooseDeptIds.includes(item[deptKey].toString())}"
+							class="f14 pl10 d-text-blue pr15 next-btn"
 							v-if="isOnlyDept ? item.children && item.children.length : (item.children && item.children.length) || (item.employeeList && item.employeeList.length)"
 							@click.stop="getNext(item, index)"
 						>下级</div>
@@ -62,11 +60,11 @@
             </div>
 
             <!-- 已选择人员部门 -->
-			<div v-if="isShow && (chooseDepts.length || chooseEmployees.length)" class="d-relative d-fixed choose-box">
+			<div v-if="isShow && (chooseDepts.length || chooseEmployees.length)" class="d-relative d-fixed choose-box" :style="{top: `${navH}`}">
 				<div class="d-bg-white dept-box">
-					<div class="d-center dept-item pl15 pr15 pt10 pb10 bb" v-for="(item, index) in chooseDepts" :key="item.id">
+					<div class="d-center dept-item pl15 bb" v-for="(item, index) in chooseDepts" :key="item.id">
 						<div class="d-cell f14 d-text-black d-elip">{{item.deptName}}</div>
-						<div class="d-text-red f14" @click.stop="removeDept(index)">移除</div>
+						<div class="d-text-red f14 pr15 next-btn" @click.stop="removeDept(index)">移除</div>
 					</div>
 				</div>
 				<div class="flex-item flex-item-V" style="height: 10px;background: #F9F9F9;" v-if="chooseDepts.length"></div>
@@ -176,14 +174,48 @@ export default {
 				index++
 			}
 			this.breadCrumbs = breadCrumbs
-			console.log(this.breadCrumbs.length)
 		},
 
 		// 获取下级
 		getNext (item, index) {
 			// 当前部门已选中的话 禁止选择下级
-			if (this.chooseDeptIds.includes(item[this.deptKey].toString())) return
+			// if (this.chooseDeptIds.includes(item[this.deptKey].toString())) return
 			this.deptsIndexs.push(index)
+		},
+
+		getId () {
+			// 默认第0个元素
+			let pids = this.getParentIds(this.depts.children[0])
+			// 获取当前所点击的 id
+			const lastId = [...this.chooseDeptIds].pop()
+			const children = this.currentDeptList.children
+			// 获取在当前数据下的 索引
+			const lastIndex = children.length && children.findIndex(item => item[this.deptKey].toString() === lastId.toString())
+			let cids = (~lastIndex && this.getChildredIds(this.currentDeptList.children[lastIndex])) || [];
+
+			[...pids, ...cids].forEach(id => {
+				let idIndex = this.chooseDeptIds.indexOf(id.toString())
+				~idIndex && this.removeDept(idIndex)
+			})
+		},
+
+		// 获取父级所有 key 项 返回数组
+		getParentIds (item, i = 0, pid = []) {
+			if (typeof this.deptsIndexs[i] === 'undefined') return pid
+			pid.push(item[this.deptKey])
+			i++
+			return this.getParentIds(item.children[this.deptsIndexs[i]], i, pid)
+		},
+
+		// 获取当前子字级所有 key 项 返回数组
+		getChildredIds (item, cid = []) {
+			item.children.forEach(cItem => {
+				cid.push(cItem[this.deptKey])
+				if (cItem.children.length) {
+					return this.getChildredIds(cItem, cid)
+				}
+			})
+			return cid
 		},
 
 		// 获取所点击的childred
@@ -213,6 +245,7 @@ export default {
 				if (+this.isMultiple) {
 					this.chooseDeptIds.push(deptItem[this.deptKey].toString())
 					this.chooseDepts.push(deptItem)
+					this.getId()
 					return
 				}
 
@@ -255,6 +288,7 @@ export default {
 			this.chooseEmployees.splice(index, 1)
 			this.isShow && (this.isShow = this.chooseEmployeesIds.length || this.chooseDeptIds.length)
 		},
+
 		// 删除 部门
 		removeDept (index) {
 			this.chooseDeptIds.splice(index, 1)
@@ -355,6 +389,11 @@ export default {
 .dept-page{
     padding-bottom: 50px;
 }
+
+.dept-item, .next-btn{
+	height: 45px;
+	line-height: 45px;
+}
 .radio-box{
     width: 15px;
     height: 15px;
@@ -393,5 +432,6 @@ export default {
 	background: #fff;
     padding-bottom: 45px;
     overflow-y: auto;
+	bottom: 0;
 }
 </style>
