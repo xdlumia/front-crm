@@ -197,7 +197,9 @@
                 </div>
                 <div class="wfull" style="box-sizing: border-box;height:350px">
 					<view class="echartsBox d-center wfull" style="height:350px;">
-						<ec-canvas :ec="ec" ref='echart' class='mr10' style="width:100%;height:310px;"></ec-canvas>
+						<!-- <ec-canvas :ec="ec" ref='echart' class='mr10' style="width:100%;height:310px;"></ec-canvas> -->
+						<canvas class="ec-canvas mr10" ref='canvas' :canvas-id="canvasId" style="width:100%;height:310px;">
+						</canvas>
 					</view>
                 </div>
             </div>
@@ -232,6 +234,9 @@
 <script>
 import mAvatar from '@/components/m-avatar'
 // import { base64src } from '../../utils/base64src.js'
+import WxCanvas from '@/static/wx-canvas'
+import * as echarts from '@/static/echarts'
+let ctx = null
 export default {
 	data () {
 		return {
@@ -323,6 +328,7 @@ export default {
 			mint: 60,
 			userId: 1,
 			popaic: '',
+			canvasId: 'ec-canvas',
 			canvasImgForm: {},
 			avatarUrl: '', // 用户头像
 			userName: '',
@@ -359,6 +365,14 @@ export default {
 			this.avatarUrl = this.$store.state.userInfo.avatarUrl
 		})
 	},
+	watch: {
+		ec: {
+			deep: true,
+			handler () {
+				this.init()
+			}
+		}
+	},
 	onShow () {
 		this.scheduleSelectSalesKit()
 		this.scheduleSelectCompanyRanking()
@@ -367,10 +381,85 @@ export default {
 		this.changeTime()
 		this.getDates()
 		this.getTodayDate()
+
+		// this.$nextTick(() => {
+		// 	if (!this.ec) {
+		// 		console.warn('组件需绑定 ec 变量，例：<ec-canvas id="mychart-dom-bar" ' +
+		// 	'canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>')
+		// 		return
+		// 	}
+
+		// 	if (!this.ec.lazyLoad) {
+		// 		this.init()
+		// 	}
+		// })
 	},
+
 	onLoad (option) {
 	},
 	methods: {
+		init: function (callback) {
+			this.$nextTick(() => {
+				const version = wx.version.version.split('.').map(n => parseInt(n, 10))
+				const isValid = version[0] > 1 || (version[0] === 1 && version[1] > 9) ||
+			(version[0] === 1 && version[1] === 9 && version[2] >= 91)
+				if (!isValid) {
+					console.error('微信基础库版本过低，需大于等于 1.9.91。' +
+			'参见：https://github.com/ecomfe/echarts-for-weixin' +
+			'#%E5%BE%AE%E4%BF%A1%E7%89%88%E6%9C%AC%E8%A6%81%E6%B1%82')
+					return
+				}
+
+				ctx = uni.createCanvasContext(this.canvasId, this)
+				const canvas = new WxCanvas(ctx, this.canvasId)
+
+				echarts.setCanvasCreator(() => {
+					return canvas
+				})
+
+				var query = uni.createSelectorQuery().in(this)
+
+				query.select('.ec-canvas').boundingClientRect((res) => {
+					// if (typeof callback === 'function') {
+					// 	this.chart = callback(canvas, res.width, res.height)
+					// } else if (this.ec && typeof this.ec.onInit === 'function') {
+					// 	this.chart = this.ec.onInit(canvas, res.width, res.height)
+					// } else {
+					// 	this.$emit('init', {
+					// 		canvas: canvas,
+					// 		width: res.width,
+					// 		height: res.height
+					// 	})
+					// }
+					this.initChart(canvas, res.width, res.height)
+				}).exec()
+			})
+		},
+
+		initChart (canvas, width, height) {
+			const chart = echarts.init(canvas, null, {
+				width: width,
+				height: height
+			})
+			canvas.setChart(chart)
+
+			let option = this.ec.option
+
+			chart.setOption(option)
+			setTimeout(() => {
+				this.$store.commit('client/getCanvasShow', true)
+			})
+		},
+
+		canvasToTempFilePath (opt) {
+			if (!opt.canvasId) {
+				opt.canvasId = this.canvasId
+			}
+
+			ctx.draw(true, () => {
+				wx.canvasToTempFilePath(opt, this)
+			})
+		},
 		// getTry () {
 		// 	uni.request({
 
@@ -487,9 +576,13 @@ export default {
 					this.ec.option.series[0].data = this.funnelList || []
 
 					this.$nextTick(() => {
-						if (this.$refs.echart) {
-							this.$refs.echart.init()
-						}
+						// if (this.$refs.echart) {
+						// 	this.$refs.echart.init()
+						// }
+						// setTimeout(()=>{
+						// 	this.init()
+						// },500)
+
 					})
 				})
 		},
@@ -542,7 +635,7 @@ export default {
 .h200{height: 200px;}
 .iconbox{height: 30px;width: 108px;box-sizing: border-box;}
 .echartsBox {width: 100%;height: 100%;}
-.ec-canvas{width: 100%;height: 200px;}
+.ec-canvas{width: 100%;}
 
 </style>
 <style>
